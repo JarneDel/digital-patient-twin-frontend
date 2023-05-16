@@ -27,7 +27,7 @@ defineProps({
   <button
     @click="e => $emit('click', e)"
     :disabled="disabled"
-    class="width bg-tertiary-500"
+    class="width rounded-lg bg-tertiary-500 p-5 font-semibold"
   >
     <slot />
   </button>
@@ -36,5 +36,6 @@ defineProps({
 <style scoped>
 .width {
   width: v-bind(width);
+  font-family: 'poppins', sans-serif;
 }
 </style>
