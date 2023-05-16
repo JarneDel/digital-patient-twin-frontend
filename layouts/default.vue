@@ -1,6 +1,8 @@
 <template>
   <div>
-    <slot />
-    <Footer />
+    <TemplateNavigation >
+      <slot />
+    </TemplateNavigation>
+    <TemplateFooter />
   </div>
 </template>
