@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>Hello index</div>
+  <div class="bg-pink-800">Hello index</div>
 </template>
 
 <style scoped>
