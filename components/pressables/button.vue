@@ -27,7 +27,8 @@ defineProps({
   <button
     @click="e => $emit('click', e)"
     :disabled="disabled"
-    class="width rounded-lg bg-tertiary-500 p-5 font-semibold"
+    class="width m-2 rounded-lg bg-tertiary-500 p-5 font-semibold transition-colors hover:bg-tertiary-400"
+    :class="{ 'bg-tertiary-300': disabled }"
   >
     <slot />
   </button>
