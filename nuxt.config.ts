@@ -2,8 +2,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/devtools'],
-  buildModules: ['@nuxtjs/google-fonts'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/devtools', '@nuxtjs/google-fonts'],
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
