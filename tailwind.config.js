@@ -32,7 +32,19 @@ module.exports = {
           300: "#C8BFDB",
           200: "#CFC6DF",
           100: "#D3CCE3",
+          50: "#BDB5CC",
         },
+        neutral:{
+          600: "#FAFBFD",
+          500: "#F3F4F6",
+          400: "#F7F6F9",
+          300: "#EDECEE",
+          200: "#999999",
+          100: "#645F5F",
+        },
+        other:{
+          100: "#F6CCA2",
+        }
       }
     },
   },
