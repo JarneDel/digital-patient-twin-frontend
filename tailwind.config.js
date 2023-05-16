@@ -50,6 +50,9 @@ module.exports = {
     fontFamily: {
       sans: ["Poppins", "sans-serif"],
     },
+    dropShadow: {
+      "black": "0 4px rgba(0, 0, 0, 0.50)",
+    },
   },
   plugins: [],
 }
