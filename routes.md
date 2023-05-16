@@ -1,0 +1,11 @@
+- `/login` --> redirect from / if not logged in  
+- `/reset-password`  
+- `/dokter/:id/` --> homepagina dokter  
+- `/dokter/:id/patienten` patienten pagina  
+- `/dokter/:id/patienten/lijst` patienten lijst en verwijder mogelijkheid   
+- `/dokter/:id/patienten/:id` detailpagina patient
+- `/dokter/:id/patienten/:id/gegevens` gegevenspagina patient
+- `/dokter/:id/patienten/:id/edit` bewerk patientgegevnes
+- `/dokter/:id/meldingen/` overzicht meldingen
+- `/dokter/:id/account/` overzicht gegevens dokter
+- `/dokter/:id/account/edit` Bewerkt gegevens dokter
