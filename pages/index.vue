@@ -2,7 +2,7 @@
 
 <template>
   <div class="bg-pink-800">Hello index</div>
-  <button></button>
+  <PressablesButton>Hello world</PressablesButton>
 </template>
 
 <style scoped></style>

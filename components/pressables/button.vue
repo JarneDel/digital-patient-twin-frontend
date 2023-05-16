@@ -1,4 +1,6 @@
 <script setup lang="ts">
+export type ButtonTypes = 'primary' | 'secondary' | 'tertiary'
+
 defineEmits({
   click: (e: MouseEvent) => true,
 })
@@ -22,13 +24,13 @@ defineProps({
 </script>
 
 <template>
-  <Button
+  <button
     @click="e => $emit('click', e)"
     :disabled="disabled"
     class="width bg-tertiary-500"
   >
     <slot />
-  </Button>
+  </button>
 </template>
 
 <style scoped>
