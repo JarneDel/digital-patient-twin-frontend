@@ -45,7 +45,10 @@ module.exports = {
         other:{
           100: "#F6CCA2",
         }
-      }
+      },
+    },
+    fontFamily: {
+      sans: ["Poppins", "sans-serif"],
     },
   },
   plugins: [],
