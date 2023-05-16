@@ -4,6 +4,7 @@
   <div class="bg-pink-800">Hello index</div>
   <PressablesButton>Hello world</PressablesButton>
   <TemplateFooter/>
+  <TemplateDashboardCards patient="15" />
 </template>
 
 <style scoped></style>
