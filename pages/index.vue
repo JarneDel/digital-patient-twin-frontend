@@ -3,6 +3,10 @@ const isEditing = ref(false)
 const clickEdit = () => {
   isEditing.value = !isEditing.value
 }
+const selected = ref('one')
+watch(selected, () => {
+  console.log(selected.value)
+})
 </script>
 
 <template>
@@ -11,7 +15,10 @@ const clickEdit = () => {
   <TemplateFooter />
   <TemplateDashboardCards patient="15" />
   <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
-  <PressablesEdit />
+  <PressablesSelector
+    :options="['one', 'two', 'three', 'four']"
+    v-model:selected="selected"
+  />
 </template>
 
 <style scoped></style>
