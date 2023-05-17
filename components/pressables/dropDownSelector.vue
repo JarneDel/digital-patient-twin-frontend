@@ -12,23 +12,32 @@ defineProps({
     required: true,
   },
 })
-defineEmits(['update:selected'])
+const emits = defineEmits(['update:selected'])
 const isOpen = ref(false)
+const isHidden = ref(true)
+watch(isOpen, value => {
+  if (value) {
+    isHidden.value = false
+  } else {
+    setTimeout(() => {
+      isHidden.value = true
+    }, 300)
+  }
+})
 </script>
 
 <template>
   <div class="relative w-fit">
-    <div
+    <button
       class="flex w-[10rem] flex-row justify-between rounded-lg bg-tertiary-300 p-2"
+      @click="isOpen = !isOpen"
     >
       <div class="pl-2">{{ selected }}</div>
-      <button @click="isOpen = !isOpen">
-        <lucide-chevron-down
-          class="transition-transform"
-          :class="isOpen ? 'rotate-180' : ''"
-        />
-      </button>
-    </div>
+      <lucide-chevron-down
+        class="transition-transform"
+        :class="isOpen ? 'rotate-180' : ''"
+      />
+    </button>
     <div class="z-1 absolute pt-0.5">
       <div
         class="flex w-[10rem] flex-col rounded-lg bg-tertiary-300 transition-all duration-300 ease-out"
@@ -37,10 +46,15 @@ const isOpen = ref(false)
         "
       >
         <button
-          v-if="isOpen"
+          v-if="!isHidden"
           v-for="(option, index) in options"
           :key="option"
-          @click="$emit('update:selected', option)"
+          @click="
+            () => {
+              $emit('update:selected', option)
+              isOpen = false
+            }
+          "
           class="p-2 transition-all duration-300 ease-out"
           :class="{
             'rounded-t-lg': index === 0,
@@ -52,7 +66,6 @@ const isOpen = ref(false)
         >
           {{ option }}
         </button>
-        <div v-else class="h-full"></div>
       </div>
     </div>
   </div>
