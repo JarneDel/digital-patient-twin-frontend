@@ -28,7 +28,6 @@ defineProps({
       <h1 class="text-4xl font-semibold text-white">
         {{ patients }}
       </h1>
-      <!-- <UserIcon class="text-red-50 w-10 h-10" /> -->
       <div class="absolute bottom-0 right-0">
         <svg
           width="82"
@@ -46,12 +45,12 @@ defineProps({
       </div>
     </div>
     <!-- inactive patients -->
-    <div class="relative h-[118px] w-[286px] rounded-lg bg-primary-500 p-5">
+    <!-- <div class="relative h-[118px] w-[286px] rounded-lg bg-primary-500 p-5">
       <h1 class="font-regular mb-2 text-xl text-white">inactieve patiënten</h1>
       <h1 class="text-4xl font-semibold text-white">
         {{ inactivePatients }}
       </h1>
-      <!-- <UserIcon class="text-red-50 w-10 h-10" /> -->
+      
       <div class="absolute bottom-0 right-0">
         <svg
           width="82"
@@ -67,14 +66,14 @@ defineProps({
           />
         </svg>
       </div>
-    </div>
+    </div> -->
     <!-- notifications -->
-    <div class="relative h-[118px] w-[286px] rounded-lg bg-primary-500 p-5">
+    <!-- <div class="relative h-[118px] w-[286px] rounded-lg bg-primary-500 p-5">
       <h1 class="font-regular mb-2 text-xl text-white">Meldingen</h1>
       <h1 class="text-4xl font-semibold text-white">
         {{ Notifications }}
       </h1>
-      <!-- <UserIcon class="text-red-50 w-10 h-10" /> -->
+      
       <div class="absolute right-2 bottom-3">
         <svg
           width="68"
@@ -90,6 +89,6 @@ defineProps({
           />
         </svg>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
