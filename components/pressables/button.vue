@@ -20,23 +20,30 @@ defineProps({
     required: false,
     default: 'auto',
   },
+  padding: {
+    type: String,
+    required: false,
+    default: '20px',
+  },
 })
 </script>
 
 <template>
-  <button
-    @click="e => $emit('click', e)"
-    :disabled="disabled"
-    class="width m-2 rounded-lg bg-tertiary-500 p-5 font-semibold transition-colors hover:bg-tertiary-400"
-    :class="{ 'bg-tertiary-300': disabled }"
-  >
-    <slot />
-  </button>
+  <div>
+    <button
+      @click="e => $emit('click', e)"
+      :disabled="disabled"
+      class="rounded-lg bg-tertiary-500 font-semibold transition-colors hover:bg-tertiary-400"
+      :class="disabled && 'bg-tertiary-300'"
+    >
+      <slot />
+    </button>
+  </div>
 </template>
 
 <style scoped>
-.width {
+button {
   width: v-bind(width);
-  font-family: 'poppins', sans-serif;
+  padding: v-bind(padding);
 }
 </style>
