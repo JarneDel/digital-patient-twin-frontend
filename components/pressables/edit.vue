@@ -14,30 +14,30 @@ defineProps({
     default: false,
   },
 })
-defineEmits(['update:isEditing', 'delete'])
+defineEmits(['update:isEditing', 'clickDelete'])
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-row justify-end">
     <div
-      class="m-2 h-[72px] max-w-[100px] rounded-lg bg-tertiary-500 p-5 font-semibold transition-all"
-      :class="{ 'max-w-[400px]': isEditing }"
+      class="m-2 h-[72px] overflow-hidden rounded-lg bg-tertiary-500 p-5 font-semibold transition-all duration-300 ease-out"
+      :class="{ 'max-w-[17.5rem]': isEditing, 'max-w-[4.5rem]': !isEditing }"
     >
       <button
         v-if="!isEditing"
-        @click="e => (isEditing = true)"
-        class="h-full w-full"
+        @click="$emit('update:isEditing', true)"
+        class="w-[15rem]"
       >
         <lucide-edit3 class="h-8 w-8" />
       </button>
-      <div v-else>
-        <div class="flex flex-row justify-between gap-2">
+      <div v-else class="w-[15rem]">
+        <div class="flex flex-row items-center justify-between gap-4">
           <p class="whitespace-nowrap">{{ selectedCount }} selected</p>
-          <div class="flex flex-row justify-end">
-            <button>
+          <div class="flex flex-row justify-end gap-4">
+            <button @click="$emit('clickDelete')">
               <lucide-trash class="h-8 w-8"></lucide-trash>
             </button>
-            <button @click="e => (isEditing = false)">
+            <button @click="$emit('update:isEditing', false)">
               <lucide-x class="h-8 w-8" />
             </button>
           </div>
