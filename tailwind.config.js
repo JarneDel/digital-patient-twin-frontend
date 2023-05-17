@@ -51,7 +51,7 @@ module.exports = {
       sans: ["Poppins", "sans-serif"],
     },
     boxShadow: {
-      "normal": "0px 15px 5px rgba(0,0,0,0.10)",
+      "normal": "10px 10px 13px -7px rgba(0,0,0,0.10)",
     },
   },
   plugins: [],
