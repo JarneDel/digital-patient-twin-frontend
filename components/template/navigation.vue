@@ -9,8 +9,8 @@ import { UserCircle2, LogOut} from 'lucide-vue-next'
   <div
     class="grid h-[100vh] grid-cols-[max-content_1fr] grid-rows-[min-content_1fr] bg-neutral-600"
   >
-    <div class="pl-3 pr-8 h-24 flex items-center justify-center">
-      <div class="font-semibold">Digital Patient Twin</div>
+    <div class="pl-3 pr-8 h-24 flex items-center justify-center bg-primary-600">
+      <div class="font-semibold text-white">Digital Patient Twin</div>
     </div>
     <div class="z-10 flex pl-3 pr-8 shadow-normal h-24 items-center justify-end">
       <div>
@@ -21,26 +21,26 @@ import { UserCircle2, LogOut} from 'lucide-vue-next'
       </div>
       <user-circle-2 class="h-12 w-12 px-2"/>
     </div>
-    <div class="w-56 pl-10 pt-6 flex flex-col justify-between">
+    <div class="w-56 pl-10 pt-6 flex flex-col justify-between bg-primary-600">
       <div>
         <div class="flex items-center my-4">
           <SvgHome class="h-8 w-8 pr-2" />
-          <div>Home</div>
+          <div class="text-white">Home</div>
         </div>
         <div class="flex items-center my-4">
           <SvgPatient class="h-8 w-8 pr-2" />
-          <div>Patienten</div>
+          <div class="text-white">Patienten</div>
         </div>
         <div class="flex items-center my-4">
           <SvgNotification class="h-8 w-8 pr-2" />
-          <div>Meldingen</div>
+          <div class="text-white">Meldingen</div>
         </div>
       </div>
 
       <div>
         <div class="flex items-center mb-16">
-          <log-out class="h-8 w-8 pr-2 pl-1"/>
-          <div>Log out</div>
+          <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
+          <div class="text-white">Log out</div>
         </div>
       </div>
     </div>
