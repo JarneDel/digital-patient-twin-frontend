@@ -10,9 +10,6 @@ const props = defineProps({
   },
 })
 defineEmits(['update:selected'])
-watch(props, () => {
-  console.log(props.selected)
-})
 </script>
 
 <template>

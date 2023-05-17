@@ -18,22 +18,6 @@
     </div>
     <div class="overflow-auto">
       <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
-      <slot />
     </div>
   </div>
 </template>
