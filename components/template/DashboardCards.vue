@@ -4,17 +4,17 @@ import { UserIcon } from 'lucide-vue-next'
 defineProps({
   patients: {
     type: Number,
-    required: true,
+    required: false,
     default: 15,
   },
   inactivePatients: {
     type: Number,
-    required: true,
+    required: false,
     default: 2,
   },
   Notifications: {
     type: Number,
-    required: true,
+    required: false,
     default: 5,
   },
 })
