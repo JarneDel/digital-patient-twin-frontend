@@ -1,8 +1,29 @@
 <script setup lang="ts">
+// imports
 import SvgHome from '@/components/svg/home.vue'
 import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { UserCircle2, LogOut} from 'lucide-vue-next'
+import { ILink } from '~/interfaces/ILink';
+
+const links: ILink[] = [
+  {
+    text: 'Home',
+    path: '/dokter/[id]',
+    icon: SvgHome
+  },
+  {
+    text: 'Patienten',
+    path: '/dokter/[id]/patienten',
+    icon: SvgPatient
+  },
+  {
+    text: "Meldingen",
+    path: '/dokter/[id]/meldingen',
+    icon: SvgNotification
+  }
+]
+
 </script>
 
 <template>
@@ -22,31 +43,35 @@ import { UserCircle2, LogOut} from 'lucide-vue-next'
       <user-circle-2 class="h-12 w-12 px-2"/>
     </div>
     <div class="w-56 pl-10 pt-6 flex flex-col justify-between bg-primary-600">
-      <div>
-        <div class="flex items-center my-4">
-          <SvgHome class="h-8 w-8 pr-2" />
-          <div class="text-white">Home</div>
-        </div>
-        <div class="flex items-center my-4">
-          <SvgPatient class="h-8 w-8 pr-2" />
-          <div class="text-white">Patienten</div>
-        </div>
-        <div class="flex items-center my-4">
-          <SvgNotification class="h-8 w-8 pr-2" />
-          <div class="text-white">Meldingen</div>
-        </div>
-      </div>
+      <ul>
+        <li v-for="link in links" class="mt-2">
+          <NuxtLink
+            :to="link.path"
+            class="flex items-center"
+          >
+          <span>
+            <component :is="link.icon"></component>
+          </span>
+          <span class="text-white">{{link.text}}</span>
+          </NuxtLink>
+        </li>
+      </ul>
 
       <div>
-        <div class="flex items-center mb-16">
-          <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
-          <div class="text-white">Log out</div>
-        </div>
+        <button type="button">
+          <div class="flex items-center mb-16">
+            <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
+            <div class="text-white">Log out</div>
+          </div>
+        </button>
       </div>
     </div>
     <div class="z-0 overflow-auto bg-white">
       <div>hello</div>
       <slot />
+      <footer class="flex justify-center items-center">
+        <div class="bg-white text-tertiary-500 pb-5 pt-2">MCT 2023</div>
+      </footer>
     </div>
   </div>
 </template>

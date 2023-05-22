@@ -1,9 +1,8 @@
 <template>
   <div>
     <!-- padding for footer height    -->
-    <TemplateNavigation class="pb-[52px]" >
+    <TemplateNavigation>
       <slot />
     </TemplateNavigation>
-    <TemplateFooter />
   </div>
 </template>
