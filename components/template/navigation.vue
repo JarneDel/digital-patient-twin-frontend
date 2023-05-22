@@ -45,7 +45,6 @@ import { UserCircle2, LogOut} from 'lucide-vue-next'
       </div>
     </div>
     <div class="z-0 overflow-auto bg-white">
-      <div>hello</div>
       <slot />
     </div>
   </div>
