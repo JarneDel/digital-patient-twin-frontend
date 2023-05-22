@@ -1,115 +1,15 @@
 <template>
-  <form class="w-full max-w-lg px-2">
-    <div class="-mx-3 mb-6 flex flex-wrap">
-      <div class="mb-6 w-full px-3 md:mb-0 md:w-1/2">
-        <label
-          class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-          for="grid-first-name"
-        >
-          First Name
-        </label>
-        <input
-          class="mb-3 block w-full appearance-none rounded border border-red-500 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:bg-white focus:outline-none"
-          id="grid-first-name"
-          type="text"
-          placeholder="Jane"
-        />
-        <p class="text-xs italic text-red-500">Please fill out this field.</p>
-      </div>
-      <div class="w-full px-3 md:w-1/2">
-        <label
-          class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-          for="grid-last-name"
-        >
-          Last Name
-        </label>
-        <input
-          class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-          id="grid-last-name"
-          type="text"
-          placeholder="Doe"
-        />
-      </div>
-    </div>
-    <div class="-mx-3 mb-6 flex flex-wrap">
-      <div class="w-full px-3">
-        <label
-          class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-          for="grid-password"
-        >
-          Password
-        </label>
-        <input
-          class="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-          id="grid-password"
-          type="password"
-          placeholder="******************"
-        />
-        <p class="text-xs italic text-gray-600">
-          Make it as long and as crazy as you'd like
-        </p>
-      </div>
-    </div>
-    <div class="-mx-3 mb-2 flex flex-wrap">
-      <div class="mb-6 w-full px-3 md:mb-0 md:w-1/3">
-        <label
-          class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-          for="grid-city"
-        >
-          City
-        </label>
-        <input
-          class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-          id="grid-city"
-          type="text"
-          placeholder="Albuquerque"
-        />
-      </div>
-      <div class="mb-6 w-full px-3 md:mb-0 md:w-1/3">
-        <label
-          class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-          for="grid-state"
-        >
-          State
-        </label>
-        <div class="relative">
-          <select
-            class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-            id="grid-state"
-          >
-            <option>New Mexico</option>
-            <option>Missouri</option>
-            <option>Texas</option>
-          </select>
-          <div
-            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-          >
-            <svg
-              class="h-4 w-4 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="mb-6 w-full px-3 md:mb-0 md:w-1/3">
-        <label
-          class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-          for="grid-zip"
-        >
-          Zip
-        </label>
-        <input
-          class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-          id="grid-zip"
-          type="text"
-          placeholder="90210"
-        />
-      </div>
-    </div>
-  </form>
+  <div class="relative">
+    <input
+      type="text"
+      id="name"
+      class="border-1 peer block w-full appearance-none rounded-lg border-gray-300 border-gray-600 bg-gray-100 bg-gray-50 px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:border-primary-500 focus:outline-none focus:ring-0"
+      placeholder=" "
+    />
+    <label
+      for="name"
+      class="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-primary-600 peer-focus:dark:text-primary-500"
+      >Naam</label
+    >
+  </div>
 </template>
