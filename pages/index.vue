@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import Login from '~/components/cards/login.vue'
-import Inputs from '~/components/template/Inputs.vue';
+import Inputs from '~/components/template/Inputs.vue'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -22,13 +22,13 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
+  <Alert></Alert>
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
   ></drop-down-selector>
   <Login></Login>
- <Inputs></Inputs>
- <Alert></Alert>
+  <Inputs></Inputs>
 </template>
 
 <style scoped></style>
