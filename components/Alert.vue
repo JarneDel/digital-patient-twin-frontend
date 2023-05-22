@@ -1,6 +1,31 @@
 <script setup lang="ts">
 import { X } from 'lucide-vue-next'
 import bloodpressure from './svg/bloodpressure.vue'
+
+defineProps({
+  type: {
+    type: Object as PropType<
+      'bloodpressures' | 'oxygen' | 'temperature' | 'heartbeat'
+    >,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  datetime: {
+    type: String,
+    required: true,
+  },
+  value: {
+    type: String,
+    required: true,
+  },
+  // level: {
+  //   type: String,
+  //   required: true,
+  // },
+})
 </script>
 
 <template>
@@ -8,13 +33,37 @@ import bloodpressure from './svg/bloodpressure.vue'
     <div class="flex justify-between rounded-lg bg-white p-5 drop-shadow-2xl">
       <div class="ml-5 flex flex-row">
         <bloodpressure
+          v-if="type === 'bloodpressures'"
           class="h-14 w-14 rounded-md bg-primary-50 p-2 text-primary-300"
         />
         <div class="ml-5">
-          <h1 class="text-md font-semibold capitalize">bloeddruk: 120/80bpm</h1>
+          <h1
+            class="text-md font-semibold capitalize"
+            v-if="type === 'bloodpressures'"
+          >
+            bloeddruk: {{ value }}mmHg
+          </h1>
+          <h1
+            class="text-md font-semibold capitalize"
+            v-else-if="type === 'oxygen'"
+          >
+            zuurstof: {{ value }}%
+          </h1>
+          <h1
+            class="text-md font-semibold capitalize"
+            v-else-if="type === 'temperature'"
+          >
+            temperatuur: {{ value }}°C
+          </h1>
+          <h1
+            class="text-md font-semibold capitalize"
+            v-else="type === 'heartbeat'"
+          >
+            hartslag: {{ value }}bpm
+          </h1>
           <div class="mt-2 flex gap-4">
-            <p class="text-sm font-medium text-gray-500">Joshy Jonkheere</p>
-            <p class="text-sm font-medium text-gray-500">1u geleden</p>
+            <p class="text-sm font-medium text-gray-500">{{ name }}</p>
+            <p class="text-sm font-medium text-gray-500">{{ datetime }}</p>
           </div>
         </div>
       </div>

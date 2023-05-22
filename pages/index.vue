@@ -22,7 +22,12 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
-  <Alert></Alert>
+  <Alert
+    value="120/80"
+    type="bloodpressures"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+  ></Alert>
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
