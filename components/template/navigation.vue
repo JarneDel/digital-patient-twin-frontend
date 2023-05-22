@@ -3,6 +3,7 @@
 import SvgHome from '@/components/svg/home.vue'
 import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
+import SvgNotificationnav from '@/components/svg/notificationnav.vue'
 import { UserCircle2, LogOut} from 'lucide-vue-next'
 import { ILink } from '~/interfaces/ILink';
 
@@ -20,7 +21,7 @@ const links: ILink[] = [
   {
     text: "Meldingen",
     path: '/dokter/[dokterid]/meldingen',
-    icon: SvgNotification
+    icon: SvgNotificationnav
   }
 ]
 
@@ -50,7 +51,7 @@ const links: ILink[] = [
             class="flex items-center"
           >
           <span>
-            <component :is="link.icon" class="fill-black"></component>
+            <component :is="link.icon"></component>
           </span>
           <span class="text-white">{{link.text}}</span>
           </NuxtLink>
