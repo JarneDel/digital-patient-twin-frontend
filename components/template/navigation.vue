@@ -9,17 +9,17 @@ import { ILink } from '~/interfaces/ILink';
 const links: ILink[] = [
   {
     text: 'Home',
-    path: '/dokter/[id]',
+    path: '/dokter/[dokterid]',
     icon: SvgHome
   },
   {
     text: 'Patienten',
-    path: '/dokter/[id]/patienten',
+    path: '/dokter/[dokterid]/patienten',
     icon: SvgPatient
   },
   {
     text: "Meldingen",
-    path: '/dokter/[id]/meldingen',
+    path: '/dokter/[dokterid]/meldingen',
     icon: SvgNotification
   }
 ]
@@ -44,13 +44,13 @@ const links: ILink[] = [
     </div>
     <div class="w-56 pl-10 pt-6 flex flex-col justify-between bg-primary-600">
       <ul>
-        <li v-for="link in links" class="mt-2">
+        <li v-for="link in links" class="mb-10">
           <NuxtLink
             :to="link.path"
             class="flex items-center"
           >
           <span>
-            <component :is="link.icon"></component>
+            <component :is="link.icon" class="fill-black"></component>
           </span>
           <span class="text-white">{{link.text}}</span>
           </NuxtLink>
@@ -66,11 +66,13 @@ const links: ILink[] = [
         </button>
       </div>
     </div>
-    <div class="z-0 overflow-auto bg-white">
-      <slot />
-      <footer class="flex justify-center items-center">
-        <div class="bg-white text-tertiary-500 pb-5 pt-2">MCT 2023</div>
-      </footer>
+    <div class="z-0 overflow-auto bg-white relative">
+      <div class="pb-11">
+        <slot />
+        <footer class="flex justify-center items-center absolute right-[50%]">
+          <div class="bg-white text-tertiary-500 pb-5 pt-2">MCT 2023</div>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
