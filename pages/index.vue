@@ -2,6 +2,7 @@
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import Login from '~/components/cards/login.vue'
 import Inputs from '~/components/template/Inputs.vue';
+import PatientSm from '~/components/template/PatientSm.vue';
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -28,6 +29,7 @@ watch(selected, () => {
   ></drop-down-selector>
   <Login></Login>
  <Inputs></Inputs>
+ <PatientSm />
 </template>
 
 <style scoped></style>
