@@ -28,6 +28,7 @@ watch(selected, () => {
   ></drop-down-selector>
   <Login></Login>
  <Inputs></Inputs>
+ <Alert></Alert>
 </template>
 
 <style scoped></style>
