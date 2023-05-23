@@ -51,7 +51,7 @@ const links: ILink[] = [
             class="flex items-center"
           >
           <span>
-            <component :is="link.icon"></component>
+            <component :is="link.icon" class="fill-amber-800"></component>
           </span>
           <span class="text-white">{{link.text}}</span>
           </NuxtLink>

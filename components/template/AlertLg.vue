@@ -1,11 +1,12 @@
 <script setup>
-import { ArrowUp } from 'lucide-vue-next';
+    import { ArrowUp, LineChart } from 'lucide-vue-next';
+    import Heartrate from '../svg/heartrate.vue';
 </script>
 
 <template>
-    <div class="grid grid-cols-[1fr_1fr_2fr_2fr_1fr_2fr_1fr] grid-rows-1 p-2">
+    <div class="grid grid-cols-[12px_60px_200px_110px_110px_80px_40px] grid-rows-1 p-2">
         <div class="bg-pink-600 w-1"></div>
-        <div> Dit is een icon</div>
+        <Heartrate />
         <div>
             <div>Joshy Jonckheere</div>
             <div class="text-sm text-neutral-100">16:53</div>
@@ -17,7 +18,7 @@ import { ArrowUp } from 'lucide-vue-next';
         <div class="flex flex-col justify-center items-center">
             <div>Hartslag</div>
             <div class="flex items-center">
-                <arrowUp />
+                <ArrowUp />
                 <div class="text-base font-semibold">120 bpm</div>
             </div>
         </div>
@@ -26,7 +27,7 @@ import { ArrowUp } from 'lucide-vue-next';
             <div class="text-sm text-neutral-100">7 minuten</div>
         </div>
         <div>
-            icon
+            <Line-chart/>
         </div>
     </div>
 </template>
