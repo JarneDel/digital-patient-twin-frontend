@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { ArrowUp, LineChart } from 'lucide-vue-next';
     import Heartrate from '../svg/heartrate.vue';
+    import Ademfrequentie from '../svg/ademfrequentie.vue';
     import bloodpressure from '../svg/bloodpressure.vue'
     import temperature from '../svg/temperature.vue'
     import oxygen from '../svg/oxygen.vue'
@@ -8,7 +9,7 @@
     defineProps({
         type: {
             type: Object as PropType<
-            'bloodpressures' | 'temperature' | 'oxygen' | 'heartrate'
+            'bloodpressures' | 'temperature' | 'oxygen' | 'heartrate' | 'breathfrequentie'
             >,
             required: true,
         },
@@ -86,6 +87,14 @@
             :class="{
                 'text-primary-325 bg-primary-250': level === 'danger',
                 'text-other-200 bg-other-50': level === 'warning',
+            }"
+        />
+        <Ademfrequentie
+            v-else-if="type === 'breathfrequentie'"
+            class="w-12 h-12 p-2 rounded-lg self-center"
+            :class="{
+                'fill-primary-325 bg-primary-250': level === 'danger',
+                'fill-other-200 bg-other-50': level === 'warning',
             }"
         />
         <Heartrate
