@@ -27,21 +27,21 @@ watch(selected, () => {
     type="temperature"
     name="Joshy Jonkheere"
     datetime="1u geleden"
-    level="high"
+    level="danger"
   ></Alert>
   <Alert
     value="37"
     type="bloodpressures"
     name="Joshy Jonkheere"
     datetime="1u geleden"
-    level="mild"
+    level="warning"
   ></Alert>
   <Alert
-    value="37"
-    type="bloodpressures"
+    value="95"
+    type="oxygen"
     name="Joshy Jonkheere"
     datetime="1u geleden"
-    level="low"
+    level="good"
   ></Alert>
   <drop-down-selector
     v-model:selected="selected"

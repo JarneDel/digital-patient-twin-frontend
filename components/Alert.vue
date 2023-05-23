@@ -2,6 +2,7 @@
 import { X } from 'lucide-vue-next'
 import bloodpressure from './svg/bloodpressure.vue'
 import temperature from './svg/temperature.vue'
+import oxygen from './svg/oxygen.vue'
 import { del } from 'nuxt/dist/app/compat/capi'
 defineProps({
   type: {
@@ -37,18 +38,27 @@ defineProps({
           v-if="type === 'bloodpressures'"
           class="h-14 w-14 rounded-md p-2"
           :class="{
-            'bg-primary-50 text-primary-500': level === 'high',
-            'bg-orange-50 text-orange-500': level === 'mild',
-            'bg-green-50 text-green-500': level === 'low',
+            'bg-primary-50 text-primary-500': level === 'danger',
+            'bg-orange-50 text-orange-500': level === 'warning',
+            'bg-green-50 text-green-500': level === 'good',
           }"
         />
         <temperature
           v-else-if="type === 'temperature'"
           class="h-14 w-14 rounded-md p-2"
           :class="{
-            'bg-primary-50 text-primary-500': level === 'high',
-            'bg-orange-50 text-orange-500': level === 'mild',
-            'bg-green-50 text-green-500': level === 'low',
+            'bg-primary-50 text-primary-500': level === 'danger',
+            'bg-orange-50 text-orange-500': level === 'warning',
+            'bg-green-50 text-green-500': level === 'good',
+          }"
+        />
+        <oxygen
+          v-else-if="type === 'oxygen'"
+          class="h-14 w-14 rounded-md p-2"
+          :class="{
+            'bg-primary-50 text-primary-500': level === 'danger',
+            'bg-orange-50 text-orange-500': level === 'warning',
+            'bg-green-50 text-green-500': level === 'good',
           }"
         />
 
