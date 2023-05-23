@@ -3,6 +3,7 @@ import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import Login from '~/components/cards/login.vue'
 import Inputs from '~/components/template/Inputs.vue';
 import PatientSm from '~/components/template/PatientSm.vue';
+import AlertLg from '~/components/template/AlertLg.vue'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -23,13 +24,45 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
+  <Alert
+    value="37"
+    type="temperature"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="danger"
+  ></Alert>
+  <Alert
+    value="37"
+    type="bloodpressures"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="warning"
+  ></Alert>
+  <Alert
+    value="95"
+    type="oxygen"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="good"
+  ></Alert>
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
   ></drop-down-selector>
-  <Login></Login>
- <Inputs></Inputs>
- <PatientSm />
+
+  <AlertLg
+    type="heartrate"
+    name="Joshy Jonkheere"
+    birthdate="01/01/2000"
+    datetime="1u geleden"
+    level="warning"
+    value="15"
+  />
+
+  <!-- <Login></Login> -->
+ <!-- <Inputs></Inputs> -->
+ <!-- <PatientSm /> -->
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
