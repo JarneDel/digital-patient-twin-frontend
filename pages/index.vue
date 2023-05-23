@@ -49,7 +49,20 @@ watch(selected, () => {
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
   ></drop-down-selector>
-  <AlertLg />
+  <AlertLg
+    type="bloodpressures"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="warning"
+    value="15"
+  />
+  <AlertLg
+    type="temperature"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="danger"
+    value="15"
+  />
 
   <!-- <Login></Login> -->
  <!-- <Inputs></Inputs> -->
