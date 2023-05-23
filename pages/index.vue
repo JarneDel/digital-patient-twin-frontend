@@ -24,6 +24,27 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
+  <Alert
+    value="37"
+    type="temperature"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="danger"
+  ></Alert>
+  <Alert
+    value="37"
+    type="bloodpressures"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="warning"
+  ></Alert>
+  <Alert
+    value="95"
+    type="oxygen"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="good"
+  ></Alert>
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
@@ -35,4 +56,5 @@ watch(selected, () => {
  <!-- <PatientSm /> -->
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
