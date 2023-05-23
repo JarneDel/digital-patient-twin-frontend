@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import fitbit from '../svg/fitbit.vue'
+
+const dummydata = [
+  {
+    id: '#101',
+  },
+  {
+    id: '#402',
+  },
+  {
+    id: '#888',
+  },
+]
+</script>
+
 <template>
   <!-- floating label  -->
   <!-- <div class="relative">
@@ -14,22 +30,57 @@
     >
   </div> -->
 
-  <form>
-    <label @submit="" for="firstname">Voornaam</label>
+  <form class="container flex flex-col">
+    <label @submit.prevent="" for="firstname">Voornaam</label>
     <input
       type="text"
       name="firstname"
       id="firstname"
-      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0"
+      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
     />
     <label for="birthdate">geboortedatum</label>
     <input
       type="date"
       name="birthdate"
       id="birthdate"
-      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0"
+      class="ocus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
     />
+    <label for="email">email</label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      class="ocus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    />
+    <label for="street">straat</label>
+    <textarea
+      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      name="street"
+      id="street"
+      cols="30"
+      rows="5"
+    ></textarea>
+    <div class="mt-5 flex items-center">
+      <label
+        for="device"
+      >
+        <fitbit />
+      </label>
+
+      <select
+        name="device"
+        id="device"
+        class="focus:border-tertiary-600 peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      >
+        <option
+          v-for="d of dummydata"
+          :key="d.id"
+          :value="d.id"
+          class="rounded-lg"
+        >
+          {{ d.id }}
+        </option>
+      </select>
+    </div>
   </form>
 </template>
-
-<script setup lang="ts"></script>
