@@ -61,9 +61,7 @@ const dummydata = [
       rows="5"
     ></textarea>
     <div class="mt-5 flex items-center">
-      <label
-        for="device"
-      >
+      <label for="device">
         <fitbit />
       </label>
 
@@ -83,4 +81,5 @@ const dummydata = [
       </select>
     </div>
   </form>
+  
 </template>
