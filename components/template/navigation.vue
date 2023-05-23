@@ -69,7 +69,7 @@ const links: ILink[] = [
     <div class="z-0 overflow-auto bg-white relative">
       <div class="pb-11">
         <slot />
-        <footer class="flex justify-center items-center absolute right-[50%]">
+        <footer class="flex justify-center items-center absolute right-[50%] mt-11">
           <div class="bg-white text-tertiary-500 pb-5 pt-2">MCT 2023</div>
         </footer>
       </div>
