@@ -55,8 +55,9 @@ watch(selected, () => {
   <!--  ALERT -->
 
   <AlertLg
-    type="bloodpressures"
+    type="heartrate"
     name="Joshy Jonkheere"
+    birthdate="01/01/2000"
     datetime="1u geleden"
     level="warning"
     value="15"
@@ -64,6 +65,7 @@ watch(selected, () => {
   <AlertLg
     type="temperature"
     name="Joshy Jonkheere"
+    birthdate="01/01/2000"
     datetime="1u geleden"
     level="danger"
     value="15"
@@ -71,13 +73,15 @@ watch(selected, () => {
   <AlertLg
     type="oxygen"
     name="Joshy Jonkheere"
+    birthdate="01/01/2000"
     datetime="1u geleden"
     level="warning"
     value="15"
   />
   <AlertLg
     type="heartrate"
-    name="Joshy Jonkheere"
+    name="Alessia Vinnik"
+    birthdate="01/07/2003"
     datetime="1u geleden"
     level="danger"
     value="15"

@@ -24,11 +24,35 @@
             type: String,
             required: true,
         },
+        birthdate: {
+            type: String,
+            required: true,
+        },
         level: {
             type: String,
             required: true,
         },
     })
+
+    function calculateAge(birthDate:string) {
+        const birthDateParts = birthDate.split("/");
+        const birthDay = parseInt(birthDateParts[0], 10);
+        const birthMonth = parseInt(birthDateParts[1], 10) - 1;
+        const birthYear = parseInt(birthDateParts[2], 10);
+
+        const currentDate = new Date();
+        const currentDay = currentDate.getDate();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+
+        let age = currentYear - birthYear;
+
+        if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)) {
+            age--;
+        }
+
+        return age;
+    }
 
 </script>
 
@@ -68,21 +92,17 @@
             v-else-if="type === 'heartrate'"
             class="w-12 h-12 p-2 rounded-lg self-center"
             :class="{
-                'fill-primary-325 bg-primary-250': level === 'warning',
-                'fill-other-200 bg-other-50': level === 'danger',
-                // 'fill-primary-325 bg-primary-250': level === 'danger',
-                // 'fill-other-200 bg-other-50': level === 'warning',
+                'fill-primary-325 bg-primary-250': level === 'danger',
+                'fill-other-200 bg-other-50': level === 'warning',
             }"
         />
-        <!-- <Heartrate class="fill-primary-325 bg-primary-250 w-12 h-12 p-2 rounded-lg self-center" /> -->
-        <!-- heartrate en streepje moeten van kleur kunnen veranderen dynamisch -->
         <div class="self-center">
-            <div>Joshy Jonckheere</div>
+            <div>{{ name }}</div>
             <div class="text-sm text-neutral-100">16:53</div>
         </div>
         <div class="self-center">
-            <div>22/05/2003</div>
-            <div class="text-sm text-neutral-100">20 jaar</div>
+            <div>{{ birthdate }}</div>
+            <div class="text-sm text-neutral-100">{{ calculateAge(birthdate) }} jaar</div>
         </div>
         <div class="flex flex-col items-center pr-10">
             <div>Hartslag</div>
@@ -104,3 +124,4 @@
 
 
 </template>
+
