@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { X } from 'lucide-vue-next'
 import bloodpressure from './svg/bloodpressure.vue'
-
+import temperature from './svg/temperature.vue'
+import { del } from 'nuxt/dist/app/compat/capi'
 defineProps({
   type: {
     type: Object as PropType<
@@ -21,10 +22,10 @@ defineProps({
     type: String,
     required: true,
   },
-  // level: {
-  //   type: String,
-  //   required: true,
-  // },
+  level: {
+    type: String,
+    required: true,
+  },
 })
 </script>
 
@@ -34,8 +35,23 @@ defineProps({
       <div class="ml-5 flex flex-row">
         <bloodpressure
           v-if="type === 'bloodpressures'"
-          class="h-14 w-14 rounded-md bg-primary-50 p-2 text-primary-300"
+          class="h-14 w-14 rounded-md p-2"
+          :class="{
+            'bg-primary-50 text-primary-500': level === 'high',
+            'bg-orange-50 text-orange-500': level === 'mild',
+            'bg-green-50 text-green-500': level === 'low',
+          }"
         />
+        <temperature
+          v-else-if="type === 'temperature'"
+          class="h-14 w-14 rounded-md p-2"
+          :class="{
+            'bg-primary-50 text-primary-500': level === 'high',
+            'bg-orange-50 text-orange-500': level === 'mild',
+            'bg-green-50 text-green-500': level === 'low',
+          }"
+        />
+
         <div class="ml-5">
           <h1
             class="text-md font-semibold capitalize"

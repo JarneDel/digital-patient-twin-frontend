@@ -23,10 +23,25 @@ watch(selected, () => {
   <!--    v-model:selected="selected"-->
   <!--  />-->
   <Alert
-    value="120/80"
+    value="37"
+    type="temperature"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="high"
+  ></Alert>
+  <Alert
+    value="37"
     type="bloodpressures"
     name="Joshy Jonkheere"
     datetime="1u geleden"
+    level="mild"
+  ></Alert>
+  <Alert
+    value="37"
+    type="bloodpressures"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="low"
   ></Alert>
   <drop-down-selector
     v-model:selected="selected"
@@ -36,4 +51,5 @@ watch(selected, () => {
   <Inputs></Inputs>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
