@@ -49,6 +49,11 @@ watch(selected, () => {
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
   ></drop-down-selector>
+
+
+
+  <!--  ALERT -->
+
   <AlertLg
     type="bloodpressures"
     name="Joshy Jonkheere"
@@ -58,6 +63,20 @@ watch(selected, () => {
   />
   <AlertLg
     type="temperature"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="danger"
+    value="15"
+  />
+  <AlertLg
+    type="oxygen"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="warning"
+    value="15"
+  />
+  <AlertLg
+    type="heartrate"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="danger"

@@ -40,7 +40,41 @@
         }"
         >
         </div>
-        <Heartrate class="fill-primary-325 bg-primary-250 w-12 h-12 p-2 rounded-lg self-center" />
+        <bloodpressure 
+            v-if="type === 'bloodpressures'"
+            class="w-12 h-12 p-2 rounded-lg self-center"
+            :class="{
+                'fill-primary-325 bg-primary-250': level === 'danger',
+                'fill-other-200 bg-other-50': level === 'warning',
+            }"
+        />
+        <temperature
+            v-else-if="type === 'temperature'"
+            class="w-12 h-12 p-2 rounded-lg self-center"
+            :class="{
+                'bg-primary-250 text-primary-325': level === 'danger',
+                'bg-other-50 text-tertiary-200': level === 'warning',
+            }"
+        />
+        <oxygen
+            v-else-if="type === 'oxygen'"
+            class="w-12 h-12 p-2 rounded-lg self-center"
+            :class="{
+                'text-primary-325 bg-primary-250': level === 'danger',
+                'text-other-200 bg-other-50': level === 'warning',
+            }"
+        />
+        <Heartrate
+            v-else-if="type === 'heartrate'"
+            class="w-12 h-12 p-2 rounded-lg self-center"
+            :class="{
+                'fill-primary-325 bg-primary-250': level === 'warning',
+                'fill-other-200 bg-other-50': level === 'danger',
+                // 'fill-primary-325 bg-primary-250': level === 'danger',
+                // 'fill-other-200 bg-other-50': level === 'warning',
+            }"
+        />
+        <!-- <Heartrate class="fill-primary-325 bg-primary-250 w-12 h-12 p-2 rounded-lg self-center" /> -->
         <!-- heartrate en streepje moeten van kleur kunnen veranderen dynamisch -->
         <div class="self-center">
             <div>Joshy Jonckheere</div>
