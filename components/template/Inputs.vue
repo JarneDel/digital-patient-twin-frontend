@@ -1,5 +1,6 @@
 <template>
-  <div class="relative">
+  <!-- floating label  -->
+  <!-- <div class="relative">
     <input
       type="text"
       id="name"
@@ -11,5 +12,24 @@
       class="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-primary-600 peer-focus:dark:text-primary-500"
       >Naam</label
     >
-  </div>
+  </div> -->
+
+  <form>
+    <label @submit="" for="firstname">Voornaam</label>
+    <input
+      type="text"
+      name="firstname"
+      id="firstname"
+      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0"
+    />
+    <label for="birthdate">geboortedatum</label>
+    <input
+      type="date"
+      name="birthdate"
+      id="birthdate"
+      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0"
+    />
+  </form>
 </template>
+
+<script setup lang="ts"></script>
