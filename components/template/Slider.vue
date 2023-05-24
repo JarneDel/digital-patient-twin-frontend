@@ -1,10 +1,12 @@
 <script setup lang="ts">
 
     import Slider from '@vueform/slider'
+    import { ref } from "vue";
 
     const value = ref([30, 60])
 
     defineExpose({ value })
+
 
 </script>
 
@@ -12,17 +14,10 @@
     <div class="m-4 w-52">
         <Slider v-model=value :tooltips="false" :min="0" :max="100" class='slider-style' />
     </div>
-
-
-    <!-- <div class="m-4 w-52">
-        <Slider v-model="value_1" :tooltips="false" :min="0" :max="100" class='slider-style' />
-    </div> -->
-
-
-
-    <!-- <div class="m-4 w-52">
-        <Slider v-model="value_2" :tooltips="false" :min="0" :max="100" class='slider-style'/>
-    </div> -->
+    <div>
+        <input v-model=value[0] type="text" />
+        <input v-model=value[1] type="text" />
+    </div>
 </template>
     
   
