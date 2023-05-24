@@ -45,6 +45,7 @@ watch(selected, () => {
     datetime="1u geleden"
     level="good"
   ></Alert>
+
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
@@ -64,5 +65,4 @@ watch(selected, () => {
  <!-- <PatientSm /> -->
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

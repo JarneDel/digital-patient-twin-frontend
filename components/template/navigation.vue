@@ -7,6 +7,7 @@ import { UserCircle2, LogOut} from 'lucide-vue-next'
 import { ILink } from '~/interfaces/ILink';
 
 const links: ILink[] = [
+  
   {
     text: 'Home',
     path: '/dokter/[dokterid]',
