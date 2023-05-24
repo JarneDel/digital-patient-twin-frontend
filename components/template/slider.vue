@@ -16,5 +16,15 @@
       <span class="text-sm text-gray-600">0</span>
       <span class="text-sm text-gray-600">1000</span>
     </div> -->
+    <h1>test</h1>
+    <Input
+      class="range pr-6 accent-tertiary-500"
+      type="range"
+      value="0"
+      min="0"
+      max="1000"
+      onChange="rangeSlide(this.value)"
+      onmousemove="rangeSlide(this.value)"
+    ></Input>
   </div>
 </template>
