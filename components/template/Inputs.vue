@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import fitbit from '../svg/fitbit.vue'
+import { ref, watch } from 'vue'
 
 const dummydata = [
   {
@@ -12,6 +13,15 @@ const dummydata = [
     id: '#888',
   },
 ]
+
+const nameError = ref('')
+const emailError = ref('')
+
+function validateForms(event:Event){
+  const target = event.target as HTMLInputElement;
+  const value = target.value.trim()
+}
+
 </script>
 
 <template>
@@ -33,11 +43,13 @@ const dummydata = [
   <form class="container flex flex-col">
     <label @submit.prevent="" for="firstname">Voornaam</label>
     <input
+      required
       type="text"
       name="firstname"
       id="firstname"
       class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
     />
+    <div class="mt-1 text-primary-500" id="name-error">{{ nameError }}</div>
     <label for="birthdate">geboortedatum</label>
     <input
       type="date"
@@ -47,13 +59,15 @@ const dummydata = [
     />
     <label for="email">email</label>
     <input
+      required
       type="email"
       name="email"
       id="email"
-      class="ocus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
     />
     <label for="street">straat</label>
     <textarea
+      required
       class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       name="street"
       id="street"
@@ -66,6 +80,7 @@ const dummydata = [
       </label>
 
       <select
+        required
         name="device"
         id="device"
         class="focus:border-tertiary-600 peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
@@ -80,6 +95,18 @@ const dummydata = [
         </option>
       </select>
     </div>
+    <label for="device">telefoonnummer</label>
+    <input
+      required
+      type="number"
+      name=""
+      id=""
+      class="focus:border-tertiary-600 peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    />
+    <button
+      class="duration-400 mt-5 w-10 min-w-max rounded-lg bg-tertiary-500 p-5 transition-all hover:cursor-pointer hover:bg-tertiary-300"
+    >
+      Save
+    </button>
   </form>
-  
 </template>

@@ -3,7 +3,6 @@ import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import Login from '~/components/cards/login.vue'
 import Inputs from '~/components/template/Inputs.vue'
 import PatientSm from '~/components/template/PatientSm.vue'
-import slider from '~/components/template/slider.vue'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -31,7 +30,7 @@ watch(selected, () => {
     datetime="1u geleden"
     level="danger"
   ></Alert>
-  <Alert
+  <!-- <Alert
     value="37"
     type="bloodpressures"
     name="Joshy Jonkheere"
@@ -44,14 +43,14 @@ watch(selected, () => {
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert>
-  <slider></slider>
+  ></Alert> -->
+
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
   ></drop-down-selector>
   <Login></Login>
-  <Inputs></Inputs>
+  <Inputs class="p-5"></Inputs>
   <PatientSm />
 </template>
 
