@@ -1,18 +1,38 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import fitbit from '../svg/fitbit.vue'
+
+const dummydata = [
+  {
+    id: '#101',
+  },
+  {
+    id: '#402',
+  },
+  {
+    id: '#888',
+  },
+]
 
 const firstName = ref('')
-const email = ref('')
 const firstNameError = ref(false)
-const emailError = ref(false)
 const firstNameErrorMessage = ref('')
+
+const email = ref('')
+const emailError = ref(false)
 const emailErrorMessage = ref('')
+
+const selectedDate = ref('')
+const dateError = ref(false)
+const dateErrorMessage = ref('')
 
 const validateForm = () => {
   firstNameError.value = false
-  emailError.value = false
   firstNameErrorMessage.value = ''
+  emailError.value = false
   emailErrorMessage.value = ''
+  dateError.value = false
+  dateErrorMessage.value = ''
 
   if (!firstName.value) {
     firstNameError.value = true
@@ -31,10 +51,18 @@ const validateForm = () => {
     emailErrorMessage.value =
       'Voer een geldig email adres in. het moet een @ en een domein (bv: hotmail) bevatten.'
   }
+
+  if (!selectedDate.value) {
+    dateError.value = true
+    dateErrorMessage.value = 'Voer uw geboortedatum in.'
+  } else {
+    dateError.value = false
+    dateErrorMessage.value = ''
+  }
 }
 
 const validateEmail = (email: string): boolean => {
-  const emailValidation = /^[^\s@]+@(hotmail|gmail|yahoo)\.[^\s@]+$/
+  const emailValidation = /^[^\s@]+@(hotmail|gmail|yahoo|)\.[^\s@]+$/
   return emailValidation.test(email)
 }
 
@@ -55,6 +83,11 @@ const clearFirstNameError = () => {
 const clearEmailError = () => {
   emailError.value = false
   emailErrorMessage.value = ''
+}
+
+const clearDateError = () => {
+  dateError.value = false
+  dateErrorMessage.value = ''
 }
 </script>
 
@@ -80,28 +113,53 @@ const clearEmailError = () => {
       <input
         id="email"
         v-model="email"
-        :class="{ 'border-red-500': emailError }"
+        :class="{ 'border-red-500': dateError }"
         class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
         @input="clearEmailError"
       />
-      <span v-if="emailError" class="text-red-500">{{
+      <span v-if="emailErrorMessage" class="text-red-500">{{
         emailErrorMessage
       }}</span>
     </div>
+    <!-- geboortedatum -->
     <div class="mb-4">
       <label for="birthdate" class="mb-2 block">geboortedatum</label>
       <input
         id="birthdate"
-        v-model="email"
-        :class="{ 'border-red-500': emailError }"
+        input
+        type="date"
+        v-model="selectedDate"
+        :class="{ 'border-red-500': dateError }"
         class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-        @input="clearEmailError"
+        @input="clearDateError"
       />
-      <span v-if="emailError" class="text-red-500">{{
-        emailErrorMessage
+      <span v-if="dateErrorMessage" class="text-red-500">{{
+        dateErrorMessage
       }}</span>
     </div>
+    <!-- select device id  -->
+    <div class="mt-5 flex items-center">
+      <label for="device">
+        <fitbit />
+      </label>
 
+      <select
+        @input="validateForm"
+        required
+        name="device"
+        id="device"
+        class="focus:border-tertiary-600 peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      >
+        <option
+          v-for="d of dummydata"
+          :key="d.id"
+          :value="d.id"
+          class="rounded-lg"
+        >
+          {{ d.id }}
+        </option>
+      </select>
+    </div>
     <!-- test pressable -->
     <button
       type="submit"
