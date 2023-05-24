@@ -30,7 +30,7 @@ watch(selected, () => {
     datetime="1u geleden"
     level="danger"
   ></Alert>
-  <!-- <Alert
+  <Alert
     value="37"
     type="bloodpressures"
     name="Joshy Jonkheere"
@@ -43,7 +43,7 @@ watch(selected, () => {
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert> -->
+  ></Alert>
 
   <drop-down-selector
     v-model:selected="selected"

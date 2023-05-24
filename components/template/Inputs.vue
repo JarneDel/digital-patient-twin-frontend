@@ -17,10 +17,8 @@ const dummydata = [
 const nameError = ref('')
 const emailError = ref('')
 
-function validateForms(event:Event){
-  const target = event.target as HTMLInputElement;
-  const value = target.value.trim()
-}
+ 
+
 
 </script>
 
@@ -40,10 +38,10 @@ function validateForms(event:Event){
     >
   </div> -->
 
-  <form class="container flex flex-col">
-    <label @submit.prevent="" for="firstname">Voornaam</label>
+  <form class="container flex flex-col" @submit.prevent="handleSubmit">
+    <label for="firstname">Voornaam</label>
     <input
-      required
+      @input="validateForm"
       type="text"
       name="firstname"
       id="firstname"
@@ -52,6 +50,7 @@ function validateForms(event:Event){
     <div class="mt-1 text-primary-500" id="name-error">{{ nameError }}</div>
     <label for="birthdate">geboortedatum</label>
     <input
+      @input="validateForm"
       type="date"
       name="birthdate"
       id="birthdate"
@@ -59,7 +58,7 @@ function validateForms(event:Event){
     />
     <label for="email">email</label>
     <input
-      required
+      @input="validateForm"
       type="email"
       name="email"
       id="email"
@@ -67,7 +66,6 @@ function validateForms(event:Event){
     />
     <label for="street">straat</label>
     <textarea
-      required
       class="focus:border-tertiary-600 peer appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       name="street"
       id="street"
@@ -80,7 +78,7 @@ function validateForms(event:Event){
       </label>
 
       <select
-        required
+        @input="validateForm"
         name="device"
         id="device"
         class="focus:border-tertiary-600 peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
