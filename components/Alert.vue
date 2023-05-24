@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { X } from 'lucide-vue-next'
-import bloodpressure from './svg/bloodpressure.vue'
-import temperature from './svg/temperature.vue'
-import oxygen from './svg/oxygen.vue'
-import { del } from 'nuxt/dist/app/compat/capi'
-defineProps({
+import { LucideX } from 'lucide-vue-next'
+import { AlertType } from '~/interfaces/AlertType'
+
+const props = defineProps({
   type: {
-    type: Object as PropType<
-      'bloodpressures' | 'oxygen' | 'temperature' | 'heartbeat'
-    >,
+    type: String as PropType<AlertType>,
     required: true,
   },
   name: {
@@ -28,14 +24,23 @@ defineProps({
     required: true,
   },
 })
+
+const unit = computed(() => {
+  if (props.type === AlertType.BloodPressure) return 'mmHg'
+  if (props.type === AlertType.temperature) return '°C'
+  if (props.type === AlertType.oxygen) return '%'
+  return ''
+})
+
+
 </script>
 
 <template>
   <div class="bg-white p-5">
     <div class="flex justify-between rounded-lg bg-white p-5 drop-shadow-2xl">
       <div class="ml-5 flex flex-row">
-        <bloodpressure
-          v-if="type === 'bloodpressures'"
+        <svg-bloodpressure
+          v-if="type === AlertType.BloodPressure"
           class="h-14 w-14 rounded-md p-2"
           :class="{
             'bg-primary-50 text-primary-500': level === 'danger',
@@ -43,8 +48,8 @@ defineProps({
             'bg-green-50 text-green-500': level === 'good',
           }"
         />
-        <temperature
-          v-else-if="type === 'temperature'"
+        <svg-temperature
+          v-else-if="type === AlertType.temperature"
           class="h-14 w-14 rounded-md p-2"
           :class="{
             'bg-primary-50 text-primary-500': level === 'danger',
@@ -52,8 +57,26 @@ defineProps({
             'bg-green-50 text-green-500': level === 'good',
           }"
         />
-        <oxygen
-          v-else-if="type === 'oxygen'"
+        <svg-oxygen
+          v-else-if="type === AlertType.oxygen"
+          class="h-14 w-14 rounded-md p-2"
+          :class="{
+            'bg-primary-50 text-primary-500': level === 'danger',
+            'bg-orange-50 text-orange-500': level === 'warning',
+            'bg-green-50 text-green-500': level === 'good',
+          }"
+        />
+        <svg-heartrate
+          v-else-if ="type === AlertType.heartRate"
+          class="h-14 w-14 rounded-md p-2"
+          :class="{
+            'bg-primary-50 text-primary-500': level === 'danger',
+            'bg-orange-50 text-orange-500': level === 'warning',
+            'bg-green-50 text-green-500': level === 'good',
+          }"
+        />
+        <svg-ademfrequentie
+          v-else-if ="type === AlertType.breathingRate"
           class="h-14 w-14 rounded-md p-2"
           :class="{
             'bg-primary-50 text-primary-500': level === 'danger',
@@ -65,27 +88,8 @@ defineProps({
         <div class="ml-5">
           <h1
             class="text-md font-semibold capitalize"
-            v-if="type === 'bloodpressures'"
           >
-            bloeddruk: {{ value }}mmHg
-          </h1>
-          <h1
-            class="text-md font-semibold capitalize"
-            v-else-if="type === 'oxygen'"
-          >
-            zuurstof: {{ value }}%
-          </h1>
-          <h1
-            class="text-md font-semibold capitalize"
-            v-else-if="type === 'temperature'"
-          >
-            temperatuur: {{ value }}°C
-          </h1>
-          <h1
-            class="text-md font-semibold capitalize"
-            v-else="type === 'heartbeat'"
-          >
-            hartslag: {{ value }}bpm
+            {{type.toString()}}: {{ value }} {{ unit }}
           </h1>
           <div class="mt-2 flex gap-4">
             <p class="text-sm font-medium text-gray-500">{{ name }}</p>
@@ -93,7 +97,7 @@ defineProps({
           </div>
         </div>
       </div>
-      <X :size="28" class="ml-auto text-gray-500 hover:cursor-pointer" />
+      <LucideX :size="28" class="ml-auto text-gray-500 hover:cursor-pointer" />
     </div>
   </div>
 </template>
