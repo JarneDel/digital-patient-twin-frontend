@@ -4,6 +4,7 @@ import Login from '~/components/cards/login.vue'
 import Inputs from '~/components/template/Inputs.vue';
 import PatientSm from '~/components/template/PatientSm.vue';
 import AlertLg from '~/components/template/AlertLg.vue'
+import Slider from '~/components/template/Slider.vue'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -58,6 +59,8 @@ watch(selected, () => {
     level="warning"
     value="15"
   />
+
+  <Slider />
 
   <!-- <Login></Login> -->
  <!-- <Inputs></Inputs> -->
