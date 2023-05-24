@@ -1,36 +1,37 @@
-<script>
+<script setup lang="ts">
+
     import Slider from '@vueform/slider'
 
-    export default {
-        components: {
-            Slider,
-        },
-        data() {
-            return {
-                value_1: [20, 40],
-                value_2: 20
-            }
-        }
-    }
+    const value = ref([30, 60])
+
+    defineExpose({ value })
+
 </script>
 
 <template>
-    <div class="mb-4">
-        <Slider v-model="value_1" :tooltips="false" :min="0" :max="100" class='slider-pink' />
+    <div class="m-4 w-52">
+        <Slider v-model=value :tooltips="false" :min="0" :max="100" class='slider-style' />
     </div>
-    <div class="mt-4">
-        <Slider v-model="value_2" :tooltips="false" :min="0" :max="100" class='slider-pink'></Slider>
-    </div>
+
+
+    <!-- <div class="m-4 w-52">
+        <Slider v-model="value_1" :tooltips="false" :min="0" :max="100" class='slider-style' />
+    </div> -->
+
+
+
+    <!-- <div class="m-4 w-52">
+        <Slider v-model="value_2" :tooltips="false" :min="0" :max="100" class='slider-style'/>
+    </div> -->
 </template>
     
   
 <style src="@vueform/slider/themes/default.css"></style>
 
 <style scoped>
-  .slider-pink{
-    --slider-connect-bg: #ff69b4;
-    --slider-tooltip-bg: #ff69b4;
-    --slider-handle-ring-color: #ff69b430;
+  .slider-style{
+    --slider-connect-bg: #AD9FCA;
+    --slider-handle-ring-color: #AD9FCA30;
+    --slider-handle-bg: #927FB8;
   }
-
 </style>
