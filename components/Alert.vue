@@ -6,7 +6,7 @@ import oxygen from './svg/oxygen.vue'
 import { del } from 'nuxt/dist/app/compat/capi'
 defineProps({
   type: {
-    type: Object as PropType<
+    type: String as PropType<
       'bloodpressures' | 'oxygen' | 'temperature' | 'heartbeat'
     >,
     required: true,
