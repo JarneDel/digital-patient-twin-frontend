@@ -62,7 +62,7 @@ watch(selected, () => {
     value="15"
   />
 
-  <Slider type="oxygen" :min=9 :max=100></Slider>
+  <Slider type="oxygen" :min=9 :max=100 />
 
   <!-- <Login></Login> -->
  <!-- <Inputs></Inputs> -->

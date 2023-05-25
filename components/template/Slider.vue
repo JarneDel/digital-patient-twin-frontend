@@ -1,7 +1,5 @@
 <script setup lang="ts">
-    import { m } from '@unhead/vue/dist/createHead-26c9c4af';
-import { def } from '@vue/shared';
-import Slider from '@vueform/slider'
+    import Slider from '@vueform/slider'
     import { ref } from "vue";
 
     const value = ref([30, 60])
@@ -35,18 +33,17 @@ import Slider from '@vueform/slider'
     <div>
         <div class="mx-4">{{ type }}</div>
         <div class="w-52 flex justify-between m-4">
-            <input v-model=value[0] type="text" class="h-10 w-10 text-sm pl-2 border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
-            <input v-model=value[1] type="text" class="h-10 w-10 text-sm pl-2 border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
+            <input v-model=value[0] type="text" class="h-10 w-11 text-sm pl-[7px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
+            <input v-model=value[1] type="text" class="h-10 w-11 text-sm pl-[7px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
         </div>
         <div class="m-4 w-52">
             <Slider v-model=value :tooltips="false" :min=min :max=max class='slider-style' />
-            <!-- <Slider v-model=value :tooltips="false" :min={min} :max={max} class='slider-style' /> -->
         </div>
     </div>
 
     <!-- <div>
         <div class="w-52 flex justify-between m-4">
-            <input v-model=value_1 type="text" class="h-10 w-10 text-sm pl-2 border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
+            <input v-model=value_1 type="text" class="h-10 w-11 text-sm pl-[7px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
         </div>
         <div class="m-4 w-52">
             <Slider v-model=value_1 :tooltips="false" :min="0" :max="100" class='slider-style' />
