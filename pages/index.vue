@@ -70,6 +70,7 @@ watch(selected, () => {
   <FormsTextInput></FormsTextInput>
   <FormsSelectDevice></FormsSelectDevice>
   <FormsEmailInput></FormsEmailInput>
+  <FormsBirthDateInput></FormsBirthDateInput>
 
   <!--  <drop-down-selector-->
   <!--    v-model:selected='selected'-->

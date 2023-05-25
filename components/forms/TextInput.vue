@@ -1,17 +1,15 @@
 <template>
-  <form class="mx-5 w-64">
-    <!-- voornaam -->
-    <label for="firstname" class="mb-2 block">Voornaam</label>
-    <input
-      id="firstname"
-      v-model="firstName"
-      :class="{ 'border-red-500': isFirstNameInvalid }"
-      class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-    />
-    <span v-if="isFirstNameInvalid" class="text-red-500">
-      {{ firstNameErrorMessage }}
-    </span>
-  </form>
+  <!-- voornaam -->
+  <label for="firstname" class="mb-2 block">Voornaam</label>
+  <input
+    id="firstname"
+    v-model="firstName"
+    :class="{ 'border-red-500': isFirstNameInvalid }"
+    class="focus:border-tertiary-600 peer w-64 appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+  />
+  <span v-if="isFirstNameInvalid" class="text-red-500">
+    {{ firstNameErrorMessage }}
+  </span>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
