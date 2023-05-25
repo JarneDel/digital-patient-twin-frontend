@@ -27,7 +27,7 @@ watch(selected, () => {
   <!--  />-->
   <goback link="Ga terug"></goback>
   <pressables-switch></pressables-switch>
-  <popup-deletePatient name="Joshy"/>
+  <popup-deletePatient />
   <Alert
     value="37"
     :type="AlertType.temperature"
