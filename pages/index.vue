@@ -41,13 +41,13 @@ watch(selected, () => {
     datetime="1u geleden"
     level="warning"
   ></Alert>
-  <Alert
+  <!-- <Alert
     value="95"
     type="oxygen"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert>
+  ></Alert> -->
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
@@ -62,7 +62,7 @@ watch(selected, () => {
     value="15"
   />
 
-  <Slider />
+  <Slider type="oxygen" :min=9 :max=100></Slider>
 
   <!-- <Login></Login> -->
  <!-- <Inputs></Inputs> -->
