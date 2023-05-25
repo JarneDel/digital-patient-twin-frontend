@@ -1,15 +1,14 @@
 <script setup lang="ts">
     import Slider from '@vueform/slider'
     import { ref } from "vue";
+    import { AlertType } from '~/interfaces/AlertType'
 
     const value = ref([30, 60])
     const value_1 = ref(10)
 
     defineProps({
         type: {
-            type: Object as PropType<
-            'bloodpressures' | 'temperature' | 'oxygen' | 'heartrate' | 'breathfrequentie'
-            >,
+            type: String as PropType<AlertType>,
             required: true,
         },
         min: {
@@ -30,14 +29,16 @@
 </script>
 
 <template>
-    <div>
-        <div class="mx-4">{{ type }}</div>
-        <div class="w-52 flex justify-between m-4">
-            <input v-model=value[0] type="text" class="h-10 w-11 text-sm pl-[7px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
-            <input v-model=value[1] type="text" class="h-10 w-11 text-sm pl-[7px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
-        </div>
-        <div class="m-4 w-52">
-            <Slider v-model=value :tooltips="false" :min=min :max=max class='slider-style' />
+    <div class="flex justify-center items-end">
+        <div class="mx-3 mb-3 text-base font-medium">{{ type }}</div>
+        <div>
+            <div class="w-52 flex justify-between m-4">
+                <input v-model=value[0] type="text" class="h-8 w-9 text-sm pl-[4px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
+                <input v-model=value[1] type="text" class="h-8 w-9 text-sm pl-[4px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0"/>
+            </div>
+            <div class="m-4 w-52">
+                <Slider v-model=value :tooltips="false" :min=min :max=max class='slider-style' />
+            </div>
         </div>
     </div>
 
