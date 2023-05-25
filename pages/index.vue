@@ -3,7 +3,6 @@ import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import goback from '~/components/pressables/goback.vue'
 
-
 const isEditing = ref(false)
 const clickEdit = () => {
   isEditing.value = !isEditing.value
@@ -13,7 +12,6 @@ const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
-
 </script>
 
 <template>
@@ -62,7 +60,6 @@ watch(selected, () => {
     datetime="1u geleden"
     level="good"
   ></Alert>
-
   <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
