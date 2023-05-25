@@ -2,7 +2,7 @@
 - `/reset-password`  
 - `/dokter/:id/` --> homepagina dokter  
 - `/dokter/:id/patienten` patienten pagina  
-- `/dokter/:id/patienten/lijst` patienten lijst en verwijder mogelijkheid   
+- `/dokter/:id/patienten/lijst` sypatienten lijst en verwijder mogelijkheid   
 - `/dokter/:id/patienten/:id` detailpagina patient
 - `/dokter/:id/patienten/:id/gegevens` gegevenspagina patient
 - `/dokter/:id/patienten/:id/edit` bewerk patientgegevnes

@@ -1,10 +1,6 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
-import Login from '~/components/cards/login.vue'
-import Inputs from '~/components/template/Inputs.vue';
-import PatientSm from '~/components/template/PatientSm.vue';
-import AlertLg from '~/components/template/AlertLg.vue'
-import Slider from '~/components/template/Slider.vue'
+import { AlertType } from '~/interfaces/AlertType'
 
 
 const isEditing = ref(false)
@@ -12,6 +8,7 @@ const clickEdit = () => {
   isEditing.value = !isEditing.value
 }
 const selected = ref('one')
+const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
@@ -27,47 +24,65 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
-  <Alert
-    value="37"
-    type="temperature"
-    name="Joshy Jonkheere"
-    datetime="1u geleden"
-    level="danger"
-  ></Alert>
-  <Alert
-    value="37"
-    type="bloodpressures"
-    name="Joshy Jonkheere"
-    datetime="1u geleden"
-    level="warning"
-  ></Alert>
-  <!-- <Alert
-    value="95"
-    type="oxygen"
-    name="Joshy Jonkheere"
-    datetime="1u geleden"
-    level="good"
-  ></Alert> -->
-  <drop-down-selector
-    v-model:selected="selected"
-    :options="['one', 'two', 'three']"
-  ></drop-down-selector>
 
-  <AlertLg
-    type="heartrate"
-    name="Joshy Jonkheere"
-    birthdate="01/01/2000"
-    datetime="1u geleden"
-    level="warning"
-    value="15"
+  <pressables-switch></pressables-switch>
+  <Alert
+    value='37'
+    :type='AlertType.temperature'
+    name='Joshy Jonkheere'
+    datetime='1u geleden'
+    level='danger'
+  ></Alert>
+  <Alert
+    value='37'
+    :type='AlertType.BloodPressure'
+    name='Joshy Jonkheere'
+    datetime='1u geleden'
+    level='warning'
+  ></Alert>
+  <Alert
+    value='95'
+    :type='AlertType.oxygen'
+    name='Joshy Jonkheere'
+    datetime='1u geleden'
+    level='good'
+  ></Alert>
+  <Alert
+    value='95'
+    :type='AlertType.heartRate'
+    name='Joshy Jonkheere'
+    datetime='1u geleden'
+    level='good'
+  ></Alert>
+  <Alert
+    value='95'
+    :type='AlertType.breathingRate'
+    name='Joshy Jonkheere'
+    datetime='1u geleden'
+    level='good'
+  ></Alert>
+
+  <drop-down-selector class='m-3' v-model:selected='selected2' :options='["one", "two", "three"]' type='searchable'/>
+
+<!--  <drop-down-selector-->
+<!--    v-model:selected='selected'-->
+<!--    :options="['one', 'two', 'three']"-->
+<!--  ></drop-down-selector>-->
+
+  <alerts-alert-lg
+    :type='AlertType.breathingRate'
+    name='Joshy Jonkheere'
+    birthdate='01/01/2000'
+    datetime='1u geleden'
+    level='warning'
+    value='15'
   />
 
   <Slider type="oxygen" :min=9 :max=100 />
 
   <!-- <Login></Login> -->
- <!-- <Inputs></Inputs> -->
- <!-- <PatientSm /> -->
+  <!-- <Inputs></Inputs> -->
+  <!-- <PatientSm /> -->
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -5,12 +5,14 @@
     import bloodpressure from '../svg/bloodpressure.vue'
     import temperature from '../svg/temperature.vue'
     import oxygen from '../svg/oxygen.vue'
+    import { PropType } from '@vue/runtime-core'
+    import { AlertType } from '~/interfaces/AlertType'
+
+
 
     defineProps({
         type: {
-            type: Object as PropType<
-            'bloodpressures' | 'temperature' | 'oxygen' | 'heartrate' | 'breathfrequentie'
-            >,
+            type: String as PropType<AlertType>,
             required: true,
         },
         name: {
@@ -66,7 +68,7 @@
         >
         </div>
         <bloodpressure 
-            v-if="type === 'bloodpressures'"
+            v-if="type === AlertType.BloodPressure"
             class="w-12 h-12 p-2 rounded-lg self-center"
             :class="{
                 'fill-primary-325 bg-primary-250': level === 'danger',
@@ -74,7 +76,7 @@
             }"
         />
         <temperature
-            v-else-if="type === 'temperature'"
+            v-else-if="type === AlertType.temperature"
             class="w-12 h-12 p-2 rounded-lg self-center"
             :class="{
                 'bg-primary-250 text-primary-325': level === 'danger',
@@ -82,7 +84,7 @@
             }"
         />
         <oxygen
-            v-else-if="type === 'oxygen'"
+            v-else-if="type === AlertType.oxygen"
             class="w-12 h-12 p-2 rounded-lg self-center"
             :class="{
                 'text-primary-325 bg-primary-250': level === 'danger',
@@ -90,7 +92,7 @@
             }"
         />
         <Ademfrequentie
-            v-else-if="type === 'breathfrequentie'"
+            v-else-if="type === AlertType.breathingRate"
             class="w-12 h-12 p-2 rounded-lg self-center"
             :class="{
                 'fill-primary-325 bg-primary-250': level === 'danger',
@@ -98,7 +100,7 @@
             }"
         />
         <Heartrate
-            v-else-if="type === 'heartrate'"
+            v-else-if="type === AlertType.heartRate"
             class="w-12 h-12 p-2 rounded-lg self-center"
             :class="{
                 'fill-primary-325 bg-primary-250': level === 'danger',

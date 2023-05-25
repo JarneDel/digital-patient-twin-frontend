@@ -60,5 +60,5 @@ module.exports = {
       normal: '10px 10px 13px -7px rgba(0,0,0,0.10)',
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  // plugins: [require('@tailwindcss/forms')],
 }
