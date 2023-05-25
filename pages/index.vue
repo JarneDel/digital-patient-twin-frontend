@@ -2,7 +2,7 @@
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import goback from '~/components/pressables/goback.vue'
-
+import TextInput from '~/components/forms/TextInput.vue'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -13,7 +13,6 @@ const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
-
 </script>
 
 <template>
@@ -62,7 +61,7 @@ watch(selected, () => {
     datetime="1u geleden"
     level="good"
   ></Alert>
-
+  <TextInput></TextInput>
   <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
@@ -84,7 +83,7 @@ watch(selected, () => {
     value="15"
   />
 
-  <Slider type="oxygen" :min=9 :max=100 />
+  <Slider type="oxygen" :min="9" :max="100" />
 
   <!-- <Login></Login> -->
   <!-- <Inputs></Inputs> -->
