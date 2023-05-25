@@ -4,6 +4,8 @@ import Login from '~/components/cards/login.vue'
 import Inputs from '~/components/template/Inputs.vue';
 import PatientSm from '~/components/template/PatientSm.vue';
 import AlertLg from '~/components/template/AlertLg.vue'
+import Slider from '~/components/template/Slider.vue'
+
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -13,6 +15,7 @@ const selected = ref('one')
 watch(selected, () => {
   console.log(selected.value)
 })
+
 </script>
 
 <template>
@@ -38,13 +41,13 @@ watch(selected, () => {
     datetime="1u geleden"
     level="warning"
   ></Alert>
-  <Alert
+  <!-- <Alert
     value="95"
     type="oxygen"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert>
+  ></Alert> -->
   <drop-down-selector
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
@@ -58,6 +61,8 @@ watch(selected, () => {
     level="warning"
     value="15"
   />
+
+  <Slider type="oxygen" :min=9 :max=100 />
 
   <!-- <Login></Login> -->
  <!-- <Inputs></Inputs> -->
