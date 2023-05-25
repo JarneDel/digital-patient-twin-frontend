@@ -67,11 +67,6 @@ watch(selected, () => {
     type="searchable"
   />
 
-  <FormsTextInput></FormsTextInput>
-  <FormsSelectDevice></FormsSelectDevice>
-  <FormsEmailInput></FormsEmailInput>
-  <FormsBirthDateInput></FormsBirthDateInput>
-
   <!--  <drop-down-selector-->
   <!--    v-model:selected='selected'-->
   <!--    :options="['one', 'two', 'three']"-->
