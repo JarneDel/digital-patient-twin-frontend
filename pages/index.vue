@@ -2,7 +2,6 @@
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import goback from '~/components/pressables/goback.vue'
-import TextInput from '~/components/forms/TextInput.vue'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -61,13 +60,16 @@ watch(selected, () => {
     datetime="1u geleden"
     level="good"
   ></Alert>
-  <TextInput></TextInput>
   <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
     :options="['one', 'two', 'three']"
     type="searchable"
   />
+
+  <FormsTextInput></FormsTextInput>
+  <FormsSelectDevice></FormsSelectDevice>
+  <FormsEmailInput></FormsEmailInput>
 
   <!--  <drop-down-selector-->
   <!--    v-model:selected='selected'-->

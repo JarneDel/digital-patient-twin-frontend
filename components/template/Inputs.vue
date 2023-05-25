@@ -23,16 +23,16 @@ const emailError = ref(false)
 const emailErrorMessage = ref('')
 
 const selectedDate = ref('')
-const dateError = ref(false)
-const dateErrorMessage = ref('')
+const birthdateError = ref(false)
+const birthdateErrorMessage = ref('')
 
 const validateForm = () => {
   firstNameError.value = false
   firstNameErrorMessage.value = ''
   emailError.value = false
   emailErrorMessage.value = ''
-  dateError.value = false
-  dateErrorMessage.value = ''
+  birthdateError.value = false
+  birthdateErrorMessage.value = ''
 
   if (!firstName.value) {
     firstNameError.value = true
@@ -53,11 +53,11 @@ const validateForm = () => {
   }
 
   if (!selectedDate.value) {
-    dateError.value = true
-    dateErrorMessage.value = 'Voer uw geboortedatum in.'
+    birthdateError.value = true
+    birthdateErrorMessage.value = 'Voer uw geboortedatum in.'
   } else {
-    dateError.value = false
-    dateErrorMessage.value = ''
+    birthdateError.value = false
+    birthdateErrorMessage.value = ''
   }
 }
 
@@ -86,8 +86,8 @@ const clearEmailError = () => {
 }
 
 const clearDateError = () => {
-  dateError.value = false
-  dateErrorMessage.value = ''
+  birthdateError.value = false
+  birthdateErrorMessage.value = ''
 }
 </script>
 
@@ -113,7 +113,7 @@ const clearDateError = () => {
       <input
         id="email"
         v-model="email"
-        :class="{ 'border-red-500': dateError }"
+        :class="{ 'border-red-500': emailError }"
         class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
         @input="clearEmailError"
       />
@@ -129,14 +129,15 @@ const clearDateError = () => {
         input
         type="date"
         v-model="selectedDate"
-        :class="{ 'border-red-500': dateError }"
+        :class="{ 'border-red-500': birthdateError }"
         class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
         @input="clearDateError"
       />
-      <span v-if="dateErrorMessage" class="text-red-500">{{
-        dateErrorMessage
+      <span v-if="birthdateErrorMessage" class="text-red-500">{{
+        birthdateErrorMessage
       }}</span>
     </div>
+
     <!-- select device id  -->
     <div class="mt-5 flex items-center">
       <label for="device">
