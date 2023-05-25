@@ -27,6 +27,7 @@ watch(selected, () => {
   <!--  />-->
   <goback link="Ga terug"></goback>
   <pressables-switch></pressables-switch>
+  <popup-deletePatient name="Joshy"/>
   <Alert
     value="37"
     :type="AlertType.temperature"
@@ -83,6 +84,8 @@ watch(selected, () => {
     level="warning"
     value="15"
   />
+
+  
 
   <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
 
