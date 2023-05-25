@@ -7,6 +7,7 @@ const clickEdit = () => {
   isEditing.value = !isEditing.value
 }
 const selected = ref('one')
+const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
@@ -59,10 +60,12 @@ watch(selected, () => {
     level='good'
   ></Alert>
 
-  <drop-down-selector
-    v-model:selected='selected'
-    :options="['one', 'two', 'three']"
-  ></drop-down-selector>
+  <drop-down-selector class='m-3' v-model:selected='selected2' :options='["one", "two", "three"]' type='searchable'/>
+
+<!--  <drop-down-selector-->
+<!--    v-model:selected='selected'-->
+<!--    :options="['one', 'two', 'three']"-->
+<!--  ></drop-down-selector>-->
 
   <alerts-alert-lg
     :type='AlertType.breathingRate'
