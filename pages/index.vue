@@ -78,7 +78,7 @@ watch(selected, () => {
     value='15'
   />
 
-  <Slider type="oxygen" :min=9 :max=100 />
+  <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
 
   <!-- <Login></Login> -->
   <!-- <Inputs></Inputs> -->
