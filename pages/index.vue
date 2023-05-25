@@ -81,5 +81,4 @@ watch(selected, () => {
   <!-- <PatientSm /> -->
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
