@@ -34,6 +34,7 @@ watch(selected, () => {
   <!-- <goback link="Ga terug"></goback> -->
   <!-- <pressables-switch></pressables-switch> -->
   <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
+  <chart-table :hartslag="[90, 98, 78, 56, 89]" :bloeddruk="[100, 90, 95, 110, 89]"/>
   <Alert
     value="37"
     :type="AlertType.temperature"
