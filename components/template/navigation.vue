@@ -42,13 +42,15 @@ const isCurrentPage = (path: string) => {
       <div class="font-semibold text-white">Digital Patient Twin</div>
     </div>
     <div class="z-10 flex pl-3 pr-8 shadow-normal h-24 items-center justify-end">
-      <div>
+      <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
         <SvgNotification class="h-12 w-12 px-2 relative fill-black" />
         <div class="bg-primary-500 rounded-full w-4 h-4 text-[10px] absolute top-8 right-[87px] flex justify-center items-center">
           <div class="text-white">+9</div>
         </div>
-      </div>
-      <user-circle-2 class="h-12 w-12 px-2"/>
+      </button>
+      <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
+        <user-circle-2 class="h-12 w-12 px-2"/>
+      </button>
     </div>
     <div class="w-56 pl-10 pt-6 flex flex-col justify-between bg-primary-600">
       <ul>
@@ -67,14 +69,27 @@ const isCurrentPage = (path: string) => {
           </NuxtLink>
         </li>
       </ul>
-      <div>
-        <button type="button">
-          <div class="flex items-center mb-16">
+      <div class="h-24">
+        <NuxtLink
+            to="/login"
+            class="flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg"
+          >
+          <div class="py-2 pl-3 flex justify-center items-center gap-2">
+            <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
+            <div class="text-white">Log out</div>
+          </div>
+          </NuxtLink>
+      </div>
+
+      <!-- <div class="h-24">
+        <button type="button" class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
+          <div class="flex items-center">
             <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
             <div class="text-white">Log out</div>
           </div>
         </button>
-      </div>
+      </div> -->
+
     </div>
     <div class="z-0 overflow-auto bg-white relative">
       <div class="pb-11">
