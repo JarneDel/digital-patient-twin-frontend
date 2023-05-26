@@ -30,6 +30,7 @@ watch(selected, () => {
     age="32 jaar"
     gender="Man"
     alertDate="20/10/2023"
+    :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner>
   <!-- <goback link="Ga terug"></goback> -->
   <!-- <pressables-switch></pressables-switch> -->

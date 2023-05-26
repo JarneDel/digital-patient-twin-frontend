@@ -3,8 +3,8 @@
     <!-- profile -->
     <div class="rounded-lg text-center">
       <img :src="imgUrl" alt="" class="mx-auto mb-4" />
-      <h1 class="font-semibold">{{ patient }}</h1>
-      <p class="text-sm mb-2">{{ age }}</p>
+      <h1 class="mb-2 font-semibold">{{ patient }}</h1>
+      <p class="mb-2 text-sm">{{ age }}</p>
       <p>{{ gender }}</p>
     </div>
     <!-- alerts and vital(s) -->
@@ -19,7 +19,7 @@
     <div>
       <!-- vital and date  -->
       <div class="mb-4 block text-center">
-        <div class="text-sm">Vital</div>
+        <div class="text-sm">{{ typeAlert }}</div>
         <div class="text-sm">{{ alertDate }}</div>
       </div>
     </div>
@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import SvgNotification from '@/components/svg/notification.vue'
+import { AlertType } from '~/interfaces/AlertType'
 defineProps({
   imgUrl: {
     type: String,
@@ -47,6 +48,10 @@ defineProps({
   },
   alertDate: {
     type: String,
+    required: true,
+  },
+  typeAlert: {
+    type: String as PropType<AlertType>,
     required: true,
   },
 })
