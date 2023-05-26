@@ -61,6 +61,7 @@ watch(selected, () => {
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
+    statuslevel="waaarschuwing"
   ></PopupAlert>
   <PopupAlert
     value="95"

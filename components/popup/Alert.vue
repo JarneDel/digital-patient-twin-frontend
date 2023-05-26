@@ -31,8 +31,6 @@ const unit = computed(() => {
   if (props.type === AlertType.oxygen) return '%'
   return ''
 })
-
-
 </script>
 
 <template>
@@ -67,7 +65,7 @@ const unit = computed(() => {
           }"
         />
         <svg-heartrate
-          v-else-if ="type === AlertType.heartRate"
+          v-else-if="type === AlertType.heartRate"
           class="h-14 w-14 rounded-md p-2"
           :class="{
             'bg-primary-50 text-primary-500': level === 'danger',
@@ -76,7 +74,7 @@ const unit = computed(() => {
           }"
         />
         <svg-ademfrequentie
-          v-else-if ="type === AlertType.breathingRate"
+          v-else-if="type === AlertType.breathingRate"
           class="h-14 w-14 rounded-md p-2"
           :class="{
             'bg-primary-50 text-primary-500': level === 'danger',
@@ -86,14 +84,19 @@ const unit = computed(() => {
         />
 
         <div class="ml-5">
-          <h1
-            class="text-md font-semibold capitalize"
-          >
-            {{type.toString()}}: {{ value }} {{ unit }}
+          <h1 class="text-md font-semibold capitalize">
+            {{ type.toString() }}: {{ value }} {{ unit }}
           </h1>
           <div class="mt-2 flex gap-4">
             <p class="text-sm font-medium text-gray-500">{{ name }}</p>
             <p class="text-sm font-medium text-gray-500">{{ datetime }}</p>
+            <p
+              class="text-sm font-medium uppercase text-gray-500"
+              v-if="level === 'danger'"
+              :class="{ 'text-primary-500': level === 'danger' }"
+            >
+              kritisch
+            </p>
           </div>
         </div>
       </div>
