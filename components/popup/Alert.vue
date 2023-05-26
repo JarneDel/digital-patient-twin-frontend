@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { is } from '@babel/types'
 import { LucideX } from 'lucide-vue-next'
 import { AlertType } from '~/interfaces/AlertType'
 
@@ -31,6 +32,8 @@ const unit = computed(() => {
   if (props.type === AlertType.oxygen) return '%'
   return ''
 })
+
+const isDanger = 'kritish'
 </script>
 
 <template>
@@ -95,7 +98,7 @@ const unit = computed(() => {
               v-if="level === 'danger'"
               :class="{ 'text-primary-500': level === 'danger' }"
             >
-              kritisch
+              {{ isDanger }}
             </p>
           </div>
         </div>
