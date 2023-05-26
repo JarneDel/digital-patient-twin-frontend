@@ -23,15 +23,14 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
-
-  <PatientsPatientbanner
+  <!-- <PatientsPatientbanner
     imgUrl="imgUrl"
     patient="Joshy Jonkheere"
     age="32 jaar"
     gender="Man"
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
-  ></PatientsPatientbanner>
+  ></PatientsPatientbanner> -->
   <!-- <goback link="Ga terug"></goback> -->
   <!-- <pressables-switch></pressables-switch> -->
   <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
