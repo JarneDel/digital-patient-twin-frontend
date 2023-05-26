@@ -33,11 +33,16 @@ const unit = computed(() => {
   return ''
 })
 
-const isDanger = 'kritish'
+const status = computed(() => {
+  if (props.level === 'danger') return 'kritisch'
+  if (props.level === 'warning') return 'matig'
+  if (props.level === 'good') return 'goed'
+  return ''
+})
 </script>
 
 <template>
-  <div class="bg-white p-5">
+  <div class="h-full w-auto bg-white p-5" role="alert">
     <div class="flex justify-between rounded-lg bg-white p-5 drop-shadow-2xl">
       <div class="ml-5 flex flex-row">
         <svg-bloodpressure
@@ -98,7 +103,24 @@ const isDanger = 'kritish'
               v-if="level === 'danger'"
               :class="{ 'text-primary-500': level === 'danger' }"
             >
-              {{ isDanger }}
+              <span class="text-gray-500">Gezondheid:</span>
+              <span class="ml-2 uppercase">{{ status }}</span>
+            </p>
+            <p
+              class="text-sm font-medium uppercase text-gray-500"
+              v-else-if="level === 'warning'"
+              :class="{ 'text-orange-500': level === 'warning' }"
+            >
+              <span class="text-gray-500">Gezondheid:</span>
+              <span class="ml-2 uppercase">{{ status }}</span>
+            </p>
+            <p
+              class="text-sm font-medium uppercase text-gray-500"
+              v-else="level === 'good'"
+              :class="{ 'text-green-500': level === 'good' }"
+            >
+              <span class="text-gray-500">Gezondheid:</span>
+              <span class="ml-2 uppercase">{{ status }}</span>
             </p>
           </div>
         </div>
