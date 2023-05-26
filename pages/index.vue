@@ -23,6 +23,9 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
+  <!-- <goback link="Ga terug"></goback> -->
+  <!-- <pressables-switch></pressables-switch> -->
+  <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
   <!-- <PatientsPatientbanner
     imgUrl="imgUrl"
     patient="Joshy Jonkheere"
@@ -31,9 +34,6 @@ watch(selected, () => {
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner> -->
-  <!-- <goback link="Ga terug"></goback> -->
-  <!-- <pressables-switch></pressables-switch> -->
-  <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
   <PopupAlert
     value="37"
     :type="AlertType.temperature"
