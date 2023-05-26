@@ -23,6 +23,9 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
+  <!-- <goback link="Ga terug"></goback> -->
+  <!-- <pressables-switch></pressables-switch> -->
+  <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
   <!-- <PatientsPatientbanner
     imgUrl="imgUrl"
     patient="Joshy Jonkheere"
@@ -31,44 +34,42 @@ watch(selected, () => {
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner> -->
-  <!-- <goback link="Ga terug"></goback> -->
-  <!-- <pressables-switch></pressables-switch> -->
-  <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
-  <Alert
+  <PopupAlert
     value="37"
     :type="AlertType.temperature"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="danger"
-  ></Alert>
-  <Alert
+  ></PopupAlert>
+  <!-- <PopupAlert
     value="37"
     :type="AlertType.BloodPressure"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="warning"
-  ></Alert>
-  <Alert
+  ></PopupAlert>
+  <PopupAlert
     value="95"
     :type="AlertType.oxygen"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert>
-  <Alert
+  ></PopupAlert>
+  <PopupAlert
     value="95"
     :type="AlertType.heartRate"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert>
-  <Alert
+    statuslevel="waaarschuwing"
+  ></PopupAlert>
+  <PopupAlert
     value="95"
     :type="AlertType.breathingRate"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></Alert>
+  ></PopupAlert> -->
   <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
@@ -90,7 +91,7 @@ watch(selected, () => {
     value="15"
   />
 
-  <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
+  <template-slider :type="AlertType.breathingRate" :min="0" :max="100" />
 
   <!-- <Login></Login> -->
   <!-- <Inputs></Inputs> -->
