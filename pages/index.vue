@@ -23,8 +23,17 @@ watch(selected, () => {
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
   <!--  />-->
-  <goback link="Ga terug"></goback>
-  <pressables-switch></pressables-switch>
+
+  <PatientsPatientbanner
+    imgUrl="imgUrl"
+    patient="Joshy Jonkheere"
+    age="32 jaar"
+    gender="Man"
+    alertDate="20/10/2023"
+  ></PatientsPatientbanner>
+  <!-- <goback link="Ga terug"></goback> -->
+  <!-- <pressables-switch></pressables-switch> -->
+  <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
   <Alert
     value="37"
     :type="AlertType.temperature"
@@ -81,7 +90,7 @@ watch(selected, () => {
     value="15"
   />
 
-  <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
+  <template-slider :type="AlertType.breathingRate" :min="0" :max="100" />
 
   <!-- <Login></Login> -->
   <!-- <Inputs></Inputs> -->
