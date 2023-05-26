@@ -3,26 +3,26 @@
 import SvgHome from '@/components/svg/home.vue'
 import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
-import { UserCircle2, LogOut} from 'lucide-vue-next'
-import { ILink } from '~/interfaces/ILink';
 import { useRoute } from 'vue-router'
+import { ILink } from '~/interfaces/ILink';
+import { UserCircle2, LogOut} from 'lucide-vue-next'
 
 const links: ILink[] = [
   {
     text: 'Home',
     path: '/dokter/[dokterid]',
-    icon: SvgHome
+    icon: SvgHome,
   },
   {
     text: 'Patienten',
     path: '/dokter/[dokterid]/patienten',
-    icon: SvgPatient
+    icon: SvgPatient,
   },
   {
-    text: "Meldingen",
+    text: 'Meldingen',
     path: '/dokter/[dokterid]/meldingen',
-    icon: SvgNotification
-  }
+    icon: SvgNotification,
+  },
 ]
 
 const route = useRoute()
@@ -38,7 +38,7 @@ const isCurrentPage = (path: string) => {
   <div
     class="grid h-[100vh] grid-cols-[max-content_1fr] grid-rows-[min-content_1fr] bg-neutral-600"
   >
-    <div class="pl-3 pr-8 h-24 flex items-center justify-center bg-primary-600">
+    <div class="flex h-24 items-center justify-center bg-primary-600 pl-3 pr-8">
       <div class="font-semibold text-white">Digital Patient Twin</div>
     </div>
     <div class="z-10 flex pl-3 pr-8 shadow-normal h-24 items-center justify-end">
@@ -52,7 +52,7 @@ const isCurrentPage = (path: string) => {
         <user-circle-2 class="h-12 w-12 px-2"/>
       </button>
     </div>
-    <div class="w-56 pl-10 pt-6 flex flex-col justify-between bg-primary-600">
+    <div class="flex w-56 flex-col justify-between bg-primary-600 pl-10 pt-6">
       <ul>
         <li v-for="link in links" :key="link.path" class="mb-9">
           <NuxtLink
@@ -81,21 +81,14 @@ const isCurrentPage = (path: string) => {
           </NuxtLink>
       </div>
 
-      <!-- <div class="h-24">
-        <button type="button" class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
-          <div class="flex items-center">
-            <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
-            <div class="text-white">Log out</div>
-          </div>
-        </button>
-      </div> -->
-
     </div>
-    <div class="z-0 overflow-auto bg-white relative">
+    <div class="relative z-0 overflow-auto bg-white">
       <div class="pb-11">
         <slot />
-        <footer class="flex justify-center items-center absolute right-[50%] mt-11">
-          <div class="bg-white text-tertiary-500 pb-5 pt-2">MCT 2023</div>
+        <footer
+          class="absolute right-[50%] mt-11 flex items-center justify-center"
+        >
+          <div class="bg-white pb-5 pt-2 text-tertiary-500">MCT 2023</div>
         </footer>
       </div>
     </div>
