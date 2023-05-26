@@ -51,12 +51,11 @@ const isCurrentPage = (path: string) => {
       <user-circle-2 class="h-12 w-12 px-2"/>
     </div>
     <div class="w-56 pl-10 pt-6 flex flex-col justify-between bg-primary-600">
-      
       <ul>
         <li v-for="link in links" :key="link.path" class="mb-9">
           <NuxtLink
             :to="link.path"
-            class="flex items-center"
+            class="flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg"
             :class="{ 'bg-primary-450 text-white rounded-l-lg': isCurrentPage(link.path) }"
           >
           <div class="py-2 pl-3 flex justify-center items-center gap-2">
@@ -68,22 +67,6 @@ const isCurrentPage = (path: string) => {
           </NuxtLink>
         </li>
       </ul>
-
-
-      <!-- <ul>
-        <li v-for="link in links" class="mb-10">
-          <NuxtLink
-            :to="link.path"
-            class="flex items-center"
-          >
-          <span>
-            <component :is="link.icon" class="fill-white"></component>
-          </span>
-          <span class="text-white">{{link.text}}</span>
-          </NuxtLink>
-        </li>
-      </ul> -->
-
       <div>
         <button type="button">
           <div class="flex items-center mb-16">
