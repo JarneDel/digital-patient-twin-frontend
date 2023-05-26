@@ -41,7 +41,7 @@ watch(selected, () => {
     datetime="1u geleden"
     level="danger"
   ></PopupAlert>
-  <PopupAlert
+  <!-- <PopupAlert
     value="37"
     :type="AlertType.BloodPressure"
     name="Joshy Jonkheere"
@@ -69,7 +69,7 @@ watch(selected, () => {
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></PopupAlert>
+  ></PopupAlert> -->
   <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
