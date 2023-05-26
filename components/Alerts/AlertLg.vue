@@ -60,7 +60,8 @@
 </script>
 
 <template>
-    <div class="grid grid-cols-[12px_120px_250px_150px_150px_150px_48px] shadow-normal grid-rows-1 p-2 w-[900px] bg-white rounded-lg my-3">
+    <div class="grid grid-cols-[12px_120px_250px_150px_150px_150px_48px] shadow-normal grid-rows-1 p-2 w-[900px] to-40% rounded-lg my-3 bg-gradient-to-r from-primary-50 to-white"
+    >
         <div class="w-[3px]" :class="{
             'bg-primary-375': level === 'danger',
             'bg-other-200': level === 'warning',

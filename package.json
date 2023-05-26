@@ -3,12 +3,13 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --port 4200",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@azure/msal-browser": "^2.37.0",
     "@kalimahapps/vue-icons": "^1.4.0",
     "@nuxt/devtools": "^0.3.1",
     "@nuxtjs/google-fonts": "^3.0.0",
@@ -17,12 +18,15 @@
     "@types/node": "^18",
     "@vueform/slider": "^2.1.7",
     "autoprefixer": "^10.4.14",
-    "lucide-vue-next": "^0.216.0",
     "nuxt": "^3.4.3",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "tailwindcss": "^3.3.2"
+    "socket.io": "^4.6.1",
+    "tailwindcss": "^3.3.2",
+    "@nuxt/kit": "^3.5.1",
+    "lucide-vue-next": "^0.216.0",
+    "mqtt": "^4.3.7"
   },
   "volta": {
     "node": "18.16.0"
