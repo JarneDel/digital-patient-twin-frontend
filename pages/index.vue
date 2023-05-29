@@ -34,6 +34,8 @@ watch(selected, () => {
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner> -->
+
+  <PressablesSaveButton text="Save"></PressablesSaveButton>
   <PopupAlert
     value="37"
     :type="AlertType.temperature"

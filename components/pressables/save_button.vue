@@ -1,7 +1,8 @@
 <template>
   <div>
     <button
-      class="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-600"
+      type="submit"
+      class="duration-400 mt-5 w-10 min-w-max rounded-lg bg-tertiary-500 p-5 transition-all hover:cursor-pointer hover:bg-tertiary-300"
       @click="click"
     >
       {{ text }}
