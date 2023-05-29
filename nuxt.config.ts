@@ -17,5 +17,8 @@ export default defineNuxtConfig({
   },
   env: {
     "IoTHubSecret": process.env.IoTHubUrl,
-  }
+  },
+  plugins: [
+    { src: '~/plugins/mqtt.js', mode: 'server' }
+  ],
 })

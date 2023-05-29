@@ -16,7 +16,8 @@ export default defineNuxtModule({
       io.on('connect', (socket) => {
         socket.emit('message', `welcome ${socket.id}`)
         socket.broadcast.emit('message', `${socket.id} joined`)
-        // subscribe to mqtt topic
+
+
 
         socket.on('message', function message(data) {
           console.log('message received: %s', data)
