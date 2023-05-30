@@ -34,6 +34,7 @@ watch(isOpen, value => {
 const input = ref('')
 
 watch(input, value => {
+  if (props.type === 'default') return
   if (value === '') {
     isSubmitted.value = false
   }
@@ -43,6 +44,7 @@ watch(input, value => {
 })
 
 const search = computed(() => {
+  if (props.type === 'default') return props.options
   if (input.value === '') return props.options
 
   return props.options.filter(option => {
@@ -91,8 +93,8 @@ const isSubmitted = ref(false)
           <lucide-x
             class='transition-transform'
             :class="isOpen ? 'rotate-180' : ''"
-
           />
+<!--          TODO: add search icon when type = searchable and isOpen = false-->
         </button>
 
       </div>
@@ -114,7 +116,12 @@ const isSubmitted = ref(false)
           :key='option'
           @click="
             () => {
+              console.log(option)
               $emit('update:selected', option)
+              if (type === 'default') {
+                selected = option
+                return
+              }
               input = option
               isSubmitted = true
               isOpen = false

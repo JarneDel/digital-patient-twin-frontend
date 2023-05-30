@@ -8,6 +8,7 @@ export enum AlertType {
 
 export interface IMelding {
   id: number
+  patientId: string
   name: string
   type: AlertType
   level: string

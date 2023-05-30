@@ -13,6 +13,7 @@ const meldingen = ref<IMelding[]>([
     value: '95/120',
     level: 'danger',
     dateOfBirth: '01/01/1980',
+    patientId: "1",
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const meldingen = ref<IMelding[]>([
     value: '37',
     level: 'danger',
     dateOfBirth: '01/01/1980',
+    patientId: "1",
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const meldingen = ref<IMelding[]>([
     value: '95',
     level: 'warning',
     dateOfBirth: '01/01/1980',
+    patientId: "1",
   },
 ])
 

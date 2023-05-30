@@ -19,7 +19,7 @@ defineEmits(['update:selected'])
         v-for="(option, index) in options"
         :key="option"
         @click="$emit('update:selected', option)"
-        class="h-[72px] overflow-hidden p-5 font-semibold transition-all duration-300 ease-out"
+        class=" overflow-hidden px-3 py-3  transition-all duration-300 ease-out"
         :class="{
           'rounded-l-lg': index === 0,
           'rounded-r-lg': index === options.length - 1,
