@@ -5,3 +5,13 @@ export enum AlertType {
   heartRate = 'Hartslag',
   breathingRate = 'Ademhalingsfrequentie',
 }
+
+export interface IMelding {
+  id: number
+  name: string
+  type: AlertType
+  level: string
+  value: string
+  time: Date
+  dateOfBirth: string
+}

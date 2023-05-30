@@ -1,45 +1,42 @@
 <script setup lang="ts">
-import { ArrowUp, LineChart } from 'lucide-vue-next'
-import Heartrate from '../svg/heartrate.vue'
-import Ademfrequentie from '../svg/ademfrequentie.vue'
-import bloodpressure from '../svg/bloodpressure.vue'
-import temperature from '../svg/temperature.vue'
-import oxygen from '../svg/oxygen.vue'
-import { PropType } from '@vue/runtime-core'
-import { AlertType } from '~/interfaces/AlertType'
+    import { ArrowUp, LineChart } from 'lucide-vue-next';
+    import { PropType } from '@vue/runtime-core'
+    import { AlertType } from '~/interfaces/AlertType'
 
-defineProps({
-  type: {
-    type: String as PropType<AlertType>,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  datetime: {
-    type: String,
-    required: true,
-  },
-  value: {
-    type: String,
-    required: true,
-  },
-  birthdate: {
-    type: String,
-    required: true,
-  },
-  level: {
-    type: String,
-    required: true,
-  },
-})
 
-function calculateAge(birthDate: string) {
-  const birthDateParts = birthDate.split('/')
-  const birthDay = parseInt(birthDateParts[0], 10)
-  const birthMonth = parseInt(birthDateParts[1], 10) - 1
-  const birthYear = parseInt(birthDateParts[2], 10)
+
+    defineProps({
+        type: {
+            type: String as PropType<AlertType>,
+            required: true,
+        },
+        name: {
+            type: String,
+            required: true,
+        },
+        datetime: {
+            type: String,
+            required: true,
+        },
+        value: {
+            type: String,
+            required: true,
+        },
+        birthdate: {
+            type: String,
+            required: true,
+        },
+        level: {
+            type: String,
+            required: true,
+        },
+    })
+
+    function calculateAge(birthDate:string) {
+        const birthDateParts = birthDate.split("/");
+        const birthDay = parseInt(birthDateParts[0], 10);
+        const birthMonth = parseInt(birthDateParts[1], 10) - 1;
+        const birthYear = parseInt(birthDateParts[2], 10);
 
   const currentDate = new Date()
   const currentDay = currentDate.getDate()
