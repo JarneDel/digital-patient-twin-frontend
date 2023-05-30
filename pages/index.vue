@@ -12,6 +12,37 @@ const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
+
+// test
+// const response = await fetch('http://172.23.80.25:5010/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d');
+// // const history = await response.json();
+// const history = ref<History[]>([])
+const response = await fetch('http://172.23.80.25:5010/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d');
+const history = await response.json();
+
+
+interface History{
+  deviceId: string;
+  timestamp: string;
+  bloeddruk: BloodPressureHistory;
+  hartslag: SensorHistory;
+  bloedzuurstof: SensorHistory;
+  temperatuur: SensorHistory;
+  ademFrequentie: SensorHistory;
+}
+
+interface BloodPressureHistory{
+  systolic: number;
+  diastolic: number;
+}
+
+interface SensorHistory{
+  avg: number;
+}
+
+// console.log(history)
+
+
 </script>
 
 <template>
@@ -34,7 +65,12 @@ watch(selected, () => {
   <!-- <goback link="Ga terug"></goback> -->
   <!-- <pressables-switch></pressables-switch> -->
   <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
-  <chart-table :hartslag="[90, 98, 78, 56, 89]" :bloeddruk="[100, 90, 95, 110, 89]" :zuurstof="[80, 81, 82, 93, 90]" :temperatuur="[36, 36, 37, 37, 37]" :ademhaling="[12, 12, 13, 15, 12]" />
+
+  <!-- <li v-for="result in history" :key="result.deviceId">{{ result.deviceId }}</li> -->
+  <div>hello</div>
+  <chart-table  :timestamp="[1, 2, 3, 4, 5]" :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/>
+  <!-- <chart-table  :timestamp="[1, 2, 3, 4, 5]" :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/> -->
+  
   <Alert
     value="37"
     :type="AlertType.temperature"

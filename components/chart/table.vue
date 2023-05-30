@@ -2,6 +2,10 @@
 import { AlertType } from '~/interfaces/AlertType';
 
     defineProps({
+        timestamp: {
+            type: Object,
+            required: true
+        },
         hartslag: {
             type: Object,
             required: true
@@ -10,7 +14,7 @@ import { AlertType } from '~/interfaces/AlertType';
             type: Object,
             required: true
         },
-        zuurstof: {
+        bloedzuurstof: {
             type: Object,
             required: true
         },
@@ -18,7 +22,7 @@ import { AlertType } from '~/interfaces/AlertType';
             type: Object,
             required: true
         },
-        ademhaling: {
+        ademFrequentie: {
             type: Object,
             required: true
         },
@@ -29,19 +33,19 @@ import { AlertType } from '~/interfaces/AlertType';
 
 <template>
     <div class="grid grid-cols-6 grid-rows-6 w-[850px]">
-        <div class="text-end -mr-4">7:40</div>
-        <div class="text-end -mr-4">8:00</div>
-        <div class="text-end -mr-4">8:20</div>
-        <div class="text-end -mr-4">8:40</div>
-        <div class="text-end -mr-4">9:00</div>
-        <div class="text-end -mr-4">9:20</div>
+        <div class="text-end -mr-4">0:00</div>
+        <div class="text-end -mr-4">{{ timestamp[1] }}</div>
+        <div class="text-end -mr-4">{{ timestamp[2] }}</div>
+        <div class="text-end -mr-4">{{ timestamp[3] }}</div>
+        <div class="text-end -mr-4">{{ timestamp[4] }}</div>
+        <div class="text-end -mr-4">{{ timestamp[5] }}</div>
 
         <div>zuurstof</div>
-        <div class="text-center">{{zuurstof[0]}}</div>
-        <div class="text-center">{{zuurstof[1]}}</div>
-        <div class="text-center">{{zuurstof[2]}}</div>
-        <div class="text-center">{{zuurstof[3]}}</div>
-        <div class="text-center">{{zuurstof[4]}}</div>
+        <div class="text-center">{{bloedzuurstof[0]}}</div>
+        <div class="text-center">{{bloedzuurstof[1]}}</div>
+        <div class="text-center">{{bloedzuurstof[2]}}</div>
+        <div class="text-center">{{bloedzuurstof[3]}}</div>
+        <div class="text-center">{{bloedzuurstof[4]}}</div>
         
         <div>hartslag</div>
         <div class="text-center">{{hartslag[0]}}</div>
@@ -58,11 +62,11 @@ import { AlertType } from '~/interfaces/AlertType';
         <div class="text-center">{{bloeddruk[4]}}</div>
 
         <div>ademfrequentie</div>
-        <div class="text-center">{{ademhaling[0]}}</div>
-        <div class="text-center">{{ademhaling[1]}}</div>
-        <div class="text-center">{{ademhaling[2]}}</div>
-        <div class="text-center">{{ademhaling[3]}}</div>
-        <div class="text-center">{{ademhaling[4]}}</div>
+        <div class="text-center">{{ademFrequentie[0]}}</div>
+        <div class="text-center">{{ademFrequentie[1]}}</div>
+        <div class="text-center">{{ademFrequentie[2]}}</div>
+        <div class="text-center">{{ademFrequentie[3]}}</div>
+        <div class="text-center">{{ademFrequentie[4]}}</div>
 
         <div>temperatuur</div>
         <div class="text-center">{{temperatuur[0]}}</div>
