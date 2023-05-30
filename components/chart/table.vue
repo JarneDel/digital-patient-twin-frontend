@@ -2,10 +2,10 @@
 import { AlertType } from '~/interfaces/AlertType';
 
     defineProps({
-        timestamp: {
-            type: Object,
-            required: true
-        },
+        // timestamp: {
+        //     type: Object,
+        //     required: true
+        // },
         hartslag: {
             type: Object,
             required: true
@@ -32,43 +32,71 @@ import { AlertType } from '~/interfaces/AlertType';
 </script>
 
 <template>
-    <div class="grid grid-cols-6 grid-rows-6 w-[850px]">
-        <div class="text-end -mr-4">0:00</div>
-        <div class="text-end -mr-4">{{ timestamp[1] }}</div>
-        <div class="text-end -mr-4">{{ timestamp[2] }}</div>
-        <div class="text-end -mr-4">{{ timestamp[3] }}</div>
-        <div class="text-end -mr-4">{{ timestamp[4] }}</div>
-        <div class="text-end -mr-4">{{ timestamp[5] }}</div>
+    <div class="grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr] grid-rows-6 w-[1150px] h-[300px] pt-2 bg-neutral-600 drop-shadow-2xl">
+        <!-- <div class="text-end -pr-4 bg-primary-50">8:00</div> -->
+        <div class="text-end flex items-end justify-end -pr-4 bg-primary-50">
+            <div>8:00</div>
+        </div>
+        <div class="text-end flex items-end justify-end -pr-4 bg-primary-50">
+            <div>8:20</div>
+        </div>
+        <div class="text-end flex items-end justify-end -pr-4 bg-primary-50">
+            <div>8:40</div>
+        </div>
+        <div class="text-end flex items-end justify-end -pr-4 bg-primary-50">
+            <div>9:00</div>
+        </div>
+        <div class="text-end flex items-end justify-end -pr-4 bg-primary-50">
+            <div>9:20</div>
+        </div>
+        <div class="text-end flex items-end justify-end -pr-4 bg-primary-50">
+            <div>9:40</div>
+        </div>
 
-        <div>zuurstof</div>
+        <div class="flex justify-between items-center mr-2 pr-4 bg-neutral-500">
+            <div>zuurstof</div>
+            <svg-oxygen class="w-8"/>
+        </div>
         <div class="text-center">{{bloedzuurstof[0]}}</div>
         <div class="text-center">{{bloedzuurstof[1]}}</div>
         <div class="text-center">{{bloedzuurstof[2]}}</div>
         <div class="text-center">{{bloedzuurstof[3]}}</div>
         <div class="text-center">{{bloedzuurstof[4]}}</div>
         
-        <div>hartslag</div>
+        <div class="flex justify-between items-center mr-2 pr-4 bg-neutral-500">
+            <div>hartslag</div>
+            <svg-heartrate class="w-8"/>
+        </div>
         <div class="text-center">{{hartslag[0]}}</div>
         <div class="text-center">{{hartslag[1]}}</div>
         <div class="text-center">{{hartslag[2]}}</div>
         <div class="text-center">{{hartslag[3]}}</div>
         <div class="text-center">{{hartslag[4]}}</div>
 
-        <div>bloeddruk</div>
+        <div class="flex justify-between items-center mr-2 pr-4 bg-neutral-500">
+            <div>bloeddruk</div>
+            <svg-bloodpressure class="w-10"/>
+        </div>
         <div class="text-center">{{bloeddruk[0]}}</div>
         <div class="text-center">{{bloeddruk[1]}}</div>
         <div class="text-center">{{bloeddruk[2]}}</div>
         <div class="text-center">{{bloeddruk[3]}}</div>
         <div class="text-center">{{bloeddruk[4]}}</div>
 
-        <div>ademfrequentie</div>
+        <div class="flex justify-between items-center mr-2 pr-4 bg-neutral-500">
+            <div>ademfrequentie</div>
+            <svg-ademfrequentie class="w-8"/>
+        </div>
         <div class="text-center">{{ademFrequentie[0]}}</div>
         <div class="text-center">{{ademFrequentie[1]}}</div>
         <div class="text-center">{{ademFrequentie[2]}}</div>
         <div class="text-center">{{ademFrequentie[3]}}</div>
         <div class="text-center">{{ademFrequentie[4]}}</div>
 
-        <div>temperatuur</div>
+        <div class="flex justify-between items-center mr-2 pr-4 bg-neutral-500">
+            <div>temperatuur</div>
+            <svg-temperature class="w-8"/>
+        </div>
         <div class="text-center">{{temperatuur[0]}}</div>
         <div class="text-center">{{temperatuur[1]}}</div>
         <div class="text-center">{{temperatuur[2]}}</div>

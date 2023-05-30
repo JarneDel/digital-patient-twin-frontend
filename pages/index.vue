@@ -14,7 +14,7 @@ watch(selected, () => {
 })
 
 // test
-const history = ref<History[]>()
+// const history = ref<History[]>()
 // fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
 //     .then(response => response.json())
 //     .then((data: History[]) => history.value = data);
@@ -22,38 +22,33 @@ const history = ref<History[]>()
 // const res = await fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
 // history.value = await res.json()
 ////
-try{
-  const res = await fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
-  history.value = await res.json()
+// try{
+//   const res = await fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
+//   history.value = await res.json()
   
-}
-catch(err){
-  console.log(err)
-}
+// }
+// catch(err){
+//   console.log(err)
+// }
 
+// interface History{
+//   deviceId: string;
+//   timestamp: string;
+//   bloeddruk: BloodPressureHistory;
+//   hartslag: SensorHistory;
+//   bloedzuurstof: SensorHistory;
+//   temperatuur: SensorHistory;
+//   ademFrequentie: SensorHistory;
+// }
 
+// interface BloodPressureHistory{
+//   systolic: number;
+//   diastolic: number;
+// }
 
-
-interface History{
-  deviceId: string;
-  timestamp: string;
-  bloeddruk: BloodPressureHistory;
-  hartslag: SensorHistory;
-  bloedzuurstof: SensorHistory;
-  temperatuur: SensorHistory;
-  ademFrequentie: SensorHistory;
-}
-
-interface BloodPressureHistory{
-  systolic: number;
-  diastolic: number;
-}
-
-interface SensorHistory{
-  avg: number;
-}
-
-
+// interface SensorHistory{
+//   avg: number;
+// }
 
 
 </script>
@@ -79,10 +74,8 @@ interface SensorHistory{
   <!-- <pressables-switch></pressables-switch> -->
   <!-- <FormsBirthDateInput></FormsBirthDateInput> -->
 
-  <!-- <li v-for="result in history" :key="result.deviceId">{{ result.deviceId }}</li> -->
-  <div>hello</div>
-  <div v-if="history?.length">{{ history[0].deviceId }}</div>
-  <chart-table  :timestamp="[1, 2, 3, 4, 5]" :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/>
+  <!-- <div v-if="history?.length">{{ history[0].deviceId }}</div> -->
+  <chart-table :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/>
   <!-- <chart-table  :timestamp="[1, 2, 3, 4, 5]" :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/> -->
   
   <Alert
