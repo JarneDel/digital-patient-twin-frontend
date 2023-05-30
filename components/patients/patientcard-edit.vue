@@ -30,28 +30,16 @@
       </div>
     </div>
   </div>
-
-  <div class="flex flex-1 flex-row content-center justify-end">
-    <button v-if="type === 'view'">
-      <LucideLineChart />
-    </button>
-    <button v-if="type === 'edit'">
-      <LucideEdit />
-    </button>
-  </div>
 </template>
 
 <script setup lang="ts">
 import { ChevronRight } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
+import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
 
 defineProps({
   patient: {
     type: Object as PropType<IPatientAlgemeen>,
-    required: true,
-  },
-  type: {
-    type: String as PropType<'view' | 'edit'>,
     required: true,
   },
 })

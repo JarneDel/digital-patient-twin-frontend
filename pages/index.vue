@@ -15,10 +15,10 @@ watch(selected, () => {
 })
 
 const registerPatient = ref<IPatientAlgemeen>({
-  voornaam: 'joshy',
-  achternaam: 'jonkheere',
-  geslacht: 'man',
-  geboortedatum: new Date(1900, 1, 1),
+  achternaam: 'Jonkheere',
+  geslacht: 'M',
+  voornaam: 'Joshy',
+  geboortedatum: new Date(1980, 1, 1),
   id: 1,
 })
 </script>
@@ -27,7 +27,7 @@ const registerPatient = ref<IPatientAlgemeen>({
   <!--  <div class="bg-pink-800">Hello index</div>-->
   <!--  <PressablesButton>Hello world</PressablesButton>-->
   <!--  <TemplateDashboardCards patient="15" />-->
-  <!--  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />-->
+  <!-- <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" /> -->
   <!--  <PressablesSelector-->
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
@@ -43,7 +43,9 @@ const registerPatient = ref<IPatientAlgemeen>({
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner> -->
-  <PatientsPatientcard></PatientsPatientcard>
+  <patients-patientcard-edit
+    :patient="registerPatient"
+  ></patients-patientcard-edit>
   <PressablesSaveButton text="Save"></PressablesSaveButton>
   <PopupAlert
     value="37"
