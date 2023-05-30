@@ -19,6 +19,22 @@ const testPatient = ref<IPatientAlgemeen>({
   geboortedatum: new Date(1910, 1, 1),
   id: 1,
 })
+// const historyRef = ref()
+//
+// const loadData = async () => {
+//   try{
+//     console.log('test')
+//     const response = await fetch('http://localhost:5010/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d');
+//     const history = await response.json();
+//     console.log({history})
+//     historyRef.value = history
+//
+//   }
+//   catch(error){
+//     console.log(error);
+//   }
+// }
+// loadData();
 
 </script>
 
@@ -80,10 +96,10 @@ const testPatient = ref<IPatientAlgemeen>({
 
   <drop-down-selector class='m-3' v-model:selected='selected2' :options='["one", "two", "three"]' type='searchable'/>
 
-<!--  <drop-down-selector-->
-<!--    v-model:selected='selected'-->
-<!--    :options="['one', 'two', 'three']"-->
-<!--  ></drop-down-selector>-->
+  <drop-down-selector
+    v-model:selected='selected'
+    :options="['one', 'two', 'three']"
+  ></drop-down-selector>
 
   <alerts-alert-lg
     :type='AlertType.breathingRate'
@@ -98,6 +114,8 @@ const testPatient = ref<IPatientAlgemeen>({
 
 
   <patient-realtime :patient='testPatient' type='view' />
+<!--  <div v-if='historyRef'>-->
+<!--  </div>-->
 
 
   <!-- <Login></Login> -->
