@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
@@ -11,31 +11,13 @@ const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
-
-const testPatient = ref<IPatientAlgemeen>({
+const registerPatient = ref<IPatientAlgemeen>({
   achternaam: 'Jonkheere',
   geslacht: 'M',
   voornaam: 'Joshy',
-  geboortedatum: new Date(1910, 1, 1),
+  geboortedatum: new Date(1980, 1, 1),
   id: 1,
 })
-// const historyRef = ref()
-//
-// const loadData = async () => {
-//   try{
-//     console.log('test')
-//     const response = await fetch('http://localhost:5010/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d');
-//     const history = await response.json();
-//     console.log({history})
-//     historyRef.value = history
-//
-//   }
-//   catch(error){
-//     console.log(error);
-//   }
-// }
-// loadData();
-
 </script>
 
 <template>
@@ -96,6 +78,32 @@ const testPatient = ref<IPatientAlgemeen>({
 
   <drop-down-selector class='m-3' v-model:selected='selected2' :options='["one", "two", "three"]' type='searchable'/>
 
+  <patients-patientcard-edit
+    :patient="registerPatient"
+  ></patients-patientcard-edit>
+  <PressablesSaveButton text="Save"></PressablesSaveButton>
+  <PopupAlert
+    value="37"
+    :type="AlertType.temperature"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="danger"
+  ></PopupAlert>
+  <PopupAlert
+    value="37"
+    :type="AlertType.BloodPressure"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="warning"
+  ></PopupAlert>
+  <PopupAlert
+    value="95"
+    :type="AlertType.oxygen"
+    name="Joshy Jonkheere"
+    datetime="1u geleden"
+    level="good"
+  ></PopupAlert>
+
   <drop-down-selector
     v-model:selected='selected'
     :options="['one', 'two', 'three']"
@@ -111,13 +119,7 @@ const testPatient = ref<IPatientAlgemeen>({
   />
 
   <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
-
-
-  <patient-realtime :patient='testPatient' type='view' />
-<!--  <div v-if='historyRef'>-->
-<!--  </div>-->
-
-
+  <patient-realtime :patient='registerPatient' type='view' />
   <!-- <Login></Login> -->
   <!-- <Inputs></Inputs> -->
   <!-- <PatientSm /> -->

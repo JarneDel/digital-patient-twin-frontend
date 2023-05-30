@@ -8,12 +8,12 @@
       <p>{{ gender }}</p>
     </div>
     <!-- alerts and vital(s) -->
-    <div class="align-center mt-8 flex justify-center text-center">
-      <SvgNotification class="relative h-12 w-12 fill-black px-2" />
+    <div class="align-center relative mt-8 flex justify-center text-center mx-auto">
+      <SvgNotification></SvgNotification>
       <div
-        class="absolute left-[126px] top-[280px] flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px]"
+        class="absolute left-[108px] flex h-4 w-4 items-center justify-center rounded-lg bg-primary-500 text-[10px] text-white"
       >
-        <div class="text-white">+9</div>
+        +9
       </div>
     </div>
     <div>
