@@ -8,7 +8,7 @@ const meldingen = ref<IMelding[]>([
   {
     id: 1,
     name: 'Joshy Jonkheere',
-    time: new Date(Date.now() - 60 * 60 * 1000),
+    time: new Date(Date.now() - 6 * 1000),
     type: AlertType.BloodPressure,
     value: '95/120',
     level: 'danger',
@@ -66,10 +66,10 @@ const unpin = (id: number) => {
 </script>
 
 <template>
-  <div>
-    <h2 class='mb-8 text-xl  mx-4 mt-6 font-semibold'>Welkom, {{ gebruiker }}</h2>
+  <div class='max-w-[67rem] mx-auto'>
+    <h2 class='mb-8 text-xl  mx-8 mt-6 font-semibold'>Welkom, {{ gebruiker }}</h2>
     <!--    Grid container -->
-    <div class='flex flex-col grid-flow-col xl:grid grid-cols-2 gap-4 grid-rows-[min-content,_1fr] mx-4'>
+    <div class='flex flex-col grid-flow-col xl:grid grid-cols-[max-content,_max-content]  gap-x-8 gap-4 2xl:gap-x-16 grid-rows-[min-content,_1fr] mx-8'>
       <!--      Title Left      -->
       <TextKop2>Gepinde Patiënten</TextKop2>
       <!--      Content Left      -->
