@@ -80,7 +80,7 @@ const unpin = (id: number) => {
         <patients-sm v-for='patient of pinnedPatients' :key='patient.id' :patient='patient' @unpin='unpin(patient.id)'></patients-sm>
       </div>
       <!--      Content right    -->
-      <div class='flex flex-col gap-4'>
+      <div class='flex flex-col gap-4 max-w-[30rem]'>
         <Alert v-for='melding of meldingen' :key='melding.id' :level='melding.level' :value='melding.value'
                :datetime='melding.time' :name='melding.name' :type='melding.type'
                @remove='removeFromList(melding.id)' />
