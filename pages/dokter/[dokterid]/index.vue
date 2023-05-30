@@ -70,17 +70,18 @@ const unpin = (id: number) => {
   <div>
     <h2 class='mb-8 text-xl  mx-4 mt-6 font-semibold'>Welkom, {{ gebruiker }}</h2>
     <!--    Grid container -->
-    <div class='grid grid-cols-2 gap-4 grid-rows-[min-content,_1fr] mx-4'>
+    <div class='flex flex-col grid-flow-col xl:grid grid-cols-2 gap-4 grid-rows-[min-content,_1fr] mx-4'>
       <!--      Title Left      -->
       <TextKop2>Gepinde Patiënten</TextKop2>
-      <!--      Title Right      -->
-      <TextKop2>Ernstige meldingen</TextKop2>
       <!--      Content Left      -->
       <div class='flex flex-col gap-4'>
         <patients-sm v-for='patient of pinnedPatients' :key='patient.id' :patient='patient' @unpin='unpin(patient.id)'></patients-sm>
       </div>
+      <!--      Title Right      -->
+      <TextKop2>Ernstige meldingen</TextKop2>
+
       <!--      Content right    -->
-      <div class='flex flex-col gap-4 max-w-[30rem]'>
+      <div class='flex flex-col gap-4 max-w-[30rem] '>
         <Alert v-for='melding of meldingen' :key='melding.id' :level='melding.level' :value='melding.value'
                :datetime='melding.time' :name='melding.name' :type='melding.type'
                @remove='removeFromList(melding.id)' />
