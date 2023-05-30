@@ -23,6 +23,7 @@
       />
 
       <label for="patient-check">Joshy Jonkheere</label>
+      <label for="patient-check">Jonkheere</label>
       <label for="patient-check">mm/dd/jjjj</label>
       <label for="patient-check">Man</label>
       <div class="flex-1 justify-between">
