@@ -20,6 +20,6 @@ export default defineNuxtConfig({
   },
   plugins: [
     // { src: '~/plugins/mqtt.js', mode: 'server' }
-    { src: '~/plugins/signalR.js', mode: 'client' },
+    // { src: '~/plugins/signalR.js', mode: 'client' },
   ],
 })

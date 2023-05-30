@@ -1,10 +1,5 @@
 <script setup lang="ts">
     import { ArrowUp, LineChart } from 'lucide-vue-next';
-    import Heartrate from '../svg/heartrate.vue';
-    import Ademfrequentie from '../svg/ademfrequentie.vue';
-    import bloodpressure from '../svg/bloodpressure.vue'
-    import temperature from '../svg/temperature.vue'
-    import oxygen from '../svg/oxygen.vue'
     import { PropType } from '@vue/runtime-core'
     import { AlertType } from '~/interfaces/AlertType'
 

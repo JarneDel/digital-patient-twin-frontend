@@ -119,10 +119,10 @@ const registerPatient = ref<IPatientAlgemeen>({
   />
 
   <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
-  <patient-realtime :patient='registerPatient' type='view' />
+  <patients-realtime :patient='registerPatient' type='view' />
   <!-- <Login></Login> -->
   <!-- <Inputs></Inputs> -->
-  <!-- <PatientSm /> -->
+  <!-- <PatientsSm /> -->
 </template>
 
 <style scoped></style>
