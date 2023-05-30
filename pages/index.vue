@@ -14,11 +14,24 @@ watch(selected, () => {
 })
 
 // test
-// const response = await fetch('http://172.23.80.25:5010/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d');
-// // const history = await response.json();
-// const history = ref<History[]>([])
-const response = await fetch('http://172.23.80.25:5010/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d');
-const history = await response.json();
+const history = ref<History[]>()
+// fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
+//     .then(response => response.json())
+//     .then((data: History[]) => history.value = data);
+/////
+// const res = await fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
+// history.value = await res.json()
+////
+try{
+  const res = await fetch('http://localhost:5010/v1.0/invoke/PatientDataService/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=7d')
+  history.value = await res.json()
+  
+}
+catch(err){
+  console.log(err)
+}
+
+
 
 
 interface History{
@@ -40,7 +53,7 @@ interface SensorHistory{
   avg: number;
 }
 
-// console.log(history)
+
 
 
 </script>
@@ -68,6 +81,7 @@ interface SensorHistory{
 
   <!-- <li v-for="result in history" :key="result.deviceId">{{ result.deviceId }}</li> -->
   <div>hello</div>
+  <div v-if="history?.length">{{ history[0].deviceId }}</div>
   <chart-table  :timestamp="[1, 2, 3, 4, 5]" :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/>
   <!-- <chart-table  :timestamp="[1, 2, 3, 4, 5]" :hartslag="[90, 89, 67, 88, 90]" :bloeddruk="[100, 80, 98, 87, 99]" :bloedzuurstof="[90, 90, 91, 91, 92]" :temperatuur="[36, 36, 36, 36, 36]" :adem-frequentie="[12, 12, 13, 13, 11]"/> -->
   
