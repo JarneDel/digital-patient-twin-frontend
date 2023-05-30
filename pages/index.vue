@@ -2,6 +2,7 @@
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import goback from '~/components/pressables/goback.vue'
+import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -11,6 +12,14 @@ const selected = ref('one')
 const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
+})
+
+const registerPatient = ref<IPatientAlgemeen>({
+  voornaam: 'joshy',
+  achternaam: 'jonkheere',
+  geslacht: 'man',
+  geboortedatum: new Date(1900, 1, 1),
+  id: 1,
 })
 </script>
 
@@ -34,12 +43,7 @@ watch(selected, () => {
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner> -->
-  <PatientsPatientcard
-    firstname="joshy"
-    lastname="jonckheere"
-    birthdate="20/01/1998"
-    gender="man"
-  ></PatientsPatientcard>
+  <PatientsPatientcard></PatientsPatientcard>
   <PressablesSaveButton text="Save"></PressablesSaveButton>
   <PopupAlert
     value="37"
