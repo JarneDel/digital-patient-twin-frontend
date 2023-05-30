@@ -2,6 +2,7 @@
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import goback from '~/components/pressables/goback.vue'
+import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -12,13 +13,21 @@ const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
+
+const registerPatient = ref<IPatientAlgemeen>({
+  achternaam: 'Jonkheere',
+  geslacht: 'M',
+  voornaam: 'Joshy',
+  geboortedatum: new Date(1980, 1, 1),
+  id: 1,
+})
 </script>
 
 <template>
   <!--  <div class="bg-pink-800">Hello index</div>-->
   <!--  <PressablesButton>Hello world</PressablesButton>-->
   <!--  <TemplateDashboardCards patient="15" />-->
-  <!--  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />-->
+  <!-- <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" /> -->
   <!--  <PressablesSelector-->
   <!--    :options="['one', 'two', 'three', 'four']"-->
   <!--    v-model:selected="selected"-->
@@ -34,7 +43,9 @@ watch(selected, () => {
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
   ></PatientsPatientbanner> -->
-
+  <patients-patientcard-edit
+    :patient="registerPatient"
+  ></patients-patientcard-edit>
   <PressablesSaveButton text="Save"></PressablesSaveButton>
   <PopupAlert
     value="37"
