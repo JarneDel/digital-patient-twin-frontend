@@ -22,17 +22,17 @@ const timeDDMMYYYY = computed(() => {
 </script>
 
 <template>
-  <div class='flex items-center bg-neutral-500 w-[550px] h-[66px] rounded-lg px-4'>
-    <div class='grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1'>
-      <Pinrotated class='self-center' @click='$emit("unpin")' />
-      <span class='self-center pl-4'>{{ patient.voornaam }} {{ patient.achternaam }}</span>
-      <span class='self-center'>{{timeDDMMYYYY}}</span>
-      <span class='self-center'>{{ patient.geslacht }}</span>
-      <NuxtLink class='self-center' to='/dokter/[dokterid]/patients/[patientid]/edit'>
-        <pencil />
+  <div class='flex items-center bg-white drop-shadow-xl hover:bg-neutral-500 transition-all w-[550px] h-[66px] rounded-lg px-4'>
+    <div class='grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center'>
+      <Pinrotated role='button' class='self-center hover:bg-neutral-400 rounded-md text-gray-800'  @click='$emit("unpin")' />
+      <span class=' pl-4'>{{ patient.voornaam }} {{ patient.achternaam }}</span>
+      <span class=' text-gray-800'>{{timeDDMMYYYY}}</span>
+      <span class=' text-gray-800'>{{ patient.geslacht }}</span>
+      <NuxtLink class='' to='/dokter/[dokterid]/patients/[patientid]/edit'>
+        <pencil class='text-gray-700  rounded-lg hover:bg-neutral-300 active:text-gray-800' />
       </NuxtLink>
-      <NuxtLink class='self-center' to='/dokter/[dokterid]/patients/[patientid]'>
-        <Line-chart />
+      <NuxtLink class='' to='/dokter/[dokterid]/patients/[patientid]'>
+        <Line-chart class='rounded-lg hover:bg-neutral-300 active:text-gray-800 text-gray-700' />
       </NuxtLink>
     </div>
   </div>

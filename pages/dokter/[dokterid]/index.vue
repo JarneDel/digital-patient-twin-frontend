@@ -1,6 +1,5 @@
 <script setup lang='ts'>
 
-import Alert from '~/components/popup/Alert.vue'
 import { AlertType, IMelding } from '~/interfaces/AlertType'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
@@ -82,7 +81,7 @@ const unpin = (id: number) => {
 
       <!--      Content right    -->
       <div class='flex flex-col gap-4 max-w-[30rem] '>
-        <Alert v-for='melding of meldingen' :key='melding.id' :level='melding.level' :value='melding.value'
+        <AlertsPinned v-for='melding of meldingen' :key='melding.id' :level='melding.level' :value='melding.value'
                :datetime='melding.time' :name='melding.name' :type='melding.type'
                @remove='removeFromList(melding.id)' />
 
