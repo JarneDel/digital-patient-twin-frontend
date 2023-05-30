@@ -2,7 +2,6 @@
 
 import Alert from '~/components/popup/Alert.vue'
 import { AlertType, IMelding } from '~/interfaces/AlertType'
-import AlertLg from '~/components/Alerts/AlertLg.vue'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const gebruiker = ref('Dokter Mertens')
