@@ -5,9 +5,9 @@
     id="firstname"
     v-model="firstName"
     :class="{ 'border-red-500': isFirstNameInvalid }"
-    class="focus:border-tertiary-600 peer block w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    class="focus:border-tertiary-600 peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />
-  <span v-if="isFirstNameInvalid" class="text-red-500">
+  <span v-if="isFirstNameInvalid" class="break-word inline-block text-red-500">
     {{ firstNameErrorMessage }}
   </span>
 </template>
