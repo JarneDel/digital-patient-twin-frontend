@@ -82,13 +82,15 @@ const isCurrentPage = (path: string) => {
       </div>
 
     </div>
-    <div class="relative z-0 overflow-auto bg-white">
-      <div class="pb-11">
-        <slot />
+    <div class="z-0 overflow-auto bg-white">
+      <div class="pb-20 relative min-h-full">
+        <div class="min-h-full">
+          <slot />
+        </div>
         <footer
-          class="absolute right-[50%] mt-11 flex items-center justify-center"
+          class="absolute right-[50%] bottom-0 mt-11 flex items-center justify-center"
         >
-          <div class="bg-white pb-5 pt-2 text-tertiary-500">MCT 2023</div>
+          <div class="pb-5 pt-2 text-tertiary-500">MCT 2023</div>
         </footer>
       </div>
     </div>
