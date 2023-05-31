@@ -8,7 +8,7 @@ import { AlertType } from '~/interfaces/AlertType'
     <PressablesSaveButton></PressablesSaveButton>
   </div>
 
-  <forms class="mx-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+  <forms class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
     <!-- persoonlijke -->
     <div>
       <FormsSelectDevice></FormsSelectDevice>
@@ -29,7 +29,7 @@ import { AlertType } from '~/interfaces/AlertType'
       <FormsSurnameInput></FormsSurnameInput>
       <FormsEmailInput></FormsEmailInput>
       <FormsBirthDateInput></FormsBirthDateInput>
-      <TextKop2>Adresgegevens</TextKop2>
+      <!-- <TextKop2>Adresgegevens</TextKop2> -->
     </div>
 
     <!-- medisch -->
@@ -37,6 +37,7 @@ import { AlertType } from '~/interfaces/AlertType'
       <TextKop2>Medische gegevens</TextKop2>
       <FormsLenghtInput></FormsLenghtInput>
       <FormsWeightInput></FormsWeightInput>
+      <FormsBloodtypeInput></FormsBloodtypeInput>
     </div>
   </forms>
 </template>
