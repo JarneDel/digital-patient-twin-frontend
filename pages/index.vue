@@ -40,41 +40,41 @@ const registerPatient = ref<IPatientAlgemeen>({
    <pressables-goback link="Ga terug"></pressables-goback>
    <pressables-switch></pressables-switch>
    <FormsBirthDateInput></FormsBirthDateInput>
-  <popup-alert
+  <alerts-pinned
     value='37'
     :type='AlertType.temperature'
     name='Joshy Jonkheere'
     datetime='1u geleden'
     level='danger'
-  ></popup-alert>
-  <popup-alert
+  ></alerts-pinned>
+  <alerts-pinned
     value='37'
     :type='AlertType.BloodPressure'
     name='Joshy Jonkheere'
     datetime='1u geleden'
     level='warning'
-  ></popup-alert>
-  <popup-alert
+  ></alerts-pinned>
+  <alerts-pinned
     value='95'
     :type='AlertType.oxygen'
     name='Joshy Jonkheere'
     datetime='1u geleden'
     level='good'
-  ></popup-alert>
-  <popup-alert
+  ></alerts-pinned>
+  <alerts-pinned
     value='95'
     :type='AlertType.heartRate'
     name='Joshy Jonkheere'
     datetime='1u geleden'
     level='good'
-  ></popup-alert>
-  <popup-alert
+  ></alerts-pinned>
+  <alerts-pinned
     value='95'
     :type='AlertType.breathingRate'
     name='Joshy Jonkheere'
     datetime='1u geleden'
     level='good'
-  ></popup-alert>
+  ></alerts-pinned>
 
   <drop-down-selector class='m-3' v-model:selected='selected2' :options='["one", "two", "three"]' type='searchable'/>
 
@@ -82,41 +82,33 @@ const registerPatient = ref<IPatientAlgemeen>({
     :patient="registerPatient"
   ></patients-patientcard-edit>
   <PressablesSaveButton text="Save"></PressablesSaveButton>
-  <PopupAlert
+  <alerts-pinned
     value="37"
     :type="AlertType.temperature"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="danger"
-  ></PopupAlert>
-  <PopupAlert
+  ></alerts-pinned>
+  <alerts-pinned
     value="37"
     :type="AlertType.BloodPressure"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="warning"
-  ></PopupAlert>
-  <PopupAlert
+  ></alerts-pinned>
+  <alerts-pinned
     value="95"
     :type="AlertType.oxygen"
     name="Joshy Jonkheere"
     datetime="1u geleden"
     level="good"
-  ></PopupAlert>
+  ></alerts-pinned>
 
   <drop-down-selector
     v-model:selected='selected'
     :options="['one', 'two', 'three']"
   ></drop-down-selector>
 
-  <alerts-alert-lg
-    :type='AlertType.breathingRate'
-    name='Joshy Jonkheere'
-    birthdate='01/01/2000'
-    datetime='1u geleden'
-    level='warning'
-    value='15'
-  />
 
   <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
   <patients-realtime :patient='registerPatient' type='view' />

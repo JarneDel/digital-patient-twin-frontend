@@ -138,7 +138,7 @@ const alertsFiltered = computed(() => {
 
     </div>
     <div>
-      <AlertsAlertLg v-for='alert of alertsFiltered' :key='alert.id' :alert='alert' />
+      <alerts-lg v-for='alert of alertsFiltered' :key='alert.id' :alert='alert' />
     </div>
   </div>
 
