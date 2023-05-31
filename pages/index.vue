@@ -21,7 +21,7 @@ const registerPatient = ref<IPatientAlgemeen>({
 </script>
 
 <template>
-  <!--  <div class="bg-pink-800">Hello index</div>-->
+    <div class="bg-pink-800">Hello index</div>
     <PressablesButton>Hello world</PressablesButton>
     <TemplateDashboardCards patient="15" />
     <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
@@ -44,77 +44,29 @@ const registerPatient = ref<IPatientAlgemeen>({
     value='37'
     :type='AlertType.temperature'
     name='Joshy Jonkheere'
-    datetime='1u geleden'
+    :datetime='new  Date(Date.now() - 2 * 60 * 60 * 1000)'
     level='danger'
-  ></alerts-pinned>
-  <alerts-pinned
-    value='37'
-    :type='AlertType.BloodPressure'
-    name='Joshy Jonkheere'
-    datetime='1u geleden'
-    level='warning'
-  ></alerts-pinned>
-  <alerts-pinned
-    value='95'
-    :type='AlertType.oxygen'
-    name='Joshy Jonkheere'
-    datetime='1u geleden'
-    level='good'
-  ></alerts-pinned>
-  <alerts-pinned
-    value='95'
-    :type='AlertType.heartRate'
-    name='Joshy Jonkheere'
-    datetime='1u geleden'
-    level='good'
-  ></alerts-pinned>
-  <alerts-pinned
-    value='95'
-    :type='AlertType.breathingRate'
-    name='Joshy Jonkheere'
-    datetime='1u geleden'
-    level='good'
-  ></alerts-pinned>
-
+  />
   <drop-down-selector class='m-3' v-model:selected='selected2' :options='["one", "two", "three"]' type='searchable'/>
-
-  <patients-patientcard-edit
-    :patient="registerPatient"
-  ></patients-patientcard-edit>
+<!---->
+  <patients-patientcard-edit :patient="registerPatient"
+  />
   <PressablesSaveButton text="Save"></PressablesSaveButton>
   <alerts-pinned
     value="37"
     :type="AlertType.temperature"
     name="Joshy Jonkheere"
-    datetime="1u geleden"
+    :datetime="new Date(Date.now() - 2  * 3 * 1000)"
     level="danger"
   ></alerts-pinned>
-  <alerts-pinned
-    value="37"
-    :type="AlertType.BloodPressure"
-    name="Joshy Jonkheere"
-    datetime="1u geleden"
-    level="warning"
-  ></alerts-pinned>
-  <alerts-pinned
-    value="95"
-    :type="AlertType.oxygen"
-    name="Joshy Jonkheere"
-    datetime="1u geleden"
-    level="good"
-  ></alerts-pinned>
-
   <drop-down-selector
     v-model:selected='selected'
     :options="['one', 'two', 'three']"
-  ></drop-down-selector>
-
-
+  />
   <template-slider :type='AlertType.breathingRate' :min=0 :max=100 />
-  <patients-realtime :patient='registerPatient' type='view' />
-  <!-- <Login></Login> -->
-  <!-- <Inputs></Inputs> -->
-  <!-- <PatientsSm /> -->
+   <cards-login></cards-login>
+   <TemplateInputs></TemplateInputs>
+<!--   <PatientsSm />-->
 </template>
 
 <style scoped></style>
