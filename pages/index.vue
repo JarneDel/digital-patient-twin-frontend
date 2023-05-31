@@ -36,7 +36,7 @@ const registerPatient = ref<IPatientAlgemeen>({
     gender="Man"
     alertDate="20/10/2023"
     :typeAlert="AlertType.temperature"
-  ></PatientsPatientbanner> -->
+  ></PatientsPatientbanner>
    <pressables-goback link="Ga terug"></pressables-goback>
    <pressables-switch></pressables-switch>
    <FormsBirthDateInput></FormsBirthDateInput>
