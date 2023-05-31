@@ -3,16 +3,17 @@ import { AlertType } from '~/interfaces/AlertType'
 </script>
 
 <template>
-  <div class="align-start m-20 flex justify-between">
+  <div class="align-center m-5 flex lg:justify-between justify-center">
     <PressablesGoback link="Nieuwe Patient aanmaken"></PressablesGoback>
     <PressablesSaveButton></PressablesSaveButton>
   </div>
 
-  <forms class="mx-20 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+  <forms class="mx-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
     <!-- persoonlijke -->
-    <div class="-pl-4">
+    <div>
       <FormsSelectDevice></FormsSelectDevice>
       <LazyTextKop2>Meldingen</LazyTextKop2>
+      
       <pressables-toggle
         :type="AlertType.temperature"
         :text="AlertType.temperature"
@@ -22,7 +23,7 @@ import { AlertType } from '~/interfaces/AlertType'
       </div>
     </div>
 
-    <div class="pl-4">
+    <div>
       <TextKop2>Persoonlijke gegevens</TextKop2>
       <FormsTextInput></FormsTextInput>
       <FormsEmailInput></FormsEmailInput>
