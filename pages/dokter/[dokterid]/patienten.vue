@@ -8,6 +8,23 @@ const registerPatient = ref<IPatientAlgemeen>({
   id: 1,
 })
 
+// const patients: IPatientAlgemeen[] = [
+//   {
+//     achternaam: 'Jonkheere',
+//     geslacht: 'Man',
+//     voornaam: 'Joshy',
+//     geboortedatum: new Date(1980, 1, 1),
+//     id: 1,
+//   },
+//   {
+//     achternaam: 'J',
+//     geslacht: 'Vrouw',
+//     voornaam: 'J',
+//     geboortedatum: new Date(1990, 2, 14),
+//     id: 2,
+//   },
+// ]
+
 const isEditing = ref(false)
 const clickEdit = () => {
   isEditing.value = !isEditing.value

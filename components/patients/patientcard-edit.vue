@@ -22,7 +22,7 @@
         patient.geslacht
       }}</label>
       <div class="flex-1 justify-between">
-        <NuxtLink to="/">
+        <NuxtLink to="/dokter/[dokterid]/patienten/index">
           <div class="flex items-center justify-end">
             <ChevronRight class="h-6 w-6" />
           </div>
