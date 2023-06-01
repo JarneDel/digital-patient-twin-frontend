@@ -2,6 +2,7 @@
 import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType } from '~/interfaces/AlertType'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
+
 const isEditing = ref(false)
 const clickEdit = () => {
   isEditing.value = !isEditing.value
@@ -18,11 +19,17 @@ const registerPatient = ref<IPatientAlgemeen>({
   geboortedatum: new Date(1980, 1, 1),
   id: 1,
 })
+
+
+
 </script>
 
 <template>
     <div class="bg-pink-800">Hello index</div>
     <PressablesButton>Hello world</PressablesButton>
+
+    <chart-table />
+
     <TemplateDashboardCards patient="15" />
     <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
     <PressablesSelector
