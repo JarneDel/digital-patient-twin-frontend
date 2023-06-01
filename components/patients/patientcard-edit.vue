@@ -1,5 +1,5 @@
 <template>
-  <div class="m-10 max-w-5xl rounded-lg bg-neutral-300 p-8">
+  <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
     <div
       class="flex flex-col items-start justify-between gap-10 sm:flex-row lg:items-center"
     >
