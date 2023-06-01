@@ -20,14 +20,20 @@
     "@types/node": "^18",
     "@vueform/slider": "^2.1.7",
     "autoprefixer": "^10.4.14",
+    "chart.js": "^4.3.0",
+    "i": "^0.3.7",
     "lucide-vue-next": "^0.216.0",
     "mqtt": "^4.3.7",
+    "npm": "^9.6.7",
     "nuxt": "^3.4.3",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "socket.io": "^4.6.1",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "vue-chartjs": "^5.2.0",
+    "bodymovin": "^4.13.0",
+    "lottie-web": "^5.11.0"
   },
   "volta": {
     "node": "18.16.0"
@@ -46,7 +52,9 @@
     ]
   },
   "dependencies": {
+    "@canvasjs/vue-charts": "^1.0.1",
     "azure-iot-device": "^1.18.2",
-    "azure-iot-device-mqtt": "^1.16.2"
+    "azure-iot-device-mqtt": "^1.16.2",
+    "vue-google-charts": "^1.1.0"
   }
 }

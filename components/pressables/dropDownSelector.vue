@@ -37,6 +37,7 @@ watch(input, value => {
   if (props.type === 'default') return
   if (value === '') {
     isSubmitted.value = false
+    console.log('empty')
   }
   else{
     isOpen.value = true

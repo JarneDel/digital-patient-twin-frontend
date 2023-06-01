@@ -2,6 +2,7 @@
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
 
+
 defineProps(
   {
     'patient': {
