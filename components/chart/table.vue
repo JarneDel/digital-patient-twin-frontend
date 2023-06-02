@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { timeStamp } from 'console'
 import { IHistoriek } from '~/interfaces/IHistoriek'
 
 const url =
