@@ -49,7 +49,9 @@ const time = computed(() => {
     <div v-if="pending">Loading... {{ pending }}</div>
     <div v-else-if="error">Error: {{ error }}</div>
   <div class="grid items h-[300px] w-[1150px] grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr] grid-rows-6 bg-neutral-600 pt-2 drop-shadow-2xl">
-    <div v-if="time" :key="Math.random()" v-for="timestamp in time" class=" pr-5 flex items-center justify-end bg-primary-50 text-end">
+    
+    
+    <div v-if="time" :key="Math.random()" v-for="timestamp in time" class="flex items-center justify-end bg-primary-50 text-end ">
         <div>{{ timestamp }}</div>
     </div>
 
@@ -58,9 +60,17 @@ const time = computed(() => {
       <div class="ml-8">zuurstof</div>
       <svg-oxygen class="w-8" />
     </div>
+    <div v-if="result"  :key="Math.random()" v-for="oxygen in result?.map((item) => item.bloedzuurstof)">
+        <div class="text-center">{{ oxygen.avg.toFixed(1) }}</div>
+    </div>
+
+    <!-- <div class="mr-2 flex items-center justify-between bg-neutral-500 pr-4">
+      <div class="ml-8">zuurstof</div>
+      <svg-oxygen class="w-8" />
+    </div>
     <div v-if="result" class="flex items-center" :key="Math.random()" v-for="oxygen in result?.map((item) => item.bloedzuurstof)">
         <div class="pl-7">{{ oxygen.avg.toFixed(1) }}</div>
-    </div>
+    </div> -->
 
 
     <div class="mr-2 flex items-center justify-between bg-neutral-500 pr-4">
