@@ -20,19 +20,33 @@ const url =
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 
 
-const calculateAge = (date: Date) => {
-  // 01/01/2000
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const year = date.getFullYear()
-  return `${day}/${month}/${year}`
-}
+const calculateAge = (date: string): number => {
+  const today = new Date();
+  const [day, month, year] = date.split('/');
+
+  const geboortedatum = new Date(`${month}/${day}/${year}`);
+
+  let age = today.getFullYear() - geboortedatum.getFullYear();
+
+  const hasBirthdayOccurred = (
+    today.getMonth() > geboortedatum.getMonth() ||
+    (today.getMonth() === geboortedatum.getMonth() && today.getDate() >= geboortedatum.getDate())
+  );
+
+  if (!hasBirthdayOccurred) {
+    age--;
+  }
+
+  return age;
+};
+
 
 const result = computed<IPatientAlgemeen[]>(() => {
   const lijst: IPatientAlgemeen[] = []
   if (data.value?.algemeen) {
     lijst.push(data.value.algemeen)
   }
+
 
   return lijst
 })
@@ -42,7 +56,8 @@ const result = computed<IPatientAlgemeen[]>(() => {
 
 <template>
   <div v-if="pending">Loading... {{ pending }}</div>
-  <div v-else-if="error">Error: {{ error }}</div>
+  <div v-else-if="error"></div>
+  <!-- <div v-else-if="error">Er is een error opgetreden, probeer de pagina opniew te laden</div> -->
   <div class='flex flex-row justify-between bg-neutral-500 p-8 rounded-lg'>
     <div class='flex flex-row justify-start content-center gap-2'>
       <div
@@ -50,15 +65,15 @@ const result = computed<IPatientAlgemeen[]>(() => {
       :key="Math.random()"
       v-for="naam in result"
       >
-      {{ naam.voornaam }}
-        <!-- {{ naam.achternaam }} -->
+        {{ naam.voornaam }}
+        {{ naam.naam }}
       </div>
-      <!-- <div v-for="naam in result">
-        {{ calculateAge(naam.geboortedatum) }}
+      <div v-for="naam in result">
+        {{ calculateAge(naam.geboorteDatum.toString()) }}
       </div>
       <div v-for="naam in result">
         {{ naam.geslacht }}
-      </div> -->
+      </div>
     </div>
     <div class='flex flex-row flex-1 justify-end content-center'>
       <button v-if='type === "view"'>
