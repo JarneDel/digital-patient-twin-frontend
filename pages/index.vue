@@ -28,7 +28,9 @@ const registerPatient = ref<IPatientAlgemeen>({
     <div class="bg-pink-800">Hello index</div>
     <PressablesButton>Hello world</PressablesButton>
 
-    <chart-table />
+    <div class="mx-12 my-2">
+      <chart-table class="" />
+    </div>
 
     <TemplateDashboardCards patient="15" />
     <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />

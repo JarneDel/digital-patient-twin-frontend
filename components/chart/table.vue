@@ -6,19 +6,6 @@ const url =
   'http://localhost:5012/v1.0/invoke/PatientData/method/history/878c95cf-e82d-40a5-a56c-8790427f1657?range=5'
 const { error, data, pending } = await useFetch<IHistoriek[]>(url)
 
-// const timestamps = computed(() => {
-//   const mappedTimestamps = [];
-
-//   if (data.value) {
-//     mappedTimestamps.push(...data.value.map((item) => new Date(item.timestamp)));
-//   }
-
-//   const nextTimestamp = new Date(); // Create a new Date object with the current timestamp
-//   mappedTimestamps.push(nextTimestamp); // Add the next timestamp to the array
-
-//   console.log(mappedTimestamps + "mappedTimestamps");
-//   return mappedTimestamps;
-// })
 
 const result = computed(() => {
   if (data.value) {
@@ -26,11 +13,9 @@ const result = computed(() => {
   }
 })
 
-// time, but only hours and minutes
 const time = computed(() => {
   const mappedTimestamps = []
 
-  // hours and minutes only
   if (data.value) {
     mappedTimestamps.push(
       ...data.value.map(item =>
@@ -42,7 +27,7 @@ const time = computed(() => {
     )
   }
 
-  const nextTimestamp = new Date() // Create a new Date object with the current timestamp
+  const nextTimestamp = new Date()
   mappedTimestamps.push(
     nextTimestamp.toLocaleTimeString('nl-BE', {
       hour: '2-digit',
@@ -61,9 +46,9 @@ const time = computed(() => {
 <template>
   <div v-if="pending">Loading... {{ pending }}</div>
   <div v-else-if="error">Error: {{ error }}</div>
-  <div class="grid grid-cols-[2fr_6fr] w-[1150px] pt-2 bg-primary-50">
-    <div></div>
-    <div class="flex justify-between px-2">
+  <div class="grid grid-cols-[2fr_6fr] pt-2 px-2 bg-primary-50">
+    <div class="w-[210px]"></div>
+    <div class="flex justify-between">
       <div
         v-if="time"
         :key="Math.random()"
@@ -75,7 +60,7 @@ const time = computed(() => {
     </div>
   </div>
   <div
-    class="items grid h-[300px] w-[1150px] grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_.1fr] grid-rows-5 bg-neutral-600 drop-shadow-2xl"
+    class="items grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_.1fr] grid-rows-5 bg-neutral-600 drop-shadow-2xl"
   >
     <div class="mr-2 flex items-center justify-between bg-neutral-500 pr-4">
       <div class="ml-8">zuurstof</div>
@@ -92,7 +77,7 @@ const time = computed(() => {
     </div>
     <div></div>
 
-    <div class="mr-2 flex items-center justify-between bg-neutral-500 pr-4">
+    <div class="mr-2 flex items-center justify-between bg-neutral-500 pr-4 py-3">
       <div class="ml-8">hartslag</div>
       <svg-heartrate class="w-8" />
     </div>
