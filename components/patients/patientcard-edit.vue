@@ -37,12 +37,11 @@ import { ChevronRight } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
 
-defineProps({
-  patient: {
-    type: Object as PropType<IPatientAlgemeen>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  patient: IPatientAlgemeen
+}>()
+
+const patient: IPatientAlgemeen = props.patient
 
 const calculateAge = (date: Date) => {
   // 01/01/2000
