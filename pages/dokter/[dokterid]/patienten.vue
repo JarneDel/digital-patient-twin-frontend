@@ -29,6 +29,8 @@ import { IPatientAlgemeen } from '~/interfaces/IPatient'
 const isEditing = ref(false)
 const clickEdit = () => {
   isEditing.value = !isEditing.value
+
+  console.log(isEditing.value)
 }
 
 const selected = ref('oogje')
@@ -79,7 +81,7 @@ const addPatient = () => {
       <Plus class="h-8 w-8" />
     </button>
 
-    <PressablesEdit v-model:is-editing="isEditing" />
+    <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
   </div>
 
   <patients-patientcard-edit
@@ -87,6 +89,7 @@ const addPatient = () => {
     v-for="patient in patients"
     :key="patient.id"
     :patient="patient"
+    v-model:is-editing="isEditing"
   />
 </template>
 
