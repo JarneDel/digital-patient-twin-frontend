@@ -1,8 +1,6 @@
 <template>
   <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
-    <div
-      class="flex flex-col items-start justify-between gap-10 sm:flex-row lg:items-center"
-    >
+    <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
       <input
         id="patient-check"
         type="checkbox"
