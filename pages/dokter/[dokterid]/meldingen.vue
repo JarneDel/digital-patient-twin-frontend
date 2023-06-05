@@ -160,6 +160,7 @@ const alertsFiltered = computed(() => {
         v-for="alert of alertsFiltered"
         :key="alert.id"
         :alert="alert"
+        v-bind:type="alert.type"
       />
     </div>
   </div>
