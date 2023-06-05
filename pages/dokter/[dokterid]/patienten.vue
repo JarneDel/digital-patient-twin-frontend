@@ -33,11 +33,11 @@ const clickEdit = () => {
   console.log(isEditing.value)
 }
 
-const selected = ref('oogje')
-const selected2 = ref('')
-watch(selected, () => {
-  console.log(selected.value)
-})
+// const selected = ref('oogje')
+// const selected2 = ref('')
+// watch(selected, () => {
+//   console.log(selected.value)
+// })
 
 const patients = ref<IPatientAlgemeen[]>([
   {
@@ -81,7 +81,12 @@ const addPatient = () => {
       <Plus class="h-8 w-8" />
     </button>
 
-    <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
+    <PressablesEdit
+      :selectedCount="patients.length"
+      @clickDelete="clickEdit"
+      v-model:is-editing="isEditing"
+      @update:isEditing="$emit('update:isEditing', $event)"
+    />
   </div>
 
   <patients-patientcard-edit
@@ -90,6 +95,7 @@ const addPatient = () => {
     :key="patient.id"
     :patient="patient"
     v-model:is-editing="isEditing"
+    @update:isEditing="$emit('update:isEditing', $event)"
   />
 </template>
 
