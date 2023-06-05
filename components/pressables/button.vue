@@ -29,11 +29,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="m-12">
+  <div>
     <button
       @click="e => $emit('click', e)"
       :disabled="disabled"
-      class="inline-flex justify-center rounded-md border border-transparent bg-tertiary-400 px-4 py-2 text-sm font-medium text-neutral-900 ring-2 ring-tertiary-400 hover:bg-tertiary-500/90 focus:outline-none focus-visible:ring-tertiary-600"
+      class="inline-flex justify-center rounded-md border border-transparent bg-tertiary-100/30 px-4 py-2 text-sm font-medium text-tertiary-600 ring-2 ring-tertiary-300 hover:bg-tertiary-200/40 focus:outline-none focus-visible:ring-tertiary-500"
       :class="disabled && 'bg-tertiary-300'"
     >
       <slot />
