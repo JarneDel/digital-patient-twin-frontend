@@ -8,13 +8,13 @@
         },
     })
 
-defineEmits(['update:isOpen', 'closeModal'])
+defineEmits(['update:isOpen', 'click'])
 
 </script>
 
 <template>
-    <TransitionRoot appear :show="isOpen" as="template">
-        <Dialog as="div" @close="$emit('closeModal')" class="relative z-10">
+        <TransitionRoot appear :show="true" as="template">
+        <Dialog as="div" @close="$emit('click')" class="relative z-10">
             <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -59,7 +59,7 @@ defineEmits(['update:isOpen', 'closeModal'])
                     <button
                         type="button"
                         class="inline-flex justify-center rounded-md border border-transparent bg-tertiary-100/30 px-4 py-2 text-sm font-medium text-tertiary-600 ring-2 ring-tertiary-300 hover:bg-tertiary-200/40 focus:outline-none focus-visible:ring-tertiary-500"
-                        @click="$emit('closeModal')"
+                        @click="$emit('click')"
                     >
                         Ok
                     </button>
@@ -127,4 +127,5 @@ defineEmits(['update:isOpen', 'closeModal'])
             </div>
         </Dialog>
     </TransitionRoot> -->
+
 </template>

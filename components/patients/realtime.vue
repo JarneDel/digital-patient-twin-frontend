@@ -58,14 +58,9 @@ const result = computed<IPatientAlgemeen[]>(() => {
 const isOpen = ref(true)
 
 const closeModal = () => {
-  isOpen.value != isOpen.value
+  isOpen.value = false
   window.location.reload()
 }
-
-// const closeModal = () => {
-//   isOpen.value = false
-//   window.location.reload()
-// }
 
 
 </script>
@@ -73,7 +68,7 @@ const closeModal = () => {
 <template>
   <div v-if="pending">Loading... {{ pending }}</div>
   <div v-else-if="error">
-    <popup-error v-model:is-open="isOpen" @click="closeModal"/>
+    <popup-error @click="closeModal" v-model:is-open="isOpen" />
     <!-- <TransitionRoot appear :show="isOpen" as="template">
       <Dialog as="div" @close="closeModal" class="relative z-10">
         <TransitionChild
