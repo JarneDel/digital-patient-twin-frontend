@@ -12,11 +12,9 @@
       <label for="patient-check" class="capitalize">{{
         patient.voornaam
       }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.achternaam
-      }}</label>
+      <label for="patient-check" class="capitalize">{{ patient.naam }}</label>
       <label for="patient-check">{{
-        calculateAge(patient.geboortedatum)
+        calculateAge(patient.geboorteDatum)
       }}</label>
       <label for="patient-check" class="capitalize">{{
         patient.geslacht

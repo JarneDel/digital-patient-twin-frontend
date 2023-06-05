@@ -46,6 +46,7 @@
     ]
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.14",
     "azure-iot-device": "^1.18.2",
     "azure-iot-device-mqtt": "^1.16.2"
   }
