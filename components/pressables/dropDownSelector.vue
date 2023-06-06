@@ -1,108 +1,82 @@
 <template>
   <div class="w-72">
-    <Combobox v-model="selected">
+    <Listbox v-model="selectedPerson">
       <div class="relative mt-1">
-        <div
-          class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
+        <ListboxButton
+          class="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
         >
-          <ComboboxInput
-            class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-            :displayValue="(person) => person.name"
-            @change="query = $event.target.value"
-          />
-          <ComboboxButton
-            class="absolute inset-y-0 right-0 flex items-center pr-2"
+          <span class="block truncate">{{ selectedPerson.name }}</span>
+          <span
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
           >
             <ChevronDown
               class="h-5 w-5 text-gray-400"
               aria-hidden="true"
             />
-          </ComboboxButton>
-        </div>
-        <TransitionRoot
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-          @after-leave="query = ''"
+          </span>
+        </ListboxButton>
+
+        <transition
+          leave-active-class="transition duration-100 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
         >
-          <ComboboxOptions
+          <ListboxOptions
             class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
           >
-            <div
-              v-if="filteredPeople.length === 0 && query !== ''"
-              class="relative cursor-default select-none py-2 px-4 text-gray-700"
-            >
-              Nothing found.
-            </div>
-
-            <ComboboxOption
-              v-for="person in filteredPeople"
-              as="template"
-              :key="person.id"
+            <ListboxOption
+              v-slot="{ active, selected }"
+              v-for="person in people"
+              :key="person.name"
               :value="person"
-              v-slot="{ selected, active }"
+              as="template"
             >
               <li
-                class="relative cursor-default select-none py-2 pl-10 pr-4"
-                :class="{
-                  'bg-teal-600 text-white': active,
-                  'text-gray-900': !active,
-                }"
+                :class="[
+                  active ? 'bg-amber-100 text-amber-900' : 'text-gray-900',
+                  'relative cursor-default select-none py-2 pl-10 pr-4',
+                ]"
               >
                 <span
-                  class="block truncate"
-                  :class="{ 'font-medium': selected, 'font-normal': !selected }"
+                  :class="[
+                    selected ? 'font-medium' : 'font-normal',
+                    'block truncate',
+                  ]"
+                  >{{ person.name }}</span
                 >
-                  {{ person.name }}
-                </span>
                 <span
                   v-if="selected"
-                  class="absolute inset-y-0 left-0 flex items-center pl-3"
-                  :class="{ 'text-white': active, 'text-teal-600': !active }"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
                 >
                   <Check class="h-5 w-5" aria-hidden="true" />
                 </span>
               </li>
-            </ComboboxOption>
-          </ComboboxOptions>
-        </TransitionRoot>
+            </ListboxOption>
+          </ListboxOptions>
+        </transition>
       </div>
-    </Combobox>
+    </Listbox>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import {
-  Combobox,
-  ComboboxInput,
-  ComboboxButton,
-  ComboboxOptions,
-  ComboboxOption,
-  TransitionRoot,
+  Listbox,
+  ListboxLabel,
+  ListboxButton,
+  ListboxOptions,
+  ListboxOption,
 } from '@headlessui/vue'
 import { Check, ChevronDown } from 'lucide-vue-next';
 
 const people = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
+  { name: 'Wade Cooper' },
+  { name: 'Arlene Mccoy' },
+  { name: 'Devon Webb' },
+  { name: 'Tom Cook' },
+  { name: 'Tanya Fox' },
+  { name: 'Hellen Schmidt' },
 ]
-
-let selected = ref(people[0])
-let query = ref('')
-
-let filteredPeople = computed(() =>
-  query.value === ''
-    ? people
-    : people.filter((person) =>
-        person.name
-          .toLowerCase()
-          .replace(/\s+/g, '')
-          .includes(query.value.toLowerCase().replace(/\s+/g, ''))
-      )
-)
+const selectedPerson = ref(people[0])
 </script>
