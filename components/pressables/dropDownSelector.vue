@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import {
   Listbox,
-  ListboxLabel,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
@@ -38,7 +37,7 @@ const selected = ref(opt[0])
     <Listbox v-model="selected">
       <div class="relative mt-1">
         <ListboxButton
-          class="relative w-full cursor-default rounded-lg bg-tertiary-300 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary-500 sm:text-sm"
+          class="relative w-full cursor-default rounded-lg bg-tertiary-300 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-tertiary-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary-500 sm:text-sm"
         >
           <span class="block truncate text-tertiary-600">{{ selected.name }}</span>
           <span
