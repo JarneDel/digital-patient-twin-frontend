@@ -38,14 +38,14 @@ const selected = ref(opt[0])
     <Listbox v-model="selected">
       <div class="relative mt-1">
         <ListboxButton
-          class="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+          class="relative w-full cursor-default rounded-lg bg-tertiary-300 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary-500 sm:text-sm"
         >
-          <span class="block truncate">{{ selected.name }}</span>
+          <span class="block truncate text-tertiary-600">{{ selected.name }}</span>
           <span
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
           >
             <ChevronDown
-              class="h-5 w-5 text-gray-400"
+              class="h-5 w-5 text-tertiary-600"
               aria-hidden="true"
             />
           </span>
@@ -57,7 +57,7 @@ const selected = ref(opt[0])
           leave-to-class="opacity-0"
         >
           <ListboxOptions
-            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-tertiary-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
           >
             <ListboxOption
               v-slot="{ active, selected }"
@@ -68,7 +68,7 @@ const selected = ref(opt[0])
             >
               <li
                 :class="[
-                  active ? 'bg-amber-100 text-amber-900' : 'text-gray-900',
+                  active ? 'bg-tertiary-400 text-tertiary-600' : 'text-tertiary-600',
                   'relative cursor-default select-none py-2 pl-10 pr-4',
                 ]"
               >
@@ -81,7 +81,7 @@ const selected = ref(opt[0])
                 >
                 <span
                   v-if="selected"
-                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-tertiary-600"
                 >
                   <Check class="h-5 w-5" aria-hidden="true" />
                 </span>
