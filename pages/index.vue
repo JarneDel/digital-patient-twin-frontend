@@ -36,16 +36,18 @@ const person = ref<IPatientAlgemeen>({
   <!-- <alerts-lg v-bind:type="" v-bind:alert=""/> -->
 
   <div>HIER</div>
-  <drop-down-selector
+  <!-- <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
     :options="['one', 'two', 'three']"
     type="searchable"
   />
-  <PressablesSelector
-    :options="['one', 'two', 'three', 'four']"
+  <drop-down-selector
     v-model:selected="selected"
-  />
+    :options="['one', 'two', 'three']"
+  /> -->
+  <drop-down-selector />
+
   <div>HIER</div>
 
   <!-- goback -->
