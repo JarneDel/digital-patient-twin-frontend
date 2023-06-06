@@ -23,7 +23,8 @@ const props = defineProps({
   data: {
     type: Array as PropType<MeasurementData[]>,
     required: true,
-  }})
+  },
+})
 
 const chartDataComputed = computed(() => {
   const dataWithLabel: any[] = [
@@ -48,19 +49,21 @@ const chartDataComputed = computed(() => {
 
 const options = ref<GoogleChartOptions>({
   legend: 'none',
-  width: 800,
-  height: 600,
+  width: 600,
+  height: 400,
   title: props.type,
   hAxis: {
     title: props.xLabel,
   },
   vAxis: {
     title: props.yLabel,
-  }
+  },
+
 })
 </script>
 
 <template>
-  <g-chart :data='chartDataComputed' type='CandlestickChart' :options='options' :resizeDebounce="500" />
-
+  <div class='drop-shadow-md m-2 rounded-lg bg-neutral-600'>
+    <g-chart :data='chartDataComputed' type='CandlestickChart' :options='options' :resizeDebounce='500' />
+  </div>
 </template>

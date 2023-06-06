@@ -8,11 +8,11 @@ defineEmits(['click'])
   <div class='m-10 max-w-[434px] rounded-lg drop-shadow-2xl'>
     <div>
       <picture>
-        <source srcset='Images/dokter.webp' type='image/webp' />
-        <source srcset='Images/dokter-sm.jpg' type='image/jpg' />
+        <source srcset='/Images/dokter.webp' type='image/webp' />
+        <source srcset='/Images/dokter-sm.jpg' type='image/jpg' />
         <img
           class='h-[350px] w-[434px] rounded-t-lg object-cover'
-          src='Images/dokter-sm.jpg'
+          src='/Images/dokter-sm.jpg'
           alt='doctor'
         />
       </picture>

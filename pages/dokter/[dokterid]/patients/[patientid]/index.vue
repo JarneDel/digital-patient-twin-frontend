@@ -13,10 +13,7 @@ const patientNaam = ref("Test Patient")
 <template>
   <pressables-goback/>
   <text-kop2>Vitalen {{patientNaam}}</text-kop2>
-  <client-only>
-
     <grafieken :for='id'/>
-  </client-only>
 
 </template>
 
