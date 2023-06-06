@@ -17,15 +17,15 @@ defineEmits(['update:selected'])
     <div class="flex flex-row">
       <button
         v-for="(option, index) in options"
-        :key="option"
+        :key?="option"
         @click="$emit('update:selected', option)"
-        class=" overflow-hidden px-3 py-3  transition-all duration-300 ease-out"
+        class=" overflow-hidden px-3 py-3 ring-2 ring-transparent transition-all duration-300 ease-out outline-none focus-visible:ring-tertiary-600"
         :class="{
           'rounded-l-lg': index === 0,
           'rounded-r-lg': index === options.length - 1,
           'rounded-none': index !== 0 && index !== options.length - 1,
-          'bg-tertiary-300': option !== selected,
-          'bg-tertiary-500': option === selected,
+          'bg-tertiary-300/30': option !== selected,
+          'bg-tertiary-500/40': option === selected,
         }"
       >
         {{ option }}

@@ -34,11 +34,22 @@ const person = ref<IPatientAlgemeen>({
 <template>
   <!-- alert on dasboard -->
   <!-- <alerts-lg v-bind:type="" v-bind:alert=""/> -->
-  
+
+  <div>HIER</div>
+  <drop-down-selector
+    class="m-3"
+    v-model:selected="selected2"
+    :options="['one', 'two', 'three']"
+    type="searchable"
+  />
+  <PressablesSelector
+    :options="['one', 'two', 'three', 'four']"
+    v-model:selected="selected"
+  />
+  <div>HIER</div>
+
   <!-- goback -->
-  <div>HIER</div>
   <pressables-goback link="Ga terug" />
-  <div>HIER</div>
 
   <!-- select device -->
   <forms-select-device />

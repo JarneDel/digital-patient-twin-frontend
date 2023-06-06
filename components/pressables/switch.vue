@@ -7,6 +7,7 @@ defineEmits({
 </script>
 
 <template>
+  <div class="bg-tertiary-400"></div>
   <label class='switch'>
     <input type='checkbox' @change='
       $emit("change", $event.target.checked)
@@ -52,7 +53,7 @@ defineEmits({
   height: 2em;
   width: 2em;
   inset: 0;
-  background-color: #927FB8;
+  background-color: #AD9FCA;
   border-radius: 50px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.4);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);

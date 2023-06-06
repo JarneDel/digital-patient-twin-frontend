@@ -164,7 +164,7 @@ const clearDateError = () => {
     <!-- test pressable -->
     <button
       type="submit"
-      class="duration-400 mt-5 w-10 min-w-max rounded-lg bg-tertiary-500 p-5 transition-all hover:cursor-pointer hover:bg-tertiary-300"
+      class="duration-400 mt-5 w-10 min-w-max rounded-lg text-tertiary-600 ring-2 ring-tertiary-300 bg-tertiary-100/30 p-5 transition-all hover:cursor-pointer hover:bg-tertiary-200/40"
     >
       Submit
     </button>

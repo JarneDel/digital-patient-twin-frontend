@@ -28,17 +28,17 @@ defineEmits(['update:isEditing', 'clickDelete'])
         @click="$emit('update:isEditing', true)"
         class="w-[15rem] focus-visible:ring-2 focus-visible:ring-tertiary-500 outline-none"
       >
-        <lucide-edit3 class="h-8 w-8" />
+        <lucide-edit3 class="h-8 w-8 text-tertiary-600" />
       </button>
       <div v-else class="w-[15rem]">
         <div class="flex flex-row items-center justify-between gap-4">
-          <p class="whitespace-nowrap">{{ selectedCount }} selected</p>
+          <p class="whitespace-nowrap text-tertiary-600">{{ selectedCount }} selected</p>
           <div class="flex flex-row justify-end gap-4">
             <button @click="$emit('clickDelete')">
-              <lucide-trash class="h-8 w-8 "></lucide-trash>
+              <lucide-trash class="h-8 w-8 text-tertiary-600"></lucide-trash>
             </button>
             <button @click="$emit('update:isEditing', false)">
-              <lucide-x class="h-8 w-8" />
+              <lucide-x class="h-8 w-8 text-tertiary-600" />
             </button>
           </div>
         </div>
