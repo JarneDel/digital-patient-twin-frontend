@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Eye } from 'lucide-vue-next';
+import { Eye } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 const registerPatient = ref<IPatientAlgemeen>({
   achternaam: 'Jonkheere',
@@ -10,18 +10,25 @@ const registerPatient = ref<IPatientAlgemeen>({
 })
 
 const selected = ref<string>('')
-const options = ref<any[]>([])
+const options = ref<any[]>(['oogje, patient'])
+watch(selected, () => {
+  console.log(selected.value)
+})
 </script>
 
 <template>
-  <div class="flex flex-1 items-center justify-end p-5">
+  <div class="mx-5 flex flex-1 items-center justify-end p-5">
     <PressablesSelector
-      :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      :options="['oogje', 'patient']"
       v-model:selected="selected"
     />
   </div>
 
-  <PatientsRealtime type="edit" :patient="registerPatient"></PatientsRealtime>
+  <PatientsRealtime
+    type="edit"
+    class="m-4"
+    :patient="registerPatient"
+  ></PatientsRealtime>
   <PatientsRealtime type="view" :patient="registerPatient"></PatientsRealtime>
 </template>
 
