@@ -1,5 +1,5 @@
 export interface IHistoriek {
-  deviceId: string;
+    deviceId: string;
   timestamp: string;
   bloeddruk: BloodPressureData;
   ademFrequentie: MeasurementData;
@@ -8,15 +8,15 @@ export interface IHistoriek {
   temperatuur: MeasurementData;
 }
 
-export interface MeasurementData {
-  min: number;
-  max: number;
-  q1: number;
-  q3: number;
-  avg: number;
+interface MeasurementData {
+    min: number;
+    max: number;
+    q1: number;
+    q3: number;
+    avg: number;
 }
 
 interface BloodPressureData {
-  systolic: MeasurementData;
-  diastolic: MeasurementData;
+    systolic: MeasurementData;
+    diastolic: MeasurementData;
 }
