@@ -26,7 +26,6 @@
     "lottie-web": "^5.11.0",
     "lucide-vue-next": "^0.216.0",
     "mqtt": "^4.3.7",
-    "npm": "^9.6.7",
     "nuxt": "^3.4.3",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",

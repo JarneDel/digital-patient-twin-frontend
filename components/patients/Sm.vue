@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import Pinrotated from '../svg/pinrotated.vue'
 import { Pencil, LineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
@@ -9,30 +9,47 @@ const props = defineProps({
     required: true,
   },
 })
-defineEmits(["unpin"])
+defineEmits(['unpin'])
 
 const timeDDMMYYYY = computed(() => {
-  const date = props.patient.geboortedatum
+  const date = props.patient.geboorteDatum
   const month = date.getMonth() + 1
   const day = date.getDate()
   const year = date.getFullYear()
   return `${day}/${month}/${year}`
 })
-
 </script>
 
 <template>
-  <div class='flex items-center bg-white drop-shadow-xl hover:bg-neutral-500 transition-all w-[550px] h-[66px] rounded-lg px-4'>
-    <div class='grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center'>
-      <Pinrotated role='button' class='self-center hover:bg-neutral-400 rounded-md text-gray-800 w-10 h-10'  @click='$emit("unpin")' />
-      <span class=' pl-4'>{{ patient.voornaam }} {{ patient.achternaam }}</span>
-      <span class=' text-gray-800'>{{timeDDMMYYYY}}</span>
-      <span class=' text-gray-800'>{{ patient.geslacht }}</span>
-      <NuxtLink class='justify-self-center' to='/dokter/[dokterid]/patients/[patientid]/edit'>
-        <pencil class='text-gray-700 w-10 p-2 h-10 rounded-lg hover:bg-neutral-300 active:text-gray-800' />
+  <div
+    class="flex h-[66px] w-[550px] items-center rounded-lg bg-white px-4 drop-shadow-xl transition-all hover:bg-neutral-500"
+  >
+    <div
+      class="grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center"
+    >
+      <Pinrotated
+        role="button"
+        class="h-10 w-10 self-center rounded-md text-gray-800 hover:bg-neutral-400"
+        @click="$emit('unpin')"
+      />
+      <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
+      <span class="text-gray-800">{{ timeDDMMYYYY }}</span>
+      <span class="text-gray-800">{{ patient.geslacht }}</span>
+      <NuxtLink
+        class="justify-self-center"
+        to="/dokter/[dokterid]/patients/[patientid]/edit"
+      >
+        <pencil
+          class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
+        />
       </NuxtLink>
-      <NuxtLink class='justify-self-center' to='/dokter/[dokterid]/patients/[patientid]'>
-        <Line-chart class='rounded-lg w-10 p-2 h-10 hover:bg-neutral-300 active:text-gray-800 text-gray-700' />
+      <NuxtLink
+        class="justify-self-center"
+        to="/dokter/[dokterid]/patients/[patientid]"
+      >
+        <Line-chart
+          class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
+        />
       </NuxtLink>
     </div>
   </div>

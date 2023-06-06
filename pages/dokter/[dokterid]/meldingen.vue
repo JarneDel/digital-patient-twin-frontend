@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { AlertType, IMelding } from '~/interfaces/AlertType'
 
@@ -11,9 +11,9 @@ const patienten = ref<PatientGegevens[]>([
       nr: '25',
     },
     algemeen: {
-      geboortedatum: new Date(1999, 5, 30),
+      geboorteDatum: new Date(1999, 5, 30),
       id: 3,
-      achternaam: 'De Koek',
+      naam: 'De Koek',
       geslacht: 'Anders',
       voornaam: 'Frankie',
     },
@@ -39,9 +39,9 @@ const patienten = ref<PatientGegevens[]>([
       nr: '16',
     },
     algemeen: {
-      geboortedatum: new Date(1985, 11, 17),
+      geboorteDatum: new Date(1985, 11, 17),
       id: 1,
-      achternaam: 'Jonckheere',
+      naam: 'Jonckheere',
       geslacht: 'Man',
       voornaam: 'Joshy',
     },
@@ -93,57 +93,76 @@ const meldingen = ref<IMelding[]>([
   },
 ])
 
-
 const patientNamen = computed(() => {
-  return patienten.value.map((patient) => {
-    return `${patient.algemeen?.voornaam} ${patient.algemeen?.achternaam}`
+  return patienten.value.map(patient => {
+    return `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
   })
 })
 const selectedPatient = ref<string>('')
 
 const selectedPatientObject = computed((): PatientGegevens => {
   return patienten.value.find((patient: PatientGegevens): boolean => {
-    return `${patient.algemeen?.voornaam} ${patient.algemeen?.achternaam}` === selectedPatient.value
+    return (
+      `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}` ===
+      selectedPatient.value
+    )
   }) as PatientGegevens
 })
-const AlertTypes = ['Alles', 'Bloeddruk', 'Hartslag', 'Temperatuur', 'Bloedzuurstof', 'Ademfrequentie']
+const AlertTypes = [
+  'Alles',
+  'Bloeddruk',
+  'Hartslag',
+  'Temperatuur',
+  'Bloedzuurstof',
+  'Ademfrequentie',
+]
 const AlertSeverity = ['Alles', 'Laag', 'Matig', 'Kritisch']
 const selectedSeverity = ref<string>('Alles')
 const selectedType = ref<string>('Alles')
-watch(selectedType, (value) => {
+watch(selectedType, value => {
   console.log(value)
 })
 
 const alertsFiltered = computed(() => {
-  return meldingen.value.filter((alert) => {
+  return meldingen.value.filter(alert => {
     if (selectedPatient.value === '') {
       return true
     }
     return alert.patientId === selectedPatientObject.value.id
   })
 })
-
 </script>
 
 <template>
-  <div class='max-w-[58rem] mx-auto'>
-    <h2 class='mb-8 text-xl  mx-8 mt-6 font-semibold'>Meldingen</h2>
-    <div class='flex justify-between my-8 mx-5 content-center'>
-      <div class='flex gap-x-4 items-center '>
-        <pressables-drop-down-selector type='searchable' :options='patientNamen' v-model:selected='selectedPatient' />
-        <pressables-drop-down-selector type='default' :options='AlertTypes' v-model:selected='selectedType' />
+  <div class="mx-auto max-w-[58rem]">
+    <h2 class="mx-8 mb-8 mt-6 text-xl font-semibold">Meldingen</h2>
+    <div class="mx-5 my-8 flex content-center justify-between">
+      <div class="flex items-center gap-x-4">
+        <pressables-drop-down-selector
+          type="searchable"
+          :options="patientNamen"
+          v-model:selected="selectedPatient"
+        />
+        <pressables-drop-down-selector
+          type="default"
+          :options="AlertTypes"
+          v-model:selected="selectedType"
+        />
       </div>
-      <PressablesSelector v-model:selected='selectedSeverity' :options='AlertSeverity' />
+      <PressablesSelector
+        v-model:selected="selectedSeverity"
+        :options="AlertSeverity"
+      />
       <!--     Alerts container     -->
-
     </div>
     <div>
-      <alerts-lg v-for='alert of alertsFiltered' :key='alert.id' :alert='alert' />
+      <alerts-lg
+        v-for="alert of alertsFiltered"
+        :key="alert.id"
+        :alert="alert"
+      />
     </div>
   </div>
-
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
