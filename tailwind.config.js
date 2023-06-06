@@ -32,7 +32,7 @@ module.exports = {
           100: '#CFE7E8',
         },
         tertiary: {
-          600: '#8573A7',
+          600: '#443A55',
           500: '#927FB8',
           400: '#AD9FCA',
           300: '#C8BFDB',
