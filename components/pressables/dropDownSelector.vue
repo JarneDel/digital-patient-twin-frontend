@@ -1,11 +1,11 @@
 <template>
   <div class="w-72">
-    <Listbox v-model="selectedPerson">
+    <Listbox v-model="selected">
       <div class="relative mt-1">
         <ListboxButton
           class="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
         >
-          <span class="block truncate">{{ selectedPerson.name }}</span>
+          <span class="block truncate">{{ selected.name }}</span>
           <span
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
           >
@@ -26,7 +26,7 @@
           >
             <ListboxOption
               v-slot="{ active, selected }"
-              v-for="person in people"
+              v-for="person in opt"
               :key="person.name"
               :value="person"
               as="template"
@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Listbox,
@@ -70,13 +70,28 @@ import {
 } from '@headlessui/vue'
 import { Check, ChevronDown } from 'lucide-vue-next';
 
-const people = [
-  { name: 'Wade Cooper' },
-  { name: 'Arlene Mccoy' },
-  { name: 'Devon Webb' },
-  { name: 'Tom Cook' },
-  { name: 'Tanya Fox' },
-  { name: 'Hellen Schmidt' },
-]
-const selectedPerson = ref(people[0])
+const props = defineProps({
+  type: {
+    type: String as PropType<'default' | 'searchable'>,
+    required: false,
+    default: 'default',
+  },
+  options: {
+    type: Array as PropType<string[]>,
+    required: true,
+  },
+  selected: {
+    type: String,
+    required: true,
+  },
+})
+
+const opt = props.options.toString().split(',').map((name) => ({
+  name,
+}))
+const selected = ref(opt[0])
+
+
+
+
 </script>
