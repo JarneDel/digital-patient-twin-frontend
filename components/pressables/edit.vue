@@ -14,6 +14,7 @@ defineProps({
     default: false,
   },
 })
+
 defineEmits(['update:isEditing', 'clickDelete'])
 </script>
 

@@ -5,6 +5,8 @@
         id="patient-check"
         type="checkbox"
         class="form-checkbox form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-0"
+        :checked="isSelected"
+        @change="handleCheckboxChange"
       />
 
       <label for="patient-check" class="capitalize">{{
@@ -35,7 +37,27 @@
 <script setup lang="ts">
 import { ChevronRight } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
-import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
+import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
+
+const isSelected = ref(false)
+const instance = getCurrentInstance()
+
+const handleCheckboxChange = () => {
+  isSelected.value = !isSelected.value
+  instance?.emit('checkboxSelected', isSelected.value ? isSelected.value : 0)
+}
+
+// Cleanup function when the component is unmounted
+onUnmounted(() => {
+  instance?.emit('checkboxSelected', 0) // Reset selected count
+})
+
+// Watch for changes in the isSelected value
+watchEffect(() => {
+  if (isSelected.value) {
+    instance?.emit('checkboxSelected', 1)
+  }
+})
 
 const props = defineProps<{
   patient: IPatientAlgemeen

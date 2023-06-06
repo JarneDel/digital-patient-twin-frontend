@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
-// const registerPatient = ref<IPatientAlgemeen>({
-//   achternaam: 'Jonkheere',
-//   geslacht: 'Man',
-//   voornaam: 'Joshy',
-//   geboortedatum: new Date(1980, 1, 1),
-//   id: 1,
-// })
+
+const registerPatient = ref<IPatientAlgemeen>({
+  achternaam: 'Jonkheere',
+  geslacht: 'Man',
+  voornaam: 'Joshy',
+  geboortedatum: new Date(1980, 1, 1),
+  id: 1,
+})
 
 // const patients: IPatientAlgemeen[] = [
 //   {
@@ -33,11 +34,12 @@ const clickEdit = () => {
   console.log(isEditing.value)
 }
 
-// const selected = ref('oogje')
-// const selected2 = ref('')
-// watch(selected, () => {
-//   console.log(selected.value)
-// })
+const selected = ref(0)
+const isSelected = ref(false)
+
+const updateSelectedCount = (count: number) => {
+  selected.value = count
+}
 
 const patients = ref<IPatientAlgemeen[]>([
   {
@@ -71,20 +73,17 @@ const addPatient = () => {
 <template>
   <div class="m-20 flex items-center justify-between">
     <h1 class="text-3xl font-semibold">Patiënt lijst</h1>
-    <!-- <PressablesSelector
-      :options="['oogje', 'patiënt']"
-      v-model:selected="selected"
-    /> -->
   </div>
-  <div class="m-20 flex items-center justify-between">
+  <div class="m-20 flex flex-col items-center justify-between lg:flex-row">
     <button @click="addPatient" class="rounded-lg bg-secondary-400 p-5">
       <Plus class="h-8 w-8" />
     </button>
 
     <PressablesEdit
-      :selectedCount="patients.length"
       @clickDelete="clickEdit"
       v-model:is-editing="isEditing"
+      :selected-count="selected"
+      @checkboxSelected="updateSelectedCount"
       @update:isEditing="$emit('update:isEditing', $event)"
     />
   </div>
@@ -93,10 +92,26 @@ const addPatient = () => {
     class="m-4"
     v-for="patient in patients"
     :key="patient.id"
+    :selected-count="selected"
     :patient="patient"
-    v-model:is-editing="isEditing"
+    :is-editing="isEditing"
+    :is-checked="isSelected"
+    @update:checked="isSelected = $event"
+    @checkboxSelected="updateSelectedCount"
     @update:isEditing="$emit('update:isEditing', $event)"
+    @update:selected-count="selected = $event"
   />
+  <!-- 
+  <patients-patientcard-edit
+    :patient="registerPatient"
+    :selected-count="selected"
+    :is-editing="isEditing"
+    :is-checked="isSelected"
+    @update:checked="isSelected = $event"
+    @checkboxSelected="updateSelectedCount"
+    @update:isEditing="$emit('update:isEditing', $event)"
+    @update:selected-count="selected = $event"
+  ></patients-patientcard-edit> -->
 </template>
 
 <style scoped></style>
