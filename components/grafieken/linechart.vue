@@ -1,8 +1,8 @@
 <script setup lang='ts'>
+
 import { GChart } from 'vue-google-charts'
 import { GoogleChartOptions } from 'vue-google-charts/dist/types'
-import { MeasurementData } from '~/interfaces/IHistoriek'
-
+import { BloodPressureData } from '~/interfaces/IHistoriek'
 const props = defineProps({
   type: {
     type: String,
@@ -21,15 +21,16 @@ const props = defineProps({
     required: true,
   },
   data: {
-    type: Array as PropType<MeasurementData[]>,
+    type: Array as PropType<BloodPressureData[]>,
     required: true,
   },
 })
 
 const chartDataComputed = computed(() => {
   const dataWithLabel: any[] = [
-    ['day', 'min/max Q1/Q3', 'Q1', 'Q3', 'max'],
+    ['tijd', 'systolic', 'diastolic'],
   ]
+  console.log(props.data.length)
   props.data.forEach((item, index) => {
     // item.timestamp: 2023-05-31T13:14:18+02:00
     const date = props.timeStamps[index]
@@ -37,11 +38,10 @@ const chartDataComputed = computed(() => {
     const label = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
     dataWithLabel.push([
       label,
-      item.min,
-      item.q1,
-      item.q3,
-      item.max,
+      item.systolic.avg,
+      item.diastolic.avg,
     ])
+    console.log(dataWithLabel)
   })
   return dataWithLabel
 })
@@ -62,30 +62,21 @@ const options = ref<GoogleChartOptions>({
   chartArea: {
     backgroundColor: 'transparent',
   },
-  candlestick: {
-    fallingColor: {
-      strokeWidth: 1,
-      fill: '#a52714', // red
-    },
-    risingColor: {
-      strokeWidth: 1,
-      fill: '#C42828', // tertiary
-    },
-  },
-  colors: [
-    '#E19393', // tertiary
-    '#E19393', // tertiary
-    '#E19393', // tertiary
-    '#E19393', // tertiary
-  ],
-
-  
+  colors: ['#158E87', '#C30707'],
 
 })
 </script>
 
 <template>
   <div class='drop-shadow-md m-2 rounded-lg bg-neutral-600'>
-    <g-chart :data='chartDataComputed' type='CandlestickChart' :options='options' :resizeDebounce='500' />
+    <GChart
+      :data="chartDataComputed"
+      :options="options"
+      type="LineChart"
+    />
   </div>
 </template>
+
+<style scoped>
+
+</style>
