@@ -46,8 +46,11 @@ const person = ref<IPatientAlgemeen>({
     v-model:selected="selected"
     :options="['one', 'two', 'three']"
   /> -->
-  <drop-down-selector :options="['one', 'two', 'three']" v-model:selected="selected" type="searchable"/>
-  <drop-down-selector :options="['een', 'twee', 'drie']" v-model:selected="selected" />
+  <div>search</div>
+  <pressables-search :options="['one', 'two', 'three']" v-model:selected="selected"/>
+  
+  <div>dropdown</div>
+  <drop-down-selector :options="['een', 'twee', 'drie']" v-model:selected="selected"/>
 
   <div>HIER</div>
 
