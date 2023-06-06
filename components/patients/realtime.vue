@@ -8,6 +8,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue'
+import { waitForDebugger } from 'inspector';
 
 defineProps({
   // 'patient': {
@@ -44,8 +45,6 @@ const calculateAge = (date: string): number => {
   return age
 }
 
-
-
 const result = computed<IPatientAlgemeen[]>(() => {
   const lijst: IPatientAlgemeen[] = []
   if (data.value?.algemeen) {
@@ -58,16 +57,19 @@ const result = computed<IPatientAlgemeen[]>(() => {
 
 const isOpen = ref(true)
 
-function closeModal() {
+const closeModal = () => {
   isOpen.value = false
   window.location.reload()
 }
+
+
 </script>
 
 <template>
   <div v-if="pending">Loading... {{ pending }}</div>
   <div v-else-if="error">
-    <TransitionRoot appear :show="isOpen" as="template">
+    <popup-error @click="closeModal" v-model:is-open="isOpen" />
+    <!-- <TransitionRoot appear :show="isOpen" as="template">
       <Dialog as="div" @close="closeModal" class="relative z-10">
         <TransitionChild
           as="template"
@@ -89,7 +91,7 @@ function closeModal() {
               as="template"
               enter="duration-300 ease-out"
               enter-from="opacity-0 scale-95"
-              enter-to="opacity-100 scale-100"
+              enter-to="opacity-00 scale-100"
               leave="duration-200 ease-in"
               leave-from="opacity-100 scale-100"
               leave-to="opacity-0 scale-95"
@@ -123,9 +125,8 @@ function closeModal() {
           </div>
         </div>
       </Dialog>
-    </TransitionRoot>
+    </TransitionRoot> -->
   </div>
-  <!-- <div v-else-if="error">Er is een error opgetreden, probeer de pagina opniew te laden</div> -->
   <div class="flex flex-row justify-between rounded-lg bg-neutral-500 p-8">
     <div class="flex flex-row content-center justify-start gap-2">
       <div v-if="result" :key="Math.random()" v-for="naam in result">

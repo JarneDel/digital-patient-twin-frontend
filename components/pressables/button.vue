@@ -33,7 +33,7 @@ defineProps({
     <button
       @click="e => $emit('click', e)"
       :disabled="disabled"
-      class="rounded-lg bg-tertiary-500 font-semibold transition-colors hover:bg-tertiary-400"
+      class="inline-flex justify-center rounded-md border border-transparent bg-tertiary-100/30 px-4 py-2 text-sm font-medium text-tertiary-600 ring-2 ring-tertiary-300 hover:bg-tertiary-200/40 focus:outline-none focus-visible:ring-tertiary-500"
       :class="disabled && 'bg-tertiary-300'"
     >
       <slot />
