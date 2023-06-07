@@ -3,17 +3,18 @@ import { AlertType } from '~/interfaces/AlertType'
 </script>
 
 <template>
-  <div class="align-center m-5 flex justify-center lg:justify-between">
+  <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <PressablesGoback link="Nieuwe Patient aanmaken"></PressablesGoback>
+
     <PressablesSaveButton></PressablesSaveButton>
   </div>
 
-  <forms class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+  <div
+    class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+  >
     <!-- persoonlijke -->
-    <div>
+    <div class="lg:col-span-2">
       <FormsSelectDevice></FormsSelectDevice>
-      <LazyTextKop2>Meldingen</LazyTextKop2>
-
       <pressables-toggle
         :type="AlertType.temperature"
         :text="AlertType.temperature"
@@ -23,23 +24,37 @@ import { AlertType } from '~/interfaces/AlertType'
       </div>
     </div>
 
-    <div class="lg:mx-20">
+    <div class="lg:col-span-1">
       <TextKop2>Persoonlijke gegevens</TextKop2>
       <FormsTextInput></FormsTextInput>
       <FormsSurnameInput></FormsSurnameInput>
-      <FormsEmailInput></FormsEmailInput>
       <FormsBirthDateInput></FormsBirthDateInput>
-      <!-- <TextKop2>Adresgegevens</TextKop2> -->
+      <TextKop2>Adresgegevens</TextKop2>
+      <FormsStreetInput></FormsStreetInput>
+      <TextKop2>Contact gegevens</TextKop2>
+      <FormsEmailInput></FormsEmailInput>
     </div>
 
     <!-- medisch -->
-    <div>
+    <div class="lg:col-span-1">
       <TextKop2>Medische gegevens</TextKop2>
       <FormsLenghtInput></FormsLenghtInput>
       <FormsWeightInput></FormsWeightInput>
       <FormsBloodtypeInput></FormsBloodtypeInput>
     </div>
-  </forms>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+</style>

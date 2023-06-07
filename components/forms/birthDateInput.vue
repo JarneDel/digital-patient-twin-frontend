@@ -6,10 +6,10 @@
       type="date"
       v-model="birthdate"
       :class="{ 'border-red-500': showError }"
-      class="focus:border-tertiary-600 peer w-fit block appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      class="focus:border-tertiary-600 peer block w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       @input="validateBirthdate"
     />
-    <span v-if="showError" class="text-red-500 ">{{ errorMessage }}</span>
+    <span v-if="showError" class="text-red-500">{{ errorMessage }}</span>
   </div>
 </template>
 
