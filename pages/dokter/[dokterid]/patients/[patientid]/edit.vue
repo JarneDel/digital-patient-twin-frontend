@@ -10,10 +10,10 @@ import { AlertType } from '~/interfaces/AlertType'
   </div>
 
   <div
-    class="mx-5 grid grid-cols-1 gap-20 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    class="mx-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
   >
     <!-- persoonlijke -->
-    <div class="lg:col-span-2">
+    <div class="lg:col-span-1">
       <FormsSelectDevice></FormsSelectDevice>
       <pressables-toggle
         :type="AlertType.temperature"
@@ -33,6 +33,7 @@ import { AlertType } from '~/interfaces/AlertType'
       <FormsStreetInput></FormsStreetInput>
       <TextKop2>Contact gegevens</TextKop2>
       <forms-email-input></forms-email-input>
+      <forms-telephone-input></forms-telephone-input>
     </div>
 
     <!-- medisch -->
