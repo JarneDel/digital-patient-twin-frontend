@@ -18,7 +18,7 @@ defineProps({
   type: {
     type: String as PropType<'view' | 'edit'>,
     required: true,
-  },
+  }
 })
 
 const url =

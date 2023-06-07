@@ -15,9 +15,6 @@ export default defineNuxtConfig({
       Poppins: [400, 500, 600, 700],
     },
   },
-  env: {
-    "IoTHubSecret": process.env.IoTHubUrl,
-  },
   plugins: [
     // { src: '~/plugins/mqtt.js', mode: 'server' }
     // { src: '~/plugins/signalR.js', mode: 'client' },
