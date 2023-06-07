@@ -95,7 +95,6 @@ const addPatient = () => {
   </div>
 
   <patients-patientcard-edit
-    class="m-4"
     v-for="patient in patients"
     :key="patient.id"
     :selected-count="selected"
