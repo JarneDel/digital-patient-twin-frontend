@@ -49,13 +49,13 @@ const patients = ref<IPatientAlgemeen[]>([
     geboorteDatum: new Date(1980, 1, 1),
     id: 1,
   },
-  {
-    voornaam: 'shareeb',
-    naam: 'hashmi',
-    geslacht: 'man',
-    geboorteDatum: new Date(1990, 2, 14),
-    id: 2,
-  },
+  // {
+  //   voornaam: 'shareeb',
+  //   naam: 'hashmi',
+  //   geslacht: 'man',
+  //   geboorteDatum: new Date(1990, 2, 14),
+  //   id: 2,
+  // },
 ])
 
 const addPatient = () => {
