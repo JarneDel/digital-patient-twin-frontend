@@ -8,21 +8,22 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue'
-import { waitForDebugger } from 'inspector';
+import { waitForDebugger } from 'inspector'
 
 defineProps({
-  // 'patient': {
+  // patient: {
   //   type: Object as PropType<IPatientAlgemeen>,
   //   required: true,
   // },
   type: {
     type: String as PropType<'view' | 'edit'>,
     required: true,
-  }
+  },
 })
 
 const url =
-  'http://localhost:5012/v1.0/invoke/PatientGegevensService/method/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 
 const calculateAge = (date: string): number => {
@@ -59,18 +60,10 @@ const result = computed<IPatientAlgemeen[]>(() => {
 <template>
   <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
     <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
-      <label for="patient-check" class="capitalize">{{
-        patient.voornaam
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.achternaam
-      }}</label>
-      <label for="patient-check">{{
-        calculateAge(patient.geboortedatum)
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.geslacht
-      }}</label>
+      <label for="patient-check" class="capitalize">{{}}</label>
+      <label for="patient-check" class="capitalize">{{}}</label>
+      <label for="patient-check">{{}}</label>
+      <label for="patient-check" class="capitalize">{{}}</label>
       <div class="flex-1 justify-between">
         <div class="flex flex-1 flex-row content-center justify-end">
           <button v-if="type === 'view'">

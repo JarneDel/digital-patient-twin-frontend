@@ -2,10 +2,10 @@
 import { Eye } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 const registerPatient = ref<IPatientAlgemeen>({
-  achternaam: 'Jonkheere',
+  naam: 'Jonkheere',
   geslacht: 'M',
   voornaam: 'Joshy',
-  geboortedatum: new Date(1980, 1, 1),
+  geboorteDatum: new Date(1980, 1, 1),
   id: 1,
 })
 

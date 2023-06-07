@@ -3,10 +3,10 @@ import { Plus } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const registerPatient = ref<IPatientAlgemeen>({
-  achternaam: 'Jonkheere',
+  naam: 'Jonkheere',
   geslacht: 'Man',
   voornaam: 'Joshy',
-  geboortedatum: new Date(1980, 1, 1),
+  geboorteDatum: new Date(1980, 1, 1),
   id: 1,
 })
 
@@ -44,16 +44,16 @@ const updateSelectedCount = (count: number) => {
 const patients = ref<IPatientAlgemeen[]>([
   {
     voornaam: 'Joshy',
-    achternaam: 'Jonkheere',
+    naam: 'Jonkheere',
     geslacht: 'Man',
-    geboortedatum: new Date(1980, 1, 1),
+    geboorteDatum: new Date(1980, 1, 1),
     id: 1,
   },
   {
     voornaam: 'shareeb',
-    achternaam: 'hashmi',
+    naam: 'hashmi',
     geslacht: 'man',
-    geboortedatum: new Date(1990, 2, 14),
+    geboorteDatum: new Date(1990, 2, 14),
     id: 2,
   },
 ])
@@ -62,16 +62,21 @@ const addPatient = () => {
   const newPatient: IPatientAlgemeen = {
     id: patients.value.length + 1,
     voornaam: 'jarne',
-    achternaam: 'delarue',
+    naam: 'delarue',
     geslacht: 'man',
-    geboortedatum: new Date(1980, 1, 1),
+    geboorteDatum: new Date(1980, 1, 1),
   }
   patients.value.push(newPatient)
 }
 </script>
 
 <template>
-    <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
+  <PressablesEdit
+    @clickDelete="clickEdit"
+    v-model:is-editing="isEditing"
+    @checkboxSelected="updateSelectedCount"
+    :selected-count="selected"
+  />
   <div class="m-20 flex items-center justify-between">
     <h1 class="text-3xl font-semibold">Patiënt lijst</h1>
   </div>
@@ -80,15 +85,15 @@ const addPatient = () => {
       <Plus class="h-8 w-8" />
     </button>
 
-    <patients-realtime class="mx-12 my-10 shadow-normal" :type="view" />
+    <patients-realtime class="mx-12 my-10 shadow-normal" type="view" />
 
-    <PressablesEdit
+    <!-- <PressablesEdit
       @clickDelete="clickEdit"
       v-model:is-editing="isEditing"
       :selected-count="selected"
       @checkboxSelected="updateSelectedCount"
       @update:isEditing="$emit('update:isEditing', $event)"
-    />
+    /> -->
   </div>
 
   <patients-patientcard-edit

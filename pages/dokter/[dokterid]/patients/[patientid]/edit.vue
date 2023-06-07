@@ -10,7 +10,7 @@ import { AlertType } from '~/interfaces/AlertType'
   </div>
 
   <div
-    class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    class="mx-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
   >
     <!-- persoonlijke -->
     <div class="lg:col-span-2">
