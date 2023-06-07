@@ -25,32 +25,6 @@ const calculateAge = (date: Date) => {
 </script>
 
 <template>
-  <!-- <div class="flex flex-row justify-between">
-    <div
-      class="flex flex-row content-center justify-start gap-2 bg-neutral-300 p-5"
-    >
-      <div>
-        {{ patient.voornaam }}
-        {{ patient.achternaam }}
-      </div>
-      <div>
-        {{ calculateAge(patient.geboortedatum) }}
-      </div>
-      <div>
-        {{ patient.geslacht }}
-      </div>
-    </div>
-    <div class="flex flex-1 flex-row content-center justify-end">
-      <button v-if="type === 'view'">
-        <LucideLineChart />
-      </button>
-      <button v-if="type === 'edit'">
-        <LucideEdit />
-      </button>
-    </div>
-    <div></div>
-  </div> -->
-
   <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
     <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
       <label for="patient-check" class="capitalize">{{

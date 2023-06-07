@@ -75,3 +75,5 @@ const calculateAge = (date: Date) => {
 </script>
 
 <style scoped></style>
+
+<!-- klaarzetten voor dynamisch -->
