@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
+import { FetchContext } from 'ofetch'
 import {
   TransitionRoot,
   TransitionChild,
@@ -10,20 +11,23 @@ import {
 } from '@headlessui/vue'
 import { waitForDebugger } from 'inspector';
 
-defineProps({
-  // 'patient': {
-  //   type: Object as PropType<IPatientAlgemeen>,
-  //   required: true,
-  // },
+const props = defineProps({
+  for:{
+    type: String,
+    required: true,
+  },
   type: {
     type: String as PropType<'view' | 'edit'>,
     required: true,
   }
 })
 
-const url =
-  'http://localhost:5012/v1.0/invoke/PatientGegevensService/method/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+console.log(props.for + " => props.for")
+
+const url = 'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
+
 
 const calculateAge = (date: string): number => {
   const today = new Date()
@@ -66,68 +70,13 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div v-if="pending">Loading... {{ pending }}</div>
+  <div v-if="pending">
+    <LoadersList height="470px" width="1600px" class="mx-28"/>
+  </div>
   <div v-else-if="error">
     <popup-error @click="closeModal" v-model:is-open="isOpen" />
-    <!-- <TransitionRoot appear :show="isOpen" as="template">
-      <Dialog as="div" @close="closeModal" class="relative z-10">
-        <TransitionChild
-          as="template"
-          enter="duration-300 ease-out"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="duration-200 ease-in"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
-          <div class="fixed inset-0 bg-black bg-opacity-25"></div>
-        </TransitionChild>
-
-        <div class="fixed inset-0 overflow-y-auto">
-          <div
-            class="flex min-h-full items-center justify-center p-4 text-center"
-          >
-            <TransitionChild
-              as="template"
-              enter="duration-300 ease-out"
-              enter-from="opacity-0 scale-95"
-              enter-to="opacity-00 scale-100"
-              leave="duration-200 ease-in"
-              leave-from="opacity-100 scale-100"
-              leave-to="opacity-0 scale-95"
-            >
-              <DialogPanel
-                class="shadow-xl w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle transition-all"
-              >
-                <DialogTitle
-                  as="h3"
-                  class="text-lg font-medium leading-6 text-gray-900"
-                >
-                  Oops!
-                </DialogTitle>
-                <div class="mt-2">
-                  <p class="text-sm text-gray-500">
-                    Er is iets misgelopen... Probeer opnieuw.
-                  </p>
-                </div>
-
-                <div class="mt-4">
-                  <button
-                    type="button"
-                    class="inline-flex justify-center rounded-md border border-transparent bg-tertiary-100/30 px-4 py-2 text-sm font-medium text-tertiary-600 ring-2 ring-tertiary-300 hover:bg-tertiary-200/40 focus:outline-none focus-visible:ring-tertiary-500"
-                    @click="closeModal"
-                  >
-                    Ok
-                  </button>
-                </div>
-              </DialogPanel>
-            </TransitionChild>
-          </div>
-        </div>
-      </Dialog>
-    </TransitionRoot> -->
   </div>
-  <div class="flex flex-row justify-between rounded-lg bg-neutral-500 p-8">
+  <div class="flex flex-row justify-between rounded-lg bg-neutral-500 p-8 mx-28">
     <div class="flex flex-row content-center justify-start gap-2">
       <div v-if="result" :key="Math.random()" v-for="naam in result">
         {{ naam.voornaam }}
