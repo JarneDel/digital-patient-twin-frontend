@@ -57,7 +57,6 @@ const result = computed<IPatientAlgemeen[]>(() => {
 
   return lijst
 })
-// fetching function for the realtime data or websocket
 
 const isOpen = ref(true)
 
@@ -65,40 +64,43 @@ const closeModal = () => {
   isOpen.value = false
   window.location.reload()
 }
-
-
+// fetching function for the realtime data or websocket
 </script>
 
 <template>
-  <div v-if="pending">
-    <LoadersList height="470px" width="1600px" class="mx-28"/>
-  </div>
-  <div v-else-if="error">
-    <popup-error @click="closeModal" v-model:is-open="isOpen" />
-  </div>
-  <div class="flex flex-row justify-between rounded-lg bg-neutral-500 p-8 mx-28">
-    <div class="flex flex-row content-center justify-start gap-2">
-      <div v-if="result" :key="Math.random()" v-for="naam in result">
-        {{ naam.voornaam }}
-        {{ naam.naam }}
-      </div>
-      <div v-for="naam in result">
-        {{ calculateAge(naam.geboorteDatum.toString()) }}
-      </div>
-      <div v-for="naam in result">
-        {{ naam.geslacht }}
-      </div>
+
+    <div v-if="pending">
+      <LoadersList height="470px" width="1600px" class="mx-28"/>
     </div>
-    <div class="flex flex-1 flex-row content-center justify-end">
-      <button v-if="type === 'view'">
-        <LucideLineChart />
-      </button>
-      <button v-if="type === 'edit'">
-        <LucideEdit />
-      </button>
-    </div>
-    <div>
-      <!--    realtime data components-->
+    <div v-else-if="error">
+      <popup-error @click="closeModal" v-model:is-open="isOpen" />
+    </div>  
+  <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
+    <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
+      <label for="patient-check" class="capitalize" v-if="result" :key="Math.random()" v-for="naam in result">{{
+        naam.voornaam
+      }}</label>
+      <label for="patient-check" class="capitalize" v-if="result" :key="Math.random()" v-for="naam in result">{{
+        naam.naam
+      }}</label>
+      <label for="patient-check" v-for="naam in result">{{
+        calculateAge(naam.geboorteDatum.toString())
+      }}</label>
+      <label for="patient-check" class="capitalize" v-for="naam in result">{{
+        naam.geslacht
+      }}</label>
+      <div class="flex-1 justify-between">
+        <div class="flex flex-1 flex-row content-center justify-end">
+          <button v-if="type === 'view'">
+            <LucideLineChart />
+          </button>
+          <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
+            <button v-if="type === 'edit'">
+              <LucideEdit />
+            </button>
+          </NuxtLink>
+        </div>
+      </div>
     </div>
   </div>
 </template>
