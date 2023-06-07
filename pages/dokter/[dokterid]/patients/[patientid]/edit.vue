@@ -29,11 +29,13 @@ import { AlertType } from '~/interfaces/AlertType'
       <FormsTextInput></FormsTextInput>
       <FormsSurnameInput></FormsSurnameInput>
       <FormsBirthDateInput></FormsBirthDateInput>
+      <forms-country-input></forms-country-input>
       <TextKop2>Adresgegevens</TextKop2>
       <FormsStreetInput></FormsStreetInput>
       <TextKop2>Contact gegevens</TextKop2>
       <forms-email-input></forms-email-input>
       <forms-telephone-input></forms-telephone-input>
+      <forms-postalcode-inputs></forms-postalcode-inputs>
     </div>
 
     <!-- medisch -->
