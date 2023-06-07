@@ -10,7 +10,7 @@ import { AlertType } from '~/interfaces/AlertType'
   </div>
 
   <div
-    class="mx-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    class="mx-5 grid grid-cols-1 gap-20 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
   >
     <!-- persoonlijke -->
     <div class="lg:col-span-2">
@@ -32,7 +32,7 @@ import { AlertType } from '~/interfaces/AlertType'
       <TextKop2>Adresgegevens</TextKop2>
       <FormsStreetInput></FormsStreetInput>
       <TextKop2>Contact gegevens</TextKop2>
-      <FormsEmailInput></FormsEmailInput>
+      <forms-email-input></forms-email-input>
     </div>
 
     <!-- medisch -->

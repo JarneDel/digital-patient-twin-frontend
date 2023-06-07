@@ -5,7 +5,7 @@
       id="email"
       v-model="email"
       :class="{ 'border-red-500': showError }"
-      class="peer block appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       @input="validateEmail"
     />
     <span v-if="showError" class="text-red-500">{{ errorMessage }}</span>
