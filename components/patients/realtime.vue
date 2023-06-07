@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
+import { FetchContext } from 'ofetch'
 import {
   TransitionRoot,
   TransitionChild,
@@ -10,20 +11,36 @@ import {
 } from '@headlessui/vue'
 import { waitForDebugger } from 'inspector';
 
-defineProps({
-  // 'patient': {
-  //   type: Object as PropType<IPatientAlgemeen>,
-  //   required: true,
-  // },
+const props = defineProps({
+  for:{
+    type: String,
+    required: true,
+  },
   type: {
     type: String as PropType<'view' | 'edit'>,
     required: true,
   }
 })
 
-const url =
-  'http://localhost:5012/v1.0/invoke/PatientGegevensService/method/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
+console.log(props.for + " => props.for")
+
+// const url = 'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+
+// const { error, data, pending } = await useFetch<PatientGegevens>(url)
+
+const { error, data, pending } = useFetch<PatientGegevens>(
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657')
+
+
+// const { error, data, pending } = useFetch<PatientGegevens>(`${props.for}`, {
+//     method: 'GET',
+//     baseURL: 'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/',
+//     lazy: true,
+//     immediate: true,
+//     key: Math.random().toString(),
+// })
+
+
 
 const calculateAge = (date: string): number => {
   const today = new Date()
@@ -66,7 +83,7 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div v-if="pending">Loading... {{ pending }}</div>
+  <div v-if="pending">Loading...</div>
   <div v-else-if="error">
     <popup-error @click="closeModal" v-model:is-open="isOpen" />
     <!-- <TransitionRoot appear :show="isOpen" as="template">
