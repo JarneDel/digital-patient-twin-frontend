@@ -21,6 +21,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "@types/node": "^18",
     "@vueform/slider": "^2.1.7",
+    "@vuepic/vue-datepicker": "^5.2.0",
     "autoprefixer": "^10.4.14",
     "azure-iot-device": "^1.18.2",
     "azure-iot-device-mqtt": "^1.16.2",
@@ -53,7 +54,5 @@
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]
-  },
-  "dependencies": {
   }
 }
