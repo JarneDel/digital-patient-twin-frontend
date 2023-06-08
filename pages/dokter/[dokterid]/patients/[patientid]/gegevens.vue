@@ -4,7 +4,7 @@ import { AlertType } from '~/interfaces/AlertType'
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
-    <PressablesGoback link="Nieuwe Patient aanmaken"></PressablesGoback>
+    <PressablesGoback link="patientgegevens"></PressablesGoback>
 
     <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
       <PressablesEdit></PressablesEdit>
@@ -16,8 +16,8 @@ import { AlertType } from '~/interfaces/AlertType'
   >
     <!-- persoonlijke -->
     <div class="lg:col-span-1">
-      <FormsSelectDevice></FormsSelectDevice>
-      <div class="inline-block">
+      <FormsSelectDevice class="-mx-5"></FormsSelectDevice>
+      <div class="inline-flex items-center gap-4">
         <h1 class="font-semibold">Harstslag</h1>
         <PressablesSwitch></PressablesSwitch>
       </div>
@@ -25,12 +25,22 @@ import { AlertType } from '~/interfaces/AlertType'
 
     <div class="lg:col-span-1">
       <TextKop2>Persoonlijke gegevens</TextKop2>
-      <TextKop2>Adres gegevens</TextKop2>
+      <h1>voornaam</h1>
+      <h1>achternaam</h1>
+      <h1>geboortedatum</h1>
+      <h1>geboorteland</h1>
+      <TextKop2>Adres informatie</TextKop2>
+      <h1>straatnaam</h1>
+      <h1>postcode</h1>
+      <h1>gemeente</h1>
     </div>
 
     <!-- medisch -->
     <div class="lg:col-span-1">
-      <TextKop2>Medische gegevens</TextKop2>
+      <TextKop2>Medische informatie</TextKop2>
+      <h1>lengte</h1>
+      <h1>gewicht</h1>
+      <h1>bloedgroep</h1>
     </div>
   </div>
 </template>
