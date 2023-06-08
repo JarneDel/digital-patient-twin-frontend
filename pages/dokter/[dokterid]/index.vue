@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { AlertType, IMelding } from '~/interfaces/AlertType'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
+import { AccountInfo } from "@azure/msal-browser"
+import { msalInstance } from '~/auth'
+const isLoggedIn = ref(false)
+const user = ref<AccountInfo|null>(null)
+onMounted(()=>{
+  const loggedInUser = msalInstance.getAllAccounts()
+  console.log(loggedInUser[0].name)
+  user.value = loggedInUser[0]
+
+})
 
 const gebruiker = ref('Dokter Mertens')
 const meldingen = ref<IMelding[]>([
@@ -68,12 +78,13 @@ const unpin = (id: number) => {
     patient => patient.id !== id,
   )
 }
+
 </script>
 
 <template>
   <div class="mx-auto max-w-[67rem]">
-    <h2 class="mx-8 mb-8 mt-6 text-xl font-semibold">
-      Welkom, {{ gebruiker }}
+    <h2 v-if='user !== null' class="mx-8 mb-8 mt-6 text-xl font-semibold">
+      Welkom, {{ user.name }}
     </h2>
     <!--    Grid container -->
     <div

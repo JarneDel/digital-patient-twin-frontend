@@ -24,6 +24,10 @@ const props = defineProps({
     type: Array as PropType<BloodPressureData[]>,
     required: true,
   },
+  range: {
+    type: String as PropType<'day' | 'week' | 'month'>,
+    required: true,
+  }
 })
 
 const chartDataComputed = computed(() => {
@@ -34,14 +38,24 @@ const chartDataComputed = computed(() => {
   props.data.forEach((item, index) => {
     // item.timestamp: 2023-05-31T13:14:18+02:00
     const date = props.timeStamps[index]
+    let label = ''
+    switch (props.range){
+      case 'day':
+        label = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
+        break
+      case 'week':
+        label = `${date.getDate()}/${date.getMonth() + 1}`
+        break
+      case 'month':
+        label = `${date.getDate()}/${date.getMonth() + 1}`
+        break
+    }
     // convert to chart label
-    const label = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
     dataWithLabel.push([
       label,
       item.systolic.avg,
       item.diastolic.avg,
     ])
-    console.log(dataWithLabel)
   })
   return dataWithLabel
 })

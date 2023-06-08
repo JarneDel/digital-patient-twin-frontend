@@ -35,121 +35,121 @@ const person = ref<IPatientAlgemeen>({
   <!-- alert on dasboard -->
   <!-- <alerts-lg v-bind:type="" v-bind:alert=""/> -->
 
-  <div>HIER</div>
-  <drop-down-selector
-    class="m-3"
-    v-model:selected="selected2"
-    :options="['one', 'two', 'three']"
-    type="searchable"
-  />
-  <PressablesSelector
-    :options="['one', 'two', 'three', 'four']"
-    v-model:selected="selected"
-  />
-  <div>HIER</div>
+<!--  <div>HIER</div>-->
+<!--  <drop-down-selector-->
+<!--    class="m-3"-->
+<!--    v-model:selected="selected2"-->
+<!--    :options="['one', 'two', 'three']"-->
+<!--    type="searchable"-->
+<!--  />-->
+<!--  <PressablesSelector-->
+<!--    :options="['one', 'two', 'three', 'four']"-->
+<!--    v-model:selected="selected"-->
+<!--  />-->
+<!--  <div>HIER</div>-->
 
   <!-- goback -->
-  <pressables-goback link="Ga terug" />
+<!--  <pressables-goback link="Ga terug" />-->
 
   <!-- select device -->
-  <forms-select-device />
+<!--  <forms-select-device />-->
 
   <!-- edit -->
-  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
-  
+<!--  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />-->
+
   <!-- deletepatient -->
-  <PopupDeletePatient />
+<!--  <PopupDeletePatient />-->
 
   <!-- bg -->
-  <div class="bg-pink-800">Hello index</div>
-  
+<!--  <div class="bg-pink-800">Hello index</div>-->
+
   <!-- button -->
-  <PressablesButton>Hello world</PressablesButton>
-  
+<!--  <PressablesButton>Hello world</PressablesButton>-->
+
   <!-- chart table -->
-  <div class="mx-12 my-2">
-    <chart-table />
-  </div>
-  
+<!--  <div class="mx-12 my-2">-->
+<!--    <chart-table />-->
+<!--  </div>-->
+
   <!-- dashboardcard -->
-  <TemplateDashboardCards patient="15" />
+<!--  <TemplateDashboardCards patient="15" />-->
 
   <!-- edit button -->
-  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />
-  
-  <!-- swith -->
-  <PressablesSelector
-    :options="['one', 'two', 'three', 'four']"
-    v-model:selected="selected"
-  />
+<!--  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />-->
 
+  <!-- swith -->
+<!--  <PressablesSelector-->
+<!--    :options="['one', 'two', 'three', 'four']"-->
+<!--    v-model:selected="selected"-->
+<!--  />-->
+<!---->
   <!-- patientbanner -->
-  <PatientsPatientbanner
-    imgUrl="imgUrl"
-    patient="Joshy Jonkheere"
-    age="32 jaar"
-    gender="Man"
-    alertDate="20/10/2023"
-    :typeAlert="AlertType.temperature"
-  />
+<!--  <PatientsPatientbanner-->
+<!--    imgUrl="imgUrl"-->
+<!--    patient="Joshy Jonkheere"-->
+<!--    age="32 jaar"-->
+<!--    gender="Man"-->
+<!--    alertDate="20/10/2023"-->
+<!--    :typeAlert="AlertType.temperature"-->
+<!--  />-->
 
   <!-- go back -->
-  <pressables-goback link="Ga terug" />
+<!--  <pressables-goback link="Ga terug" />-->
 
   <!-- toggle swith -->
-  <pressables-switch />
+<!--  <pressables-switch />-->
 
   <!-- date input -->
-  <FormsBirthDateInput />
+<!--  <FormsBirthDateInput />-->
 
   <!-- pinned alerts -->
-  <alerts-pinned
-    value="37"
-    :type="AlertType.temperature"
-    name="Joshy Jonkheere"
-    :datetime="new Date(Date.now() - 2 * 60 * 60 * 1000)"
-    level="danger"
-  />
+<!--  <alerts-pinned-->
+<!--    value="37"-->
+<!--    :type="AlertType.temperature"-->
+<!--    name="Joshy Jonkheere"-->
+<!--    :datetime="new Date(Date.now() - 2 * 60 * 60 * 1000)"-->
+<!--    level="danger"-->
+<!--  />-->
 
   <!-- search -->
-  <drop-down-selector
-    class="m-3"
-    v-model:selected="selected2"
-    :options="['one', 'two', 'three']"
-    type="searchable"
-  />
-  
+<!--  <drop-down-selector-->
+<!--    class="m-3"-->
+<!--    v-model:selected="selected2"-->
+<!--    :options="['one', 'two', 'three']"-->
+<!--    type="searchable"-->
+<!--  />-->
+
   <!-- patient card edit -->
-  <patients-patientcard-edit :patient="registerPatient" />
+<!--  <patients-patientcard-edit :patient="registerPatient" />-->
 
   <!-- save button -->
-  <PressablesSaveButton text="Save" />
+<!--  <PressablesSaveButton text="Save" />-->
 
   <!-- pinned alerts -->
-  <alerts-pinned
-    value="37"
-    :type="AlertType.temperature"
-    name="Joshy Jonkheere"
-    :datetime="new Date(Date.now() - 2 * 3 * 1000)"
-    level="danger"
-  />
+<!--  <alerts-pinned-->
+<!--    value="37"-->
+<!--    :type="AlertType.temperature"-->
+<!--    name="Joshy Jonkheere"-->
+<!--    :datetime="new Date(Date.now() - 2 * 3 * 1000)"-->
+<!--    level="danger"-->
+<!--  />-->
 
   <!-- dropdown -->
-  <drop-down-selector
-    v-model:selected="selected"
-    :options="['one', 'two', 'three']"
-  />
-
+<!--  <drop-down-selector-->
+<!--    v-model:selected="selected"-->
+<!--    :options="['one', 'two', 'three']"-->
+<!--  />-->
+<!---->
   <!-- dubble slider -->
-  <template-slider :type="AlertType.breathingRate" :min="0" :max="100" />
-
+<!--  <template-slider :type="AlertType.breathingRate" :min="0" :max="100" />-->
+<!---->
   <!-- login card -->
-  <cards-login />
-  
+<!--  <cards-login />-->
+
   <!-- template inputs -->
-  <TemplateInputs />
-  
-  <PatientsSm :patient="person"/>
+<!--  <TemplateInputs />-->
+<!--  -->
+<!--  <PatientsSm :patient="person"/>-->
 </template>
 
 <style scoped></style>

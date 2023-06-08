@@ -2,14 +2,15 @@
   "name": "nuxt-app",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt build --port 4200",
     "dev": "nuxt dev --port 4200",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "nuxt preview --port 4200",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@azure/msal-browser": "^2.37.0",
+    "@canvasjs/vue-charts": "^1.0.1",
     "@headlessui/vue": "^1.7.14",
     "@kalimahapps/vue-icons": "^1.4.0",
     "@microsoft/signalr": "^7.0.5",
@@ -21,6 +22,8 @@
     "@types/node": "^18",
     "@vueform/slider": "^2.1.7",
     "autoprefixer": "^10.4.14",
+    "azure-iot-device": "^1.18.2",
+    "azure-iot-device-mqtt": "^1.16.2",
     "bodymovin": "^4.13.0",
     "chart.js": "^4.3.0",
     "lottie-web": "^5.11.0",
@@ -33,9 +36,6 @@
     "socket.io": "^4.6.1",
     "tailwindcss": "^3.3.2",
     "vue-chartjs": "^5.2.0",
-    "@canvasjs/vue-charts": "^1.0.1",
-    "azure-iot-device": "^1.18.2",
-    "azure-iot-device-mqtt": "^1.16.2",
     "vue-google-charts": "^1.1.0"
   },
   "volta": {
@@ -53,8 +53,5 @@
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]
-  },
-  "dependencies": {
-
   }
 }
