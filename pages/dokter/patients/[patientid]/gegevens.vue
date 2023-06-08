@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { AlertType } from '~/interfaces/AlertType'
+import {
+  IPatientAlgemeen,
+  PatientGegevens,
+  Address,
+  Medisch,
+} from '~/interfaces/IPatient'
 useHead({
   title: 'Gegevens patiënt',
   meta: [
@@ -9,11 +15,51 @@ useHead({
     },
   ],
 })
+
+const url =
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+
+const { error, data, pending } = await useFetch<PatientGegevens>(url)
+const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
+const patientAdres: Address = data.value?.adres as Address
+const patientMedisch: Medisch = data.value?.medisch as Medisch
+
+// const calculateAge = (date: string): number => {
+//   const today = new Date()
+//   const [day, month, year] = date.split('/')
+
+//   const geboortedatum = new Date(`${month}/${day}/${year}`)
+
+//   let age = today.getFullYear() - geboortedatum.getFullYear()
+
+//   const hasBirthdayOccurred =
+//     today.getMonth() > geboortedatum.getMonth() ||
+//     (today.getMonth() === geboortedatum.getMonth() &&
+//       today.getDate() >= geboortedatum.getDate())
+
+//   if (!hasBirthdayOccurred) {
+//     age--
+//   }
+
+//   return age
+// }
+
+const result = computed<IPatientAlgemeen[]>(() => {
+  const lijst: IPatientAlgemeen[] = []
+  if (data.value?.algemeen) {
+    lijst.push(data.value.algemeen)
+  }
+
+  return lijst
+})
 </script>
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
-    <!-- <PressablesGoback link="patientgegevens"></PressablesGoback> -->
+    <PressablesGoback
+      link_path="/dokter/patienten"
+      link_name="patient gegevens"
+    ></PressablesGoback>
 
     <NuxtLink to="/dokter/patients/[patientid]/edit">
       <PressablesEdit></PressablesEdit>
@@ -27,22 +73,7 @@ useHead({
     <div class="mx-auto lg:col-span-1">
       <img src="public/Images/profile.png" alt="" />
       <div class="flex text-lg font-semibold">
-        <p
-          :key="Math.random()"
-          v-if="result"
-          v-for="naam in result"
-          class="text-center"
-        >
-          {{ naam.voornaam }}
-        </p>
-        <p
-          :key="Math.random()"
-          v-if="result"
-          v-for="naam in result"
-          class="text-center"
-        >
-          {{ naam.naam }}
-        </p>
+        <p>{{ patient.voornaam }} {{ patient.naam }}</p>
       </div>
 
       <FormsSelectDevice class="-mx-5"></FormsSelectDevice>
@@ -53,13 +84,11 @@ useHead({
     </div>
 
     <div class="lg:col-span-1">
-      <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
+      <TextKop2 class="my-5">Persoonlijke informatie</TextKop2>
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">geslacht</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.geslacht }}
-          </p>
+          <p>{{ patient.geslacht }}</p>
         </div>
         <!-- <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Voornaam:</h1>
@@ -75,14 +104,14 @@ useHead({
         </div> -->
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Geboortedatum:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.geboorteDatum.toString() }}
+          <p>
+            {{ patient.geboorteDatum.toString() }}
           </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Geboorteland:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.geboorteland }}
+          <p>
+            {{ patient.geboorteland }}
           </p>
         </div>
       </div>
@@ -90,19 +119,15 @@ useHead({
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Straatnaam:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.Straatnaam }}
-          </p>
+          <p>{{ patientAdres.straat }}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Postcode:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.Postcode }}
-          </p>
+          <p>{{ patientAdres.postcode }}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gemeente:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">{{}}</p>
+          <p>{{ patientAdres.gemeente }}</p>
         </div>
       </div>
     </div>
@@ -113,15 +138,17 @@ useHead({
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Lengte:</h1>
-          <p>{{}}</p>
+          <p>{{ patientMedisch.lengte }}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
-          <p>{{}}</p>
+          <p>{{ patientMedisch.gewicht }}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Bloedgroep:</h1>
-          <p>{{}}</p>
+          <p v-if="patientMedisch.bloedgroep">
+            {{ patientMedisch.bloedgroep }}
+          </p>
         </div>
       </div>
     </div>
