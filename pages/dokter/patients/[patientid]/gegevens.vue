@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { AlertType } from '~/interfaces/AlertType'
 useHead({
   title: 'Gegevens patiënt',
@@ -12,13 +12,10 @@ useHead({
 </script>
 
 <template>
-  <div
-    class="m-5 flex flex-col items-center justify-between md:flex-row"
-    v-if="result"
-  >
-    <PressablesGoback link="patientgegevens"></PressablesGoback>
+  <div class="m-5 flex flex-col items-center justify-between md:flex-row">
+    <!-- <PressablesGoback link="patientgegevens"></PressablesGoback> -->
 
-    <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
+    <NuxtLink to="/dokter/patients/[patientid]/edit">
       <PressablesEdit></PressablesEdit>
     </NuxtLink>
   </div>

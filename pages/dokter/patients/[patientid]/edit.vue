@@ -13,7 +13,10 @@ useHead({
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
-    <PressablesGoback link="Nieuwe Patient aanmaken"></PressablesGoback>
+    <pressables-goback
+      link_name="nieuw patienten toevoegen"
+      link_path="/dokter/patienten"
+    />
 
     <PressablesSaveButton></PressablesSaveButton>
   </div>
