@@ -2,6 +2,16 @@
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { AlertType, IMelding } from '~/interfaces/AlertType'
 
+useHead({
+  title: 'Meldingen',
+  meta: [
+    {
+      name: 'description',
+      content: 'Meldingen pagina. Bekijk alle meldingen van patiënten.',
+    },
+  ],
+})
+
 const patienten = ref<PatientGegevens[]>([
   {
     adres: {

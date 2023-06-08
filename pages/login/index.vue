@@ -11,8 +11,15 @@ const login = async () => {
     navigateTo(`/dokter/${result.account?.homeAccountId}`)
 }
 
-
-
+useHead({
+  title: 'Login',
+  meta: [
+    {
+      name: 'description',
+      content: 'Login to your account',
+    },
+  ],
+})
 </script>
 
 <template>

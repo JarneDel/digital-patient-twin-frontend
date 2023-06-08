@@ -44,6 +44,16 @@ const updateSelectedCount = (count: number) => {
   selected.value = count
 }
 
+useHead({
+  title: 'Patiënten',
+  meta: [
+    {
+      name: 'description',
+      content: 'Patiënten pagina. Bekijk al je patiënten zien.',
+    },
+  ],
+})
+
 const patients = ref<IPatientAlgemeen[]>([
   {
     voornaam: 'Joshy',

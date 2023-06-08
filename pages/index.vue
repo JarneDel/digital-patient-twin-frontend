@@ -3,6 +3,7 @@ import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import { AlertType, IMelding } from '~/interfaces/AlertType'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
+
 const isEditing = ref(false)
 const clickEdit = () => {
   isEditing.value = !isEditing.value
@@ -28,7 +29,6 @@ const person = ref<IPatientAlgemeen>({
   geboorteDatum: new Date(1980, 1, 1),
   id: 1,
 })
-
 </script>
 
 <template>
