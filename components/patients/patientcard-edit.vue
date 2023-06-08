@@ -86,7 +86,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
         naam.geslacht
       }}</label>
       <div class="flex-1 justify-between">
-        <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/vitals">
+        <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/gegevens">
           <div class="flex items-center justify-end">
             <ChevronRight
               class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"

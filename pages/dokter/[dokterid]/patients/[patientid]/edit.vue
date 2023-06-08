@@ -10,10 +10,10 @@ import { AlertType } from '~/interfaces/AlertType'
   </div>
 
   <div
-    class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    class="mx-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
   >
     <!-- persoonlijke -->
-    <div class="lg:col-span-2">
+    <div class="lg:col-span-1">
       <FormsSelectDevice></FormsSelectDevice>
       <pressables-toggle
         :type="AlertType.temperature"
@@ -25,19 +25,22 @@ import { AlertType } from '~/interfaces/AlertType'
     </div>
 
     <div class="lg:col-span-1">
-      <TextKop2>Persoonlijke gegevens</TextKop2>
+      <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
       <FormsTextInput></FormsTextInput>
       <FormsSurnameInput></FormsSurnameInput>
       <FormsBirthDateInput></FormsBirthDateInput>
-      <TextKop2>Adresgegevens</TextKop2>
+      <forms-country-input></forms-country-input>
+      <TextKop2 class="my-5">Adresgegevens</TextKop2>
       <FormsStreetInput></FormsStreetInput>
-      <TextKop2>Contact gegevens</TextKop2>
-      <FormsEmailInput></FormsEmailInput>
+      <TextKop2 class="my-5">Contact gegevens</TextKop2>
+      <forms-email-input></forms-email-input>
+      <forms-telephone-input></forms-telephone-input>
+      <forms-postalcode-inputs></forms-postalcode-inputs>
     </div>
 
     <!-- medisch -->
     <div class="lg:col-span-1">
-      <TextKop2>Medische gegevens</TextKop2>
+      <TextKop2 class="my-5">Medische gegevens</TextKop2>
       <FormsLenghtInput></FormsLenghtInput>
       <FormsWeightInput></FormsWeightInput>
       <FormsBloodtypeInput></FormsBloodtypeInput>

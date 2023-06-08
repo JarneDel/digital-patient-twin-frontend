@@ -9,7 +9,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue'
-import { waitForDebugger } from 'inspector';
+import { waitForDebugger } from 'inspector'
 
 const props = defineProps({
   for:{
@@ -19,7 +19,7 @@ const props = defineProps({
   type: {
     type: String as PropType<'view' | 'edit'>,
     required: true,
-  }
+  },
 })
 
 console.log(props.for + " => props.for")
