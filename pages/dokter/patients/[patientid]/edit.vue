@@ -5,6 +5,7 @@ import {
   PatientGegevens,
   Address,
   Medisch,
+  Contact,
 } from '~/interfaces/IPatient'
 useHead({
   title: 'Gegevens patiënt',
@@ -23,6 +24,7 @@ const { error, data, pending } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
 const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
+const patientContact: Contact = data.value?.contact as Contact
 </script>
 
 <template>
@@ -56,14 +58,14 @@ const patientMedisch: Medisch = data.value?.medisch as Medisch
     <div class="flex">
       <div>
         <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
-        <FormsTextInput value="jarne"></FormsTextInput>
+        <FormsTextInput :value="patient.voornaam"></FormsTextInput>
         <FormsSurnameInput></FormsSurnameInput>
         <FormsBirthDateInput></FormsBirthDateInput>
         <forms-country-input></forms-country-input>
         <TextKop2 class="my-5">Adresgegevens</TextKop2>
         <FormsStreetInput></FormsStreetInput>
         <TextKop2 class="my-5">Contact gegevens</TextKop2>
-        <forms-email-input></forms-email-input>
+        <!-- <FormsEmailInput :emailValue="patientContact.email"></FormsEmailInput> -->
         <forms-telephone-input></forms-telephone-input>
         <forms-postalcode-inputs></forms-postalcode-inputs>
       </div>

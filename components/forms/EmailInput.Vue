@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="mb-4 w-full">
     <label for="email" class="mb-2 block">Email</label>
     <input
@@ -52,4 +52,53 @@ const errorMessage = computed(() => {
 .border-red-500 {
   border-color: #f56565;
 }
-</style>
+</style> -->
+<template>
+  <label></label>
+  <input
+    type="text"
+    v-model="Emailvalue"
+    :class="{
+      'bg-primary': isValueFilled,
+      'bg-red': !isValueFilled || !isValidEmail,
+    }"
+  />
+  <p v-if="!isValidEmail" class="text-red-500">
+    Please enter a valid email address
+  </p>
+</template>
+
+<script setup lang="ts">
+import { defineProps, defineEmits, ref, watch } from 'vue'
+
+const props = defineProps({
+  Emailvalue: {
+    type: String,
+    required: true,
+  },
+  isValid: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+})
+
+const emits = defineEmits(['update:input', 'update:isValid'])
+
+const isValueFilled = ref(true)
+const isValidEmail = ref(true)
+
+watch(props, newValue => {
+  isValueFilled.value = !!newValue
+  isValidEmail.value = validateEmail(newValue)
+
+  emits('update:isValid', isValueFilled.value && isValidEmail.value)
+})
+
+function validateEmail(email) {
+  // Simple email validation logic
+  return email.includes('@')
+}
+</script>
+
+<style scoped></style>
