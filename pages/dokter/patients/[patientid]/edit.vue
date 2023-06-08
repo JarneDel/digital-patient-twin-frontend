@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { AlertType } from '~/interfaces/AlertType'
+import {
+  IPatientAlgemeen,
+  PatientGegevens,
+  Address,
+  Medisch,
+} from '~/interfaces/IPatient'
 useHead({
   title: 'Gegevens patiënt',
   meta: [
@@ -9,6 +15,14 @@ useHead({
     },
   ],
 })
+
+const url =
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+
+const { error, data, pending } = await useFetch<PatientGegevens>(url)
+const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
+const patientAdres: Address = data.value?.adres as Address
+const patientMedisch: Medisch = data.value?.medisch as Medisch
 </script>
 
 <template>
@@ -42,7 +56,7 @@ useHead({
     <div class="flex">
       <div>
         <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
-        <FormsTextInput value=""></FormsTextInput>
+        <FormsTextInput value="jarne"></FormsTextInput>
         <FormsSurnameInput></FormsSurnameInput>
         <FormsBirthDateInput></FormsBirthDateInput>
         <forms-country-input></forms-country-input>

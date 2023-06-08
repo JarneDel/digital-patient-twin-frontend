@@ -77,9 +77,11 @@ const patients = ref<IPatientAlgemeen[]>([
     <h1 class="text-3xl font-semibold">Patiënt lijst</h1>
   </div>
   <div class="m-20 flex flex-col items-center justify-between lg:flex-row">
-    <button class="rounded-lg bg-secondary-400 p-5">
-      <Plus class="h-8 w-8" />
-    </button>
+    <nuxt-link to="/dokter/patients/[patientid]/edit">
+      <button class="rounded-lg bg-secondary-400 p-5">
+        <Plus class="h-8 w-8" />
+      </button>
+    </nuxt-link>
 
     <patients-realtime
       :for="id"
