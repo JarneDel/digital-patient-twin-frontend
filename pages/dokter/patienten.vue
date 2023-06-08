@@ -81,7 +81,11 @@ const patients = ref<IPatientAlgemeen[]>([
       <Plus class="h-8 w-8" />
     </button>
 
-    <!-- <patients-realtime :for="id" class="mx-12 my-10 shadow-normal" type="view" /> -->
+    <patients-realtime
+      :for="id"
+      class="mx-12 my-10 shadow-normal"
+      type="view"
+    />
 
     <!-- <PressablesEdit
       @clickDelete="clickEdit"
@@ -93,18 +97,16 @@ const patients = ref<IPatientAlgemeen[]>([
   </div>
 
   <patients-patientcard-edit
-    v-for="patient in patients"
     :for="id"
-    :key="patient.id"
     :selected-count="selected"
-    :patient="patient"
     :is-editing="isEditing"
     :is-checked="isSelected"
     @update:checked="isSelected = $event"
     @checkboxSelected="updateSelectedCount"
     @update:isEditing="$emit('update:isEditing', $event)"
     @update:selected-count="selected = $event"
-  />
+  ></patients-patientcard-edit>
+
   <!-- 
   <patients-patientcard-edit
     :patient="registerPatient"
