@@ -87,7 +87,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
         naam.naam
       }}</label>
       <label for="patient-check" v-for="naam in result">{{
-        calculateAge(naam.geboorteDatum.toString())
+        calculateAge(naam.geboorteDatum.toString()) + ' jaar'
       }}</label>
       <label for="patient-check" class="capitalize" v-for="naam in result">{{
         naam.geslacht
