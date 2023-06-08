@@ -24,6 +24,10 @@ const props = defineProps({
     type: Array as PropType<MeasurementData[]>,
     required: true,
   },
+  range: {
+    type: String as PropType<'day' | 'week' | 'month'>,
+    required: true,
+  }
 })
 
 const chartDataComputed = computed(() => {
@@ -34,7 +38,18 @@ const chartDataComputed = computed(() => {
     // item.timestamp: 2023-05-31T13:14:18+02:00
     const date = props.timeStamps[index]
     // convert to chart label
-    const label = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
+    let label = ''
+    switch (props.range){
+      case 'day':
+        label = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
+        break
+      case 'week':
+        label = `${date.getDate()}/${date.getMonth() + 1}`
+        break
+      case 'month':
+        label = `${date.getDate()}/${date.getMonth() + 1}`
+        break
+    }
     dataWithLabel.push([
       label,
       item.min,
