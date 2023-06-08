@@ -25,11 +25,16 @@ watch(selected, () => {
   </div>
 
   <PatientsRealtime
+    for="id"
     type="edit"
     class="m-4"
     :patient="registerPatient"
   ></PatientsRealtime>
-  <PatientsRealtime type="view" :patient="registerPatient"></PatientsRealtime>
+  <PatientsRealtime
+    for="id"
+    type="view"
+    :patient="registerPatient"
+  ></PatientsRealtime>
 </template>
 
 <style scoped></style>

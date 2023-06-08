@@ -2,6 +2,7 @@
 import { ChevronRight } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
+import { LucideLineChart } from 'lucide-vue-next'
 
 const isSelected = ref(false)
 const instance = getCurrentInstance()
@@ -28,11 +29,10 @@ watchEffect(() => {
 // }>()
 // const patient: IPatientAlgemeen = props.patient
 
-const url = 'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+const url =
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
-
-
 
 const calculateAge = (date: string): number => {
   const today = new Date()
@@ -75,10 +75,17 @@ const result = computed<IPatientAlgemeen[]>(() => {
         @change="handleCheckboxChange"
       />
 
-      <label for="patient-check" class="capitalize" v-if="result" :key="Math.random()" v-for="naam in result">{{
-        naam.voornaam
+      <label
+        for="patient-check"
+        class="capitalize"
+        v-if="result"
+        :key="Math.random()"
+        v-for="naam in result"
+        >{{ naam.voornaam }}</label
+      >
+      <label for="patient-check" class="capitalize" v-for="naam in result">{{
+        naam.naam
       }}</label>
-      <label for="patient-check" class="capitalize" v-for="naam in result">{{ naam.naam }}</label>
       <label for="patient-check" v-for="naam in result">{{
         calculateAge(naam.geboorteDatum.toString())
       }}</label>
@@ -86,19 +93,24 @@ const result = computed<IPatientAlgemeen[]>(() => {
         naam.geslacht
       }}</label>
       <div class="flex-1 justify-between">
-        <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/gegevens">
+        <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
+            <NuxtLink to="/">
+              <LucideLineChart
+                class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
+              />
+            </NuxtLink>
+          </div>
+          <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/gegevens">
             <ChevronRight
               class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
             />
-          </div>
-        </NuxtLink>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <style scoped></style>
 
