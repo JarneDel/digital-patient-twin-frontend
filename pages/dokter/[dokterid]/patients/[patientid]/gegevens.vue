@@ -24,23 +24,59 @@ import { AlertType } from '~/interfaces/AlertType'
     </div>
 
     <div class="lg:col-span-1">
-      <TextKop2>Persoonlijke gegevens</TextKop2>
-      <h1>voornaam</h1>
-      <h1>achternaam</h1>
-      <h1>geboortedatum</h1>
-      <h1>geboorteland</h1>
-      <TextKop2>Adres informatie</TextKop2>
-      <h1>straatnaam</h1>
-      <h1>postcode</h1>
-      <h1>gemeente</h1>
+      <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Voornaam:</h1>
+          <p></p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Achternaam:</h1>
+          <p></p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Geboortedatum:</h1>
+          <p></p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Geboorteland:</h1>
+          <p></p>
+        </div>
+      </div>
+      <TextKop2 class="my-5">Adres informatie</TextKop2>
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Straatnaam:</h1>
+          <p></p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Postcode:</h1>
+          <p>}</p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Gemeente:</h1>
+          <p></p>
+        </div>
+      </div>
     </div>
 
     <!-- medisch -->
     <div class="lg:col-span-1">
-      <TextKop2>Medische informatie</TextKop2>
-      <h1>lengte</h1>
-      <h1>gewicht</h1>
-      <h1>bloedgroep</h1>
+      <TextKop2 class="my-5">Medische informatie</TextKop2>
+      <div class="flex flex-col gap-5">
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Lengte:</h1>
+          <p></p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
+          <p></p>
+        </div>
+        <div class="flex items-center">
+          <h1 class="mr-3 font-medium capitalize">Bloedgroep:</h1>
+          <p></p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
