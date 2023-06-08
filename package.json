@@ -36,7 +36,8 @@
     "socket.io": "^4.6.1",
     "tailwindcss": "^3.3.2",
     "vue-chartjs": "^5.2.0",
-    "vue-google-charts": "^1.1.0"
+    "vue-google-charts": "^1.1.0",
+    "@vuepic/vue-datepicker": "^5.2.0"
   },
   "volta": {
     "node": "18.16.0"
@@ -55,6 +56,5 @@
     ]
   },
   "dependencies": {
-    "@vuepic/vue-datepicker": "^5.2.0"
   }
 }
