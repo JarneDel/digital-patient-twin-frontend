@@ -1,7 +1,12 @@
-<script setup lang='ts'>
-import { LucideChevronDown, LucideX } from 'lucide-vue-next'
-import Button from '~/components/pressables/button.vue'
-
+<script setup lang="ts">
+import { ref } from 'vue'
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOptions,
+  ListboxOption,
+} from '@headlessui/vue'
+import { Check, ChevronDown } from 'lucide-vue-next';
 
 const props = defineProps({
   type: {
@@ -18,130 +23,74 @@ const props = defineProps({
     required: true,
   },
 })
-const emits = defineEmits(['update:selected'])
-const isOpen = ref(false)
-const isHidden = ref(true)
-watch(isOpen, value => {
-  if (value) {
-    isHidden.value = false
-  } else {
-    setTimeout(() => {
-      isHidden.value = true
-    }, 300)
-  }
-})
 
-const input = ref('')
+const opt = props.options.toString().split(',').map((name) => ({
+  name,
+}))
+const selected = ref(opt[0])
 
-watch(input, value => {
-  if (props.type === 'default') return
-  if (value === '') {
-    isSubmitted.value = false
-    console.log('empty')
-  }
-  else{
-    isOpen.value = true
-  }
-})
-
-const search = computed(() => {
-  if (props.type === 'default') return props.options
-  if (input.value === '') return props.options
-
-  return props.options.filter(option => {
-    return option.toLowerCase().includes(input.value.toLowerCase())
-  })
-})
-
-const isSubmitted = ref(false)
 
 </script>
 
 <template>
-  <div class='relative w-fit'>
-    <button
-      class='flex w-[10rem] flex-row justify-between rounded-lg bg-tertiary-300 p-2 transition-colors'
-      :class='{"bg-tertiary-500 ": input === selected && type === "searchable" && isSubmitted}'
-      @click='isOpen = !isOpen'
-    >
-      <div v-if='type === "default"' class='pl-2'>{{ selected }}</div>
-      <div v-else-if='type === "searchable"' class='pl-2 relative w-full' >
-        <input
-          type='text'
-          class='bg-transparent border-none outline-none '
-          placeholder='Search'
-          :value='input'
-          @input='input = $event.target.value'
-          @keydown.enter="
-            () => {
-              if (search.length === 0) return
-              if (!input in options) return
-              $emit('update:selected', search[0])
-              isSubmitted = true
-              isOpen = false
-            }"
-        />
-        <button v-if='isSubmitted'
-                class='absolute right-0 top-0  transition-all duration-300 ease-out'
-                @click="
-              () => {
-                $emit('update:selected', '')
-                input = ''
-                isSubmitted = false
-                isOpen = false
-              }
-            ">
-          <lucide-x
-            class='transition-transform'
-            :class="isOpen ? 'rotate-180' : ''"
-          />
-<!--          TODO: add search icon when type = searchable and isOpen = false-->
-        </button>
-
-      </div>
-      <lucide-chevron-down
-        class='transition-transform'
-        :class="isOpen ? 'rotate-180' : ''"
-      />
-    </button>
-    <div class='z-10 absolute pt-0.5'>
-      <div
-        class='flex w-[10rem] flex-col rounded-lg bg-tertiary-300 transition-all duration-300 ease-out'
-        :class="
-          isOpen ? 'max-h-[10rem] overflow-y-auto' : 'max-h-0 overflow-hidden'
-        "
-      >
-        <button
-          v-if='!isHidden'
-          v-for='(option, index) in search'
-          :key='option'
-          @click="
-            () => {
-              console.log(option)
-              $emit('update:selected', option)
-              if (type === 'default') {
-                selected = option
-                return
-              }
-              input = option
-              isSubmitted = true
-              isOpen = false
-            }
-          "
-          class='p-2 transition-all duration-300 ease-out'
-          :class="{
-            'rounded-t-lg': index === 0,
-            'rounded-b-lg': index === options.length - 1,
-            'rounded-none': index !== 0 && index !== options.length - 1,
-            'bg-tertiary-300': option !== selected,
-            'bg-tertiary-500': option === selected,
-          }"
+  <div class="w-72">
+    <Listbox v-model="selected">
+      <div class="relative mt-1">
+        <ListboxButton
+          class="relative w-full cursor-default rounded-lg bg-tertiary-400 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-tertiary-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary-500 sm:text-sm"
         >
-          {{ option }}
-        </button>
+          <span class="block truncate text-tertiary-600">{{ selected.name }}</span>
+          <span
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+          >
+            <ChevronDown
+              class="h-5 w-5 text-tertiary-600"
+              aria-hidden="true"
+            />
+          </span>
+        </ListboxButton>
+
+        <transition
+          leave-active-class="transition duration-100 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
+        >
+          <ListboxOptions
+            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-tertiary-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          >
+            <ListboxOption
+              v-slot="{ active, selected }"
+              v-for="person in opt"
+              :key="person.name"
+              :value="person"
+              as="template"
+            >
+              <li
+                :class="[
+                  active ? 'bg-tertiary-400 text-tertiary-600' : 'text-tertiary-600',
+                  'relative cursor-default select-none py-2 pl-10 pr-4',
+                ]"
+              >
+                <span
+                  :class="[
+                    selected ? 'font-medium' : 'font-normal',
+                    'block truncate',
+                  ]"
+                  >{{ person.name }}</span
+                >
+                <span
+                  v-if="selected"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-tertiary-600"
+                >
+                  <Check class="h-5 w-5" aria-hidden="true" />
+                </span>
+              </li>
+            </ListboxOption>
+          </ListboxOptions>
+        </transition>
       </div>
-    </div>
+    </Listbox>
   </div>
 </template>
 
-<style scoped></style>
+
