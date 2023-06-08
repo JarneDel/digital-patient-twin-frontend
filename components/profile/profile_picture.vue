@@ -1,5 +1,16 @@
-<template></template>
+<script setup lang="ts">
+defineProps({
+  imgUrl: {
+    type: String,
+    required: true,
+  },
+})
 
-<script setup lang="ts"></script>
+const imgUrl = ref('images/profile.png')
+</script>
+
+<template>
+  <img :src="imgUrl" alt="" class="mx-auto mb-4" />
+</template>
 
 <style scoped></style>

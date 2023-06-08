@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4">
-    <label for="birthdate" class="mb-2 block">Birthdate:</label>
+    <label for="birthdate" class="mb-2 block">Geboortedatum</label>
     <input
       id="birthdate"
       type="date"

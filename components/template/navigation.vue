@@ -6,6 +6,7 @@ import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
 import { ILink } from '~/interfaces/ILink';
 import { UserCircle2, LogOut} from 'lucide-vue-next'
+import { msalInstance } from '~/auth'
 
 const links: ILink[] = [
   {
@@ -29,6 +30,10 @@ const route = useRoute()
 
 const isCurrentPage = (path: string) => {
   return route.path === path
+}
+
+const logout = () => {
+  msalInstance.logoutPopup()
 }
 
 
@@ -74,10 +79,10 @@ const isCurrentPage = (path: string) => {
             to="/login"
             class="flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg"
           >
-          <div class="py-2 pl-3 flex justify-center items-center gap-2">
+          <button class="py-2 pl-3 flex justify-center items-center gap-2" @click='logout'>
             <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
             <div class="text-white">Log out</div>
-          </div>
+          </button>
           </NuxtLink>
       </div>
 

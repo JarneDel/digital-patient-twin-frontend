@@ -5,10 +5,20 @@ import {msalInstance} from '~/auth'
     layout: false,
   });
 
+onMounted(() => {
+  console.log("mounted")
+  const users = msalInstance.getAllAccounts()
+  console.log(users.length, "users in login")
+  if (users.length !== 0) {
+    navigateTo('/')
+  }
+})
+
+
 const login = async () => {
     const result = await msalInstance.loginPopup()
     console.log({ result })
-    navigateTo(`/dokter/${result.account?.homeAccountId}`)
+    navigateTo(`/`)
 }
 
 useHead({
