@@ -25,14 +25,14 @@ import { AlertType } from '~/interfaces/AlertType'
     </div>
 
     <div class="lg:col-span-1">
-      <TextKop2>Persoonlijke gegevens</TextKop2>
+      <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
       <FormsTextInput></FormsTextInput>
       <FormsSurnameInput></FormsSurnameInput>
       <FormsBirthDateInput></FormsBirthDateInput>
       <forms-country-input></forms-country-input>
-      <TextKop2>Adresgegevens</TextKop2>
+      <TextKop2 class="my-5">Adresgegevens</TextKop2>
       <FormsStreetInput></FormsStreetInput>
-      <TextKop2>Contact gegevens</TextKop2>
+      <TextKop2 class="my-5">Contact gegevens</TextKop2>
       <forms-email-input></forms-email-input>
       <forms-telephone-input></forms-telephone-input>
       <forms-postalcode-inputs></forms-postalcode-inputs>
@@ -40,7 +40,7 @@ import { AlertType } from '~/interfaces/AlertType'
 
     <!-- medisch -->
     <div class="lg:col-span-1">
-      <TextKop2>Medische gegevens</TextKop2>
+      <TextKop2 class="my-5">Medische gegevens</TextKop2>
       <FormsLenghtInput></FormsLenghtInput>
       <FormsWeightInput></FormsWeightInput>
       <FormsBloodtypeInput></FormsBloodtypeInput>

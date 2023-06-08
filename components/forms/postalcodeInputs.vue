@@ -2,7 +2,7 @@
   <div class="flex gap-4">
     <!-- postal code -->
     <div>
-      <label for="postalCode" class="mb-2 block">Postal Code</label>
+      <label for="postalCode" class="mb-2 block">Post code</label>
       <input
         id="postalCode"
         v-model="postalCode"
@@ -21,7 +21,7 @@
 
     <!-- house number -->
     <div>
-      <label for="houseNumber" class="mb-2 block">House Number</label>
+      <label for="houseNumber" class="mb-2 block">Nummer</label>
       <input
         id="houseNumber"
         v-model="houseNumber"
