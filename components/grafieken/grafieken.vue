@@ -3,6 +3,15 @@ import { IHistoriek } from '~/interfaces/IHistoriek'
 import { FetchContext } from 'ofetch'
 import { LucideLoader2 } from 'lucide-vue-next'
 import VitalStats = PatientData.models.VitalStats
+import Datepicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+
+const date = ref<Date[]>([
+  new Date(new Date().setDate(new Date().getDate() - 7)),
+  new Date(),
+])
+
+console.log(date.value[0])
 
 const props = defineProps({
   for: {
@@ -13,37 +22,53 @@ const props = defineProps({
 
 // default: yesterday
 const manual = reactive({
-  start: false,
-  end: false,
+  start: true,
+  end: true,
 })
 const hasLoadedBefore = ref<boolean>(false)
 
-const start = ref<Date>(new Date(new Date().setDate(new Date().getDate() - 1)))
-const end = ref<Date>(new Date())
+
+watch(date, ((value, oldValue, onCleanup) => {
+  if (value == null) return
+  execute()
+  statsExecute()
+  const timeDiff = date.value[0].getTime() - date.value[1].getTime()
+  if (timeDiff < 1000 * 60 * 60 * 25) {
+    range.value = 'dag'
+  } else if (timeDiff < 1000 * 60 * 60 * 24 * 8  ) {
+    range.value = 'week'
+  } else if (timeDiff < 1000 * 60 * 60 * 24 * 31) {
+    range.value = 'maand'
+  } else {
+    range.value = 'maand'
+  }
+}))
+
 const range = ref<'dag' | 'week' | 'maand'>('dag')
 const xLabel = ref<string>('')
 console.log(props.for)
 console.log('fetching')
+
 const rangeEn = computed(() => {
   switch (range.value) {
     case 'dag':
       if (!manual.start && !manual.end) {
-        start.value = new Date(new Date().setDate(new Date().getDate() - 1))
-        end.value = new Date()
+        date.value[0] = new Date(new Date().setDate(new Date().getDate() - 1))
+        date.value[1] = new Date()
       }
       xLabel.value = 'Tijd [hh:mm]'
       return 'day'
     case 'week':
       if (!manual.start && !manual.end) {
-        start.value = new Date(new Date().setDate(new Date().getDate() - 7))
-        end.value = new Date()
+        date.value[0] = new Date(new Date().setDate(new Date().getDate() - 7))
+        date.value[0] = new Date()
       }
       xLabel.value = 'Datum [dd/mm]'
       return 'week'
     case 'maand':
       if (!manual.start && !manual.end) {
-        start.value = new Date(new Date().setDate(new Date().getDate() - 30))
-        end.value = new Date()
+        date.value[0] = new Date(new Date().setDate(new Date().getDate() - 30))
+        date.value[1] = new Date()
       }
       xLabel.value = 'Datum [dd/mm]'
       return 'month'
@@ -63,11 +88,11 @@ const { data: grafiekData, error: grafiekError, pending: grafiekPending, execute
     onRequest({ options }: FetchContext): Promise<void> | void {
       options.params = {
         range: rangeEn.value,
-        start: start.value.getTime() / 1000,
-        end: end.value.getTime() / 1000,
+        start: date.value[0].getTime() / 1000,
+        end: date.value[1].getTime() / 1000,
       }
     },
-    watch: [range, start, end],
+    watch: [range, date],
   },
 )
 
@@ -84,11 +109,11 @@ const stats = useFetch<VitalStats>(
     onRequest({ options }: FetchContext): Promise<void> | void {
       options.params = {
         range: rangeEn.value,
-        start: start.value.getTime() / 1000,
-        end: end.value.getTime() / 1000,
+        start: date.value[0].getTime() / 1000,
+        end: date.value[1].getTime() / 1000,
       }
     },
-    watch: [range, start, end],
+    watch: [range, date],
   },
 )
 const { data: statsData, error: statsError, pending: statsPending, execute: statsExecute } = stats
@@ -109,11 +134,16 @@ watch(statsData, (value, oldValue, onCleanup) => {
 })
 </script>
 <template>
-  <!--     time picker start -->
-  <pressables-selector
-    :options="['dag', 'week', 'maand']"
-    v-model:selected='range'
-  />
+  <div class='flex flex-row justify-between mx-8 gap-8 items-center'>
+    <!--     time picker start -->
+    <Datepicker :range='true' v-model='date' :max-date="new Date()"  v-on:text-submit="() => {manual.end = true; manual.start= true}" class='max-w-[434px]' />
+
+    <!--  range picker -->
+    <pressables-selector
+      :options="['dag', 'week', 'maand']"
+      v-model:selected='range'
+    />
+  </div>
 
   <div class='flex flex-row flex-wrap'>
 
@@ -223,7 +253,8 @@ watch(statsData, (value, oldValue, onCleanup) => {
         width='800px'
         height='600px'
       />
-      <grafieken-stats :data='statsData.systolic' :data-diastolic='statsData.diastolic' type='Bloeddruk' v-if='statsData !== null' />
+      <grafieken-stats :data='statsData.systolic' :data-diastolic='statsData.diastolic' type='Bloeddruk'
+                       v-if='statsData !== null' />
       <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
     </div>
   </div>

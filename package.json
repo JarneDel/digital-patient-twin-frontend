@@ -53,5 +53,8 @@
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]
+  },
+  "dependencies": {
+    "@vuepic/vue-datepicker": "^5.2.0"
   }
 }
