@@ -55,6 +55,5 @@
     ]
   },
   "dependencies": {
-    "@esbuild/win32-x64": "^0.17.19"
   }
 }
