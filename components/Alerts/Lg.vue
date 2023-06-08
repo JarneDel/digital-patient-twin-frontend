@@ -108,7 +108,7 @@ const unit = computed(() => {
       <div>Hartslag</div>
       <div class='flex items-center'>
         <ArrowUp />
-        <div class='text-base font-semibold'>{{ alert.value }} {{ unit }}</div>
+        <div class='text-sm font-medium'>{{ alert.value }} {{ unit }}</div>
       </div>
     </div>
     <div class='self-center'>

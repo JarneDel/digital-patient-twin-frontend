@@ -2,6 +2,16 @@
 import { AlertType, IMelding } from '~/interfaces/AlertType'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
+useHead({
+  title: 'Home',
+  meta: [
+    {
+      name: 'description',
+      content: 'Welkom op de homepage.',
+    },
+  ],
+})
+
 const gebruiker = ref('Dokter Mertens')
 const meldingen = ref<IMelding[]>([
   {

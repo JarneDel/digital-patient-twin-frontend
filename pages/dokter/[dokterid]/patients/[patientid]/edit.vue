@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import { AlertType } from '~/interfaces/AlertType'
+useHead({
+  title: 'Gegevens patiënt',
+  meta: [
+    {
+      name: 'description',
+      content: 'Patiënt gegevens aanpassen.',
+    },
+  ],
+})
 </script>
 
 <template>
