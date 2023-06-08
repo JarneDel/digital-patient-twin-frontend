@@ -1,0 +1,58 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 4200",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@azure/msal-browser": "^2.37.0",
+    "@canvasjs/vue-charts": "^1.0.1",
+    "@headlessui/vue": "^1.7.14",
+    "@kalimahapps/vue-icons": "^1.4.0",
+    "@microsoft/signalr": "^7.0.5",
+    "@nuxt/devtools": "^0.3.1",
+    "@nuxt/kit": "^3.5.1",
+    "@nuxtjs/google-fonts": "^3.0.0",
+    "@nuxtjs/tailwindcss": "^6.6.0",
+    "@tailwindcss/forms": "^0.5.3",
+    "@types/node": "^18",
+    "@vueform/slider": "^2.1.7",
+    "@vuepic/vue-datepicker": "^5.2.0",
+    "autoprefixer": "^10.4.14",
+    "azure-iot-device": "^1.18.2",
+    "azure-iot-device-mqtt": "^1.16.2",
+    "bodymovin": "^4.13.0",
+    "chart.js": "^4.3.0",
+    "lottie-web": "^5.11.0",
+    "lucide-vue-next": "^0.216.0",
+    "mqtt": "^4.3.7",
+    "nuxt": "^3.4.3",
+    "postcss": "^8.4.23",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "socket.io": "^4.6.1",
+    "tailwindcss": "^3.3.2",
+    "vue-chartjs": "^5.2.0",
+    "vue-google-charts": "^1.1.0"
+  },
+  "volta": {
+    "node": "18.16.0"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "endOfLine": "lf",
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false,
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  }
+}
