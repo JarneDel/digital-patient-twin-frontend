@@ -15,7 +15,7 @@ useHead({
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <PressablesGoback link="patientgegevens"></PressablesGoback>
 
-    <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
+    <NuxtLink to='/dokter/patients/[patientid]/edit'>
       <PressablesEdit></PressablesEdit>
     </NuxtLink>
   </div>
