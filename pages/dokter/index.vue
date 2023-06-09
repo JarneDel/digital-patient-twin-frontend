@@ -97,7 +97,7 @@ const unpin = (id: number) => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-[67rem]">
+  <div class="mx-auto my-12 max-w-[67rem]">
     <h2 v-if='user !== null' class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Welkom, {{ user.name }}
     </h2>

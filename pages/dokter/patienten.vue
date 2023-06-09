@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
-import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
-
+import { PatientGegevens } from '~/interfaces/IPatient'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -9,6 +8,8 @@ const clickEdit = () => {
 
   console.log(isEditing.value)
 }
+
+// dokterid ophalen
 const routeID = useRoute().params.dokterid as string
 const id = ref(routeID)
 id.value = '878c95cf-e82d-40a5-a56c-8790427f1657'
@@ -38,12 +39,12 @@ useHead({
 </script>
 
 <template>
-  <div class="mx-auto max-w-[67rem]">
+  <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">
         Patiënt lijst
     </h2>
-    <div class="m-20 flex flex-col items-center justify-between lg:flex-row">
-      <button class="rounded-lg bg-secondary-400 p-5">
+    <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
+      <button class="p-5 inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 text-sm font-medium ring-2 ring-transparent hover:bg-secondary-200/40 outline-none focus-visible:ring-secondary-400/80">
         <Plus class="h-8 w-8" />
       </button>
   
