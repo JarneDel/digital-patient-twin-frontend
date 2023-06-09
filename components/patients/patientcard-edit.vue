@@ -5,7 +5,7 @@ import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
 
 const props = defineProps({
   patient: {
-    type: Object as PropType<PatientGegevens>,
+    type: Object as PropType<IPatientAlgemeen>,
     required: true,
   },
 })
@@ -29,11 +29,6 @@ watchEffect(() => {
     instance?.emit('checkboxSelected', 1)
   }
 })
-
-// const url =
-//   'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient'
-
-// const { error, data, pending } = await useFetch<PatientGegevens[]>(url)
 
 const calculateAge = (date: string): number => {
   const today = new Date()
@@ -59,7 +54,7 @@ const calculateAge = (date: string): number => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8" :key="Math.random()" v-if="props != null" v-for="person in props.patient">
+  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-8" >
     <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
       <input
         id="patient-check"
@@ -72,16 +67,16 @@ const calculateAge = (date: string): number => {
       <label
         for="patient-check"
         class="capitalize"
-        >{{ person.algemeen?.voornaam }}</label
+        >{{ patient.voornaam }}</label
       >
       <label for="patient-check" class="capitalize">{{
-        person.algemeen?.naam
+        patient.naam
       }}</label>
       <label for="patient-check">{{
-        calculateAge(person.algemeen.geboorteDatum.toString())
+        calculateAge(patient.geboorteDatum.toString())
       }}</label>
       <label for="patient-check" class="capitalize">{{
-        person.algemeen?.geslacht
+        patient.geslacht
       }}</label>
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">

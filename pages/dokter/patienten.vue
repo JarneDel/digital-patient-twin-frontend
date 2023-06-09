@@ -35,46 +35,9 @@ useHead({
   ],
 })
 
-// const patients = ref<IPatientAlgemeen[]>([
-//   {
-//     voornaam: 'Joshy',
-//     naam: 'Jonkheere',
-//     geslacht: 'Man',
-//     geboorteDatum: new Date(1980, 1, 1),
-//     id: 1,
-//     Straatnaam: 'Kerkstraat',
-//     geboorteland: 'België',
-//   },
-//   {
-//     voornaam: 'shareeb',
-//     naam: 'hashmi',
-//     geslacht: 'man',
-//     geboorteDatum: new Date(1990, 2, 14),
-//     id: 2,
-//     Straatnaam: 'Kerkstraat',
-//     geboorteland: 'België',
-//   },
-// ])
-
-// const addPatient = () => {
-//   const newPatient: IPatientAlgemeen = {
-//     id: patients.value.length + 1,
-//     voornaam: 'jarne',
-//     naam: 'delarue',
-//     geslacht: 'man',
-//     geboorteDatum: new Date(1980, 1, 1),
-//   }
-//   patients.value.push(newPatient)
-// }
 </script>
 
 <template>
-  <PressablesEdit
-    @clickDelete="clickEdit"
-    v-model:is-editing="isEditing"
-    @checkboxSelected="updateSelectedCount"
-    :selected-count="selected"
-  />
   <div class="m-20 flex items-center justify-between">
     <h1 class="text-3xl font-semibold">Patiënt lijst</h1>
   </div>
@@ -83,15 +46,13 @@ useHead({
       <Plus class="h-8 w-8" />
     </button>
 
-    <!-- <patients-realtime :for="id" class="mx-12 my-10 shadow-normal" type="view" /> -->
-
-    <!-- <PressablesEdit
+    <PressablesEdit
       @clickDelete="clickEdit"
       v-model:is-editing="isEditing"
       :selected-count="selected"
       @checkboxSelected="updateSelectedCount"
       @update:isEditing="$emit('update:isEditing', $event)"
-    /> -->
+    />
   </div>
 
   <patients-patientcard-edit 
@@ -99,7 +60,7 @@ useHead({
     :for="id"
     :key="patient.id"
     :selected-count="selected"
-    :patient="patient"
+    :patient="patient.algemeen"
     :is-editing="isEditing"
     :is-checked="isSelected"
     @update:checked="isSelected = $event"
@@ -107,19 +68,5 @@ useHead({
     @update:isEditing="$emit('update:isEditing', $event)"
     @update:selected-count="selected = $event"
   />
-  <!-- <patients-patientcard-edit
-    v-for="patient in patients"
-    :for="id"
-    :key="patient.id"
-    :selected-count="selected"
-    :patient="patient"
-    :is-editing="isEditing"
-    :is-checked="isSelected"
-    @update:checked="isSelected = $event"
-    @checkboxSelected="updateSelectedCount"
-    @update:isEditing="$emit('update:isEditing', $event)"
-    @update:selected-count="selected = $event"
-  /> -->
 </template>
 
-<style scoped></style>
