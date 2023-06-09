@@ -3,6 +3,13 @@ import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
 
+const props = defineProps({
+  patient: {
+    type: Object as PropType<PatientGegevens>,
+    required: true,
+  },
+})
+
 const isSelected = ref(false)
 const instance = getCurrentInstance()
 
@@ -23,10 +30,10 @@ watchEffect(() => {
   }
 })
 
-const url =
-  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+// const url =
+//   'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient'
 
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
+// const { error, data, pending } = await useFetch<PatientGegevens[]>(url)
 
 const calculateAge = (date: string): number => {
   const today = new Date()
@@ -48,18 +55,11 @@ const calculateAge = (date: string): number => {
   return age
 }
 
-const result = computed<IPatientAlgemeen[]>(() => {
-  const lijst: IPatientAlgemeen[] = []
-  if (data.value?.algemeen) {
-    lijst.push(data.value.algemeen)
-  }
 
-  return lijst
-})
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
+  <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8" :key="Math.random()" v-if="props != null" v-for="person in props.patient">
     <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
       <input
         id="patient-check"
@@ -72,19 +72,16 @@ const result = computed<IPatientAlgemeen[]>(() => {
       <label
         for="patient-check"
         class="capitalize"
-        v-if="result"
-        :key="Math.random()"
-        v-for="naam in result"
-        >{{ naam.voornaam }}</label
+        >{{ person.algemeen?.voornaam }}</label
       >
-      <label for="patient-check" class="capitalize" v-for="naam in result">{{
-        naam.naam
+      <label for="patient-check" class="capitalize">{{
+        person.algemeen?.naam
       }}</label>
-      <label for="patient-check" v-for="naam in result">{{
-        calculateAge(naam.geboorteDatum.toString())
+      <label for="patient-check">{{
+        calculateAge(person.algemeen.geboorteDatum.toString())
       }}</label>
-      <label for="patient-check" class="capitalize" v-for="naam in result">{{
-        naam.geslacht
+      <label for="patient-check" class="capitalize">{{
+        person.algemeen?.geslacht
       }}</label>
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">

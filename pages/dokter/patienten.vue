@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
-import { IPatientAlgemeen } from '~/interfaces/IPatient'
+import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 
 
 const isEditing = ref(false)
@@ -20,6 +20,11 @@ const updateSelectedCount = (count: number) => {
   selected.value = count
 }
 
+const url =
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient'
+
+const { error, data, pending } = await useFetch<PatientGegevens[]>(url)
+
 useHead({
   title: 'Patiënten',
   meta: [
@@ -30,26 +35,26 @@ useHead({
   ],
 })
 
-const patients = ref<IPatientAlgemeen[]>([
-  {
-    voornaam: 'Joshy',
-    naam: 'Jonkheere',
-    geslacht: 'Man',
-    geboorteDatum: new Date(1980, 1, 1),
-    id: 1,
-    Straatnaam: 'Kerkstraat',
-    geboorteland: 'België',
-  },
-  {
-    voornaam: 'shareeb',
-    naam: 'hashmi',
-    geslacht: 'man',
-    geboorteDatum: new Date(1990, 2, 14),
-    id: 2,
-    Straatnaam: 'Kerkstraat',
-    geboorteland: 'België',
-  },
-])
+// const patients = ref<IPatientAlgemeen[]>([
+//   {
+//     voornaam: 'Joshy',
+//     naam: 'Jonkheere',
+//     geslacht: 'Man',
+//     geboorteDatum: new Date(1980, 1, 1),
+//     id: 1,
+//     Straatnaam: 'Kerkstraat',
+//     geboorteland: 'België',
+//   },
+//   {
+//     voornaam: 'shareeb',
+//     naam: 'hashmi',
+//     geslacht: 'man',
+//     geboorteDatum: new Date(1990, 2, 14),
+//     id: 2,
+//     Straatnaam: 'Kerkstraat',
+//     geboorteland: 'België',
+//   },
+// ])
 
 // const addPatient = () => {
 //   const newPatient: IPatientAlgemeen = {
@@ -89,7 +94,19 @@ const patients = ref<IPatientAlgemeen[]>([
     /> -->
   </div>
 
-  <patients-patientcard-edit />
+  <patients-patientcard-edit 
+    v-for="patient in data"
+    :for="id"
+    :key="patient.id"
+    :selected-count="selected"
+    :patient="patient"
+    :is-editing="isEditing"
+    :is-checked="isSelected"
+    @update:checked="isSelected = $event"
+    @checkboxSelected="updateSelectedCount"
+    @update:isEditing="$emit('update:isEditing', $event)"
+    @update:selected-count="selected = $event"
+  />
   <!-- <patients-patientcard-edit
     v-for="patient in patients"
     :for="id"
