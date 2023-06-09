@@ -65,7 +65,7 @@ const patientContact: Contact = data.value?.contact as Contact
         <TextKop2 class="my-5">Adresgegevens</TextKop2>
         <FormsStreetInput></FormsStreetInput>
         <TextKop2 class="my-5">Contact gegevens</TextKop2>
-        <!-- <FormsEmailInput :emailValue="patientContact.email"></FormsEmailInput> -->
+        <FormsEmailInput :emailValue="patientContact.email"></FormsEmailInput>
         <forms-telephone-input></forms-telephone-input>
         <forms-postalcode-inputs></forms-postalcode-inputs>
       </div>

@@ -142,7 +142,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
-          <p>{{ patientMedisch.gewicht }}</p>
+          <p>{{ patientMedisch.gewicht  +'kg'}}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Bloedgroep:</h1>

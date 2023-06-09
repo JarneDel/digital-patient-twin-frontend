@@ -54,16 +54,17 @@ const errorMessage = computed(() => {
 }
 </style> -->
 <template>
-  <label></label>
+  <label>E-mail</label>
   <input
-    type="text"
-    v-model="Emailvalue"
+    type="email"
+    v-model="props.emailValue"
+    class="peer mb-4 block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
     :class="{
       'bg-primary': isValueFilled,
       'bg-red': !isValueFilled || !isValidEmail,
     }"
   />
-  <p v-if="!isValidEmail" class="text-red-500">
+  <p v-if="!isValidEmail" class="text-primary-500">
     Please enter a valid email address
   </p>
 </template>
@@ -72,7 +73,7 @@ const errorMessage = computed(() => {
 import { defineProps, defineEmits, ref, watch } from 'vue'
 
 const props = defineProps({
-  Emailvalue: {
+  emailValue: {
     type: String,
     required: true,
   },
@@ -95,7 +96,7 @@ watch(props, newValue => {
   emits('update:isValid', isValueFilled.value && isValidEmail.value)
 })
 
-function validateEmail(email) {
+function validateEmail(email: any) {
   // Simple email validation logic
   return email.includes('@')
 }
