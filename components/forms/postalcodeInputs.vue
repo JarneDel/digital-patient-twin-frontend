@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps({
-  birthDateValue: {
-    type: String,
+  postalcodeValue: {
+    type: Number,
     required: true,
   },
   huisNumberValue: {
@@ -15,10 +15,10 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['update:input', 'update:isValid'])
-let birthDateValue = props.birthDateValue
+let postalcodeValue = props.postalcodeValue
 let huisNumberValue = props.huisNumberValue
 watch(
-  () => birthDateValue && huisNumberValue,
+  () => postalcodeValue && huisNumberValue,
   newValue => {
     if (newValue) {
       emits('update:isValid', true)
@@ -34,7 +34,7 @@ watch(
       <label for="postalCode" class="mb-2 block">Post code</label>
       <input
         id="postalCode"
-        v-model="birthDateValue"
+        v-model="postalcodeValue"
         :class="{ 'border-red-500': isPostalCodeInvalid }"
         type="number"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
