@@ -59,15 +59,24 @@ const patientContact: Contact = data.value?.contact as Contact
       <div>
         <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
         <FormsTextInput :value="patient.voornaam"></FormsTextInput>
-        <FormsSurnameInput></FormsSurnameInput>
+        <FormsSurnameInput :value="patient.naam"></FormsSurnameInput>
         <FormsBirthDateInput></FormsBirthDateInput>
-        <forms-country-input></forms-country-input>
+        <forms-country-input
+          :value="patient.geboorteland"
+        ></forms-country-input>
         <TextKop2 class="my-5">Adresgegevens</TextKop2>
-        <FormsStreetInput></FormsStreetInput>
+        <FormsStreetInput :value="patientAdres.straat"></FormsStreetInput>
+        <forms-postalcode-inputs
+          :birthDateValue="patientAdres.postcode"
+          :huisNumberValue="patientAdres.nr"
+        ></forms-postalcode-inputs>
         <TextKop2 class="my-5">Contact gegevens</TextKop2>
-        <FormsEmailInput :emailValue="patientContact.email"></FormsEmailInput>
-        <forms-telephone-input></forms-telephone-input>
-        <forms-postalcode-inputs></forms-postalcode-inputs>
+        <forms-email-input
+          :emailValue="patientContact.email"
+        ></forms-email-input>
+        <forms-telephone-input
+          :telephoneValue="patientContact.telefoon"
+        ></forms-telephone-input>
       </div>
     </div>
 
@@ -75,9 +84,15 @@ const patientContact: Contact = data.value?.contact as Contact
     <div class="flex">
       <div>
         <TextKop2 class="my-5">Medische gegevens</TextKop2>
-        <FormsLenghtInput></FormsLenghtInput>
-        <FormsWeightInput></FormsWeightInput>
-        <FormsBloodtypeInput></FormsBloodtypeInput>
+        <FormsLenghtInput
+          :value="patientMedisch.lengte + ' cm'"
+        ></FormsLenghtInput>
+        <FormsWeightInput
+          :value="patientMedisch.gewicht + ' kg'"
+        ></FormsWeightInput>
+        <FormsBloodtypeInput
+          :value="patientMedisch.bloedgroep"
+        ></FormsBloodtypeInput>
       </div>
     </div>
   </div>
