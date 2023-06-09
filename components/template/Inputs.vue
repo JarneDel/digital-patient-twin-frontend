@@ -100,7 +100,7 @@ const clearDateError = () => {
         id="firstname"
         v-model="firstName"
         :class="{ 'border-red-500': firstNameError }"
-        class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+        class="peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
         @input="clearFirstNameError"
       />
       <span v-if="firstNameError" class="text-red-500">{{
@@ -114,7 +114,7 @@ const clearDateError = () => {
         id="email"
         v-model="email"
         :class="{ 'border-red-500': emailError }"
-        class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+        class="peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
         @input="clearEmailError"
       />
       <span v-if="emailErrorMessage" class="text-red-500">{{
@@ -130,7 +130,7 @@ const clearDateError = () => {
         type="date"
         v-model="selectedDate"
         :class="{ 'border-red-500': birthdateError }"
-        class="focus:border-tertiary-600 peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+        class="peer w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
         @input="clearDateError"
       />
       <span v-if="birthdateErrorMessage" class="text-red-500">{{
@@ -149,7 +149,7 @@ const clearDateError = () => {
         required
         name="device"
         id="device"
-        class="focus:border-tertiary-600 peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+        class="peer h-fit w-fit appearance-none rounded-lg border-2 border-gray-400 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       >
         <option
           v-for="d of dummydata"

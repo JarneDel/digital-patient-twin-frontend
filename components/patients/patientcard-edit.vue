@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ChevronRight } from 'lucide-vue-next'
+import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
-import { LucideLineChart } from 'lucide-vue-next'
 
 const isSelected = ref(false)
 const instance = getCurrentInstance()
@@ -23,11 +22,6 @@ watchEffect(() => {
     instance?.emit('checkboxSelected', 1)
   }
 })
-
-// const props = defineProps<{
-//   patient: IPatientAlgemeen
-// }>()
-// const patient: IPatientAlgemeen = props.patient
 
 const url =
   'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
@@ -101,7 +95,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
               />
             </NuxtLink>
           </div>
-          <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/gegevens">
+          <NuxtLink to="/dokter/patients/[patientid]/gegevens">
             <ChevronRight
               class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
             />
@@ -111,7 +105,3 @@ const result = computed<IPatientAlgemeen[]>(() => {
     </div>
   </div>
 </template>
-
-<style scoped></style>
-
-<!-- klaarzetten voor dynamisch -->

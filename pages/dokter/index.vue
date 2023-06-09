@@ -22,7 +22,6 @@ useHead({
   ],
 })
 
-const gebruiker = ref('Dokter Mertens')
 const meldingen = ref<IMelding[]>([
   {
     id: 1,
@@ -63,6 +62,8 @@ const pinnedPatients = ref<IPatientAlgemeen[]>([
     naam: 'Jonkheere',
     voornaam: 'Joshy',
     geslacht: 'Man',
+    Straatnaam: 'Kerkstraat',
+    geboorteland: 'België',
   },
   {
     geboorteDatum: new Date(1985, 3, 7),
@@ -70,6 +71,8 @@ const pinnedPatients = ref<IPatientAlgemeen[]>([
     naam: 'Heard',
     voornaam: 'Amber',
     geslacht: 'Vrouw',
+    Straatnaam: 'Kerkstraat',
+    geboorteland: 'België',
   },
   {
     geboorteDatum: new Date(1999, 5, 30),
@@ -77,6 +80,8 @@ const pinnedPatients = ref<IPatientAlgemeen[]>([
     naam: 'De Koek',
     voornaam: 'Frankie',
     geslacht: 'Anders',
+    Straatnaam: 'Kerkstraat',
+    geboorteland: 'België',
   },
 ])
 

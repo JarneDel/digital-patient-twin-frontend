@@ -62,9 +62,6 @@ watch(selected, () => {
 <!--    <chart-table />-->
 <!--  </div>-->
 
-  <!-- dashboardcard -->
-<!--  <TemplateDashboardCards patient="15" />-->
-
   <!-- edit button -->
 <!--  <PressablesEdit @clickDelete="clickEdit" v-model:is-editing="isEditing" />-->
 

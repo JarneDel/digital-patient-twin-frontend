@@ -39,7 +39,3 @@ useHead({
     <cards-login @click='login'/>
   </div>
 </template>
-
-<style scoped>
-
-</style>

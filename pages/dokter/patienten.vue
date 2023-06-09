@@ -2,13 +2,6 @@
 import { Plus } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
-// const registerPatient = ref<IPatientAlgemeen>({
-//   naam: 'Jonkheere',
-//   geslacht: 'Man',
-//   voornaam: 'Joshy',
-//   geboorteDatum: new Date(1980, 1, 1),
-//   id: 1,
-// })
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -38,20 +31,24 @@ useHead({
 })
 
 const patients = ref<IPatientAlgemeen[]>([
-  // {
-  //   voornaam: 'Joshy',
-  //   naam: 'Jonkheere',
-  //   geslacht: 'Man',
-  //   geboorteDatum: new Date(1980, 1, 1),
-  //   id: 1,
-  // },
-  // {
-  //   voornaam: 'shareeb',
-  //   naam: 'hashmi',
-  //   geslacht: 'man',
-  //   geboorteDatum: new Date(1990, 2, 14),
-  //   id: 2,
-  // },
+  {
+    voornaam: 'Joshy',
+    naam: 'Jonkheere',
+    geslacht: 'Man',
+    geboorteDatum: new Date(1980, 1, 1),
+    id: 1,
+    Straatnaam: 'Kerkstraat',
+    geboorteland: 'België',
+  },
+  {
+    voornaam: 'shareeb',
+    naam: 'hashmi',
+    geslacht: 'man',
+    geboorteDatum: new Date(1990, 2, 14),
+    id: 2,
+    Straatnaam: 'Kerkstraat',
+    geboorteland: 'België',
+  },
 ])
 
 // const addPatient = () => {
@@ -92,7 +89,8 @@ const patients = ref<IPatientAlgemeen[]>([
     /> -->
   </div>
 
-  <patients-patientcard-edit
+  <patients-patientcard-edit />
+  <!-- <patients-patientcard-edit
     v-for="patient in patients"
     :for="id"
     :key="patient.id"
@@ -104,18 +102,7 @@ const patients = ref<IPatientAlgemeen[]>([
     @checkboxSelected="updateSelectedCount"
     @update:isEditing="$emit('update:isEditing', $event)"
     @update:selected-count="selected = $event"
-  />
-  <!-- 
-  <patients-patientcard-edit
-    :patient="registerPatient"
-    :selected-count="selected"
-    :is-editing="isEditing"
-    :is-checked="isSelected"
-    @update:checked="isSelected = $event"
-    @checkboxSelected="updateSelectedCount"
-    @update:isEditing="$emit('update:isEditing', $event)"
-    @update:selected-count="selected = $event"
-  ></patients-patientcard-edit> -->
+  /> -->
 </template>
 
 <style scoped></style>
