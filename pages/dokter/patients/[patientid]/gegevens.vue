@@ -1,6 +1,10 @@
 <script setup lang='ts'>
 import { AlertType } from '~/interfaces/AlertType'
-<<<<<<< HEAD:pages/dokter/patients/[patientid]/gegevens.vue
+import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
+const routeID = useRoute().params.dokterid as string
+const id = ref(routeID)
+id.value = '878c95cf-e82d-40a5-a56c-8790427f1657'
+
 useHead({
   title: 'Gegevens patiënt',
   meta: [
@@ -9,11 +13,7 @@ useHead({
       content: 'Patiënt detailpagina.',
     },
   ],
-=======
-import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
-const routeID = useRoute().params.dokterid as string
-const id = ref(routeID)
-id.value = '878c95cf-e82d-40a5-a56c-8790427f1657'
+})
 
 const url =
   'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
@@ -25,10 +25,9 @@ const result = computed<IPatientAlgemeen[]>(() => {
   if (data.value?.algemeen) {
     lijst.push(data.value.algemeen)
   }
-
   return lijst
->>>>>>> patient-dynamic:pages/dokter/[dokterid]/patients/[patientid]/gegevens.vue
 })
+
 </script>
 
 <template>
