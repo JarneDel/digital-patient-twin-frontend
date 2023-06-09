@@ -37,7 +37,7 @@ const result = computed<PatientGegevens[]>(() => {
   >
     <PressablesGoback link="patientgegevens"></PressablesGoback>
 
-    <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
+    <NuxtLink to="/dokter/patients/[patientid]/edit">
       <PressablesEdit></PressablesEdit>
     </NuxtLink>
   </div>
