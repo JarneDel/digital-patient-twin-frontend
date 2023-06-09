@@ -49,9 +49,9 @@ const result = computed<IPatientAlgemeen[]>(() => {
   if (data.value?.algemeen) {
     lijst.push(data.value.algemeen)
   }
-
   return lijst
 })
+
 </script>
 
 <template>
