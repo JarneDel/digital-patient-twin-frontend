@@ -38,35 +38,37 @@ useHead({
 </script>
 
 <template>
-  <div class="m-20 flex items-center justify-between">
-    <h1 class="text-3xl font-semibold">Patiënt lijst</h1>
-  </div>
-  <div class="m-20 flex flex-col items-center justify-between lg:flex-row">
-    <button class="rounded-lg bg-secondary-400 p-5">
-      <Plus class="h-8 w-8" />
-    </button>
-
-    <PressablesEdit
-      @clickDelete="clickEdit"
-      v-model:is-editing="isEditing"
+  <div class="mx-auto max-w-[67rem]">
+    <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">
+        Patiënt lijst
+    </h2>
+    <div class="m-20 flex flex-col items-center justify-between lg:flex-row">
+      <button class="rounded-lg bg-secondary-400 p-5">
+        <Plus class="h-8 w-8" />
+      </button>
+  
+      <PressablesEdit
+        @clickDelete="clickEdit"
+        v-model:is-editing="isEditing"
+        :selected-count="selected"
+        @checkboxSelected="updateSelectedCount"
+        @update:isEditing="$emit('update:isEditing', $event)"
+      />
+    </div>
+  
+    <patients-patientcard-edit 
+      v-for="patient in data"
+      :for="id"
+      :key="patient.id"
       :selected-count="selected"
+      :patient="patient.algemeen"
+      :is-editing="isEditing"
+      :is-checked="isSelected"
+      @update:checked="isSelected = $event"
       @checkboxSelected="updateSelectedCount"
       @update:isEditing="$emit('update:isEditing', $event)"
+      @update:selected-count="selected = $event"
     />
   </div>
-
-  <patients-patientcard-edit 
-    v-for="patient in data"
-    :for="id"
-    :key="patient.id"
-    :selected-count="selected"
-    :patient="patient.algemeen"
-    :is-editing="isEditing"
-    :is-checked="isSelected"
-    @update:checked="isSelected = $event"
-    @checkboxSelected="updateSelectedCount"
-    @update:isEditing="$emit('update:isEditing', $event)"
-    @update:selected-count="selected = $event"
-  />
 </template>
 

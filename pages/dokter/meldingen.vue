@@ -151,8 +151,8 @@ const alertsFiltered = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-[58rem]">
-    <h2 class="mx-8 mb-8 mt-6 text-xl font-semibold">Meldingen</h2>
+  <div class="mx-auto max-w-[67rem]">
+    <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Meldingen</h2>
     <div class="mx-5 my-8 flex content-center justify-between">
       <div class="flex items-center gap-x-4">
         <pressables-drop-down-selector

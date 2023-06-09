@@ -98,7 +98,7 @@ const unpin = (id: number) => {
 
 <template>
   <div class="mx-auto max-w-[67rem]">
-    <h2 v-if='user !== null' class="mx-8 mb-8 mt-6 text-xl font-semibold">
+    <h2 v-if='user !== null' class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Welkom, {{ user.name }}
     </h2>
     <!--    Grid container -->
