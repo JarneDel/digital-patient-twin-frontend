@@ -5,7 +5,7 @@ import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
 
 const props = defineProps({
   patient: {
-    type: Object as PropType<IPatientAlgemeen>,
+    type: Object as PropType<PatientGegevens>,
     required: true,
   },
 })
@@ -50,7 +50,7 @@ const calculateAge = (date: string): number => {
   return age
 }
 
-
+console.log(props.patient)
 </script>
 
 <template>
@@ -67,16 +67,16 @@ const calculateAge = (date: string): number => {
       <label
         for="patient-check"
         class="capitalize"
-        >{{ patient.voornaam }}</label
+        >{{ patient.algemeen.voornaam }}</label
       >
       <label for="patient-check" class="capitalize">{{
-        patient.naam
+        patient.algemeen.naam
       }}</label>
       <label for="patient-check">{{
-        calculateAge(patient.geboorteDatum.toString())
+        calculateAge(patient.algemeen.geboorteDatum.toString())
       }}</label>
       <label for="patient-check" class="capitalize">{{
-        patient.geslacht
+        patient.algemeen.geslacht
       }}</label>
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
