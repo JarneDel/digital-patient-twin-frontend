@@ -3,7 +3,7 @@
     class="flex min-h-screen flex-col-reverse items-center justify-center text-center font-mono text-gray-600 dark:text-gray-400"
   >
     <div>
-      <h2 class="text-2xl font-bold md:text-6xl">404:Page_not_found</h2>
+      <h2 class="text-2xl font-bold md:text-6xl">404: Page not found</h2>
       <p class="mt-4 text-lg">
         Sorry, but the page you were trying to view does not exist.
       </p>
@@ -28,15 +28,12 @@
         </div>
       </nuxt-link>
     </div>
-    <client-only>
-      <lottie404 ></lottie404>
-    </client-only>
   </article>
 </template>
 
 <script setup>
 useHead({
-  title: '404 | Page not found',
+  title: 'Page not found',
   meta: [
     {
       name: 'description',

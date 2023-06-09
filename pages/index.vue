@@ -13,22 +13,7 @@ const selected2 = ref('')
 watch(selected, () => {
   console.log(selected.value)
 })
-const registerPatient = ref<IPatientAlgemeen>({
-  naam: 'Jonkheere',
-  geslacht: 'M',
-  voornaam: 'Joshy',
-  geboorteDatum: new Date(1980, 1, 1),
-  id: 1,
-})
 
-// is test
-const person = ref<IPatientAlgemeen>({
-  naam: 'Jonkheere',
-  geslacht: 'M',
-  voornaam: 'Joshy',
-  geboorteDatum: new Date(1980, 1, 1),
-  id: 1,
-})
 </script>
 
 <template>

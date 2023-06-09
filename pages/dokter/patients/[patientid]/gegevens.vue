@@ -20,10 +20,10 @@ const url =
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 
-const result = computed<IPatientAlgemeen[]>(() => {
-  const lijst: IPatientAlgemeen[] = []
-  if (data.value?.algemeen) {
-    lijst.push(data.value.algemeen)
+const result = computed<PatientGegevens[]>(() => {
+  const lijst: PatientGegevens[] = []
+  if (data.value) {
+    lijst.push(data.value)
   }
   return lijst
 })
@@ -45,7 +45,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
   <div
     class="mx-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
   >
-    <!-- persoonlijke -->
+    <!-- profiel -->
     <div class="mx-auto lg:col-span-1">
       <img src="public/Images/profile.png" alt="" />
       <div class="flex text-lg font-semibold">
@@ -55,7 +55,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
           v-for="naam in result"
           class="text-center"
         >
-          {{ naam.voornaam }}
+          {{ naam.algemeen?.voornaam }}
         </p>
         <p
           :key="Math.random()"
@@ -63,10 +63,11 @@ const result = computed<IPatientAlgemeen[]>(() => {
           v-for="naam in result"
           class="text-center"
         >
-          {{ naam.naam }}
+          {{ naam.algemeen?.naam }}
         </p>
       </div>
 
+      <!-- meldingen -->
       <FormsSelectDevice class="-mx-5"></FormsSelectDevice>
       <div class="inline-flex items-center gap-4">
         <h1 class="font-semibold">Harstslag</h1>
@@ -74,57 +75,50 @@ const result = computed<IPatientAlgemeen[]>(() => {
       </div>
     </div>
 
+    <!-- persoonlijke -->
     <div class="lg:col-span-1">
       <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">geslacht</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.geslacht }}
+            {{ naam.algemeen?.geslacht }}
           </p>
         </div>
-        <!-- <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Voornaam:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.voornaam }}
-          </p>
-        </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Achternaam:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.naam }}
-          </p>
-        </div> -->
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Geboortedatum:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.geboorteDatum.toString() }}
+            {{ naam.algemeen?.geboorteDatum.toString() }}
           </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Geboorteland:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.geboorteland }}
+            {{ naam.algemeen?.geboorteland }}
           </p>
         </div>
       </div>
+
+      <!-- adres -->
       <TextKop2 class="my-5">Adres informatie</TextKop2>
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Straatnaam:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.Straatnaam }}
+            {{ naam.algemeen?.Straatnaam }}
           </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Postcode:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.Postcode }}
+            {{ naam.adres?.postcode }}
           </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gemeente:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">{{}}</p>
+          <p :key="Math.random()" v-if="result" v-for="naam in result">
+            {{ naam.adres?.gemeente }}
+          </p>
         </div>
       </div>
     </div>
@@ -135,15 +129,21 @@ const result = computed<IPatientAlgemeen[]>(() => {
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Lengte:</h1>
-          <p>{{}}</p>
+          <p :key="Math.random()" v-if="result" v-for="naam in result">
+            {{ naam.medisch?.lengte }}
+          </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
-          <p>{{}}</p>
+          <p :key="Math.random()" v-if="result" v-for="naam in result">
+            {{ naam.medisch?.gewicht }}
+          </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Bloedgroep:</h1>
-          <p>{{}}</p>
+          <p :key="Math.random()" v-if="result" v-for="naam in result">
+            {{ naam.medisch?.bloedgroep }}
+          </p>
         </div>
       </div>
     </div>
