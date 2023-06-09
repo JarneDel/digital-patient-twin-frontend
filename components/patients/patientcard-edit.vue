@@ -2,6 +2,7 @@
 import { ChevronRight } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
+import { LucideLineChart } from 'lucide-vue-next'
 
 const isSelected = ref(false)
 const instance = getCurrentInstance()
@@ -28,7 +29,8 @@ watchEffect(() => {
 // }>()
 // const patient: IPatientAlgemeen = props.patient
 
-const url = 'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+const url =
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 
@@ -75,10 +77,17 @@ const result = computed<IPatientAlgemeen[]>(() => {
         @change="handleCheckboxChange"
       />
 
-      <label for="patient-check" class="capitalize" v-if="result" :key="Math.random()" v-for="naam in result">{{
-        naam.voornaam
+      <label
+        for="patient-check"
+        class="capitalize"
+        v-if="result"
+        :key="Math.random()"
+        v-for="naam in result"
+        >{{ naam.voornaam }}</label
+      >
+      <label for="patient-check" class="capitalize" v-for="naam in result">{{
+        naam.naam
       }}</label>
-      <label for="patient-check" class="capitalize" v-for="naam in result">{{ naam.naam }}</label>
       <label for="patient-check" v-for="naam in result">{{
         calculateAge(naam.geboorteDatum.toString())
       }}</label>

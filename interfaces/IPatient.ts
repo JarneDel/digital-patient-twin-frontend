@@ -1,9 +1,11 @@
 export interface IPatientAlgemeen {
+  Straatnaam: any
   id: number
   voornaam: string
   naam: string
   geboorteDatum: Date
   geslacht: string
+  geboorteland: string
 }
 
 export interface PatientGegevens {
