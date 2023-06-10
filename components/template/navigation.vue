@@ -11,17 +11,17 @@ import { msalInstance } from '~/auth'
 const links: ILink[] = [
   {
     text: 'Home',
-    path: '/dokter/[dokterid]',
+    path: '/dokter/',
     icon: SvgHome,
   },
   {
     text: 'Patienten',
-    path: '/dokter/[dokterid]/patienten',
+    path: '/dokter/patienten',
     icon: SvgPatient,
   },
   {
     text: 'Meldingen',
-    path: '/dokter/[dokterid]/meldingen',
+    path: '/dokter/meldingen',
     icon: SvgNotification,
   },
 ]
