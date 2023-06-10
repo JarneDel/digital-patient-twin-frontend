@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { defineProps, defineEmits, watch } from 'vue'
+
 const props = defineProps({
-  value: {
+  FirstnameValue: {
     type: String,
     required: true,
   },
@@ -10,15 +12,18 @@ const props = defineProps({
     default: true,
   },
 })
+
 const emits = defineEmits(['update:input', 'update:isValid'])
 
-let inputValue = props.value
+let inputValue = props.FirstnameValue
 
 watch(
-  () => inputValue,
+  () => props.FirstnameValue,
   newValue => {
+    inputValue = newValue
     if (newValue) {
       emits('update:isValid', true)
+      emits('update:input', newValue)
     } else {
       emits('update:isValid', false)
     }
@@ -30,7 +35,7 @@ watch(
   <label>Voornaam</label>
   <input
     type="text"
-    v-model="props.value"
+    v-model="inputValue"
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />
 </template>
