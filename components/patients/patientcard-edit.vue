@@ -34,8 +34,6 @@ const url =
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 
-
-
 const calculateAge = (date: string): number => {
   const today = new Date()
   const [day, month, year] = date.split('/')
@@ -105,16 +103,14 @@ const result = computed<IPatientAlgemeen[]>(() => {
           </div>
           <NuxtLink to="/dokter/patients/[patientid]/gegevens">
             <ChevronRight
-              class='h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500'
+              class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
             />
-          </div>
-        </NuxtLink>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <style scoped></style>
 

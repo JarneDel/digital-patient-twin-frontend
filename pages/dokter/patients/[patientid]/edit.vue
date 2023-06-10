@@ -27,14 +27,10 @@ const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
 const patientContact: Contact = data.value?.contact as Contact
 
-// Create reactive variables for form values
 const formPatient = ref<IPatientAlgemeen>(patient)
 const formPatientAdres = ref<Address>(patientAdres)
 const formPatientMedisch = ref<Medisch>(patientMedisch)
 const formPatientContact = ref<Contact>(patientContact)
-
-
-
 </script>
 
 <template>
@@ -68,7 +64,11 @@ const formPatientContact = ref<Contact>(patientContact)
       <div class="flex">
         <div>
           <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
-          <FormsTextInput
+          <forms-text-input
+            lblName="Voornaam"
+            :textValue="patient.voornaam"
+          ></forms-text-input>
+          <!-- <FormsTextInput
             v-model="patient.voornaam"
             :FirstnameValue="patient.voornaam"
             @update:FirstnameValue="patient.voornaam = $event"
@@ -101,7 +101,7 @@ const formPatientContact = ref<Contact>(patientContact)
           <forms-telephone-input
             :telephoneValue="patientContact.telefoon"
             @update:telephoneValue="patientContact.telefoon = $event"
-          ></forms-telephone-input>
+          ></forms-telephone-input> -->
         </div>
       </div>
 
