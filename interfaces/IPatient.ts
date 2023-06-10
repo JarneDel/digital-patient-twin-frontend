@@ -1,6 +1,4 @@
 export interface IPatientAlgemeen {
-  value(value: any): BodyInit | null | undefined
-  Straatnaam: any
   id: number
   voornaam: string
   naam: string
