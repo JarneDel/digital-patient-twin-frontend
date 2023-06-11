@@ -101,7 +101,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:textValue', 'update:isValid'])
+const emits = defineEmits(['update:textStreetNameValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
@@ -119,15 +119,25 @@ const updateValue = (event: Event) => {
     emits('update:isValid', isValid)
 
     if (isValid) {
-      emits('update:textValue', value)
+      emits('update:textStreetNameValue', value)
     }
   }
 }
+
+watch(
+  () => props.textStreetNameValue,
+  newValue => {
+    const isValid = validateInput(newValue)
+
+    emits('update:isValid', isValid)
+  },
+)
 </script>
 
 <template>
-  <label>straatnaam</label>
+  <label for="straat">straatnaam</label>
   <textarea
+    id="straat"
     v-model="props.textStreetNameValue"
     @input="updateValue($event)"
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"

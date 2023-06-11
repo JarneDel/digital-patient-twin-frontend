@@ -77,9 +77,10 @@ const updateValue = (event: Event) => {
     <div>
       <label for="postalCode" class="mb-2 block">Post code</label>
       <input
+        type="text"
         id="postalCode"
+        @input="updateValue($event)"
         v-model="props.postalcodeValue"
-        type="number"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
     </div>
@@ -87,6 +88,7 @@ const updateValue = (event: Event) => {
     <div>
       <label for="houseNumber" class="mb-2 block">Nummer</label>
       <input
+        type="text"
         id="houseNumber"
         v-model="props.huisNumberValue"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"

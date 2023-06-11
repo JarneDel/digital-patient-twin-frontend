@@ -1,71 +1,8 @@
-<!-- <template>
- 
-  <label for="length" class="mb-2 block">Lengte</label>
-  <input
-    id="length"
-    type="text"
-    v-model="length"
-    :class="{ 'border-red-500': isLengthInvalid }"
-    @input="validateLength"
-    class="focus:border-tertiary-600 peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-  />
-  <span v-if="isLengthInvalid" class="break-word inline-block text-red-500">
-    {{ lengthErrorMessage }}
-  </span>
-</template>
-
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-
-const length = ref('')
-const isLengthInvalid = ref(false)
-const lengthErrorMessage = ref('')
-
-const validateLength = () => {
-  const value = length.value.trim()
-  if (value === '') {
-    isLengthInvalid.value = true
-    lengthErrorMessage.value = 'Voer een lengte in.'
-  } else if (!/^\d+(cm)?$/.test(value)) {
-    isLengthInvalid.value = true
-    lengthErrorMessage.value =
-      'Voer een geldige lengte in (bijv. 180 of 180cm).'
-  } else {
-    isLengthInvalid.value = false
-    lengthErrorMessage.value = ''
-  }
-}
-
-watch(length, () => {
-  validateLength()
-})
-</script>
-
-<style>
-.border-red-500 {
-  border-color: #ef4444;
-}
-.text-red-500 {
-  color: #ef4444;
-}
-</style> -->
-<template>
-  <label class="capitalize">lengte</label>
-  <input
-    type="text"
-    :required="isInputValid"
-    v-model="inputValue"
-    :class="{ 'border-red-500': !isInputValid }"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-  />
-  <p v-if="!isInputValid" class="text-red-500">Please enter a value</p>
-</template>
-
 <script setup lang="ts">
 import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
-  value: {
+  lengthValue: {
     type: String,
     required: true,
   },
@@ -76,23 +13,52 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:input', 'update:isValid'])
+const emits = defineEmits(['update:lengthValue', 'update:isValid'])
 
-let inputValue = props.value
-let isInputValid = inputValue !== ''
+const validateInput = (value: string) => {
+  // Perform your form validation logic here
+  // Example: Check if the input value has a length greater than 3
+  return value.length > 3 || value.length === 0
+}
+
+const updateValue = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:lengthValue', value)
+    }
+  }
+}
 
 watch(
-  () => inputValue,
+  () => props.lengthValue,
   newValue => {
-    isInputValid = newValue !== ''
+    const isValid = validateInput(newValue)
 
-    emits('update:isValid', isInputValid)
+    emits('update:isValid', isValid)
   },
 )
 </script>
 
-<style scoped>
-.border-red-500 {
-  border-color: red;
-}
-</style>
+<template>
+  <label for="lengte">lengte</label>
+  <input
+    type="text"
+    id="lengte"
+    v-model="props.lengthValue"
+    @input="updateValue($event)"
+    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+  />
+
+  <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
+    <p>Invalid input</p>
+  </div>
+</template>
+
+<style scoped></style>

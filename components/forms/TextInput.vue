@@ -78,6 +78,15 @@ const updateValue = (event: Event) => {
     }
   }
 }
+
+watch(
+  () => props.textValue,
+  newValue => {
+    const isValid = validateInput(newValue)
+
+    emits('update:isValid', isValid)
+  },
+)
 </script>
 
 <template>

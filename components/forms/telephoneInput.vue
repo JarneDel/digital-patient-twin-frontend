@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { defineProps, defineEmits, watch } from 'vue'
+
 const props = defineProps({
-  telephoneValue: {
+  phoneNumberValue: {
     type: String,
     required: true,
   },
@@ -10,29 +12,44 @@ const props = defineProps({
     default: true,
   },
 })
-const emits = defineEmits(['update:input', 'update:isValid'])
 
-let telephone = props.telephoneValue
+const emits = defineEmits(['update:phoneNumberValue', 'update:isValid'])
 
-watch(
-  () => telephone,
-  newValue => {
-    if (newValue) {
-      emits('update:isValid', true)
-    } else {
-      emits('update:isValid', false)
+const validateInput = (value: string) => {
+  // Perform your form validation logic here
+  // Example: Check if the input value has a length greater than 3
+  return value.includes('@')
+}
+
+const updateValue = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:phoneNumberValue', value)
     }
-  },
-)
+  }
+}
 </script>
 
 <template>
-  <label>Telefoon nummer</label>
+  <label for="telefoon">telefoon</label>
   <input
-    type="text"
-    v-model="props.telephoneValue"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    id="telefoon"
+    type="tel"
+    v-model="props.phoneNumberValue"
+    @input="updateValue($event)"
+    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />
+
+  <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
+    <p>Invalid input</p>
+  </div>
 </template>
 
 <style scoped></style>

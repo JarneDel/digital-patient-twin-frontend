@@ -50,23 +50,11 @@ watch(weight, () => {
 }
 </style> -->
 
-<template>
-  <label class="capitalize">gewicht</label>
-  <input
-    type="text"
-    :required="isInputValid"
-    v-model="inputValue"
-    :class="{ 'border-red-500': !isInputValid }"
-    class="peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-  />
-  <p v-if="!isInputValid" class="text-red-500">Please enter a value</p>
-</template>
-
 <script setup lang="ts">
 import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
-  value: {
+  weightValue: {
     type: String,
     required: true,
   },
@@ -77,23 +65,51 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:input', 'update:isValid'])
+const emits = defineEmits(['update:weightValue', 'update:isValid'])
 
-let inputValue = props.value
-let isInputValid = inputValue !== ''
+const validateInput = (value: string) => {
+  const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+
+  const uppercaseValue = value.toUpperCase()
+
+  return bloodGroups.includes(uppercaseValue) || bloodGroups.includes(value)
+}
+
+const updateValue = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:weightValue', value)
+    }
+  }
+}
 
 watch(
-  () => inputValue,
+  () => props.weightValue,
   newValue => {
-    isInputValid = newValue !== ''
+    const isValid = validateInput(newValue)
 
-    emits('update:isValid', isInputValid)
+    emits('update:isValid', isValid)
   },
 )
 </script>
 
-<style scoped>
-.border-red-500 {
-  border-color: red;
-}
-</style>
+<template>
+  <label for="gewicht">gewicht</label>
+  <input
+    id="gewicht"
+    type="text"
+    v-model="props.weightValue"
+    @input="updateValue"
+    class="peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+  />
+  <p v-if="!isValid" class="text-red-500">Please enter a value</p>
+</template>
+
+<style scoped></style>

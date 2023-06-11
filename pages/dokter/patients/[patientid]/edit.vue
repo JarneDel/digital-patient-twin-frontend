@@ -98,40 +98,11 @@ const formPatientContact = ref<Contact>(patientContact)
             v-model="patientContact.email"
             @update:emailValue="patientContact.email = $event"
           ></forms-email-input>
-          <!-- <FormsTextInput
-            v-model="patient.voornaam"
-            :FirstnameValue="patient.voornaam"
-            @update:FirstnameValue="patient.voornaam = $event"
-          ></FormsTextInput>
-          <FormsSurnameInput
-            :value="patient.naam"
-            @update:value="patient.naam = $event"
-          ></FormsSurnameInput>
-          <FormsBirthDateInput></FormsBirthDateInput>
-          <forms-country-input
-            :value="patient.geboorteland"
-            @update:value="patient.geboorteland = $event"
-          ></forms-country-input>
-          <TextKop2 class="my-5">Adresgegevens</TextKop2>
-          <FormsStreetInput
-            :value="patientAdres.straat"
-            @update:value="patientAdres.straat = $event"
-          ></FormsStreetInput>
-          <forms-postalcode-inputs
-            :postalcodeValue="patientAdres.postcode"
-            @update:postalcodeValue="patientAdres.postcode = $event"
-            @update:huisNumberValue="patientAdres.nr = $event"
-            :huisNumberValue="patientAdres.nr"
-          ></forms-postalcode-inputs>
-          <TextKop2 class="my-5">Contact gegevens</TextKop2>
-          <forms-email-input
-            :emailValue="patientContact.email"
-            @update:emailValue="patientContact.email = $event"
-          ></forms-email-input>
           <forms-telephone-input
-            :telephoneValue="patientContact.telefoon"
-            @update:telephoneValue="patientContact.telefoon = $event"
-          ></forms-telephone-input> -->
+            :phoneNumberValue="patientContact.telefoon"
+            v-model="patientContact.telefoon"
+            @update:phoneNumberValue="patientContact.telefoon = $event"
+          ></forms-telephone-input>
         </div>
       </div>
 
@@ -140,16 +111,19 @@ const formPatientContact = ref<Contact>(patientContact)
         <div>
           <TextKop2 class="my-5">Medische gegevens</TextKop2>
           <FormsLenghtInput
-            :value="patientMedisch.lengte + ' cm'"
-            @update:value="patientMedisch.lengte = $event"
+            :lengthValue="patientMedisch.lengte + ' cm'"
+            v-model="patientMedisch.lengte"
+            @update:lengthValue="patientMedisch.lengte = $event"
           ></FormsLenghtInput>
           <FormsWeightInput
-            :value="patientMedisch.gewicht + ' kg'"
-            @update:value="patientMedisch.gewicht = $event"
+            :weightValue="patientMedisch.gewicht + ' kg'"
+            v-model="patientMedisch.gewicht"
+            @update:weightValue="patientMedisch.gewicht = $event"
           ></FormsWeightInput>
           <FormsBloodtypeInput
-            :value="patientMedisch.bloedgroep"
-            @update:value="patientMedisch.bloedgroep = $event"
+            :bloodTypeValue="patientMedisch.bloedgroep"
+            v-model="patientMedisch.bloedgroep"
+            @update:bloodTypeValue="patientMedisch.bloedgroep = $event"
           ></FormsBloodtypeInput>
         </div>
       </div>

@@ -54,7 +54,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:textValue', 'update:isValid'])
+const emits = defineEmits(['update: textSurnameValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
@@ -72,10 +72,22 @@ const updateValue = (event: Event) => {
     emits('update:isValid', isValid)
 
     if (isValid) {
-      emits('update:textValue', value)
+      emits('update: textSurnameValue', value)
     }
   }
 }
+
+watch(
+  () => props.textCountryValue,
+  newValue => {
+    if (newValue) {
+      emits('update:isValid', true)
+      emits('update: textSurnameValue', newValue)
+    } else {
+      emits('update:isValid', false)
+    }
+  },
+)
 </script>
 
 <template>
