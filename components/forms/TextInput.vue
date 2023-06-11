@@ -54,15 +54,9 @@ const props = defineProps({
     required: false,
     default: true,
   },
-  lblName: {
-    type: String,
-    required: true,
-  },
 })
 
-const emits = defineEmits(['update:input', 'update:isValid'])
-
-const inputValue = props.textValue
+const emits = defineEmits(['update:textValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
@@ -70,31 +64,33 @@ const validateInput = (value: string) => {
   return value.length > 3
 }
 
-const updateValue = (value: string) => {
-  const isValid = validateInput(value)
+const updateValue = (event: Event) => {
+  const target = event.target as HTMLInputElement | null
 
-  emits('update:isValid', isValid)
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
 
-  if (isValid) {
-    emits('update:input', value)
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:textValue', value)
+    }
   }
 }
-
-watch(
-  () => inputValue,
-  newValue => {
-    updateValue(newValue)
-  },
-)
 </script>
 
 <template>
-  <label>{{ lblName }}</label>
+  <label>Voornaam</label>
   <input
     type="text"
-    v-model="inputValue"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    v-model="props.textValue"
+    @input="updateValue($event)"
+    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />
+  <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
+    Invalid input.
+  </div>
 </template>
 
 <style scoped></style>

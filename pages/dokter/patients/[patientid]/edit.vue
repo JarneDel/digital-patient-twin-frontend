@@ -65,9 +65,39 @@ const formPatientContact = ref<Contact>(patientContact)
         <div>
           <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
           <forms-text-input
-            lblName="Voornaam"
             :textValue="patient.voornaam"
+            v-model="patient.voornaam"
+            @update:textValue="patient.voornaam = $event"
           ></forms-text-input>
+          <forms-surname-input
+            :textSurnameValue="patient.naam"
+            v-model="patient.naam"
+            @update:textSurnameValue="patient.naam = $event"
+          ></forms-surname-input>
+          <forms-country-input
+            :textCountryValue="patient.geboorteland"
+            v-model="patient.geboorteland"
+            @update:textCountryValue="patient.geboorteland = $event"
+          ></forms-country-input>
+          <TextKop2 class="my-5">Adres informatie</TextKop2>
+          <forms-street-input
+            :textStreetNameValue="patientAdres.straat"
+            v-model="patientAdres.straat"
+            @update:textStreetNameValue="patientAdres.straat = $event"
+          ></forms-street-input>
+          <forms-postalcode-inputs
+            :postalcodeValue="patientAdres.postcode"
+            v-model="patientAdres.postcode"
+            @update:postalcodeValue="patientAdres.postcode = $event"
+            @update:huisNumberValue="patientAdres.nr = $event"
+            :huisNumberValue="patientAdres.nr"
+          ></forms-postalcode-inputs>
+          <TextKop2 class="my-5">Contact gegevens</TextKop2>
+          <forms-email-input
+            :emailValue="patientContact.email"
+            v-model="patientContact.email"
+            @update:emailValue="patientContact.email = $event"
+          ></forms-email-input>
           <!-- <FormsTextInput
             v-model="patient.voornaam"
             :FirstnameValue="patient.voornaam"
