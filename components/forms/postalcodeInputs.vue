@@ -37,7 +37,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  huisNumberValue: {
+  houseNumberValue: {
     type: String,
     required: true,
   },
@@ -48,7 +48,11 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:textValue', 'update:isValid'])
+const emits = defineEmits([
+  'update:houseNumberValue',
+  'update:postalcodeValue',
+  'update:isValid',
+])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
@@ -56,7 +60,7 @@ const validateInput = (value: string) => {
   return value.length > 3 || value.length === 0
 }
 
-const updateValue = (event: Event) => {
+const updateValuePostCode = (event: Event) => {
   const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
 
   if (target) {
@@ -66,10 +70,35 @@ const updateValue = (event: Event) => {
     emits('update:isValid', isValid)
 
     if (isValid) {
-      emits('update:textValue', value)
+      emits('update:postalcodeValue', value)
     }
   }
 }
+const updateValueNr = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:postalcodeValue', value)
+    }
+  }
+}
+
+watch(
+  () => props.postalcodeValue && props.houseNumberValue,
+  newValue => {
+    if (newValue) {
+      emits('update:isValid', true)
+    } else {
+      emits('update:isValid', false)
+    }
+  },
+)
 </script>
 
 <template>
@@ -79,7 +108,7 @@ const updateValue = (event: Event) => {
       <input
         type="number"
         id="postalCode"
-        @input="updateValue($event)"
+        @input="updateValuePostCode($event)"
         v-model="props.postalcodeValue"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
@@ -90,7 +119,8 @@ const updateValue = (event: Event) => {
       <input
         type="text"
         id="houseNumber"
-        v-model="props.huisNumberValue"
+        @input="updateValueNr($event)"
+        v-model="props.houseNumberValue"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
     </div>

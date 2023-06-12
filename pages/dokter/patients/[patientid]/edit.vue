@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { d } from 'ofetch/dist/error-04138797'
 import { ref } from 'vue'
+import { FormsBirthDateInput } from '~/.nuxt/components'
 import { AlertType } from '~/interfaces/AlertType'
 import {
   IPatientAlgemeen,
@@ -80,6 +82,11 @@ const editLinkName = computed(
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
   <form @submit.prevent="submitForm">
+    <div class="flex items-start justify-end p-5">
+      <button type="submit">
+        <PressablesSaveButton></PressablesSaveButton>
+      </button>
+    </div>
     <div class="mx-5 flex flex-col gap-4 lg:mx-20 lg:flex-row">
       <!-- persoonlijke -->
       <div class="">
@@ -116,23 +123,30 @@ const editLinkName = computed(
             v-model="patient.geslacht"
             @update:genderValue="patient.geslacht = $event"
           ></forms-gender-input>
+          <forms-birthdate-input
+            :birthdateValue="patient.geboorteDatum"
+            v-model="patient.geboorteDatum"
+            @update:birthdateValue="patient.geboorteDatum = $event"
+          ></forms-birthdate-input>
           <forms-country-input
-            :textCountryValue="patient.geboorteland"
+            :countryValue="patient.geboorteland"
             v-model="patient.geboorteland"
-            @update:textCountryValue="patient.geboorteland = $event"
+            @update:countryValue="patient.geboorteland = $event"
           ></forms-country-input>
           <TextKop2 class="my-5">Adres informatie</TextKop2>
+          <forms-city-input
+            :cityValue="patientAdres.gemeente"
+            v-model="patientAdres.gemeente"
+            @update:cityValue="patientAdres.gemeente = $event"
+          ></forms-city-input>
           <forms-street-input
             :textStreetNameValue="patientAdres.straat"
             v-model="patientAdres.straat"
             @update:textStreetNameValue="patientAdres.straat = $event"
           ></forms-street-input>
           <forms-postalcode-inputs
-            :postalcodeValue="patientAdres.postcode"
-            v-model="patientAdres.postcode"
             @update:postalcodeValue="patientAdres.postcode = parseInt($event)"
-            @update:huisNumberValue="patientAdres.nr = $event"
-            :huisNumberValue="patientAdres.nr"
+            @update:houseNumberValue="patientAdres.nr = $event"
           ></forms-postalcode-inputs>
           <TextKop2 class="my-5">Contact gegevens</TextKop2>
           <forms-email-input
@@ -169,9 +183,6 @@ const editLinkName = computed(
           ></FormsBloodtypeInput>
         </div>
       </div>
-      <button type="submit">
-        <PressablesSaveButton></PressablesSaveButton>
-      </button>
     </div>
   </form>
 </template>

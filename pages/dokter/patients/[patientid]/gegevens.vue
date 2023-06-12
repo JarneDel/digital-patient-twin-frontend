@@ -118,7 +118,7 @@ const result = computed<PatientGegevens[]>(() => {
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gemeente:</h1>
-          <p>{{ patientAdres.gemeente }}</p>
+          <!-- <p>{{ patientAdres.gemeente }}</p> -->
           <p :key="Math.random()" v-if="result" v-for="naam in result">
             {{ naam.adres?.gemeente }}
           </p>
