@@ -63,12 +63,17 @@ const submitForm = async () => {
     console.error('An error occurred while updating patient data:', error)
   }
 }
+
+const patientForGoback = { ...patient }
+const editLinkName = computed(
+  () => `${patientForGoback.voornaam} ${patientForGoback.naam} | Edit`,
+)
 </script>
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
-      :link_name="patient.voornaam + ' ' + patient.naam + ' | Edit'"
+      :link_name="editLinkName"
       link_path="/dokter/patients/[patientid]/gegevens"
     />
 
