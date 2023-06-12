@@ -59,8 +59,8 @@ console.log(props.patient)
 </script>
 
 <template>
-  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-8" >
-    <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
+  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-6" >
+    <div class="flex flex-row content-center items-center justify-start gap-2 lg:gap-10">
       <input
         id="patient-check"
         type="checkbox"
@@ -86,15 +86,15 @@ console.log(props.patient)
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
-            <NuxtLink to="/dokter/patienten/[patientenid]/vitals">
+            <NuxtLink to="/dokter/patients/[patientenid]/vitals">
               <LucideLineChart
-                class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
+                class="h-9 w-9 p-2 rounded-lg hover:bg-neutral-200/20 active:text-gray-800"
               />
             </NuxtLink>
           </div>
-          <NuxtLink to="/dokter/patienten/[patientid]/gegevens">
+          <NuxtLink to="/dokter/patients/[patientid]/gegevens">
             <ChevronRight
-              class='h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500'
+              class='h-9 w-9 p-2 rounded-lg hover:bg-neutral-200/20 active:text-gray-800'
             />
         </NuxtLink>
       </div>
