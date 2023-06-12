@@ -55,7 +55,6 @@ useHead({
 </script>
 
 <template>
-  <div class="bg-primary-325">{{ count }}</div>
   <div class="bg-primary-325">{{ selected_list }}</div>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">
@@ -70,7 +69,7 @@ useHead({
       <PressablesEdit
         @clickDelete="clickEdit"
         v-model:is-editing="isEditing"
-        :selected-count="selected"
+        :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
       />

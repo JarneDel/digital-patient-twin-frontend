@@ -2,6 +2,7 @@
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
+import { id } from 'date-fns/locale';
 
 const props = defineProps({
   patient: {
@@ -15,7 +16,8 @@ const instance = getCurrentInstance()
 
 const handleCheckboxChange = () => {
   isSelected.value = !isSelected.value
-  instance?.emit('checkboxSelected', isSelected.value ? isSelected.value : 0)
+  // instance?.emit('checkboxSelected', isSelected.value ? isSelected.value : 0)
+  instance?.emit('checkboxSelected', props.patient.id)
 }
 
 // Cleanup function when the component is unmounted
@@ -24,11 +26,11 @@ onUnmounted(() => {
 })
 
 // Watch for changes in the isSelected value
-watchEffect(() => {
-  if (isSelected.value) {
-    instance?.emit('checkboxSelected', 1)
-  }
-})
+// watchEffect(() => {
+//   if (isSelected.value) {
+//     instance?.emit('checkboxSelected', 1)
+//   }
+// })
 
 const url =
   'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
@@ -64,10 +66,19 @@ console.log(props.patient)
       <input
         id="patient-check"
         type="checkbox"
+        value=""
         class="form-checkbox form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
+      <!-- <input
+        v-model=""
+        id="patient-check"
+        type="checkbox"
+        class="form-checkbox form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-0"
+        :checked="isSelected"
+        @change="handleCheckboxChange"
+      /> -->
 
       <label
         for="patient-check"

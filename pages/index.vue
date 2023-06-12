@@ -141,4 +141,6 @@ watch(selected, () => {
 <!--  <PatientsSm :patient="person"/>-->
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
