@@ -100,4 +100,5 @@ console.log(props.patient)
       </div>
     </div>
   </div>
+  </div>
 </template>
