@@ -59,7 +59,7 @@ console.log(props.patient)
 </script>
 
 <template>
-  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-8" >
+  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-8">
     <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
       <input
         id="patient-check"
@@ -69,11 +69,9 @@ console.log(props.patient)
         @change="handleCheckboxChange"
       />
 
-      <label
-        for="patient-check"
-        class="capitalize"
-        >{{ patient.algemeen.voornaam }}</label
-      >
+      <label for="patient-check" class="capitalize">{{
+        patient.algemeen.voornaam
+      }}</label>
       <label for="patient-check" class="capitalize">{{
         patient.algemeen.naam
       }}</label>
@@ -100,7 +98,6 @@ console.log(props.patient)
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 

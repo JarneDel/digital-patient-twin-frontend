@@ -107,7 +107,7 @@ const result = computed<PatientGegevens[]>(() => {
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Straatnaam:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.algemeen?.Straatnaam }}
+            {{ naam.adres?.straat }}
           </p>
         </div>
         <div class="flex items-center">
