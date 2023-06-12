@@ -90,7 +90,18 @@ const updateValueNr = (event: Event) => {
 }
 
 watch(
-  () => props.postalcodeValue && props.houseNumberValue,
+  () => props.postalcodeValue,
+  newValue => {
+    if (newValue) {
+      emits('update:isValid', true)
+    } else {
+      emits('update:isValid', false)
+    }
+  },
+)
+
+watch(
+  () => props.houseNumberValue,
   newValue => {
     if (newValue) {
       emits('update:isValid', true)
