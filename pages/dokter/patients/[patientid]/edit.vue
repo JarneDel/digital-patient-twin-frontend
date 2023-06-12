@@ -82,7 +82,7 @@ const editLinkName = computed(
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
   <form @submit.prevent="submitForm">
-    <div class="flex items-start justify-end p-5">
+    <div class="mx-10 flex items-start justify-end">
       <button type="submit">
         <PressablesSaveButton></PressablesSaveButton>
       </button>
@@ -114,25 +114,27 @@ const editLinkName = computed(
             @update:textValue="patient.voornaam = $event"
           ></forms-text-input>
           <forms-surname-input
-            :textSurnameValue="patient.naam"
+            :surnameValue="patient.naam"
             v-model="patient.naam"
-            @update:textSurnameValue="patient.naam = $event"
-          ></forms-surname-input>
+            @update:surnameValue="patient.naam = $event"
+          >
+          </forms-surname-input>
           <forms-gender-input
             :genderValue="patient.geslacht"
             v-model="patient.geslacht"
             @update:genderValue="patient.geslacht = $event"
           ></forms-gender-input>
-          <forms-birthdate-input
-            :birthdateValue="patient.geboorteDatum"
-            v-model="patient.geboorteDatum"
-            @update:birthdateValue="patient.geboorteDatum = $event"
-          ></forms-birthdate-input>
           <forms-country-input
             :countryValue="patient.geboorteland"
             v-model="patient.geboorteland"
             @update:countryValue="patient.geboorteland = $event"
           ></forms-country-input>
+          <forms-date-input
+            :birthDateValue="patient.geboorteDatum"
+            v-model="patient.geboorteDatum"
+            @update:birthDateValue="patient.geboorteDatum = $event"
+          >
+          </forms-date-input>
           <TextKop2 class="my-5">Adres informatie</TextKop2>
           <forms-city-input
             :cityValue="patientAdres.gemeente"
