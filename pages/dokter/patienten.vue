@@ -73,17 +73,22 @@ useHead({
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
       />
-
       <!-- <PressablesEdit
         @clickDelete="clickEdit"
         v-model:is-editing="isEditing"
-        :selected-count="selected"
+        :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
       /> -->
     </div>
   
-    <patients-patientcard-edit 
+    <patients-patientcard-edit
+      v-for="patient in data"
+      :id="patient.id"
+      :patient="patient"
+      @checkboxSelected="updateList(patient.id)"
+    />
+    <!-- <patients-patientcard-edit 
       v-for="patient in data"
       :for="id"
       :key="patient.id"
@@ -93,19 +98,6 @@ useHead({
       :is-checked="isSelected"
       @update:checked="isSelected = $event"
       @checkboxSelected="updateList(patient.id)"
-      @update:isEditing="$emit('update:isEditing', $event)"
-      @update:selected-count="selected = $event"
-    />
-    <!-- <patients-patientcard-edit 
-      v-for="patient in data"
-      :for="id"
-      :key="patient.id"
-      :selected-count="selected"
-      :patient="patient.algemeen"
-      :is-editing="isEditing"
-      :is-checked="isSelected"
-      @update:checked="isSelected = $event"
-      @checkboxSelected="updateSelectedCount"
       @update:isEditing="$emit('update:isEditing', $event)"
       @update:selected-count="selected = $event"
     /> -->

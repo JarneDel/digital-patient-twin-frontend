@@ -2,7 +2,6 @@
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
-import { id } from 'date-fns/locale';
 
 const props = defineProps({
   patient: {
@@ -17,6 +16,7 @@ const instance = getCurrentInstance()
 const handleCheckboxChange = () => {
   isSelected.value = !isSelected.value
   // instance?.emit('checkboxSelected', isSelected.value ? isSelected.value : 0)
+  console.log(isSelected.value)
   instance?.emit('checkboxSelected', props.patient.id)
 }
 
@@ -25,17 +25,6 @@ onUnmounted(() => {
   instance?.emit('checkboxSelected', 0) // Reset selected count
 })
 
-// Watch for changes in the isSelected value
-// watchEffect(() => {
-//   if (isSelected.value) {
-//     instance?.emit('checkboxSelected', 1)
-//   }
-// })
-
-const url =
-  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
-
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
 
 const calculateAge = (date: string): number => {
   const today = new Date()
@@ -61,8 +50,11 @@ console.log(props.patient)
 </script>
 
 <template>
-  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-6" >
-    <div class="flex flex-row content-center items-center justify-start gap-2 lg:gap-10">
+  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-6">
+    <div
+      class="flex flex-row content-center items-center justify-start gap-2 lg:gap-10"
+    >
+
       <input
         id="patient-check"
         type="checkbox"
@@ -71,20 +63,21 @@ console.log(props.patient)
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
-      <!-- <input
-        v-model=""
-        id="patient-check"
-        type="checkbox"
-        class="form-checkbox form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-0"
-        :checked="isSelected"
-        @change="handleCheckboxChange"
-      /> -->
-
-      <label
-        for="patient-check"
-        class="capitalize"
-        >{{ patient.algemeen.voornaam }}</label
-      >
+      <div class="capitalize">{{
+        patient.algemeen.voornaam
+      }}</div>
+      <div class="capitalize">{{
+        patient.algemeen.naam
+      }}</div>
+      <div>{{
+        calculateAge(patient.algemeen.geboorteDatum.toString())
+      }}</div>
+      <div class="capitalize">{{
+        patient.algemeen.geslacht
+      }}</div>
+      <!-- <label for="patient-check" class="capitalize">{{
+        patient.algemeen.voornaam
+      }}</label>
       <label for="patient-check" class="capitalize">{{
         patient.algemeen.naam
       }}</label>
@@ -93,23 +86,23 @@ console.log(props.patient)
       }}</label>
       <label for="patient-check" class="capitalize">{{
         patient.algemeen.geslacht
-      }}</label>
+      }}</label> -->
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
             <NuxtLink to="/dokter/patients/[patientenid]">
               <LucideLineChart
-                class="h-9 w-9 p-2 rounded-lg hover:bg-neutral-200/20 active:text-gray-800"
+                class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
               />
             </NuxtLink>
           </div>
           <NuxtLink to="/dokter/patients/[patientid]/gegevens">
             <ChevronRight
-              class='h-9 w-9 p-2 rounded-lg hover:bg-neutral-200/20 active:text-gray-800'
+              class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
             />
-        </NuxtLink>
+          </NuxtLink>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
