@@ -35,6 +35,7 @@ const formPatientContact = ref<Contact>(patientContact)
 const submitForm = async () => {
   try {
     const updatedPatientData = {
+      deviceId: 'testdatagenerator', //deviceid remains unchanged when updated
       algemeen: formPatient.value,
       adres: formPatientAdres.value,
       medisch: formPatientMedisch.value,
@@ -154,6 +155,7 @@ const submitForm = async () => {
           <FormsWeightInput
             :weightValue="patientMedisch.gewicht"
             v-model="patientMedisch.gewicht"
+            @update:weightValue="patientMedisch.gewicht = parseInt($event)"
           ></FormsWeightInput>
           <FormsBloodtypeInput
             :bloodTypeValue="patientMedisch.bloedgroep"

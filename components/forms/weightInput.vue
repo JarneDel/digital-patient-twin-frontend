@@ -56,8 +56,7 @@ import { defineProps, defineEmits, watch } from 'vue'
 const props = defineProps({
   weightValue: {
     type: Number,
-    required: false,
-    default: 0,
+    required: true,
   },
   isValid: {
     type: Boolean,
@@ -104,7 +103,7 @@ watch(
   <label for="gewicht">gewicht</label>
   <input
     id="gewicht"
-    type="text"
+    type="number"
     v-model="props.weightValue"
     @input="updateValue"
     class="peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
