@@ -30,6 +30,11 @@ watchEffect(() => {
   }
 })
 
+const url =
+  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+
+const { error, data, pending } = await useFetch<PatientGegevens>(url)
+
 const calculateAge = (date: string): number => {
   const today = new Date()
   const [day, month, year] = date.split('/')
@@ -89,10 +94,9 @@ console.log(props.patient)
           </div>
           <NuxtLink to="/dokter/patienten/[patientid]/gegevens">
             <ChevronRight
-              class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
+              class='h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500'
             />
-          </NuxtLink>
-        </div>
+        </NuxtLink>
       </div>
     </div>
   </div>

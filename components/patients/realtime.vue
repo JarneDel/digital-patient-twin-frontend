@@ -94,7 +94,7 @@ const closeModal = () => {
           <button v-if="type === 'view'">
             <LucideLineChart />
           </button>
-          <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
+          <NuxtLink to='/dokter/patients/[patientid]/edit'>
             <button v-if="type === 'edit'">
               <LucideEdit />
             </button>

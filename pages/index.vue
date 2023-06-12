@@ -21,6 +21,7 @@ watch(selected, () => {
   <!-- <alerts-lg v-bind:type="" v-bind:alert=""/> -->
 
   <div>HIER</div>
+  <pressables-button>Hello</pressables-button>
   <!-- <drop-down-selector
     class="m-3"
     v-model:selected="selected2"
