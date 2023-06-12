@@ -25,7 +25,7 @@ defineEmits(['update:selected'])
           'rounded-r-lg': index === options.length - 1,
           'rounded-none': index !== 0 && index !== options.length - 1,
           'bg-tertiary-300/30': option !== selected,
-          'bg-tertiary-500/70 font-medium': option === selected,
+          'bg-tertiary-500/70': option === selected,
         }"
       >
         {{ option }}

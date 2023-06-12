@@ -11,17 +11,17 @@ import { msalInstance } from '~/auth'
 const links: ILink[] = [
   {
     text: 'Home',
-    path: '/dokter/[dokterid]',
+    path: '/dokter',
     icon: SvgHome,
   },
   {
     text: 'Patienten',
-    path: '/dokter/[dokterid]/patienten',
+    path: '/dokter/patienten',
     icon: SvgPatient,
   },
   {
     text: 'Meldingen',
-    path: '/dokter/[dokterid]/meldingen',
+    path: '/dokter/meldingen',
     icon: SvgNotification,
   },
 ]
@@ -35,8 +35,6 @@ const isCurrentPage = (path: string) => {
 const logout = () => {
   msalInstance.logoutPopup()
 }
-
-
 </script>
 
 <template>
@@ -47,15 +45,11 @@ const logout = () => {
       <div class="font-semibold text-white">Digital Patient Twin</div>
     </div>
     <div class="z-10 flex pl-3 pr-8 shadow-normal h-24 items-center justify-end">
-      <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
-        <SvgNotification class="h-12 w-12 px-2 relative fill-black" />
-        <div class="bg-primary-500 rounded-full w-4 h-4 text-[10px] absolute top-8 right-[87px] flex justify-center items-center">
-          <div class="text-white">+9</div>
-        </div>
-      </button>
-      <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
-        <user-circle-2 class="h-12 w-12 px-2"/>
-      </button>
+      <NuxtLink to="/dokter/account">
+        <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
+          <user-circle-2 class="h-12 w-12 px-2 text-neutral-700"/>
+        </button>
+      </NuxtLink>
     </div>
     <div class="flex w-56 flex-col justify-between bg-primary-600 pl-10 pt-6">
       <ul>

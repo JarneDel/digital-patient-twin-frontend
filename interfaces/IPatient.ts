@@ -11,7 +11,7 @@ export interface IPatientAlgemeen {
 export interface PatientGegevens {
   id?: string
   deviceId?: string
-  algemeen?: IPatientAlgemeen
+  algemeen: IPatientAlgemeen
   profilePictureUrl?: string
   adres?: Address
   contact?: Contact
