@@ -23,8 +23,8 @@ defineEmits(['update:selected'])
           'rounded-l-lg': index === 0,
           'rounded-r-lg': index === options.length - 1,
           'rounded-none': index !== 0 && index !== options.length - 1,
-          'bg-tertiary-20': option !== selected,
-          'bg-tertiary-300/70 font-medium': option === selected,
+          'bg-tertiary-300/30': option !== selected,
+          'bg-tertiary-500/70': option === selected,
         }"
         class=' overflow-hidden px-3 py-3 text-tertiary-600  transition-all duration-300 ease-out outline-none border-2 border-transparent focus-visible:border-tertiary-500'
       >

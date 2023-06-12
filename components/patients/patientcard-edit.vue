@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { ChevronRight } from 'lucide-vue-next'
+import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
-import { LucideLineChart } from 'lucide-vue-next'
+
+const props = defineProps({
+  patient: {
+    type: Object as PropType<PatientGegevens>,
+    required: true,
+  },
+})
 
 const isSelected = ref(false)
 const instance = getCurrentInstance()
@@ -23,11 +29,6 @@ watchEffect(() => {
     instance?.emit('checkboxSelected', 1)
   }
 })
-
-// const props = defineProps<{
-//   patient: IPatientAlgemeen
-// }>()
-// const patient: IPatientAlgemeen = props.patient
 
 const url =
   'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
@@ -54,18 +55,11 @@ const calculateAge = (date: string): number => {
   return age
 }
 
-const result = computed<IPatientAlgemeen[]>(() => {
-  const lijst: IPatientAlgemeen[] = []
-  if (data.value?.algemeen) {
-    lijst.push(data.value.algemeen)
-  }
-
-  return lijst
-})
+console.log(props.patient)
 </script>
 
 <template>
-  <div class="mx-auto max-w-7xl rounded-lg bg-neutral-300 p-8">
+  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-8" >
     <div class="flex flex-row content-center justify-start gap-2 lg:gap-10">
       <input
         id="patient-check"
@@ -78,19 +72,16 @@ const result = computed<IPatientAlgemeen[]>(() => {
       <label
         for="patient-check"
         class="capitalize"
-        v-if="result"
-        :key="Math.random()"
-        v-for="naam in result"
-        >{{ naam.voornaam }}</label
+        >{{ patient.algemeen.voornaam }}</label
       >
-      <label for="patient-check" class="capitalize" v-for="naam in result">{{
-        naam.naam
+      <label for="patient-check" class="capitalize">{{
+        patient.algemeen.naam
       }}</label>
       <label for="patient-check" v-for="naam in result">{{
         calculateAge(naam.geboorteDatum.toString()) + ' jaar'
       }}</label>
-      <label for="patient-check" class="capitalize" v-for="naam in result">{{
-        naam.geslacht
+      <label for="patient-check" class="capitalize">{{
+        patient.algemeen.geslacht
       }}</label>
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
@@ -109,6 +100,7 @@ const result = computed<IPatientAlgemeen[]>(() => {
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

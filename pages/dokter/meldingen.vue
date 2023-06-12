@@ -12,6 +12,7 @@ useHead({
   ],
 })
 
+// pinnedPatients is a list of patients that are pinned to the top of the list
 const patienten = ref<PatientGegevens[]>([
   {
     adres: {
@@ -26,6 +27,8 @@ const patienten = ref<PatientGegevens[]>([
       naam: 'De Koek',
       geslacht: 'Anders',
       voornaam: 'Frankie',
+      Straatnaam: 'Sint-Pietersnieuwstraat',
+      geboorteland: 'België',
     },
     contact: {
       email: 'Frankie.de.koek@domain.org',
@@ -54,6 +57,8 @@ const patienten = ref<PatientGegevens[]>([
       naam: 'Jonckheere',
       geslacht: 'Man',
       voornaam: 'Joshy',
+      Straatnaam: 'Sint-Pietersnieuwstraat',
+      geboorteland: 'België',
     },
     contact: {
       email: 'jean.dupont@domain.org',
@@ -70,6 +75,8 @@ const patienten = ref<PatientGegevens[]>([
     profilePictureUrl: 'https://i.pravatar.cc/300?u=123',
   },
 ])
+
+// meldingen is a list of alerts that are shown on the page
 const meldingen = ref<IMelding[]>([
   {
     id: 1,
@@ -144,8 +151,8 @@ const alertsFiltered = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-[58rem]">
-    <h2 class="mx-8 mb-8 mt-6 text-xl font-semibold">Meldingen</h2>
+  <div class="mx-auto max-w-[67rem]">
+    <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Meldingen</h2>
     <div class="mx-5 my-8 flex content-center justify-between">
       <div class="flex items-center gap-x-4">
         <pressables-drop-down-selector
@@ -175,5 +182,3 @@ const alertsFiltered = computed(() => {
     </div>
   </div>
 </template>
-
-<style scoped></style>
