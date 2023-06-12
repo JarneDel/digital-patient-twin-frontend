@@ -53,6 +53,7 @@ const submitForm = async () => {
     if (response.ok) {
       // Handle successful update
       console.log('Patient data updated successfully')
+      alert('Patient data updated successfully')
     } else {
       // Handle update error
       console.error('Failed to update patient data')
@@ -66,8 +67,8 @@ const submitForm = async () => {
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
-      link_name="nieuw patienten toevoegen"
-      link_path="/dokter/patienten"
+      :link_name="patient.voornaam + ' ' + patient.naam + ' | Edit'"
+      link_path="/dokter/patients/[patientid]/gegevens"
     />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
@@ -104,6 +105,11 @@ const submitForm = async () => {
             v-model="patient.naam"
             @update:textSurnameValue="patient.naam = $event"
           ></forms-surname-input>
+          <forms-gender-input
+            :genderValue="patient.geslacht"
+            v-model="patient.geslacht"
+            @update:genderValue="patient.geslacht = $event"
+          ></forms-gender-input>
           <forms-country-input
             :textCountryValue="patient.geboorteland"
             v-model="patient.geboorteland"
@@ -118,7 +124,7 @@ const submitForm = async () => {
           <forms-postalcode-inputs
             :postalcodeValue="patientAdres.postcode"
             v-model="patientAdres.postcode"
-            @update:postalcodeValue="patientAdres.postcode = $event"
+            @update:postalcodeValue="patientAdres.postcode = parseInt($event)"
             @update:huisNumberValue="patientAdres.nr = $event"
             :huisNumberValue="patientAdres.nr"
           ></forms-postalcode-inputs>
@@ -141,14 +147,13 @@ const submitForm = async () => {
         <div>
           <TextKop2 class="my-5">Medische gegevens</TextKop2>
           <FormsLenghtInput
-            :lengthValue="patientMedisch.lengte + ' cm'"
+            :lengthValue="patientMedisch.lengte"
             v-model="patientMedisch.lengte"
-            @update:lengthValue="patientMedisch.lengte = $event"
+            @update:lengthValue="patientMedisch.lengte = parseInt($event)"
           ></FormsLenghtInput>
           <FormsWeightInput
-            :weightValue="patientMedisch.gewicht + ' kg'"
+            :weightValue="patientMedisch.gewicht"
             v-model="patientMedisch.gewicht"
-            @update:weightValue="patientMedisch.gewicht = $event"
           ></FormsWeightInput>
           <FormsBloodtypeInput
             :bloodTypeValue="patientMedisch.bloedgroep"

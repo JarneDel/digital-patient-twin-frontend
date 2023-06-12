@@ -55,8 +55,9 @@ import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
   weightValue: {
-    type: String,
-    required: true,
+    type: Number,
+    required: false,
+    default: 0,
   },
   isValid: {
     type: Boolean,
@@ -67,19 +68,18 @@ const props = defineProps({
 
 const emits = defineEmits(['update:weightValue', 'update:isValid'])
 
-const validateInput = (value: string) => {
-  const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
-
-  const uppercaseValue = value.toUpperCase()
-
-  return bloodGroups.includes(uppercaseValue) || bloodGroups.includes(value)
+const validateInput = (value: Number) => {
+  if (value === 0) {
+    return false
+  } else {
+    return true
+  }
 }
-
 const updateValue = (event: Event) => {
-  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+  const target = event.target as HTMLInputElement | null
 
   if (target) {
-    const value = target.value
+    const value = parseFloat(target.value)
     const isValid = validateInput(value)
 
     emits('update:isValid', isValid)

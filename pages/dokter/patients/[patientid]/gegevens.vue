@@ -51,7 +51,6 @@ const result = computed<IPatientAlgemeen[]>(() => {
   }
   return lijst
 })
-
 </script>
 
 <template>
@@ -71,7 +70,6 @@ const result = computed<IPatientAlgemeen[]>(() => {
   >
     <!-- persoonlijke -->
     <div class="mx-auto lg:col-span-1">
-      <img src="public/Images/profile.png" alt="" />
       <div class="flex text-lg font-semibold">
         <p>{{ patient.voornaam }} {{ patient.naam }}</p>
       </div>
@@ -138,11 +136,11 @@ const result = computed<IPatientAlgemeen[]>(() => {
       <div class="flex flex-col gap-5">
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Lengte:</h1>
-          <p>{{ patientMedisch.lengte }}</p>
+          <p>{{ patientMedisch.lengte + 'cm' }}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
-          <p>{{ patientMedisch.gewicht  +'kg'}}</p>
+          <p>{{ patientMedisch.gewicht + 'kg' }}</p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Bloedgroep:</h1>

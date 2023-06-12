@@ -3,7 +3,7 @@ import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
   lengthValue: {
-    type: String,
+    type: Number,
     required: true,
   },
   isValid: {
@@ -15,17 +15,15 @@ const props = defineProps({
 
 const emits = defineEmits(['update:lengthValue', 'update:isValid'])
 
-const validateInput = (value: string) => {
-  // Perform your form validation logic here
-  // Example: Check if the input value has a length greater than 3
-  return value.length > 3 || value.length === 0
+const validateInput = (value: number) => {
+  return value > 3 || value === 0
 }
 
 const updateValue = (event: Event) => {
-  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+  const target = event.target as HTMLInputElement | null
 
   if (target) {
-    const value = target.value
+    const value = parseInt(target.value)
     const isValid = validateInput(value)
 
     emits('update:isValid', isValid)
@@ -38,7 +36,7 @@ const updateValue = (event: Event) => {
 
 watch(
   () => props.lengthValue,
-  newValue => {
+  (newValue: number) => {
     const isValid = validateInput(newValue)
 
     emits('update:isValid', isValid)
@@ -47,9 +45,9 @@ watch(
 </script>
 
 <template>
-  <label for="lengte">lengte</label>
+  <label for="lengte">lengte (in cm)</label>
   <input
-    type="text"
+    type="number"
     id="lengte"
     v-model="props.lengthValue"
     @input="updateValue($event)"

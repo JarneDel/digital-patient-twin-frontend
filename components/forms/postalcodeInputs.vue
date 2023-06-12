@@ -34,7 +34,7 @@ import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
   postalcodeValue: {
-    type: String,
+    type: Number,
     required: true,
   },
   huisNumberValue: {
@@ -77,7 +77,7 @@ const updateValue = (event: Event) => {
     <div>
       <label for="postalCode" class="mb-2 block">Post code</label>
       <input
-        type="text"
+        type="number"
         id="postalCode"
         @input="updateValue($event)"
         v-model="props.postalcodeValue"
