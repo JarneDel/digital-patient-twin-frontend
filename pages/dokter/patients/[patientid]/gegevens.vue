@@ -133,13 +133,13 @@ const result = computed<PatientGegevens[]>(() => {
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Lengte:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.medisch?.lengte }}
+            {{ naam.medisch?.lengte + ' cm' }}
           </p>
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.medisch?.gewicht }}
+            {{ naam.medisch?.gewicht + ' kg' }}
           </p>
         </div>
         <div class="flex items-center">
