@@ -22,10 +22,11 @@ const props = defineProps({
     required: true,
   },
 })
+
 const emits = defineEmits(['update:selected'])
-const ops = computed(() => props.options.map((name) => ({ name })))
-const selected = ref(ops.value[0])
-watch(ops, (newVal) => {
+const opt = computed(() => props.options.map((name) => ({ name })))
+const selected = ref(opt.value[0])
+watch(opt, (newVal) => {
   selected.value = newVal[0]
 })
 watch(selected, (newVal) => {
