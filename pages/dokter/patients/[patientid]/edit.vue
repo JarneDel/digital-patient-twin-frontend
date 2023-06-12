@@ -31,6 +31,36 @@ const formPatient = ref<IPatientAlgemeen>(patient)
 const formPatientAdres = ref<Address>(patientAdres)
 const formPatientMedisch = ref<Medisch>(patientMedisch)
 const formPatientContact = ref<Contact>(patientContact)
+
+const submitForm = async () => {
+  try {
+    const updatedPatientData = {
+      algemeen: formPatient.value,
+      adres: formPatientAdres.value,
+      medisch: formPatientMedisch.value,
+      contact: formPatientContact.value,
+    }
+
+    // Send the updated patient data to your API endpoint
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedPatientData),
+    })
+
+    if (response.ok) {
+      // Handle successful update
+      console.log('Patient data updated successfully')
+    } else {
+      // Handle update error
+      console.error('Failed to update patient data')
+    }
+  } catch (error) {
+    console.error('An error occurred while updating patient data:', error)
+  }
+}
 </script>
 
 <template>
@@ -40,9 +70,9 @@ const formPatientContact = ref<Contact>(patientContact)
       link_path="/dokter/patienten"
     />
 
-    <PressablesSaveButton @click="saveFormData"></PressablesSaveButton>
+    <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
-  <form>
+  <form @submit.prevent="submitForm">
     <div class="mx-5 flex flex-col gap-4 lg:mx-20 lg:flex-row">
       <!-- persoonlijke -->
       <div class="">
@@ -127,6 +157,9 @@ const formPatientContact = ref<Contact>(patientContact)
           ></FormsBloodtypeInput>
         </div>
       </div>
+      <button type="submit">
+        <PressablesSaveButton></PressablesSaveButton>
+      </button>
     </div>
   </form>
 </template>
