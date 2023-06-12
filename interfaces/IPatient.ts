@@ -1,21 +1,19 @@
 export interface IPatientAlgemeen {
-  Straatnaam: any
-  id: number
+  id: string
   voornaam: string
   naam: string
-  geboorteDatum: Date
+  geboorteDatum: string
   geslacht: string
-  geboorteland: string
 }
 
 export interface PatientGegevens {
-  id?: string
-  deviceId?: string
+  id: string
+  deviceId: string
   algemeen: IPatientAlgemeen
   profilePictureUrl?: string
-  adres?: Address
-  contact?: Contact
-  medisch?: Medisch
+  adres: Address
+  contact: Contact
+  medisch: Medisch
   createdBy?: string
 }
 

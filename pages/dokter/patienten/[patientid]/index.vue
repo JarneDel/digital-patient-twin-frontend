@@ -23,7 +23,9 @@ useHead({
 <template>
   <pressables-goback/>
   <text-kop2 class='mx-8 mb-2'>Vitalen {{patientNaam}}</text-kop2>
-    <grafieken :for='id'/>
+  <client-only>
+    <grafieken :for='id' />
+  </client-only>
 
 </template>
 

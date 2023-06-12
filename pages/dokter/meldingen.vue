@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { AlertType, IMelding } from '~/interfaces/AlertType'
+import { servicesUrls } from '~/servicesurls'
 
 useHead({
   title: 'Meldingen',
@@ -12,70 +13,19 @@ useHead({
   ],
 })
 
-// pinnedPatients is a list of patients that are pinned to the top of the list
-const patienten = ref<PatientGegevens[]>([
-  {
-    adres: {
-      gemeente: 'Gent',
-      straat: 'Sint-Pietersnieuwstraat',
-      postcode: 9000,
-      nr: '25',
-    },
-    algemeen: {
-      geboorteDatum: new Date(1999, 5, 30),
-      id: 3,
-      naam: 'De Koek',
-      geslacht: 'Anders',
-      voornaam: 'Frankie',
-      Straatnaam: 'Sint-Pietersnieuwstraat',
-      geboorteland: 'België',
-    },
-    contact: {
-      email: 'Frankie.de.koek@domain.org',
-      telefoon: '0470 12 34 56',
-    },
-    medisch: {
-      bloedgroep: 'A+',
-      gewicht: 75,
-      lengte: 1.75,
-    },
-    createdBy: 'Dokter Mertens',
-    deviceId: '123456789',
-    id: '3',
-    profilePictureUrl: 'https://i.pravatar.cc/300?u=234',
-  },
-  {
-    adres: {
-      gemeente: 'Brussel',
-      straat: 'Rue de la Loi',
-      postcode: 1000,
-      nr: '16',
-    },
-    algemeen: {
-      geboorteDatum: new Date(1985, 11, 17),
-      id: 1,
-      naam: 'Jonckheere',
-      geslacht: 'Man',
-      voornaam: 'Joshy',
-      Straatnaam: 'Sint-Pietersnieuwstraat',
-      geboorteland: 'België',
-    },
-    contact: {
-      email: 'jean.dupont@domain.org',
-      telefoon: '02 123 45 67',
-    },
-    medisch: {
-      bloedgroep: 'B+',
-      gewicht: 80,
-      lengte: 1.85,
-    },
-    createdBy: 'Dr. Smith',
-    deviceId: '987654321',
-    id: '1',
-    profilePictureUrl: 'https://i.pravatar.cc/300?u=123',
-  },
-])
+const user = useUser().value
+// get patienten by dokterid
 
+const { pending: patientenPending, data: patienten, error: patientenError } = useFetch<PatientGegevens[]>(
+  `/dokter/${user?.localAccountId}/patienten`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
+
+
+// pinnedPatients is a list of patienten that are pinned to the top of the list
 // meldingen is a list of alerts that are shown on the page
 const meldingen = ref<IMelding[]>([
   {
@@ -156,9 +106,10 @@ const alertsFiltered = computed(() => {
     <div class="mx-5 my-8 flex content-center justify-between">
       <div class="flex items-center gap-x-4">
         <pressables-drop-down-selector
-          type="searchable"
-          :options="patientNamen"
-          v-model:selected="selectedPatient"
+          v-if='patienten'
+          v-model:selected='selectedPatient'
+          :options='patienten.map(patient => `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`)'
+          type='searchable'
         />
         <pressables-drop-down-selector
           type="default"
