@@ -81,13 +81,13 @@ console.log(props.patient)
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
-            <NuxtLink to="/">
+            <NuxtLink to="/dokter/patienten/[patientenid]/vitals">
               <LucideLineChart
                 class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
               />
             </NuxtLink>
           </div>
-          <NuxtLink to="/dokter/patients/[patientid]/gegevens">
+          <NuxtLink to="/dokter/patienten/[patientid]/gegevens">
             <ChevronRight
               class="h-6 w-6 transition-all duration-300 hover:scale-125 hover:cursor-pointer hover:text-secondary-500"
             />

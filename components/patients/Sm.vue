@@ -37,7 +37,7 @@ const timeDDMMYYYY = computed(() => {
       <span class="text-gray-800">{{ patient.geslacht }}</span>
       <NuxtLink
         class="justify-self-center"
-        to="/dokter/[dokterid]/patients/[patientid]/edit"
+        to="/dokter/patienten/[patientid]/edit"
       >
         <pencil
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
@@ -45,7 +45,7 @@ const timeDDMMYYYY = computed(() => {
       </NuxtLink>
       <NuxtLink
         class="justify-self-center"
-        to="/dokter/[dokterid]/patients/[patientid]"
+        to="/dokter/patienten/[patientid]"
       >
         <Line-chart
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
