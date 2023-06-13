@@ -1,28 +1,28 @@
 <script setup lang='ts'>
-import {msalInstance} from '~/auth'
+import { msalInstance } from '~/auth'
 
-  definePageMeta({
-    layout: false,
-  });
-
-onMounted(() => {
-  console.log("mounted")
-  const users = msalInstance.getAllAccounts()
-  console.log(users.length, "users in login")
-  if (users.length !== 0) {
-    navigateTo('/')
-  }
+definePageMeta({
+  layout: false,
 })
 
 
+if (process.client) {
+  const users = msalInstance.getAllAccounts()
+  console.log(users.length, 'users in login')
+  if (users.length !== 0) {
+    navigateTo('/')
+  }
+}
+
+
 const login = async () => {
-    const result = await msalInstance.loginPopup()
+  const result = await msalInstance.loginPopup()
     console.log({ result })
     navigateTo(`/`)
 }
 
 useHead({
-  title: 'Login',
+  title: 'Login | Digital Patient Twin',
   meta: [
     {
       name: 'description',

@@ -97,7 +97,7 @@ useHead({
       @update:isEditing="$emit('update:isEditing', $event)"
       @update:selected-count="selected = $event"
     />
-    <!-- <patients-patientcard-edit 
+    <!-- <patienten-patientcard-edit
       v-for="patient in data"
       :for="id"
       :key="patient.id"

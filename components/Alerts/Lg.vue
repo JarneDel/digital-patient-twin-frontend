@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { ArrowUp, LineChart } from 'lucide-vue-next'
 import { PropType } from '@vue/runtime-core'
-import { AlertType, IMelding } from '~/interfaces/AlertType'
+import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { SvgAdemfrequentie, SvgBloodpressure, SvgHeartrate, SvgOxygen, SvgTemperature } from '#components'
 
 
@@ -81,8 +81,9 @@ const unit = computed(() => {
   <div
     class='mx-5 my-3 grid w-[900px] grid-cols-[12px_120px_250px_150px_150px_150px_48px] grid-rows-1 rounded-lg bg-white p-2 drop-shadow-2xl'
     :class="{
-      'border-l-4 border-primary-375': alert.level === 'danger',
-      'border-l-4 border-other-200': alert.level === 'warning',
+      'border-l-4 border-primary-375': alert.level === AlertLevel.High,
+      'border-l-4 border-other-200': alert.level === AlertLevel.Medium,
+      'border-l-4 border-indigo-300': alert.level === AlertLevel.Low,
     }"
   >
     <div class='w-[3px]'></div>
@@ -90,9 +91,9 @@ const unit = computed(() => {
       :is='alertSvg'
       class='h-14 w-14 rounded-md p-2 row-start-1 row-end-3'
       :class="{
-        'bg-primary-50 text-primary-500': alert.level === 'danger',
-        'bg-orange-50 text-orange-500': alert.level === 'warning',
-        'bg-green-50 text-green-500': alert.level === 'good',
+        'bg-primary-50 text-primary-500': alert.level === AlertLevel.High,
+        'bg-orange-50 text-orange-500': alert.level === AlertLevel.Medium,
+        'bg-indigo-50 text-indigo-500': alert.level === AlertLevel.Low,
        }" />
     <div class='self-center'>
       <div>{{ alert.name }}</div>
@@ -116,7 +117,7 @@ const unit = computed(() => {
       <div class='text-sm text-neutral-100'>7 minuten</div>
     </div>
     <div class='self-center'>
-      <NuxtLink to='dokter/[dokterid]/patients/[patientid]'>
+      <NuxtLink to='/dokter/patienten/[patientid]'>
         <Line-chart />
       </NuxtLink>
     </div>

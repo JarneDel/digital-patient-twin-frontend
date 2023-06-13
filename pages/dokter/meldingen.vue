@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PatientGegevens } from '~/interfaces/IPatient'
-import { AlertType, IMelding } from '~/interfaces/AlertType'
+import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
+import { servicesUrls } from '~/servicesurls'
 
 useHead({
   title: 'Meldingen',
@@ -12,112 +13,84 @@ useHead({
   ],
 })
 
-// pinnedPatients is a list of patients that are pinned to the top of the list
-const patienten = ref<PatientGegevens[]>([
-  {
-    adres: {
-      gemeente: 'Gent',
-      straat: 'Sint-Pietersnieuwstraat',
-      postcode: 9000,
-      nr: '25',
-    },
-    algemeen: {
-      geboorteDatum: new Date(1999, 5, 30),
-      id: 3,
-      naam: 'De Koek',
-      geslacht: 'Anders',
-      voornaam: 'Frankie',
-      Straatnaam: 'Sint-Pietersnieuwstraat',
-      geboorteland: 'België',
-    },
-    contact: {
-      email: 'Frankie.de.koek@domain.org',
-      telefoon: '0470 12 34 56',
-    },
-    medisch: {
-      bloedgroep: 'A+',
-      gewicht: 75,
-      lengte: 1.75,
-    },
-    createdBy: 'Dokter Mertens',
-    deviceId: '123456789',
-    id: '3',
-    profilePictureUrl: 'https://i.pravatar.cc/300?u=234',
-  },
-  {
-    adres: {
-      gemeente: 'Brussel',
-      straat: 'Rue de la Loi',
-      postcode: 1000,
-      nr: '16',
-    },
-    algemeen: {
-      geboorteDatum: new Date(1985, 11, 17),
-      id: 1,
-      naam: 'Jonckheere',
-      geslacht: 'Man',
-      voornaam: 'Joshy',
-      Straatnaam: 'Sint-Pietersnieuwstraat',
-      geboorteland: 'België',
-    },
-    contact: {
-      email: 'jean.dupont@domain.org',
-      telefoon: '02 123 45 67',
-    },
-    medisch: {
-      bloedgroep: 'B+',
-      gewicht: 80,
-      lengte: 1.85,
-    },
-    createdBy: 'Dr. Smith',
-    deviceId: '987654321',
-    id: '1',
-    profilePictureUrl: 'https://i.pravatar.cc/300?u=123',
-  },
-])
 
+const user = useUser().value
+// get patienten by dokterid
+
+const { pending: patientenPending, data: patienten, error: patientenError } = useFetch<PatientGegevens[]>(
+  `/dokter/${user?.localAccountId}/patients`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
+
+const selectedPatient = ref<string | "Alle patiënten">('')
+const filteredPatients = computed<PatientGegevens[]>( () => {
+  console.log("computing selected patient")
+  if (!patienten.value) return []
+  // filter by selected patient
+  if (selectedPatient.value === '' || "Alle patiënten") return patienten.value
+  const patient = patienten.value.find((patient: PatientGegevens): boolean => {
+    return (
+      `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}` ===
+      selectedPatient.value
+    )
+  }) as PatientGegevens
+  return [patient]
+})
+
+watch(filteredPatients, (newVal) => {
+  console.log(newVal, "filtered patients changed")
+})
+
+
+// pinnedPatients is a list of patienten that are pinned to the top of the list
 // meldingen is a list of alerts that are shown on the page
 const meldingen = ref<IMelding[]>([
   {
-    id: 1,
+    id: "1",
     name: 'Joshy Jonkheere',
     time: new Date(Date.now() - 6 * 1000),
     type: AlertType.heartRate,
     value: '95/120',
-    level: 'danger',
+    level: AlertLevel.High,
     dateOfBirth: '01/01/1980',
-    patientId: '1',
+    patientId: '878c95cf-e82d-40a5-a56c-8790427f1657',
   },
   {
-    id: 2,
+    id: "2",
     name: 'Joshy Jonkheere',
     time: new Date(Date.now() - 2 * 60 * 60 * 1000),
     type: AlertType.temperature,
     value: '37',
-    level: 'danger',
+    level: AlertLevel.Low,
     dateOfBirth: '01/01/1980',
-    patientId: '1',
+    patientId: '878c95cf-e82d-40a5-a56c-8790427f1657',
   },
   {
-    id: 3,
+    id: "3",
     name: 'Franky De Koek',
     time: new Date(Date.now() - 3 * 60 * 60 * 1000),
     type: AlertType.oxygen,
     value: '95',
-    level: 'warning',
+    level: AlertLevel.Medium,
     dateOfBirth: '01/01/1980',
-    patientId: '3',
+    patientId: '16da7d6d-09b5-40b3-9ba4-41492a4c99f7',
   },
 ])
 
 const patientNamen = computed(() => {
-  return patienten.value.map(patient => {
+  if (!patienten.value) return []
+  const namen =  patienten.value.map(patient => {
     return `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
   })
+  return ["Alle patiënten", ...namen]
 })
-const selectedPatient = ref<string>('')
 
 const selectedPatientObject = computed((): PatientGegevens => {
+  if (!patienten.value) return {} as PatientGegevens
+  if (selectedPatient.value === "Alle patiënten") return {} as PatientGegevens
   return patienten.value.find((patient: PatientGegevens): boolean => {
     return (
       `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}` ===
@@ -125,47 +98,64 @@ const selectedPatientObject = computed((): PatientGegevens => {
     )
   }) as PatientGegevens
 })
-const AlertTypes = [
-  'Alles',
-  'Bloeddruk',
-  'Hartslag',
-  'Temperatuur',
-  'Bloedzuurstof',
-  'Ademfrequentie',
+
+
+
+const AlertTypes: Array<AlertType | "Alle types"> = [
+  'Alle types',
+  AlertType.heartRate,
+  AlertType.temperature,
+  AlertType.oxygen,
+  AlertType.breathingRate,
+  AlertType.BloodPressure,
 ]
-const AlertSeverity = ['Alles', 'Laag', 'Matig', 'Kritisch']
-const selectedSeverity = ref<string>('Alles')
-const selectedType = ref<string>('Alles')
+
+
+const AlertSeverity = ref<Array<AlertLevel | "Alles">>(['Alles', AlertLevel.Low, AlertLevel.Medium, AlertLevel.High])
+const selectedSeverity = ref<AlertLevel | "Alles">('Alles')
+
+
+const selectedType = ref<AlertType | "Alle types">('Alle types')
 watch(selectedType, value => {
   console.log(value)
 })
 
 const alertsFiltered = computed(() => {
   return meldingen.value.filter(alert => {
-    if (selectedPatient.value === '') {
-      return true
-    }
-    return alert.patientId === selectedPatientObject.value.id
-  })
+
+    const isTypeMatch = selectedType.value === 'Alle types' || alert.type === selectedType.value
+    const isSeverityMatch = selectedSeverity.value === 'Alles' || alert.level === selectedSeverity.value
+    const isPatientMatch = selectedPatient.value === 'Alle patiënten' || (selectedPatientObject.value && alert.patientId === selectedPatientObject.value.id);
+    return isTypeMatch && isSeverityMatch && isPatientMatch
+  });
 })
+
+watch(patientNamen, (newVal) => {
+  console.log(newVal, "patient namen changed")
+})
+
+watch(selectedSeverity, (newVal) => {
+  console.log(newVal, "selected type changed")
+})
+
 </script>
 
 <template>
-  <div class="mx-auto max-w-[67rem]">
+  <div class="mx-auto max-w-[60rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Meldingen</h2>
     <div class="mx-5 my-8 flex content-center justify-between">
-      <div class="flex items-center gap-x-4">
-        <pressables-drop-down-selector
-          type="searchable"
-          :options="patientNamen"
-          v-model:selected="selectedPatient"
+<!--      <div class="flex items-center gap-x-4">-->
+        <pressables-search
+          type='small'
+          v-model:selected='selectedPatient'
+          :options='patientNamen'
         />
         <pressables-drop-down-selector
           type="default"
           :options="AlertTypes"
           v-model:selected="selectedType"
         />
-      </div>
+<!--      </div>-->
       <PressablesSelector
         v-model:selected="selectedSeverity"
         :options="AlertSeverity"
@@ -177,7 +167,7 @@ const alertsFiltered = computed(() => {
         v-for="alert of alertsFiltered"
         :key="alert.id"
         :alert="alert"
-        v-bind:type="alert.type"
+        :type="alert.type"
       />
     </div>
   </div>

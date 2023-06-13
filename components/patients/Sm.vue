@@ -11,13 +11,6 @@ const props = defineProps({
 })
 defineEmits(['unpin'])
 
-const timeDDMMYYYY = computed(() => {
-  const date = props.patient.geboorteDatum
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const year = date.getFullYear()
-  return `${day}/${month}/${year}`
-})
 </script>
 
 <template>
@@ -33,7 +26,7 @@ const timeDDMMYYYY = computed(() => {
         @click="$emit('unpin')"
       />
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
-      <span class="text-gray-800">{{ timeDDMMYYYY }}</span>
+      <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
       <span class="text-gray-800">{{ patient.geslacht }}</span>
       <NuxtLink
         class="justify-self-center"
