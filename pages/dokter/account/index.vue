@@ -29,37 +29,78 @@ console.log('Last Name:', lastName)
     <h2 v-if="fullName !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Mijn gegevens
     </h2>
-    <div class="mx-8 h-auto w-fit rounded-lg bg-secondary-300 py-8 px-6 shadow-normal">
-      <img
-      class='w-32 h-32 mx-auto rounded-full object-cover'
-      src='/Images/random_profile.jpg'
-      alt='doctor'
-      />
-      <div class="mx-8 my-2 flex flex-col items-center justify-center md:flex-row">
-        <div class="lg:col-span-1">
-          <TextKop2 class="my-5">Persoonlijke informatie</TextKop2>
-          <div class="flex flex-col gap-5">
-            <div class="flex items-center">
-              <h1 class="mr-3 font-medium capitalize">achternaam</h1>
-              <div>{{ divideFullName(fullName)[0] }}</div>
-            </div>
-            <div class="flex items-center">
-              <h1 class="mr-3 font-medium capitalize">voornaam:</h1>
-              <div>{{ divideFullName(fullName)[1] }}</div>
-            </div>
-          </div>
-
-          <TextKop2 class="my-5">Contact informatie</TextKop2>
-          <div class="flex items-center">
-            <h1 class="mr-3 font-medium capitalize">email:</h1>
+    <div class="card">
+      <div class="header">
+        <img src="/Images/random_profile.jpg" class="h-7 w-7 rounded-lg"/>
+        <div class="text-white">{{ fullName }}</div>
+        <ul>
+          <li class="py-4 text-white">
+            <div>Email</div>
             <div>
               {{ useUser().value?.idTokenClaims?.preferred_username }}
             </div>
-          </div>
-        </div>
+            <i class="fas fa-mobile-alt"></i>
+          </li>
+          <li class="py-4 text-white">
+            <div>Telefoonnummer</div>
+            <div>
+              {{ useUser().value?.idTokenClaims?.preferred_username }}
+            </div>
+            <i class="fas fa-mobile-alt"></i>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+body {
+  background: #72c4bf;
+}
+
+.card {
+  position: relative;
+  height: auto;
+  width: 300px;
+  margin: 100px auto;
+  border-radius: 12px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  height: auto;
+  width: 95%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: -30px;
+  border-radius: 12px;
+  padding: 1rem 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-image: linear-gradient(to right, #72c4bf, #72c4bf);
+}
+
+.header h3 {
+  font-family: sans-serif;
+  color: white;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.header p {
+  font-family: sans-serif;
+  /* color: rgb(236, 233, 233); */
+  font-size: 13px;
+  top: 166px;
+  left: 90px;
+}
+
+
+
+</style>
