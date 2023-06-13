@@ -41,13 +41,6 @@ console.log('Last Name:', lastName)
             </div>
             <i class="fas fa-mobile-alt"></i>
           </li>
-          <li class="py-4 text-white">
-            <div class="font-semibold">Telefoonnummer</div>
-            <div>
-              {{ useUser().value?.idTokenClaims?.preferred_username }}
-            </div>
-            <i class="fas fa-mobile-alt"></i>
-          </li>
         </ul>
       </div>
     </div>
