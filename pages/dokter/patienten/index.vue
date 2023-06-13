@@ -20,7 +20,6 @@ const count = ref(selected_list.value.length)
 
 
 const selected = ref(0)
-const isSelected = ref(false)
 
 
 const updateSelectedCount = (count: number) => {
@@ -55,7 +54,6 @@ useHead({
 </script>
 
 <template>
-  <div class="bg-primary-325">{{ selected_list }}</div>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">
         Patiënt lijst
@@ -73,13 +71,6 @@ useHead({
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
       />
-      <!-- <PressablesEdit
-        @clickDelete="clickEdit"
-        v-model:is-editing="isEditing"
-        :selected-count="count"
-        @checkboxSelected="updateSelectedCount"
-        @update:isEditing="$emit('update:isEditing', $event)"
-      /> -->
     </div>
   
     <patients-patientcard-edit
@@ -88,19 +79,6 @@ useHead({
       :patient="patient"
       @checkboxSelected="updateList(patient.id)"
     />
-    <!-- <patienten-patientcard-edit
-      v-for="patient in data"
-      :for="id"
-      :key="patient.id"
-      :selected-count="selected"
-      :patient="patient"
-      :is-editing="isEditing"
-      :is-checked="isSelected"
-      @update:checked="isSelected = $event"
-      @checkboxSelected="updateList(patient.id)"
-      @update:isEditing="$emit('update:isEditing', $event)"
-      @update:selected-count="selected = $event"
-    /> -->
   </div>
 </template>
 

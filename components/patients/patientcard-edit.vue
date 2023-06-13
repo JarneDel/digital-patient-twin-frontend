@@ -15,7 +15,6 @@ const instance = getCurrentInstance()
 
 const handleCheckboxChange = () => {
   isSelected.value = !isSelected.value
-  // instance?.emit('checkboxSelected', isSelected.value ? isSelected.value : 0)
   console.log(isSelected.value)
   instance?.emit('checkboxSelected', props.patient.id)
 }
@@ -75,22 +74,10 @@ console.log(props.patient)
       <div class="capitalize">{{
         patient.algemeen.geslacht
       }}</div>
-      <!-- <label for="patient-check" class="capitalize">{{
-        patient.algemeen.voornaam
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.algemeen.naam
-      }}</label>
-      <label for="patient-check">{{
-        calculateAge(patient.algemeen.geboorteDatum.toString())
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.algemeen.geslacht
-      }}</label> -->
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
-            <NuxtLink to="/dokter/patients/[patientenid]">
+            <NuxtLink to="/dokter/patienten/[patientenid]">
               <LucideLineChart
                 class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
               />
