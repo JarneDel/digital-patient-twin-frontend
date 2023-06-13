@@ -11,7 +11,10 @@ useHead({
 </script>
 
 <template>
-  
+  <div>hallo</div>
+  <div>{{ useUser() }}</div>
+  <div>{{ useUser().value?.idTokenClaims?.name }}</div>
+  <div>{{ useUser().value?.idTokenClaims?.preferred_username }}</div>
 </template>
 
 <style scoped>
