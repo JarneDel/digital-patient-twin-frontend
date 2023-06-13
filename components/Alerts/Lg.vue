@@ -83,7 +83,7 @@ const unit = computed(() => {
     :class="{
       'border-l-4 border-primary-375': alert.level === AlertLevel.High,
       'border-l-4 border-other-200': alert.level === AlertLevel.Medium,
-      'border-l-4 border-gray-300': alert.level === AlertLevel.Low,
+      'border-l-4 border-indigo-300': alert.level === AlertLevel.Low,
     }"
   >
     <div class='w-[3px]'></div>
@@ -93,7 +93,7 @@ const unit = computed(() => {
       :class="{
         'bg-primary-50 text-primary-500': alert.level === AlertLevel.High,
         'bg-orange-50 text-orange-500': alert.level === AlertLevel.Medium,
-        'bg-gray-50 text-gray-500': alert.level === AlertLevel.Low,
+        'bg-indigo-50 text-indigo-500': alert.level === AlertLevel.Low,
        }" />
     <div class='self-center'>
       <div>{{ alert.name }}</div>
