@@ -16,8 +16,9 @@ useHead({
   ],
 })
 
-const url =
-  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657'
+const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
+
+const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
@@ -40,7 +41,7 @@ const result = computed<PatientGegevens[]>(() => {
       link_name="patient gegevens"
     ></PressablesGoback>
 
-    <NuxtLink to="/dokter/patients/[patientid]/edit">
+    <NuxtLink to="/dokter/patienten/[patientid]/edit">
       <PressablesEdit></PressablesEdit>
     </NuxtLink>
   </div>

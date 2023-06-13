@@ -133,7 +133,7 @@ watch(
 </script>
 
 <template>
-  <label>Voornaam</label>
+  <label>Naam</label>
   <input
     type="text"
     v-model="props.surnameValue"

@@ -25,7 +25,6 @@ onUnmounted(() => {
   instance?.emit('checkboxSelected', 0) // Reset selected count
 })
 
-
 const calculateAge = (date: string): number => {
   const today = new Date()
   const [day, month, year] = date.split('/')
@@ -54,7 +53,6 @@ console.log(props.patient)
     <div
       class="flex flex-row content-center items-center justify-start gap-2 lg:gap-10"
     >
-
       <input
         id="patient-check"
         type="checkbox"
@@ -63,18 +61,10 @@ console.log(props.patient)
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
-      <div class="capitalize">{{
-        patient.algemeen.voornaam
-      }}</div>
-      <div class="capitalize">{{
-        patient.algemeen.naam
-      }}</div>
-      <div>{{
-        calculateAge(patient.algemeen.geboorteDatum.toString())
-      }}</div>
-      <div class="capitalize">{{
-        patient.algemeen.geslacht
-      }}</div>
+      <div class="capitalize">{{ patient.algemeen.voornaam }}</div>
+      <div class="capitalize">{{ patient.algemeen.naam }}</div>
+      <div>{{ calculateAge(patient.algemeen.geboorteDatum.toString()) }}</div>
+      <div class="capitalize">{{ patient.algemeen.geslacht }}</div>
       <!-- <label for="patient-check" class="capitalize">{{
         patient.algemeen.voornaam
       }}</label>
@@ -93,13 +83,13 @@ console.log(props.patient)
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
-            <NuxtLink to="/dokter/patients/[patientenid]">
+            <NuxtLink to="/dokter/patienten/[patientenid]">
               <LucideLineChart
                 class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
               />
             </NuxtLink>
           </div>
-          <NuxtLink to="/dokter/patients/[patientid]/gegevens">
+          <NuxtLink to="/dokter/patienten/[patientid]/gegevens">
             <ChevronRight
               class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
             />

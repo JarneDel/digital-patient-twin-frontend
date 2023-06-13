@@ -91,7 +91,7 @@ watch(
 </script>
 
 <template>
-  <label>geboorteland</label>
+  <label>gemeente</label>
   <input
     type="text"
     v-model="props.cityValue"
