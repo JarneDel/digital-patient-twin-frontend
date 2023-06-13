@@ -45,10 +45,10 @@ const logout = () => {
       <div class="font-semibold text-white">Digital Patient Twin</div>
     </div>
     <div class="z-10 flex pl-3 pr-8 shadow-normal h-24 items-center justify-end">
-      <NuxtLink to="/dokter/account">
-        <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
+      <NuxtLink class="appearance-none border-transparent focus-visible:border-tertiary-500 focus:border-tertiary-500 border-2 focus-visible:outline-none focus:outline-none rounded-lg" to="/dokter/account">
+        <div>
           <user-circle-2 class="h-12 w-12 px-2 text-neutral-700"/>
-        </button>
+        </div>
       </NuxtLink>
     </div>
     <div class="flex w-56 flex-col justify-between bg-primary-600 pl-5 pt-6">
