@@ -29,20 +29,20 @@ console.log('Last Name:', lastName)
     <h2 v-if="fullName !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Mijn gegevens
     </h2>
-    <div class="card">
-      <div class="header">
-        <img src="/Images/random_profile.jpg" class="h-7 w-7 rounded-lg"/>
-        <div class="text-white">{{ fullName }}</div>
+    <div class="relative h-auto w-[300px] my-[100px] mx-auto rounded-xl">
+      <div class="flex flex-col justify-between items-center absolute h-auto w-auto mx-0 my-auto left-0 right-0 -top-8 rounded-xl px-4 py-4 shadow-normal bg-secondary-300">
+        <img src="/Images/random_profile.jpg" class="rounded-full mb-3"/>
+        <div class="text-white text-2xl font-semibold">{{ fullName }}</div>
         <ul>
           <li class="py-4 text-white">
-            <div>Email</div>
+            <div class="font-semibold">Email</div>
             <div>
               {{ useUser().value?.idTokenClaims?.preferred_username }}
             </div>
             <i class="fas fa-mobile-alt"></i>
           </li>
           <li class="py-4 text-white">
-            <div>Telefoonnummer</div>
+            <div class="font-semibold">Telefoonnummer</div>
             <div>
               {{ useUser().value?.idTokenClaims?.preferred_username }}
             </div>
@@ -54,53 +54,3 @@ console.log('Last Name:', lastName)
   </div>
 </template>
 
-<style scoped>
-body {
-  background: #72c4bf;
-}
-
-.card {
-  position: relative;
-  height: auto;
-  width: 300px;
-  margin: 100px auto;
-  border-radius: 12px;
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  height: auto;
-  width: 95%;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  top: -30px;
-  border-radius: 12px;
-  padding: 1rem 0;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-image: linear-gradient(to right, #72c4bf, #72c4bf);
-}
-
-.header h3 {
-  font-family: sans-serif;
-  color: white;
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.header p {
-  font-family: sans-serif;
-  /* color: rgb(236, 233, 233); */
-  font-size: 13px;
-  top: 166px;
-  left: 90px;
-}
-
-
-
-</style>
