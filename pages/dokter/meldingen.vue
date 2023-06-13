@@ -141,7 +141,7 @@ watch(selectedSeverity, (newVal) => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-[60rem]">
+    <div class="mx-auto my-12 max-w-[60rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Meldingen</h2>
     <div class="mx-5 my-8 flex content-center justify-between">
 <!--      <div class="flex items-center gap-x-4">-->

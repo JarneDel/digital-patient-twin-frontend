@@ -15,6 +15,7 @@ defineEmits(['unpin'])
 
 <template>
   <div
+  @click="() => navigateTo(`/dokter/patienten/${patient.id}`)"
     class="flex h-[66px] w-[550px] items-center rounded-lg bg-white px-4 drop-shadow-xl transition-all hover:bg-neutral-500"
   >
     <div
@@ -23,7 +24,7 @@ defineEmits(['unpin'])
       <Pinrotated
         role="button"
         class="h-10 w-10 self-center rounded-md text-gray-800 hover:bg-neutral-400"
-        @click="$emit('unpin')"
+        @click.stop="$emit('unpin')"
       />
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
       <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
@@ -38,7 +39,7 @@ defineEmits(['unpin'])
       </NuxtLink>
       <NuxtLink
         class="justify-self-center"
-        to="/dokter/patienten/[patientid]"
+        to="/dokter/patients/[patientid]"
       >
         <Line-chart
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"

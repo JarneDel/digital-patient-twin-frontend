@@ -11,7 +11,7 @@ useHead({
 </script>
 
 <template>
-
+  
 </template>
 
 <style scoped>
