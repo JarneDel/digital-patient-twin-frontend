@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { d } from 'ofetch/dist/error-04138797'
 import { ref } from 'vue'
-import { FormsBirthDateInput } from '~/.nuxt/components'
 import { AlertType } from '~/interfaces/AlertType'
 import {
   IPatientAlgemeen,
@@ -76,7 +75,7 @@ const editLinkName = computed(
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
       :link_name="editLinkName"
-      link_path="/dokter/patients/[patientid]/gegevens"
+      link_path="/dokter/patienten/[patientid]/gegevens"
     />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
