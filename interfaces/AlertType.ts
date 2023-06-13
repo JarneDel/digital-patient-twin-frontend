@@ -6,12 +6,18 @@ export enum AlertType {
   breathingRate = 'Ademhalingsfrequentie',
 }
 
+export enum AlertLevel {
+  Low = 'Laag',
+  Medium = 'Matig',
+  High = 'Kritiek',
+}
+
 export interface IMelding {
-  id: number
+  id: string
   patientId: string
   name: string
   type: AlertType
-  level: string
+  level: AlertLevel
   value: string
   time: Date
   dateOfBirth: string

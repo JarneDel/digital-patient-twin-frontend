@@ -1,5 +1,4 @@
 <script lang='ts' setup>
-import { ref } from 'vue'
 import {
   Listbox,
   ListboxButton,
@@ -24,10 +23,15 @@ const props = defineProps({
   },
 })
 
-const opt = props.options.toString().split(',').map((name) => ({
-  name,
-}))
-const selected = ref(opt[0])
+const emits = defineEmits(['update:selected'])
+const opt = computed(() => props.options.map((name) => ({ name })))
+const selected = ref(opt.value[0])
+watch(opt, (newVal) => {
+  selected.value = newVal[0]
+})
+watch(selected, (newVal) => {
+  emits('update:selected', newVal.name)
+})
 
 
 </script>

@@ -109,7 +109,7 @@ watch(selected, () => {
 <!--  />-->
 
   <!-- patient card edit -->
-<!--  <patients-patientcard-edit :patient="registerPatient" />-->
+  <!--  <patienten-patientcard-edit :patient="registerPatient" />-->
 
   <!-- save button -->
 <!--  <PressablesSaveButton text="Save" />-->
@@ -141,4 +141,6 @@ watch(selected, () => {
 <!--  <PatientsSm :patient="person"/>-->
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -2,7 +2,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/devtools', '@nuxtjs/google-fonts'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts'],
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
+    // { src: '~/plugins/auto-animate-plugin', mode: 'client' },
     // { src: '~/plugins/mqtt.js', mode: 'server' }
     // { src: '~/plugins/signalR.js', mode: 'client' },
   ],
