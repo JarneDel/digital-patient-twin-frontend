@@ -58,7 +58,7 @@ console.log(props.patient)
         id="patient-check"
         type="checkbox"
         value=""
-        class="form-checkbox form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-0"
+        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />

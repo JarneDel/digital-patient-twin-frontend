@@ -51,7 +51,7 @@ const logout = () => {
         </button>
       </NuxtLink>
     </div>
-    <div class="flex w-56 flex-col justify-between bg-primary-600 pl-10 pt-6">
+    <div class="flex w-56 flex-col justify-between bg-primary-600 pl-5 pt-6">
       <ul>
         <li v-for="link in links" :key="link.path" class="mb-9">
           <NuxtLink
