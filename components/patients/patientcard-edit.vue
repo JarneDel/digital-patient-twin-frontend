@@ -78,13 +78,13 @@ console.log(props.patient.id)
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
-            <NuxtLink :to="`/dokter/patienten/${props.patient.id}`" class="border-transparent rounded-lg border-2 focus-visible:outline-none focus-visible:border-tertiary-500 focus-visible:border-offset-0">
+            <NuxtLink :to="`/dokter/patienten/${patient.id}`" class="border-transparent rounded-lg border-2 focus-visible:outline-none focus-visible:border-tertiary-500 focus-visible:border-offset-0">
               <LucideLineChart
                 class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
               />
             </NuxtLink>
           </div>
-          <NuxtLink :to="`/dokter/patienten/${props.patient.id}/gegevens`" class="border-transparent rounded-lg border-2 focus-visible:outline-none focus-visible:border-tertiary-500 focus-visible:border-offset-0">
+          <NuxtLink :to="`/dokter/patienten/${patient.id}/gegevens`" class="border-transparent rounded-lg border-2 focus-visible:outline-none focus-visible:border-tertiary-500 focus-visible:border-offset-0">
             <ChevronRight
               class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
             />
