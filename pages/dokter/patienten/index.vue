@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
-import { NuxtLink } from '~/.nuxt/components'
 import { PatientGegevens } from '~/interfaces/IPatient'
 
 const isEditing = ref(false)

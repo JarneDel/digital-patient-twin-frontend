@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { d } from 'ofetch/dist/error-04138797'
 import { ref } from 'vue'
 import { AlertType } from '~/interfaces/AlertType'
 import {
@@ -10,49 +9,53 @@ import {
   Contact,
 } from '~/interfaces/IPatient'
 useHead({
-  title: 'Gegevens patiënt',
+  title: 'Nieuwe patiënt',
   meta: [
     {
       name: 'description',
-      content: 'Patiënt gegevens aanpassen.',
+      content: 'Patiënt gegevens aanmaken.',
     },
   ],
 })
 
-const patientId = ref('878c95cf-e82d-40a5-a56c-8790427f1657') // Declare patientId as a ref
+const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
 
-const url = computed(
-  () =>
-    `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId.value}`,
-)
-
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
-const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
-const patientAdres: Address = data.value?.adres as Address
-const patientMedisch: Medisch = data.value?.medisch as Medisch
-const patientContact: Contact = data.value?.contact as Contact
-
-const formPatient = ref<IPatientAlgemeen>(patient)
-const formPatientAdres = ref<Address>(patientAdres)
-const formPatientMedisch = ref<Medisch>(patientMedisch)
-const formPatientContact = ref<Contact>(patientContact)
+const patient = reactive<IPatientAlgemeen>({
+  // Initialize the patient data with empty values or default values
+  id: '',
+  voornaam: 'Shareeb',
+  naam: 'Hashmi',
+  geslacht: 'man',
+  geboorteland: 'België',
+  geboorteDatum: '19/09/1999',
+})
+const patientAdres = reactive<Address>({
+  gemeente: 'Kortijk',
+  straat: 'toekomststraat',
+  postcode: 8500,
+  nr: '451',
+})
+const patientMedisch = reactive<Medisch>({
+  lengte: 179,
+  gewicht: 75,
+  bloedgroep: 'AB+',
+})
+const patientContact = reactive<Contact>({
+  email: 'shareeb@hotmail.com',
+  telefoon: '04555555555',
+})
 
 const submitForm = async () => {
   try {
-    // Perform your form submission logic here
-    // You can access the form data from the formPatient, formPatientAdres, formPatientMedisch, and formPatientContact refs
-    // You can send the form data to your API endpoint or perform any other necessary actions
-
-    // Example: Create a new patient
     const newPatientData = {
-      algemeen: formPatient.value,
-      adres: formPatientAdres.value,
-      medisch: formPatientMedisch.value,
-      contact: formPatientContact.value,
+      algemeen: { ...patient },
+      adres: { ...patientAdres },
+      medisch: { ...patientMedisch },
+      contact: { ...patientContact },
     }
 
-    // Send the new patient data to your API endpoint
-    const response = await fetch(url.value, {
+    // Send the new patient data to your API endpoint using POST request
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,13 +75,15 @@ const submitForm = async () => {
     console.error('An error occurred while creating new patient:', error)
   }
 }
+
+const editLinkName = computed(() => 'Nieuw Patiënt creëren')
 </script>
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
-      link_name="Nieuw patient toevoegen"
-      link_path="/dokter/patienten/[patientid]/"
+      :link_name="editLinkName"
+      :link_path="'/dokter/patienten/'"
     />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
