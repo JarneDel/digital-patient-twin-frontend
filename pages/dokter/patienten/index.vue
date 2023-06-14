@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
+import { servicesUrls } from '~/servicesurls'
 
 const isEditing = ref(false)
 const clickEdit = () => {
@@ -8,10 +9,7 @@ const clickEdit = () => {
   console.log(isEditing.value + ' isEditing doe ke nor,qql')
 }
 
-// dokterid ophalen
-const routeID = useRoute().params.dokterid as string
-const id = ref(routeID)
-id.value = '878c95cf-e82d-40a5-a56c-8790427f1657'
+const user = useUser()
 
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
@@ -42,10 +40,10 @@ watch(
   },
 )
 
-const url =
-  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient'
-
-const { error, data, pending } = await useFetch<PatientGegevens[]>(url)
+const { data, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
+  baseURL: servicesUrls.dokterService,
+  server: false,
+})
 
 useHead({
   title: 'Patiënten',
