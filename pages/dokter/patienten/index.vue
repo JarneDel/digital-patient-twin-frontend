@@ -58,7 +58,7 @@ useHead({
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">
         Patiënt lijst
     </h2>
-    <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
+    <div class="mt-20 mb-10 flex flex-col items-center justify-between lg:flex-row">
       <button class="p-5 inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 text-sm font-medium ring-2 ring-transparent hover:bg-secondary-200/40 outline-none focus-visible:ring-secondary-400/80">
         <Plus class="h-8 w-8" />
       </button>
@@ -77,8 +77,11 @@ useHead({
       v-for="patient in data"
       :id="patient.id"
       :patient="patient"
+      :click-edit="isEditing"
       @checkboxSelected="updateList(patient.id)"
     />
+
+
   </div>
 </template>
 

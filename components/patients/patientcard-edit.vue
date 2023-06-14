@@ -2,10 +2,15 @@
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
+import { cli } from 'webpack';
 
 const props = defineProps({
   patient: {
     type: Object as PropType<PatientGegevens>,
+    required: true,
+  },
+  clickEdit: {
+    type: Boolean,
     required: true,
   },
 })
@@ -50,19 +55,24 @@ console.log(props.patient.id)
 </script>
 
 <template>
-  <div class="mx-auto my-3 max-w-6xl rounded-lg bg-neutral-300 p-6">
+  <div class="mx-auto my-3 rounded-lg bg-neutral-300 p-6">
     <div
-      class="flex flex-row content-center items-center justify-start gap-2 lg:gap-10"
-    >
+      class="flex content-center justify-between items-center gap-10"
+      >
 
       <input
+        v-if="clickEdit"
         id="patient-check"
         type="checkbox"
         value=""
-        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
+        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 ease-in rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
+      <div v-else
+      class="h-auto transition-all duration-300 ease-out"
+      :class="{'w-6 h-auto': !clickEdit, 'w-0 h-auto': clickEdit}"
+      ></div>
       <div class="capitalize">{{
         patient.algemeen.voornaam
       }}</div>
