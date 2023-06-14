@@ -35,7 +35,7 @@ defineEmits(['update:isEditing', 'clickEdit', 'clickDelete'])
         <div class="flex flex-row items-center justify-between gap-4">
           <p class="whitespace-nowrap text-tertiary-600">{{ selectedCount }} selected</p>
           <div class="flex flex-row justify-end gap-4">
-            <button @click="() => {$emit('clickDelete'); console.log('DELETING')}">
+            <button @click="() => $emit('clickDelete')">
               <lucide-trash class="h-8 w-8 text-tertiary-600"></lucide-trash>
             </button>
             <button @click="$emit('update:isEditing', false)">

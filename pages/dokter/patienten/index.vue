@@ -2,6 +2,14 @@
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
+import { $fetch, FetchError } from 'ofetch'
+
+const user = useUser()
+
+const { data, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
+  baseURL: servicesUrls.dokterService,
+  server: false,
+})
 
 const isEditing = ref(false)
 const isDeleting = ref(false)
@@ -11,11 +19,11 @@ const clickEdit = () => {
 }
 
 const clickDelete = () => {
-  console.log('clickDelete')
+  console.log('clickDelete ------------------')
   isDeleting.value = !isDeleting.value
 }
 
-const user = useUser()
+
 
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
@@ -54,10 +62,28 @@ watch(
   },
 )
 
-const { data, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
-  baseURL: servicesUrls.dokterService,
-  server: false,
-})
+const removeFromList = (id: string) => {
+  console.log("het is verwijdered 😀")
+}
+
+const del = async (id: string) => {
+  // TODO: user can undo this action
+  if (data.value === null) return
+  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+    method: 'DELETE',
+    baseURL: servicesUrls.dokterService,
+  }).then(
+    () => {
+      removeFromList(id)
+    },
+    (err: FetchError) => {
+      console.log(err)
+    },
+  )
+}
+
+
+
 
 useHead({
   title: 'Patiënten',
@@ -90,6 +116,7 @@ useHead({
         :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
+        @del="del(patient.id)"
       />
     </div>
 
