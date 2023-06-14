@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { ArrowUp, LineChart } from 'lucide-vue-next'
+import {  LineChart } from 'lucide-vue-next'
 import { PropType } from '@vue/runtime-core'
 import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { SvgAdemfrequentie, SvgBloodpressure, SvgHeartrate, SvgOxygen, SvgTemperature } from '#components'
@@ -76,8 +76,11 @@ const unit = computed(() => {
       throw new Error(`Unknown alert type: ${props.type}`)
   }
 })
+const timeDate = computed(() => {
+  return new Date(props.alert.timestamp)
+})
 
-const time = useFormatDate(new Date(props.alert?.timestamp))
+const time = useFormatDate(timeDate)
 const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
 
 </script>

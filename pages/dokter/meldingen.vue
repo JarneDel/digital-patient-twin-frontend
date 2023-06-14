@@ -26,6 +26,10 @@ const AlertTypes: Array<AlertType | 'Alle types'> = [
 ]
 const selectedPatient = ref<string | 'Alle patiënten'>('')
 const currentOffset = ref(0)
+const selectedPatientId = ref<string | null>(null)
+const AlertSeverity = ref<Array<AlertLevel | 'Alles'>>(['Alles', AlertLevel.Info, AlertLevel.Matig, AlertLevel.Kritiek])
+const selectedSeverity = ref<string>('Alles')
+const selectedType = ref<string>('Alle types')
 
 
 // get patienten by dokterid
@@ -37,23 +41,7 @@ const { pending: patientenPending, data: patienten, error: patientenError } = us
     server: false,
   },
 )
-
-const filteredPatients = computed<PatientGegevens[]>(() => {
-  console.log('computing selected patient')
-  if (!patienten.value) return []
-  // filter by selected patient
-  if (selectedPatient.value === '' || 'Alle patiënten') return patienten.value
-  const patient = patienten.value.find((patient: PatientGegevens): boolean => {
-    return (
-      `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}` ===
-      selectedPatient.value
-    )
-  }) as PatientGegevens
-  return [patient]
-})
-
-
-let {
+const {
   data: meldingen,
   pending: meldingenPending,
   error: meldingenError,
@@ -61,27 +49,19 @@ let {
 } = useFetch<IMelding[]>(`/meldingen/dokter/${user?.localAccountId}`, {
   baseURL: servicesUrls.meldingenService,
   server: false,
+  immediate: true,
   onRequest(context: FetchContext): Promise<void> | void {
     const typeEnum : AlertType = AlertType[selectedType.value as keyof typeof AlertType];
     const levelEnum : AlertLevel = AlertLevel[selectedSeverity.value as keyof typeof AlertLevel];
-
     context.options.params = {
       type: typeEnum,
       level: levelEnum,
       offset: currentOffset.value,
+      patientId: selectedPatientId.value,
     }
   }
 })
 
-
-const perPatient = useFetch<IMelding[]>(`/meldingen/${selectedPatient.value}`, {
-  baseURL: servicesUrls.meldingenService,
-  server: false,
-  immediate: false,
-})
-
-meldingen = perPatient.data
-const execute = perPatient.execute
 
 // meldingen is a list of alerts that are shown on the page
 
@@ -93,24 +73,10 @@ const patientNamen = computed(() => {
   return ['Alle patiënten', ...namen]
 })
 
-const AlertSeverity = ref<Array<AlertLevel | 'Alles'>>(['Alles', AlertLevel.Info, AlertLevel.Matig, AlertLevel.Kritiek])
-const selectedSeverity = ref<string>('Alles')
 
-
-const selectedType = ref<string>('Alle types')
 watch(selectedType, value => {
   console.log(value)
   getMeldingen()
-})
-
-// region logging
-watch(patientNamen, (newVal) => {
-  console.log(newVal, 'patient namen changed')
-  execute()
-})
-
-const props = defineProps({
-  isEditing: Boolean,
 })
 
 
@@ -119,13 +85,23 @@ watch(selectedSeverity, (newVal) => {
   getMeldingen()
 })
 
-watch(meldingen, (newVal) => {
-  console.log(newVal, 'meldingen changed')
+
+watch(selectedPatient, (newVal) => {
+  // get patient id from name
+  const patient = patienten.value?.find(patient => {
+    return `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}` === newVal
+  })
+  if (patient) {
+    console.log(patient.id, 'selected patient changed')
+    selectedPatientId.value = patient.id
+    getMeldingen()
+  } else {
+    console.log('selected patient changed to all', newVal)
+    getMeldingen()
+  }
 })
 
-watch(filteredPatients, (newVal) => {
-  console.log(newVal, 'filtered patients changed')
-})
+
 // endregion
 
 const AlertTypesString = computed(() => {
@@ -179,7 +155,7 @@ const placeHolderAlert = ref<IMelding>({
       />
       <!--     Alerts container     -->
     </div>
-    <div v-if='meldingen'>
+    <div v-if='!meldingenPending'>
       <alerts-lg
         v-for='alert of meldingen'
         :key='alert.id'
@@ -187,7 +163,7 @@ const placeHolderAlert = ref<IMelding>({
         :type='alert.type'
       />
     </div>
-    <div v-else-if='meldingenPending'>
+    <div v-else-if='meldingenPending || patientenPending'>
       <alerts-lg
         class='animate-pulse blurred-text'
         v-for='alert of 5'
@@ -197,7 +173,7 @@ const placeHolderAlert = ref<IMelding>({
       />
     </div>
   </div>
-  <decorations-fixed-right/>
+<!--  <decorations-fixed-right/>-->
 
 
 </template>
