@@ -62,46 +62,43 @@ watch(
     class="mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6"
   >
     <div
-      class="flex h-auto w-full items-center justify-end gap-10 font-semibold transition-all duration-300 ease-linear"
+    class="h-auto w-full flex justify-end items-center gap-10 font-semibold transition-all duration-300 ease-linear"
       :class="{ 'max-w-full': !clickEdit, 'max-w-[96%]': clickEdit }"
     >
       <input
+        v-if="clickEdit"
         id="patient-check"
         type="checkbox"
         value=""
-        class="form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
+        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
+      <div v-else
+      class="h-auto transition-all duration-300 ease-out"
+      :class="{'w-6': clickEdit, 'w-0': !clickEdit}"
+      ></div>
       <div class="capitalize">{{ patient.algemeen.voornaam }}</div>
       <div class="capitalize">{{ patient.algemeen.naam }}</div>
       <div>{{ calculateAge(patient.algemeen.geboorteDatum.toString()) }}</div>
       <div class="capitalize">{{ patient.algemeen.geslacht }}</div>
-      <!-- <label for="patient-check" class="capitalize">{{
-        patient.algemeen.voornaam
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.algemeen.voornaam
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.algemeen.naam
-      }}</label>
-      <label for="patient-check" v-for="naam in result">{{
-        calculateAge(naam.geboorteDatum.toString()) + ' jaar'
-      }}</label>
-      <label for="patient-check" class="capitalize">{{
-        patient.algemeen.geslacht
-      }}</div>
+
       <div class="flex-1 justify-between">
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
-            <NuxtLink :to="`/dokter/patienten/${patient.id}`" class="border-transparent rounded-lg border-2 focus-visible:outline-none focus-visible:border-tertiary-500 focus-visible:border-offset-0">
+            <NuxtLink
+              :to="`/dokter/patienten/${patient.id}`"
+              class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
+            >
               <LucideLineChart
                 class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
               />
             </NuxtLink>
           </div>
-          <NuxtLink :to="`/dokter/patienten/${patient.id}/gegevens`" class="border-transparent rounded-lg border-2 focus-visible:outline-none focus-visible:border-tertiary-500 focus-visible:border-offset-0">
+          <NuxtLink
+            :to="`/dokter/patienten/${patient.id}/gegevens`"
+            class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
+          >
             <ChevronRight
               class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
             />
@@ -109,11 +106,5 @@ watch(
         </div>
       </div>
     </div>
-  </div> -->
-    </div>
   </div>
 </template>
-
-<style scoped></style>
-
-<!-- klaarzetten voor dynamisch -->
