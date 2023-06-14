@@ -90,7 +90,7 @@ const editLinkName = computed(() => 'Nieuw Patiënt creëren')
   </div>
   <form @submit.prevent="submitForm">
     <div class="mx-10 flex items-start justify-end">
-      <button type="submit">
+      <button type="submit" class="md:fixed">
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
@@ -104,7 +104,6 @@ const editLinkName = computed(() => 'Nieuw Patiënt creëren')
         ></pressables-toggle>
         <div>
           <template-slider
-            class="-mx-5"
             :type="AlertType.breathingRate"
             :min="0"
             :max="100"

@@ -82,7 +82,7 @@ const editLinkName = computed(
   </div>
   <form @submit.prevent="submitForm">
     <div class="mx-10 flex items-start justify-end">
-      <button type="submit">
+      <button type="submit" class="md:fixed">
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
