@@ -4,9 +4,15 @@ import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
 
 const isEditing = ref(false)
+const isDeleting = ref(false)
+
 const clickEdit = () => {
   isEditing.value = !isEditing.value
-  console.log(isEditing.value + ' isEditing doe ke nor,qql')
+}
+
+const clickDelete = () => {
+  console.log('clickDelete')
+  isDeleting.value = !isDeleting.value
 }
 
 const user = useUser()
@@ -22,7 +28,6 @@ const updateSelectedCount = (count: number) => {
 }
 
 const updateList = (id: any, isSelected: boolean) => {
-  console.log(isSelected + ' isSelected')
   if (!isSelected) {
     selected_list.value = selected_list.value.filter(item => item !== id)
   } else {
@@ -35,6 +40,15 @@ watch(
   () => isEditing.value,
   state => {
     console.log(state + ' state isEditing')
+    selected_list.value = []
+    count.value = selected_list.value.length
+  },
+)
+
+watch(
+  () => isDeleting.value,
+  state => {
+    console.log(state + ' state isDeleting')
     selected_list.value = []
     count.value = selected_list.value.length
   },
@@ -70,7 +84,8 @@ useHead({
       </button>
 
       <PressablesEdit
-        @clickDelete="() => clickEdit"
+        @clickEdit="() => clickEdit"
+        @clickDelete="clickDelete"
         v-model:is-editing="isEditing"
         :selected-count="count"
         @checkboxSelected="updateSelectedCount"
