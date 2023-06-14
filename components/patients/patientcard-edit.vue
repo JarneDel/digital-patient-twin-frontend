@@ -65,13 +65,13 @@ console.log(props.patient.id)
         id="patient-check"
         type="checkbox"
         value=""
-        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 ease-in rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
+        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
       <div v-else
       class="h-auto transition-all duration-300 ease-out"
-      :class="{'w-6 h-auto': !clickEdit, 'w-0 h-auto': clickEdit}"
+      :class="{'w-6': clickEdit, 'w-0': !clickEdit}"
       ></div>
       <div class="capitalize">{{
         patient.algemeen.voornaam
