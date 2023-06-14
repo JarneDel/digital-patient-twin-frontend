@@ -19,6 +19,7 @@ useHead({
 })
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
+const notifcationurl = ``
 
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
@@ -75,14 +76,12 @@ const submitForm = async () => {
     console.error('An error occurred while creating new patient:', error)
   }
 }
-
-const editLinkName = computed(() => 'Nieuw Patiënt creëren')
 </script>
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
-      :link_name="editLinkName"
+      link_name="Nieuw Patiënt creëren"
       :link_path="'/dokter/patienten/'"
     />
 
