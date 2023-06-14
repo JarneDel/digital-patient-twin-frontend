@@ -50,26 +50,26 @@ const calculateAge = (date: string): number => {
 
 watch(
   () => props.clickEdit,
-  (state) => {
+  state => {
     console.log(state + ' state clickEdit')
     isSelected.value = false
-  }
+  },
 )
-
-
 </script>
 
 <template>
-  <div class="mx-auto flex flex-row justify-end my-3 rounded-lg bg-neutral-300 p-6">
+  <div
+    class="mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6"
+  >
     <div
-      class="h-auto w-full flex justify-end items-center gap-10 font-semibold transition-all duration-300 ease-linear"
+      class="flex h-auto w-full items-center justify-end gap-10 font-semibold transition-all duration-300 ease-linear"
       :class="{ 'max-w-full': !clickEdit, 'max-w-[96%]': clickEdit }"
     >
       <input
         id="patient-check"
         type="checkbox"
         value=""
-        class="form-checkbox cursor-pointer form-tertiary-500 h-6 w-6 rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
+        class="form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
@@ -110,6 +110,8 @@ watch(
       </div>
     </div>
   </div> -->
+    </div>
+  </div>
 </template>
 
 <style scoped></style>
