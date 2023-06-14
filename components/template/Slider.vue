@@ -25,7 +25,7 @@ defineExpose({ value, value_1 })
 </script>
 
 <template>
-  <div class="flex items-end justify-center">
+  <div class="flex items-end justify-start">
     <div class="mx-3 mb-3 text-base font-medium">{{ type }}</div>
     <div>
       <div class="m-4 flex w-52 justify-between">

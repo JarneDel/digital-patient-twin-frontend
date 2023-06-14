@@ -4,6 +4,7 @@ export interface IPatientAlgemeen {
   naam: string
   geboorteDatum: string
   geslacht: string
+  geboorteland: string
 }
 
 export interface PatientGegevens {

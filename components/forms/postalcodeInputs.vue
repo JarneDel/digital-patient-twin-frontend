@@ -1,80 +1,141 @@
+<!-- <script setup lang="ts">
+const props = defineProps({
+  postalcodeValue: {
+    type: Number,
+    required: true,
+  },
+  huisNumberValue: {
+    type: String,
+    required: true,
+  },
+  isValid: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+})
+const emits = defineEmits(['update:input', 'update:isValid'])
+let postalcodeValue = props.postalcodeValue
+let huisNumberValue = props.huisNumberValue
+watch(
+  () => postalcodeValue && huisNumberValue,
+  newValue => {
+    if (newValue) {
+      emits('update:isValid', true)
+    } else {
+      emits('update:isValid', false)
+    }
+  },
+)
+</script> -->
+
+<script setup lang="ts">
+import { defineProps, defineEmits, watch } from 'vue'
+
+const props = defineProps({
+  postalcodeValue: {
+    type: Number,
+    required: true,
+  },
+  houseNumberValue: {
+    type: String,
+    required: true,
+  },
+  isValid: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+})
+
+const emits = defineEmits([
+  'update:houseNumberValue',
+  'update:postalcodeValue',
+  'update:isValid',
+])
+
+const validateInput = (value: string) => {
+  // Perform your form validation logic here
+  // Example: Check if the input value has a length greater than 3
+  return value.length > 3 || value.length === 0
+}
+
+const updateValuePostCode = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:postalcodeValue', value)
+    }
+  }
+}
+const updateValueNr = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:postalcodeValue', value)
+    }
+  }
+}
+
+watch(
+  () => props.postalcodeValue,
+  newValue => {
+    if (newValue) {
+      emits('update:isValid', true)
+    } else {
+      emits('update:isValid', false)
+    }
+  },
+)
+
+watch(
+  () => props.houseNumberValue,
+  newValue => {
+    if (newValue) {
+      emits('update:isValid', true)
+    } else {
+      emits('update:isValid', false)
+    }
+  },
+)
+</script>
+
 <template>
   <div class="flex gap-4">
-    <!-- postal code -->
     <div>
       <label for="postalCode" class="mb-2 block">Post code</label>
       <input
-        id="postalCode"
-        v-model="postalCode"
-        :class="{ 'border-red-500': isPostalCodeInvalid }"
         type="number"
-        class="peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-        @input="validatePostalCode"
+        id="postalCode"
+        @input="updateValuePostCode($event)"
+        :value="postalcodeValue"
+        class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
-      <span
-        v-if="isPostalCodeInvalid"
-        class="break-word inline-block text-red-500"
-      >
-        {{ postalCodeErrorMessage }}
-      </span>
     </div>
 
-    <!-- house number -->
     <div>
       <label for="houseNumber" class="mb-2 block">Nummer</label>
       <input
+        type="text"
         id="houseNumber"
-        v-model="houseNumber"
-        :class="{ 'border-red-500': isHouseNumberInvalid }"
-        class="peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-600 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-        @input="validateHouseNumber"
+        @input="updateValueNr($event)"
+        :value="houseNumberValue"
+        class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
-      <span
-        v-if="isHouseNumberInvalid"
-        class="break-word inline-block text-red-500"
-      >
-        {{ houseNumberErrorMessage }}
-      </span>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-
-const postalCode = ref('')
-const houseNumber = ref('')
-const isPostalCodeInvalid = ref(false)
-const isHouseNumberInvalid = ref(false)
-const postalCodeErrorMessage = ref('')
-const houseNumberErrorMessage = ref('')
-
-function validatePostalCode() {
-  const numericRegex = /^[0-9]+$/
-  isPostalCodeInvalid.value = !numericRegex.test(postalCode.value)
-  postalCodeErrorMessage.value = 'Only numeric values are allowed.'
-}
-
-function validateHouseNumber() {
-  const numericRegex = /^[0-9]+$/
-  isHouseNumberInvalid.value = !numericRegex.test(houseNumber.value)
-  houseNumberErrorMessage.value = 'Only numeric values are allowed.'
-}
-
-watch(postalCode, () => {
-  validatePostalCode()
-})
-
-watch(houseNumber, () => {
-  validateHouseNumber()
-})
-</script>
-
-<style>
-.border-red-500 {
-  border-color: #ef4444;
-}
-.text-red-500 {
-  color: #ef4444;
-}
-</style>
+<style scoped></style>
