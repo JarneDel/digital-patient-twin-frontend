@@ -5,7 +5,7 @@ import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
 import { ILink } from '~/interfaces/ILink';
-import { UserCircle2, LogOut} from 'lucide-vue-next'
+import { LogOut} from 'lucide-vue-next'
 import { msalInstance } from '~/auth'
 
 const links: ILink[] = [
@@ -25,6 +25,7 @@ const links: ILink[] = [
     icon: SvgNotification,
   },
 ]
+const scrollDiv = ref<HTMLDivElement | null>(null)
 
 const route = useRoute()
 
@@ -35,6 +36,26 @@ const isCurrentPage = (path: string) => {
 const logout = () => {
   msalInstance.logoutPopup()
 }
+
+const isScrolledToBottom = useWatchIfScrolledToBottom
+// required for infinite scroll in meldingen
+const onScrollEvent = () => {
+  // check if scroll is at the bottom
+  if (!scrollDiv.value) return
+  if (!scrollDiv.value.clientHeight) return
+  const scrollHeight = scrollDiv.value.scrollTop + scrollDiv.value.clientHeight
+  const scrollMax = scrollDiv.value.scrollHeight
+  if (scrollHeight > scrollMax - 100) {
+    console.log('scrolled to bottom')
+    // load more
+    isScrolledToBottom.value = true
+  }else {
+    isScrolledToBottom.value = false
+  }
+
+}
+
+
 </script>
 
 <template>
@@ -81,7 +102,7 @@ const logout = () => {
       </div>
 
     </div>
-    <div class="z-0 overflow-auto bg-white">
+    <div class="z-0 overflow-auto bg-neutral-50" @scroll='onScrollEvent' ref='scrollDiv'>
       <div class="pb-20 relative min-h-full">
         <div class="min-h-full">
           <slot />

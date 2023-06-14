@@ -1,9 +1,9 @@
 export enum AlertType {
   Bloeddruk,
   Temperatuur ,
-  Bloedzuurstof ,
   Hartslag ,
   AdemsFrequentie ,
+  Bloedzuurstof,
   "Alle types"
 }
 

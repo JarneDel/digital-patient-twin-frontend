@@ -3,6 +3,7 @@ import { PatientGegevens } from '~/interfaces/IPatient'
 import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { servicesUrls } from '~/servicesurls'
 import { FetchContext } from 'ofetch'
+import { LucideRotateCw } from 'lucide-vue-next'
 
 useHead({
   title: 'Meldingen',
@@ -30,6 +31,7 @@ const selectedPatientId = ref<string | null>(null)
 const AlertSeverity = ref<Array<AlertLevel | 'Alles'>>(['Alles', AlertLevel.Info, AlertLevel.Matig, AlertLevel.Kritiek])
 const selectedSeverity = ref<string>('Alles')
 const selectedType = ref<string>('Alle types')
+const requestFromScroll= ref(false)
 
 
 // get patienten by dokterid
@@ -51,15 +53,15 @@ const {
   server: false,
   immediate: true,
   onRequest(context: FetchContext): Promise<void> | void {
-    const typeEnum : AlertType = AlertType[selectedType.value as keyof typeof AlertType];
-    const levelEnum : AlertLevel = AlertLevel[selectedSeverity.value as keyof typeof AlertLevel];
+    const typeEnum: AlertType = AlertType[selectedType.value as keyof typeof AlertType]
+    const levelEnum: AlertLevel = AlertLevel[selectedSeverity.value as keyof typeof AlertLevel]
     context.options.params = {
       type: typeEnum,
       level: levelEnum,
       offset: currentOffset.value,
       patientId: selectedPatientId.value,
     }
-  }
+  },
 })
 
 
@@ -77,12 +79,16 @@ const patientNamen = computed(() => {
 watch(selectedType, value => {
   console.log(value)
   getMeldingen()
+  // reset offset
+  currentOffset.value = 0
 })
 
 
 watch(selectedSeverity, (newVal) => {
   console.log(newVal, 'selected type changed')
   getMeldingen()
+  // reset offset
+  currentOffset.value = 0
 })
 
 
@@ -94,11 +100,17 @@ watch(selectedPatient, (newVal) => {
   if (patient) {
     console.log(patient.id, 'selected patient changed')
     selectedPatientId.value = patient.id
+    currentOffset.value = 0
     getMeldingen()
   } else {
     console.log('selected patient changed to all', newVal)
+    currentOffset.value = 0
     getMeldingen()
   }
+})
+
+watch(meldingen, () => {
+  isRefreshing.value = false
 })
 
 
@@ -121,19 +133,59 @@ const placeHolderAlert = ref<IMelding>({
   id: '1',
   patientId: '1',
   type: AlertType.Bloeddruk,
-  value: "1",
-  birthDate: "01/01/2000",
+  value: '1',
+  birthDate: '01/01/2000',
   level: AlertLevel.Info,
   timestamp: new Date(),
-  fullName: "John Doe",
-  })
+  fullName: 'John Doe',
+})
 
+const isRefreshing = ref(false)
+const onButtonClick = () => {
+  isRefreshing.value = true
+  currentOffset.value = 0
+  getMeldingen()
+}
+
+watch(useWatchIfScrolledToBottom, (newVal) => {
+  if (newVal) {
+    requestFromScroll.value = true
+    currentOffset.value += 25
+    getMeldingen()
+  }
+} , { immediate: true })
+
+const allMeldingen = ref<IMelding[]>([])
+// add new data to meldingen
+watch(meldingen, (newVal) => {
+  console.log(newVal, 'new meldingen')
+  if (newVal) {
+    if (requestFromScroll.value) {
+      allMeldingen.value.push(...newVal)
+      requestFromScroll.value = false
+    } else {
+      allMeldingen.value = newVal
+    }
+  }
+})
+watch(requestFromScroll, (newVal) => {
+  console.log(newVal, 'request from scroll')
+})
 
 </script>
 
 <template>
-  <div class='mx-auto my-12 max-w-[55rem]'>
-    <h2 class='mx-8 mb-8 mt-6 text-3xl font-semibold'>Meldingen</h2>
+  <div class='mx-auto my-12 max-w-[55rem] '>
+    <div class='flex flex-row items-center justify-between'>
+      <h2 class='mx-8 mb-8 mt-6 text-3xl font-semibold'>Meldingen</h2>
+      <div class='refresh mr-5' role='button' @click='onButtonClick'>
+        <lucide-rotate-cw :class='{
+          "animate-spin" : meldingenPending && isRefreshing
+         }' />
+      </div>
+    </div>
+
+    <div class='notificationSettings'></div>
     <div class='mx-5 my-8 flex content-center justify-between'>
       <!--      <div class="flex items-center gap-x-4">-->
       <pressables-search
@@ -155,15 +207,15 @@ const placeHolderAlert = ref<IMelding>({
       />
       <!--     Alerts container     -->
     </div>
-    <div v-if='!meldingenPending'>
+    <div v-if='allMeldingen ||  !(!requestFromScroll && !patientenPending)'>
       <alerts-lg
-        v-for='alert of meldingen'
+        v-for='alert of allMeldingen'
         :key='alert.id'
         :alert='alert'
         :type='alert.type'
       />
     </div>
-    <div v-else-if='meldingenPending || patientenPending'>
+    <div v-if='(meldingenPending || patientenPending) && !requestFromScroll'>
       <alerts-lg
         class='animate-pulse blurred-text'
         v-for='alert of 5'
@@ -173,7 +225,7 @@ const placeHolderAlert = ref<IMelding>({
       />
     </div>
   </div>
-<!--  <decorations-fixed-right/>-->
+  <!--  <decorations-fixed-right/>-->
 
 
 </template>
@@ -192,8 +244,10 @@ const placeHolderAlert = ref<IMelding>({
   text-shadow: 0 0 8px #000;
   filter: grayscale(1);
 }
-.blurred-text .text-sm  {
+
+.blurred-text .text-sm {
   color: transparent !important;
   text-shadow: 0 0 8px #000;
 }
+
 </style>

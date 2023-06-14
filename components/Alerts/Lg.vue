@@ -16,7 +16,6 @@ const props = defineProps({
   },
 })
 
-console.log(props.alert)
 
 
 function calculateAge(birthDate: string) {
@@ -57,9 +56,7 @@ const alertSvg = computed(() => {
       return SvgAdemfrequentie
   }
 })
-onMounted(() => {
-  console.log(props.alert.type)
-})
+
 const unit = computed(() => {
   switch (props.alert.type) {
     case AlertType.Bloeddruk:
@@ -87,7 +84,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
 
 <template>
   <div
-    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-[55rem] flex-grow-0  rounded-lg bg-white p-2 drop-shadow-2xl'
+    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-[55rem] flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md '
     :class="{
       'border-l-4 border-primary-375': alert.level === AlertLevel.Kritiek,
       'border-l-4 border-other-200': alert.level === AlertLevel.Matig,
@@ -121,7 +118,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
         <div>{{ AlertType[alert.type] }}</div>
         <div class='text-sm'>{{ alert.value }} {{ unit }}</div>
       </div>
-      <NuxtLink to='/dokter/patienten/[patientid]'>
+      <NuxtLink :to='`/dokter/patienten/${alert.patientId}`'>
         <Line-chart />
       </NuxtLink>
     </div>
