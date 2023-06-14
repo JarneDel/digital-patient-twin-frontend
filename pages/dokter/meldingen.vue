@@ -3,7 +3,7 @@ import { PatientGegevens } from '~/interfaces/IPatient'
 import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { servicesUrls } from '~/servicesurls'
 import { FetchContext } from 'ofetch'
-import { LucideRotateCw } from 'lucide-vue-next'
+import { LucideRotateCw, LucideLoader2, LucideInfo } from 'lucide-vue-next'
 
 useHead({
   title: 'Meldingen',
@@ -168,9 +168,7 @@ watch(meldingen, (newVal) => {
     }
   }
 })
-watch(requestFromScroll, (newVal) => {
-  console.log(newVal, 'request from scroll')
-})
+
 
 </script>
 
@@ -214,6 +212,21 @@ watch(requestFromScroll, (newVal) => {
         :alert='alert'
         :type='alert.type'
       />
+    </div>
+    <!--       center -->
+    <div v-if='!meldingenPending && !patientenPending && allMeldingen.length === 0'>
+      <div class='flex flex-col items-center justify-center pt-6'>
+        <lucide-info class='text-6xl' />
+        <text-kop2>Geen meldingen gevonden</text-kop2>
+        <div class='text-center text-neutral-100'>
+          Er zijn geen meldingen gevonden voor de geselecteerde filters.
+        </div>
+
+      </div>
+    </div>
+
+    <div  v-if='meldingenPending' class='flex justify-center'>
+      <lucide-loader2 class='animate-spin' />
     </div>
     <div v-if='(meldingenPending || patientenPending) && !requestFromScroll'>
       <alerts-lg
