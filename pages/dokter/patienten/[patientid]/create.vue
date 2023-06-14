@@ -23,25 +23,25 @@ const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azu
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
   id: '',
-  voornaam: 'Shareeb',
-  naam: 'Hashmi',
+  voornaam: 'User',
+  naam: 'User',
   geslacht: 'man',
-  geboorteland: 'België',
+  geboorteland: 'Land',
   geboorteDatum: '19/09/1999',
 })
 const patientAdres = reactive<Address>({
-  gemeente: 'Kortijk',
-  straat: 'toekomststraat',
+  gemeente: 'kortrijk',
+  straat: 'ergensstraat',
   postcode: 8500,
-  nr: '451',
+  nr: '21',
 })
 const patientMedisch = reactive<Medisch>({
-  lengte: 179,
-  gewicht: 75,
-  bloedgroep: 'AB+',
+  lengte: 180,
+  gewicht: 70,
+  bloedgroep: '',
 })
 const patientContact = reactive<Contact>({
-  email: 'shareeb@hotmail.com',
+  email: 'user@hotmail.com',
   telefoon: '04555555555',
 })
 
@@ -117,7 +117,7 @@ const editLinkName = computed(() => 'Nieuw Patiënt creëren')
           <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
           <forms-text-input
             :textValue="patient.voornaam"
-            v-model="patient.voornaam"
+            :placeholder="patient.voornaam"
             @update:textValue="patient.voornaam = $event"
           ></forms-text-input>
           <forms-surname-input

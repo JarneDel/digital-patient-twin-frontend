@@ -41,6 +41,19 @@ watch(
 </template>
 
 <style scoped></style> -->
+<template>
+  <label>Voornaam</label>
+  <input
+    type="text"
+    :value="textValue"
+    @input="updateValue($event)"
+    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+  />
+  <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
+    Invalid input.
+  </div>
+</template>
+
 <script setup lang="ts">
 import { defineProps, defineEmits, watch } from 'vue'
 
@@ -88,18 +101,5 @@ watch(
   },
 )
 </script>
-
-<template>
-  <label>Voornaam</label>
-  <input
-    type="text"
-    v-model="props.textValue"
-    @input="updateValue($event)"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-  />
-  <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
-    Invalid input.
-  </div>
-</template>
 
 <style scoped></style>

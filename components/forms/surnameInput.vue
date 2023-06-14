@@ -136,7 +136,7 @@ watch(
   <label>Naam</label>
   <input
     type="text"
-    v-model="props.surnameValue"
+    :value="surnameValue"
     @input="updateValue($event)"
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />

@@ -47,19 +47,30 @@ watch(
   },
 )
 </script>
-
 <template>
-  <label for="bloedgroep">bloedgroep</label>
-  <input
-    type="text"
-    id="bloedgroep"
-    v-model="props.bloodTypeValue"
-    @input="updateValue($event)"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-  />
-
-  <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
-    <p>Invalid input</p>
+  <div class="select-container">
+    <label for="blood-group">Bloedgroep</label>
+    <div class="select-wrapper">
+      <select
+        id="blood-group"
+        :value="bloodTypeValue"
+        @input="updateValue($event)"
+        class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      >
+        <option value="">Selecteer bloedgroep</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+    </div>
+    <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
+      Ongeldige selectie.
+    </div>
   </div>
 </template>
 

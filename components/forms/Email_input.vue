@@ -69,11 +69,12 @@ const props = defineProps({
   },
 })
 
+
+
 const emits = defineEmits(['update:emailValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
-  // Example: Check if the input value has a length greater than 3
   return value.includes('@')
 }
 
@@ -98,7 +99,7 @@ const updateValue = (event: Event) => {
   <input
     id="mail"
     type="email"
-    v-model="props.emailValue"
+    :value="emailValue"
     @input="updateValue($event)"
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />

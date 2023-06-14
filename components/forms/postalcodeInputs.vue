@@ -120,7 +120,7 @@ watch(
         type="number"
         id="postalCode"
         @input="updateValuePostCode($event)"
-        v-model="props.postalcodeValue"
+        :value="postalcodeValue"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
     </div>
@@ -131,7 +131,7 @@ watch(
         type="text"
         id="houseNumber"
         @input="updateValueNr($event)"
-        v-model="props.houseNumberValue"
+        :value="houseNumberValue"
         class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
       />
     </div>
