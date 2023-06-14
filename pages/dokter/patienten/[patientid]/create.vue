@@ -19,20 +19,20 @@ useHead({
 })
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
-const notifcationurl = ``
+const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657/thresholds`
 
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
   id: '',
-  voornaam: 'User',
-  naam: 'User',
+  voornaam: '',
+  naam: '',
   geslacht: 'man',
-  geboorteland: 'Land',
-  geboorteDatum: '19/09/1999',
+  geboorteland: '',
+  geboorteDatum: '',
 })
 const patientAdres = reactive<Address>({
-  gemeente: 'kortrijk',
-  straat: 'ergensstraat',
+  gemeente: 'Stad',
+  straat: 'voorbeeld straat',
   postcode: 8500,
   nr: '21',
 })

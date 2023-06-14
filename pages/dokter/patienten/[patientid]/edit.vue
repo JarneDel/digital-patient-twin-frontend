@@ -19,7 +19,7 @@ useHead({
   ],
 })
 
-const patientId = '80406cff-3f96-4569-a177-b20d4f5ab276'
+const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
