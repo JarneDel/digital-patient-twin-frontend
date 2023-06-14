@@ -5,7 +5,7 @@ import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
 import { ILink } from '~/interfaces/ILink';
-import { LogOut} from 'lucide-vue-next'
+import { LogOut, UserCircle2 } from 'lucide-vue-next'
 import { msalInstance } from '~/auth'
 
 const links: ILink[] = [

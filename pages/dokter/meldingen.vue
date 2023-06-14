@@ -4,6 +4,7 @@ import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { servicesUrls } from '~/servicesurls'
 import { FetchContext } from 'ofetch'
 import { LucideRotateCw, LucideLoader2, LucideInfo } from 'lucide-vue-next'
+import { useWatchIfScrolledToBottom } from '~/composables/useWatchIfScrolledToBottom'
 
 useHead({
   title: 'Meldingen',
