@@ -84,7 +84,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
 
 <template>
   <NuxtLink
-    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-[55rem] flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:bg-neutral-50'
+    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-[55rem] flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:bg-neutral-300'
     :class="{
       'border-l-4 border-primary-375': alert.level === AlertLevel.Kritiek,
       'border-l-4 border-other-200': alert.level === AlertLevel.Matig,
