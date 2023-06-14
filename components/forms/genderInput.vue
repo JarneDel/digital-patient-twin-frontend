@@ -61,7 +61,7 @@ const emits = defineEmits(['update:genderValue', 'update:isValid'])
 const validateInput = (value: string) => {
   // Perform your form validation logic here
   // Example: Check if the input value has a length greater than 3
-  return value === 'male' || value === 'female'
+  return value === 'man'|| value === 'vrouw'
 }
 
 const updateValue = (event: Event) => {

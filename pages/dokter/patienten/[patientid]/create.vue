@@ -39,7 +39,7 @@ const patientAdres = reactive<Address>({
 const patientMedisch = reactive<Medisch>({
   lengte: 180,
   gewicht: 70,
-  bloedgroep: '',
+  bloedgroep: 'A+',
 })
 const patientContact = reactive<Contact>({
   email: 'user@hotmail.com',
@@ -89,7 +89,7 @@ const submitForm = async () => {
   </div>
   <form @submit.prevent="submitForm">
     <div class="mx-10 flex items-start justify-end">
-      <button type="submit" class="md:fixed">
+      <button type="submit">
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
