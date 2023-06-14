@@ -6,7 +6,7 @@ import { $fetch, FetchError } from 'ofetch'
 
 const user = useUser()
 
-const { data, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
+const { data:patients, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
   baseURL: servicesUrls.dokterService,
   server: false,
 })
@@ -19,7 +19,7 @@ const clickEdit = () => {
 }
 
 const clickDelete = () => {
-  console.log('clickDelete ------------------')
+  console.log('clickDelete -------------')
   isDeleting.value = !isDeleting.value
 }
 
@@ -57,8 +57,10 @@ watch(
   () => isDeleting.value,
   state => {
     console.log(state + ' state isDeleting')
+    console.log('KAARTJE MOET NU WEG')
     selected_list.value = []
     count.value = selected_list.value.length
+
   },
 )
 
@@ -68,7 +70,7 @@ const removeFromList = (id: string) => {
 
 const del = async (id: string) => {
   // TODO: user can undo this action
-  if (data.value === null) return
+  if (patients.value === null) return
   $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
     method: 'DELETE',
     baseURL: servicesUrls.dokterService,
@@ -121,7 +123,7 @@ useHead({
     </div>
 
     <patients-patientcard-edit
-      v-for="patient in data"
+      v-for="patient in patients"
       :id="patient.id"
       :patient="patient"
       :click-edit="isEditing"
