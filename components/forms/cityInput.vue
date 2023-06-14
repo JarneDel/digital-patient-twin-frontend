@@ -43,7 +43,7 @@ watch(country, newValue => {
 import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
-  countryValue: {
+  cityValue: {
     type: String,
     required: true,
   },
@@ -54,7 +54,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:countryValue', 'update:isValid'])
+const emits = defineEmits(['update:cityValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
@@ -72,17 +72,17 @@ const updateValue = (event: Event) => {
     emits('update:isValid', isValid)
 
     if (isValid) {
-      emits('update:countryValue', value)
+      emits('update:cityValue', value)
     }
   }
 }
 
 watch(
-  () => props.countryValue,
+  () => props.cityValue,
   newValue => {
     if (newValue) {
       emits('update:isValid', true)
-      emits('update:countryValue', newValue)
+      emits('update:cityValue', newValue)
     } else {
       emits('update:isValid', false)
     }
@@ -91,10 +91,10 @@ watch(
 </script>
 
 <template>
-  <label>geboorteland</label>
+  <label>gemeente</label>
   <input
     type="text"
-    :value="countryValue"
+    :value="cityValue"
     @input="updateValue($event)"
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />

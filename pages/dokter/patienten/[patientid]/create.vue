@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { d } from 'ofetch/dist/error-04138797'
 import { ref } from 'vue'
 import { AlertType } from '~/interfaces/AlertType'
 import {
@@ -10,79 +9,87 @@ import {
   Contact,
 } from '~/interfaces/IPatient'
 useHead({
-  title: 'Gegevens patiënt',
+  title: 'Nieuwe patiënt',
   meta: [
     {
       name: 'description',
-      content: 'Patiënt gegevens aanpassen.',
+      content: 'Patiënt gegevens aanmaken.',
     },
   ],
 })
 
-const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
-const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
+const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
+const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657/thresholds`
 
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
-const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
-const patientAdres: Address = data.value?.adres as Address
-const patientMedisch: Medisch = data.value?.medisch as Medisch
-const patientContact: Contact = data.value?.contact as Contact
-
-const formPatient = ref<IPatientAlgemeen>(patient)
-const formPatientAdres = ref<Address>(patientAdres)
-const formPatientMedisch = ref<Medisch>(patientMedisch)
-const formPatientContact = ref<Contact>(patientContact)
+const patient = reactive<IPatientAlgemeen>({
+  // Initialize the patient data with empty values or default values
+  id: '',
+  voornaam: '',
+  naam: '',
+  geslacht: 'man',
+  geboorteland: '',
+  geboorteDatum: '',
+})
+const patientAdres = reactive<Address>({
+  gemeente: 'Stad',
+  straat: 'voorbeeld straat',
+  postcode: 8500,
+  nr: '21',
+})
+const patientMedisch = reactive<Medisch>({
+  lengte: 180,
+  gewicht: 70,
+  bloedgroep: 'A+',
+})
+const patientContact = reactive<Contact>({
+  email: 'user@hotmail.com',
+  telefoon: '04555555555',
+})
 
 const submitForm = async () => {
   try {
-    const updatedPatientData = {
-      deviceId: 'testdatagenerator', //deviceid remains unchanged when updated
-      algemeen: formPatient.value,
-      adres: formPatientAdres.value,
-      medisch: formPatientMedisch.value,
-      contact: formPatientContact.value,
+    const newPatientData = {
+      algemeen: { ...patient },
+      adres: { ...patientAdres },
+      medisch: { ...patientMedisch },
+      contact: { ...patientContact },
     }
 
-    // Send the updated patient data to your API endpoint
-    const response = await fetch(url, {
-      method: 'PUT',
+    // Send the new patient data to your API endpoint using POST request
+    const response = await $fetch(url, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedPatientData),
+      body: JSON.stringify(newPatientData),
     })
 
-    if (response.ok) {
-      // Handle successful update
-      console.log('Patient data updated successfully')
-      alert('Patient data updated successfully')
+    if (response) {
+      // Handle successful creation
+      console.log('New patient created successfully')
+      alert('New patient created successfully')
     } else {
-      // Handle update error
-      console.error('Failed to update patient data')
+      // Handle creation error
+      console.error('Failed to create new patient')
     }
   } catch (error) {
-    console.error('An error occurred while updating patient data:', error)
+    console.error('An error occurred while creating new patient:', error)
   }
 }
-
-const patientForGoback = { ...patient }
-const editLinkName = computed(
-  () => `${patientForGoback.voornaam} ${patientForGoback.naam} | Edit`,
-)
 </script>
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
-      :link_name="editLinkName"
-      link_path="/dokter/patienten/[patientid]/gegevens"
+      link_name="Nieuw Patiënt creëren"
+      :link_path="'/dokter/patienten/'"
     />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
   <form @submit.prevent="submitForm">
     <div class="mx-10 flex items-start justify-end">
-      <button type="submit" class="md:fixed">
+      <button type="submit">
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
@@ -96,7 +103,6 @@ const editLinkName = computed(
         ></pressables-toggle>
         <div>
           <template-slider
-            class="-mx-5"
             :type="AlertType.breathingRate"
             :min="0"
             :max="100"
@@ -109,7 +115,7 @@ const editLinkName = computed(
           <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
           <forms-text-input
             :textValue="patient.voornaam"
-            v-model="patient.voornaam"
+            :placeholder="patient.voornaam"
             @update:textValue="patient.voornaam = $event"
           ></forms-text-input>
           <forms-surname-input

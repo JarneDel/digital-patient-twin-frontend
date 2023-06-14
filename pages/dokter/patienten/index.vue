@@ -83,10 +83,6 @@ const del = async (id: string) => {
     },
   )
 }
-
-
-
-
 useHead({
   title: 'Patiënten',
   meta: [
@@ -102,14 +98,14 @@ useHead({
   <div>{{ selected_list }}</div>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Patiënt lijst</h2>
-    <div
-      class="mb-10 mt-20 flex flex-col items-center justify-between lg:flex-row"
-    >
-      <button
-        class="inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80"
-      >
-        <Plus class="h-8 w-8" />
-      </button>
+    <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
+      <NuxtLink to="/dokter/patienten/[patientid]/create">
+        <button
+          class="inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80"
+        >
+          <Plus class="h-8 w-8" />
+        </button>
+      </NuxtLink>
 
       <PressablesEdit
         @clickEdit="() => clickEdit"
