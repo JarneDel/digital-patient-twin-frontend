@@ -225,7 +225,7 @@ watch(meldingen, (newVal) => {
       </div>
     </div>
 
-    <div  v-if='meldingenPending' class='flex justify-center'>
+    <div  v-if='meldingenPending && requestFromScroll' class='flex justify-center'>
       <lucide-loader2 class='animate-spin' />
     </div>
     <div v-if='(meldingenPending || patientenPending) && !requestFromScroll'>
