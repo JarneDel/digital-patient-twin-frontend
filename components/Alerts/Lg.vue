@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import {  LineChart } from 'lucide-vue-next'
+import {  LucideSlidersHorizontal } from 'lucide-vue-next'
 import { PropType } from '@vue/runtime-core'
 import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { SvgAdemfrequentie, SvgBloodpressure, SvgHeartrate, SvgOxygen, SvgTemperature } from '#components'
@@ -83,13 +83,14 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
 </script>
 
 <template>
-  <div
-    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-[55rem] flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md '
+  <NuxtLink
+    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-[55rem] flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:bg-neutral-50'
     :class="{
       'border-l-4 border-primary-375': alert.level === AlertLevel.Kritiek,
       'border-l-4 border-other-200': alert.level === AlertLevel.Matig,
       'border-l-4 border-indigo-300': alert.level === AlertLevel.Info,
     }"
+    :to='`/dokter/patienten/${alert.patientId}`'
   >
     <div class='flex flex-row gap-6'>
       <component
@@ -118,11 +119,12 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
         <div>{{ AlertType[alert.type] }}</div>
         <div class='text-sm'>{{ alert.value }} {{ unit }}</div>
       </div>
-      <NuxtLink :to='`/dokter/patienten/${alert.patientId}`'>
-        <Line-chart />
+<!--      TODO: link to correct patient settings page-->
+      <NuxtLink :to='`/dokter/settings/${alert.patientId}`'>
+        <LucideSlidersHorizontal />
       </NuxtLink>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <style scoped>
