@@ -56,7 +56,7 @@ const submitForm = async () => {
     }
 
     // Send the new patient data to your API endpoint using POST request
-    const response = await fetch(url, {
+    const response = await $fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const submitForm = async () => {
       body: JSON.stringify(newPatientData),
     })
 
-    if (response.ok) {
+    if (response) {
       // Handle successful creation
       console.log('New patient created successfully')
       alert('New patient created successfully')
