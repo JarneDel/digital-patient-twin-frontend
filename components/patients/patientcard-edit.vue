@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
-import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
-import { ref, watchEffect, onUnmounted, getCurrentInstance } from 'vue'
-import { cli } from 'webpack';
+import { PatientGegevens } from '~/interfaces/IPatient'
+import { ref, onUnmounted, getCurrentInstance } from 'vue'
 
 const props = defineProps({
   patient: {
@@ -21,7 +20,7 @@ const instance = getCurrentInstance()
 const handleCheckboxChange = () => {
   isSelected.value = !isSelected.value
   console.log(isSelected.value)
-  instance?.emit('checkboxSelected', props.patient.id)
+  instance?.emit('checkboxSelected', props.patient.id, isSelected.value)
 }
 
 // Cleanup function when the component is unmounted
@@ -50,8 +49,15 @@ const calculateAge = (date: string): number => {
   return age
 }
 
-console.log(props.patient)
-console.log(props.patient.id)
+watch(
+  () => props.clickEdit,
+  (state) => {
+    console.log(state + ' state clickEdit')
+    isSelected.value = false
+  }
+)
+
+
 </script>
 
 <template>
