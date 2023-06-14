@@ -9,7 +9,11 @@ module.exports = {
     './app.vue',
   ],
   theme: {
+    screens: {
+       md: "900px",
+    },
     extend: {
+
       colors: {
         primary: {
           600: '#C30707',

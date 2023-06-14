@@ -25,11 +25,11 @@ useHead({
     <div class="lg:col-span-1">
       <FormsSelectDevice></FormsSelectDevice>
       <pressables-toggle
-        :type="AlertType.temperature"
-        :text="AlertType.temperature"
+        :type="AlertType.Temperatuur"
+        :text="AlertType.Temperatuur"
       ></pressables-toggle>
       <div>
-        <template-slider :type="AlertType.breathingRate" :min="0" :max="100" />
+        <template-slider :type="AlertType.AdemsFrequentie" :min="0" :max="100" />
       </div>
     </div>
 

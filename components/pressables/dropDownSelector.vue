@@ -37,7 +37,7 @@ watch(selected, (newVal) => {
 </script>
 
 <template>
-  <Listbox v-model='selected' class='w-72'>
+  <Listbox v-model='selected'>
     <div class='relative mt-1'>
       <ListboxButton
         class='w-full cursor-default rounded-lg bg-tertiary-100/30 border border-tertiary-400 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-tertiary-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary-500 sm:text-sm'

@@ -26,7 +26,7 @@ defineEmits(['update:selected'])
           'bg-tertiary-300/30': option !== selected,
           'bg-tertiary-500/70': option === selected,
         }"
-        class=' overflow-hidden px-3 py-3 text-tertiary-600  transition-all duration-300 ease-out outline-none border-2 border-transparent focus-visible:border-tertiary-500'
+        class=' overflow-hidden px-2 py-2 text-tertiary-600  transition-all duration-300 ease-out outline-none border-2 border-transparent focus-visible:border-tertiary-500'
       >
         {{ option }}
       </button>

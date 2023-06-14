@@ -1,10 +1,18 @@
-// import signalR from '@microsoft/signalr'
+// import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@microsoft/signalr'
 //
 // export default function(context) {
+//   if (process.server) return
 //
-//   const connection = new signalR.HubConnectionBuilder()
-//     .withUrl("industryprojectsignalr.service.signalr.net")
-//     .configureLogging(signalR.LogLevel.Information)
+//   const connection = new HubConnectionBuilder()
+//     .withUrl("https://industryprojectsignalr.service.signalr.net/client/?hub=newDeviceData",
+//       {
+//         skipNegotiation: true,
+//         transport: HttpTransportType.WebSockets,
+//         accessTokenFactory() {
+//           return token
+//         }
+//       })
+//     .configureLogging(LogLevel.Information)
 //     .build();
 //   console.log({connection})
 //   async function start() {
@@ -26,6 +34,8 @@
 //
 //   context.SignalR = connection
 // }
-export default () => {
 
-}
+
+export default defineNuxtPlugin((context, inject) => {
+
+})
