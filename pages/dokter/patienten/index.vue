@@ -83,6 +83,7 @@ const del = async (id: string) => {
       console.log(err)
     },
   )
+  isEditing.value = false
 }
 
 useHead({
