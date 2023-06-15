@@ -1,5 +1,5 @@
-<template>
-  <!-- gewicht -->
+<!-- <template>
+
   <label for="weight" class="mb-2 block">Gewicht</label>
   <input
     id="weight"
@@ -48,4 +48,67 @@ watch(weight, () => {
 .text-red-500 {
   color: #ef4444;
 }
-</style>
+</style> -->
+
+<script setup lang="ts">
+import { defineProps, defineEmits, watch } from 'vue'
+
+const props = defineProps({
+  weightValue: {
+    type: Number,
+    required: true,
+  },
+  isValid: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+})
+
+const emits = defineEmits(['update:weightValue', 'update:isValid'])
+
+const validateInput = (value: Number) => {
+  if (value === 0) {
+    return false
+  } else {
+    return true
+  }
+}
+const updateValue = (event: Event) => {
+  const target = event.target as HTMLInputElement | null
+
+  if (target) {
+    const value = parseFloat(target.value)
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:weightValue', value)
+    }
+  }
+}
+
+watch(
+  () => props.weightValue,
+  newValue => {
+    const isValid = validateInput(newValue)
+
+    emits('update:isValid', isValid)
+  },
+)
+</script>
+
+<template>
+  <label for="gewicht">gewicht</label>
+  <input
+    id="gewicht"
+    type="number"
+    :value="weightValue"
+    @input="updateValue"
+    class="peer block h-fit w-fit appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+  />
+  <p v-if="!isValid" class="text-red-500">Please enter a value</p>
+</template>
+
+<style scoped></style>
