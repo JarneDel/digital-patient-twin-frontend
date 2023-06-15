@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
-import { FetchContext } from 'ofetch'
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from '@headlessui/vue'
-import { waitForDebugger } from 'inspector'
 
 const props = defineProps({
   for:{
@@ -64,7 +55,6 @@ const closeModal = () => {
   isOpen.value = false
   window.location.reload()
 }
-// fetching function for the realtime data or websocket
 </script>
 
 <template>

@@ -1,32 +1,47 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
+import { servicesUrls } from '~/servicesurls'
+import { $fetch, FetchError } from 'ofetch'
+import { exec } from 'child_process'
+
+const user = useUser()
+
+const {
+  data: patients,
+  execute,
+  error,
+  pending,
+} = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
+  baseURL: servicesUrls.dokterService,
+  server: false,
+})
 
 const isEditing = ref(false)
+const isDeleting = ref(false)
+
 const clickEdit = () => {
   isEditing.value = !isEditing.value
-
-  console.log(isEditing.value)
 }
 
-// dokterid ophalen
-const routeID = useRoute().params.dokterid as string
-const id = ref(routeID)
-id.value = '878c95cf-e82d-40a5-a56c-8790427f1657'
+const clickDelete = () => {
+  isDeleting.value = !isDeleting.value
+}
+
+
 
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
 const count = ref(selected_list.value.length)
 
 const selected = ref(0)
-const isSelected = ref(false)
 
 const updateSelectedCount = (count: number) => {
   selected.value = count
 }
 
-const updateList = (id: any) => {
-  if (selected_list.value.includes(id)) {
+const updateList = (id: any, isSelected: boolean) => {
+  if (!isSelected) {
     selected_list.value = selected_list.value.filter(item => item !== id)
   } else {
     selected_list.value.push(id)
@@ -34,10 +49,47 @@ const updateList = (id: any) => {
   count.value = selected_list.value.length
 }
 
-const url =
-  'https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient'
+watch(
+  () => isEditing.value,
+  state => {
+    console.log(state + ' state isEditing')
+    selected_list.value = []
+    count.value = selected_list.value.length
+  },
+)
 
-const { error, data, pending } = await useFetch<PatientGegevens[]>(url)
+watch(
+  () => isDeleting.value,
+  state => {
+    console.log(state + ' state isDeleting')
+    for (let i = 0; i < selected_list.value.length; i++) {
+      del(selected_list.value[i])
+    }
+    selected_list.value = []
+    count.value = selected_list.value.length
+  },
+)
+
+const removeFromList = (id: string) => {
+  console.log('patiënt is verwijdered')
+}
+
+const del = async (id: string) => {
+  if (patients.value === null) return
+  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
+    method: 'DELETE',
+    baseURL: servicesUrls.dokterService,
+  }).then(
+    () => {
+      execute()
+      removeFromList(id)
+    },
+    (err: FetchError) => {
+      console.log(err)
+    },
+  )
+  isEditing.value = false
+}
 
 useHead({
   title: 'Patiënten',
@@ -51,7 +103,7 @@ useHead({
 </script>
 
 <template>
-  <div class="bg-primary-325">{{ selected_list }}</div>
+  <div>{{ selected_list }}</div>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Patiënt lijst</h2>
     <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
@@ -64,39 +116,23 @@ useHead({
       </NuxtLink>
 
       <PressablesEdit
-        @clickDelete="clickEdit"
+        @clickDelete='clickDelete'
+        @clickEdit='() => clickEdit'
         v-model:is-editing="isEditing"
         :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
+        @del='del(patient.id)'
       />
-      <!-- <PressablesEdit
-        @clickDelete="clickEdit"
-        v-model:is-editing="isEditing"
-        :selected-count="count"
-        @checkboxSelected="updateSelectedCount"
-        @update:isEditing="$emit('update:isEditing', $event)"
-      /> -->
     </div>
 
     <patients-patientcard-edit
-      v-for="patient in data"
+      v-for='patient in patients'
+      :key='patient.id'
       :id="patient.id"
       :patient="patient"
-      @checkboxSelected="updateList(patient.id)"
+      :click-edit='isEditing'
+      @checkboxSelected='updateList'
     />
-    <!-- <patienten-patientcard-edit
-      v-for="patient in data"
-      :for="id"
-      :key="patient.id"
-      :selected-count="selected"
-      :patient="patient"
-      :is-editing="isEditing"
-      :is-checked="isSelected"
-      @update:checked="isSelected = $event"
-      @checkboxSelected="updateList(patient.id)"
-      @update:isEditing="$emit('update:isEditing', $event)"
-      @update:selected-count="selected = $event"
-    /> -->
   </div>
 </template>
