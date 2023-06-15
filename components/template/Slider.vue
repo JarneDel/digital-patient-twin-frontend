@@ -8,7 +8,7 @@ const value_1 = ref(10)
 
 defineProps({
   type: {
-    type: String as PropType<AlertType>,
+    type: String,
     required: true,
   },
   min: {

@@ -86,18 +86,18 @@ const editLinkName = computed(
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
-    <div class="mx-5 flex flex-col gap-4 lg:mx-20 lg:flex-row">
+    <div class='mx-5 flex flex-col gap-4 lg:mx-20 md:flex-row flex-wrap'>
       <!-- persoonlijke -->
       <div class="">
         <FormsSelectDevice></FormsSelectDevice>
-        <pressables-toggle
-          :type="AlertType.temperature"
-          :text="AlertType.temperature"
-        ></pressables-toggle>
+        <pressables-switch
+          :text='AlertType[AlertType.Temperatuur]'
+          :type='AlertType[AlertType.Temperatuur]'
+        ></pressables-switch>
         <div>
           <template-slider
             class="-mx-5"
-            :type="AlertType.breathingRate"
+            :type='AlertType[AlertType.AdemsFrequentie]'
             :min="0"
             :max="100"
           />
