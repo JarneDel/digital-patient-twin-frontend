@@ -24,17 +24,17 @@ const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.nort
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
   id: '',
-  voornaam: 'Voorbeeld voornaam',
-  naam: 'voorbeeld naam',
-  geslacht: 'man',
-  geboorteland: 'België',
-  geboorteDatum: '19/05/2001',
+  voornaam: '',
+  naam: '',
+  geslacht: '',
+  geboorteland: '',
+  geboorteDatum: '',
 })
 const patientAdres = reactive<Address>({
-  gemeente: 'Stad',
-  straat: 'voorbeeld straat',
-  postcode: 8500,
-  nr: '21',
+  gemeente: '',
+  straat: '',
+  postcode: 0,
+  nr: '',
 })
 const patientMedisch = reactive<Medisch>({
   lengte: 180,
@@ -42,9 +42,14 @@ const patientMedisch = reactive<Medisch>({
   bloedgroep: 'A+',
 })
 const patientContact = reactive<Contact>({
-  email: 'user@hotmail.com',
-  telefoon: '04555555555',
+  email: '',
+  telefoon: '',
 })
+
+watch(patientAdres, () => {
+  console.log(patientAdres)
+})
+
 
 const submitForm = async () => {
   try {
@@ -54,6 +59,7 @@ const submitForm = async () => {
       medisch: { ...patientMedisch },
       contact: { ...patientContact },
     }
+    console.log(newPatientData)
 
     // Send the new patient data to your API endpoint using POST request
     const response = await $fetch(url, {

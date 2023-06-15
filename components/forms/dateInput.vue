@@ -26,16 +26,19 @@ const updateValue = (event: Event) => {
   const target = event.target as HTMLInputElement | null
 
   if (target) {
-    const dateValue = target.valueAsDate // Get the date object from the input value
-    const value = dateValue ? dateValue.toISOString().substring(0, 10) : '' // Convert date to string
+    const dateValue = target.valueAsDate // Get the date object from the input value\
+    if (!dateValue) return
+    const date = new Date(dateValue)
+    // convert to nl-be format with double digit day and month
+    const dateStringNl = date.toLocaleDateString('nl-BE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+    emits('update:birthDateValue', dateStringNl)
+    emits('update:isValid', true)
 
-    const isValid = validateInput(value)
-
-    emits('update:isValid', isValid)
-
-    if (isValid) {
-      emits('update:birthDateValue', value)
-    }
+    console.log('DateStringNl: ' + dateStringNl)
   }
 }
 
