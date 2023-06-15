@@ -15,10 +15,13 @@ useHead({
     },
   ],
 })
+const routeID = useRoute().params.patientid as string
 
-const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
+const refrenceid = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
+//id dynamicaaly
+const id = ref(routeID)
 
-const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
+const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
 
 // const url = `/dokter/${user.value?.localAccountId}/patients/${patientId}`
 
@@ -43,7 +46,7 @@ const result = computed<PatientGegevens[]>(() => {
       link_name="patient gegevens"
     ></PressablesGoback>
 
-    <NuxtLink to="/dokter/patienten/[patientid]/edit">
+    <NuxtLink :to="`/dokter/patienten/${id}/edit`">
       <PressablesEdit></PressablesEdit>
     </NuxtLink>
   </div>
