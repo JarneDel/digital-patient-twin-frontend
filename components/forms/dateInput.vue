@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { f } from 'ofetch/dist/error-04138797'
 import { defineProps, defineEmits, watch } from 'vue'
 
 const props = defineProps({
@@ -26,19 +25,16 @@ const updateValue = (event: Event) => {
   const target = event.target as HTMLInputElement | null
 
   if (target) {
-    const dateValue = target.valueAsDate // Get the date object from the input value\
-    if (!dateValue) return
-    const date = new Date(dateValue)
-    // convert to nl-be format with double digit day and month
-    const dateStringNl = date.toLocaleDateString('nl-BE', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
-    emits('update:birthDateValue', dateStringNl)
+    const dateValue = target.value // Get the date value from the input
+    if (!validateInput(dateValue)) {
+      emits('update:isValid', false)
+      return
+    }
+
+    emits('update:birthDateValue', dateValue)
     emits('update:isValid', true)
 
-    console.log('DateStringNl: ' + dateStringNl)
+    console.log('Date Value: ' + dateValue)
   }
 }
 
@@ -60,7 +56,6 @@ watch(
   <input
     id="geboortedatum"
     type="date"
-    format="dd-mm-yyyy"
     :value="birthDateValue"
     @input="updateValue($event)"
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
