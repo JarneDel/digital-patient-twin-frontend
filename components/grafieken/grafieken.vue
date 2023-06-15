@@ -134,7 +134,7 @@ watch(statsData, (value, oldValue, onCleanup) => {
 })
 </script>
 <template>
-  <div class='flex flex-row justify-between mx-8 gap-8 items-center'>
+  <div class='flex flex-row justify-between gap-8 items-center max-w-6xl mx-auto'>
     <!--     time picker start -->
     <Datepicker :range='true' v-model='date' :max-date="new Date()"  v-on:text-submit="() => {manual.end = true; manual.start= true}" class='max-w-[434px]' />
 

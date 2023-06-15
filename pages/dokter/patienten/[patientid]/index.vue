@@ -19,12 +19,11 @@ useHead({
 </script>
 
 <template>
-  <pressables-goback
-    link_name='nieuw patienten toevoegen'
-    link_path='dokter/patienten'
-  />
+
   <text-kop2 class='mx-8 mb-2'>Vitalen {{ patientNaam }}</text-kop2>
-  <grafieken :for='id' />
+  <client-only>
+    <grafieken :for='id' />
+  </client-only>
 </template>
 
 <style scoped></style>
