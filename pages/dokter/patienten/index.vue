@@ -3,10 +3,11 @@ import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchError } from 'ofetch'
+import { exec } from 'child_process';
 
 const user = useUser()
 
-const { data:patients, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
+const { data:patients, execute, error, pending } = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
   baseURL: servicesUrls.dokterService,
   server: false,
 })
@@ -74,7 +75,8 @@ const del = async (id: string) => {
     method: 'DELETE',
     baseURL: servicesUrls.dokterService,
   }).then(
-    () => {
+    () => { 
+      execute()
       removeFromList(id)
     },
     (err: FetchError) => {
@@ -82,6 +84,7 @@ const del = async (id: string) => {
     },
   )
 }
+
 useHead({
   title: 'Patiënten',
   meta: [
@@ -119,6 +122,7 @@ useHead({
 
     <patients-patientcard-edit
       v-for="patient in patients"
+      :key="patient.id"
       :id="patient.id"
       :patient="patient"
       :click-edit="isEditing"
