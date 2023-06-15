@@ -76,6 +76,18 @@ const removeFromList = (id: string) => {
 
 const del = async (id: string) => {
   if (patients.value === null) return
+  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+    method: 'DELETE',
+    baseURL: servicesUrls.dokterService,
+  }).then(
+    () => {
+      execute()
+      removeFromList(id)
+    },
+    (err: FetchError) => {
+      console.log(err)
+    },
+  )
   $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
     method: 'DELETE',
     baseURL: servicesUrls.dokterService,
