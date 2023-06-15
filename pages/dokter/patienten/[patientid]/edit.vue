@@ -20,15 +20,11 @@ useHead({
 })
 
 const routeID = useRoute().params.patientid as string
-
 const refrenceid = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
 //id dynamicaaly
 const id = ref(routeID)
-
+//get patient data
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
-
-// const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
-// const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
 
 const { error, data, pending, execute } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
@@ -61,7 +57,9 @@ const submitForm = async () => {
     })
 
     if (response.ok) {
+      //execute the fetch again to update the data
       execute()
+      window.location.reload()
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
@@ -82,10 +80,8 @@ const editLinkName = computed(
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
-    <pressables-goback
-      :link_name="editLinkName"
-      link_path=´/dokter/patienten/${id}/gegevens´
-    />
+    <pressables-goback :link_name="editLinkName"
+    link_path=´/dokter/patienten/${id}/gegevens´ />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
