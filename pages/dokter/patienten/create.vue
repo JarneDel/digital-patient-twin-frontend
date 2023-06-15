@@ -98,12 +98,12 @@ const submitForm = async () => {
       <div class="">
         <FormsSelectDevice></FormsSelectDevice>
         <pressables-toggle
-          :type="AlertType.temperature"
-          :text="AlertType.temperature"
+          :type="AlertType.Temperatuur"
+          :text="AlertType.Temperatuur"
         ></pressables-toggle>
         <div>
           <template-slider
-            :type="AlertType.breathingRate"
+            :type="AlertType.AdemsFrequentie"
             :min="0"
             :max="100"
           />

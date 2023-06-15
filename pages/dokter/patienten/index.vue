@@ -12,10 +12,13 @@ const {
   execute,
   error,
   pending,
-} = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
-  baseURL: servicesUrls.dokterService,
-  server: false,
-})
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/patients`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
 
 const isEditing = ref(false)
 const isDeleting = ref(false)
@@ -27,8 +30,6 @@ const clickEdit = () => {
 const clickDelete = () => {
   isDeleting.value = !isDeleting.value
 }
-
-
 
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
@@ -107,7 +108,7 @@ useHead({
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Patiënt lijst</h2>
     <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
-      <NuxtLink to="/dokter/patienten/[patientid]/create">
+      <NuxtLink to="/dokter/patienten/create">
         <button
           class="inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80"
         >
@@ -116,23 +117,23 @@ useHead({
       </NuxtLink>
 
       <PressablesEdit
-        @clickDelete='clickDelete'
-        @clickEdit='() => clickEdit'
+        @clickDelete="clickDelete"
+        @clickEdit="() => clickEdit"
         v-model:is-editing="isEditing"
         :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del='del(patient.id)'
+        @del="del(patient.id)"
       />
     </div>
 
     <patients-patientcard-edit
-      v-for='patient in patients'
-      :key='patient.id'
+      v-for="patient in patients"
+      :key="patient.id"
       :id="patient.id"
       :patient="patient"
-      :click-edit='isEditing'
-      @checkboxSelected='updateList'
+      :click-edit="isEditing"
+      @checkboxSelected="updateList"
     />
   </div>
 </template>
