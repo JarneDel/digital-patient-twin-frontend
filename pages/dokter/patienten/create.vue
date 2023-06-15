@@ -24,11 +24,11 @@ const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.nort
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
   id: '',
-  voornaam: '',
-  naam: '',
+  voornaam: 'Voorbeeld voornaam',
+  naam: 'voorbeeld naam',
   geslacht: 'man',
-  geboorteland: '',
-  geboorteDatum: '',
+  geboorteland: 'België',
+  geboorteDatum: '19/05/2001',
 })
 const patientAdres = reactive<Address>({
   gemeente: 'Stad',
@@ -82,7 +82,7 @@ const submitForm = async () => {
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
       link_name="Nieuw Patiënt creëren"
-      :link_path="'/dokter/patienten/'"
+      link_path="/dokter/patienten/"
     />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
