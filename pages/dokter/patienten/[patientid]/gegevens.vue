@@ -20,6 +20,8 @@ const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
 
+// const url = `/dokter/${user.value?.localAccountId}/patients/${patientId}`
+
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
 const patientAdres: Address = data.value?.adres as Address

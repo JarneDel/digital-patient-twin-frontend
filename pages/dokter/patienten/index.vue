@@ -13,12 +13,15 @@ const {
   error,
   pending,
 } = useFetch<PatientGegevens[]>(
-  `/dokter/${user.value?.localAccountId}/patients`,
+  `/dokter/${user.value?.localAccountId}/patients/`,
   {
     baseURL: servicesUrls.dokterService,
     server: false,
   },
 )
+
+const user1 = useUser()
+console.log(user1.value?.localAccountId)
 
 const isEditing = ref(false)
 const isDeleting = ref(false)

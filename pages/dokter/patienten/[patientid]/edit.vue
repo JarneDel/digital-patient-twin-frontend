@@ -19,10 +19,13 @@ useHead({
   ],
 })
 
+const user1 = useUser()
+console.log(user1.value?.localAccountId)
+
 const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
 
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
+const { error, data, pending, execute } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
 const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
@@ -53,6 +56,7 @@ const submitForm = async () => {
     })
 
     if (response.ok) {
+      execute()
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
@@ -86,18 +90,18 @@ const editLinkName = computed(
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
-    <div class='mx-5 flex flex-col gap-4 lg:mx-20 md:flex-row flex-wrap'>
+    <div class="mx-5 flex flex-col flex-wrap gap-4 md:flex-row lg:mx-20">
       <!-- persoonlijke -->
       <div class="">
         <FormsSelectDevice></FormsSelectDevice>
         <pressables-switch
-          :text='AlertType[AlertType.Temperatuur]'
-          :type='AlertType[AlertType.Temperatuur]'
+          :text="AlertType[AlertType.Temperatuur]"
+          :type="AlertType[AlertType.Temperatuur]"
         ></pressables-switch>
         <div>
           <template-slider
             class="-mx-5"
-            :type='AlertType[AlertType.AdemsFrequentie]'
+            :type="AlertType[AlertType.AdemsFrequentie]"
             :min="0"
             :max="100"
           />
