@@ -72,7 +72,7 @@ const alertSvg = computed(() => {
 
 <template>
   <div @click='$emit("details")'
-       class='rounded-lg bg-white p-5 drop-shadow-2xl gap-x-2 grid grid-rows-2 hover:bg-neutral-50 hover:translate-x-1 transition-all grid-cols-[auto,repeat(3,1fr),auto] items-center'
+       class='rounded-lg bg-white p-5 drop-shadow-lg gap-x-2 grid grid-rows-2 hover:bg-neutral-50 hover:translate-x-1 transition-all grid-cols-[auto,repeat(3,1fr),auto] items-center'
        role='button'>
     <component
       :is='alertSvg'

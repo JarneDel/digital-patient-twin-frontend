@@ -1,11 +1,11 @@
-<script setup lang="ts">
+<script lang='ts' setup>
 // imports
 import SvgHome from '@/components/svg/home.vue'
 import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
-import { ILink } from '~/interfaces/ILink';
-import { LogOut, UserCircle2 } from 'lucide-vue-next'
+import { ILink } from '~/interfaces/ILink'
+import { LogOut, UserCircle2, LucideChevronRight } from 'lucide-vue-next'
 import { msalInstance } from '~/auth'
 
 const links: ILink[] = [
@@ -33,8 +33,9 @@ const isCurrentPage = (path: string) => {
   return route.path === path
 }
 
-const logout = () => {
-  msalInstance.logoutPopup()
+const logout = async () => {
+  await msalInstance.logoutPopup()
+  navigateTo('/login')
 }
 
 const isScrolledToBottom = useWatchIfScrolledToBottom
@@ -49,68 +50,107 @@ const onScrollEvent = () => {
     console.log('scrolled to bottom')
     // load more
     isScrolledToBottom.value = true
-  }else {
+  } else {
     isScrolledToBottom.value = false
   }
 
 }
+const isOpen = ref<Boolean>(false)
+// store isOpen in localstorage
+watch(isOpen, () => {
+  localStorage.setItem('navigationIsOpen', isOpen.value.toString())
+})
+
+
+// load isOpen from localstorage
+onMounted(() => {
+  const isOpenFromLocalStorage = localStorage.getItem('navigationIsOpen')
+  if (isOpenFromLocalStorage) {
+    isOpen.value = isOpenFromLocalStorage === 'true'
+  }
+})
+
 
 
 </script>
 
 <template>
   <div
-    class="grid h-[100vh] grid-cols-[max-content_1fr] grid-rows-[min-content_1fr] bg-neutral-600"
+    class='grid h-[100vh] grid-cols-[max-content_1fr] grid-rows-[min-content_1fr] bg-neutral-600'
   >
-    <div class="flex h-24 items-center justify-center bg-primary-600 pl-3 pr-8">
-      <div class="font-semibold text-white">Digital Patient Twin</div>
+    <div :class='{
+      "pl-3 pr-8": isOpen
+         }'
+         class='flex h-16 items-center justify-center bg-primary-600  relative  transition-all ease-out'>
+      <NuxtLink class='font-semibold text-white rounded-md transition-colors mx-auto' to='/dokter'>
+        <h1 v-if='isOpen' class='p-2'>Digital Patient Twin</h1>
+        <img v-else alt='Digital Patient Twin' class='block w-8 h-8 mx-auto' src='/DigitalPatientTwin.png'>
+      </NuxtLink>
+      <Button
+        :class='isOpen? "rotate-180" : "rotate-0"'
+        class='rounded-full bg-primary-550 drop-shadow-md w-8 h-8 absolute  -right-4 -bottom-4 z-50 hover:bg-primary-450 transition-all focus:bg-primary-450'
+        type='button'
+        @click='isOpen = !isOpen'>
+        <LucideChevronRight class='mt-1 ml-1 w-6 h-6' color='white' />
+      </Button>
     </div>
-    <div class="z-10 flex pl-3 pr-8 shadow-normal h-24 items-center justify-end">
-      <NuxtLink to="/dokter/account">
-        <button class="appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg">
-          <user-circle-2 class="h-12 w-12 px-2 text-neutral-700"/>
+    <div :class='isOpen? "pl-3 pr-8": ""'
+         class='z-10 flex shadow-normal h-16 items-center justify-end'>
+      <NuxtLink to='/dokter/account'>
+        <button
+          class='appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg'>
+          <user-circle-2 class='h-12 w-12 px-2 text-neutral-700' />
         </button>
       </NuxtLink>
     </div>
-    <div class="flex w-56 flex-col justify-between bg-primary-600 pl-10 pt-6">
+    <div :class='{
+        "w-56 pl-10": isOpen,
+        "px-4 w-20": !isOpen,
+         }'
+         class='flex flex-col justify-between bg-primary-600 pt-6 transition-all ease-out'
+    >
       <ul>
-        <li v-for="link in links" :key="link.path" class="mb-9">
+        <li v-for='link in links' :key='link.path' class='mb-9'>
           <NuxtLink
-            :to="link.path"
-            class="flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg"
-            :class="{ 'bg-primary-450 text-white rounded-l-lg': isCurrentPage(link.path) }"
+            :class='isOpen && isCurrentPage(link.path) ? "bg-primary-450 text-white rounded-l-lg": "" + !isOpen && isCurrentPage(link.path) ? "bg-primary-450 text-white rounded-lg" : ""'
+            :to='link.path'
+            class='flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg'
           >
-          <div class="py-2 pl-3 flex justify-center items-center gap-2">
+            <div :class='isOpen? " pl-3": "flex-grow"'
+                 class=' flex py-2 justify-center items-center gap-2'
+
+            >
             <span>
-              <component :is="link.icon" class="fill-white"></component>
+              <component :is='link.icon' class='fill-white'></component>
             </span>
-            <span :class="{ 'text-white': !isCurrentPage(link.path) }">{{ link.text }}</span>
-          </div>
+              <span v-if='isOpen' :class="{ 'text-white': !isCurrentPage(link.path) }">{{ link.text }}</span>
+            </div>
           </NuxtLink>
         </li>
       </ul>
-      <div class="h-24">
-        <NuxtLink
-            to="/login"
-            class="flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg"
-          >
-          <button class="py-2 pl-3 flex justify-center items-center gap-2" @click='logout'>
-            <log-out class="h-8 w-8 pr-2 pl-1 stroke-white"/>
-            <div class="text-white">Log out</div>
-          </button>
-          </NuxtLink>
+      <div class='h-24'>
+        <button
+          class='flex items-center appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-l-lg'
+          type='button'
+          @click='logout'
+        >
+          <div class='py-2 pl-3 flex justify-center items-center gap-2'>
+            <log-out class='h-8 w-8 pr-2 pl-1 stroke-white' />
+            <div v-if='isOpen' class='text-white whitespace-nowrap'>Log out</div>
+          </div>
+        </button>
       </div>
 
     </div>
-    <div class="z-0 overflow-auto bg-neutral-50" @scroll='onScrollEvent' ref='scrollDiv'>
-      <div class="pb-20 relative min-h-full">
-        <div class="min-h-full">
+    <div ref='scrollDiv' class='z-0 overflow-auto bg-neutral-50' @scroll='onScrollEvent'>
+      <div class='pb-20 relative min-h-full'>
+        <div class='min-h-full'>
           <slot />
         </div>
         <footer
-          class="absolute right-[50%] bottom-0 mt-11 flex items-center justify-center"
+          class='absolute right-[50%] bottom-0 mt-11 flex items-center justify-center'
         >
-          <div class="pb-5 pt-2 text-tertiary-500">MCT 2023</div>
+          <div class='pb-5 pt-2 text-tertiary-500'>MCT 2023</div>
         </footer>
       </div>
     </div>
