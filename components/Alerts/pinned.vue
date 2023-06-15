@@ -29,9 +29,9 @@ const props = defineProps({
 defineEmits(['remove', 'details'])
 
 const unit = computed(() => {
-  if (props.type === AlertType.BloodPressure) return 'mmHg'
-  if (props.type === AlertType.temperature) return '°C'
-  if (props.type === AlertType.oxygen) return '%'
+  if (props.type === AlertType.Bloeddruk) return 'mmHg'
+  if (props.type === AlertType.Temperatuur) return '°C'
+  if (props.type === AlertType.Bloedzuurstof) return '%'
   return ''
 })
 console.log(props.datetime)
@@ -54,15 +54,15 @@ const status = computed(() => {
 
 const alertSvg = computed(() => {
   switch (props.type) {
-    case  AlertType.BloodPressure:
+    case  AlertType.Bloeddruk:
       return SvgBloodpressure
-    case AlertType.temperature:
+    case AlertType.Temperatuur:
       return SvgTemperature
-    case AlertType.oxygen:
+    case AlertType.Bloedzuurstof:
       return SvgOxygen
-    case AlertType.heartRate:
+    case AlertType.Hartslag:
       return SvgHeartrate
-    case AlertType.breathingRate:
+    case AlertType.AdemsFrequentie:
       return SvgAdemfrequentie
   }
 })

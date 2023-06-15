@@ -11,6 +11,7 @@ if (process.client) {
     navigateTo('/login')
   }
   useUser().value = users[0]
+
 }
 
 </script>

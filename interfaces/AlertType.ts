@@ -1,24 +1,29 @@
 export enum AlertType {
-  BloodPressure = 'Bloeddruk',
-  temperature = 'Temperatuur',
-  oxygen = 'Bloedzuurstof',
-  heartRate = 'Hartslag',
-  breathingRate = 'Ademhalingsfrequentie',
+  Bloeddruk,
+  Temperatuur ,
+  Hartslag ,
+  AdemsFrequentie ,
+  Bloedzuurstof,
+  "Alle types"
 }
 
 export enum AlertLevel {
-  Low = 'Laag',
-  Medium = 'Matig',
-  High = 'Kritiek',
+  // Info = 'Info',
+  // Matig = 'Matig',
+  // Kritiek = 'Kritiek'
+  Info,
+  Matig,
+  Kritiek,
+  "Alles"
 }
 
 export interface IMelding {
   id: string
   patientId: string
-  name: string
+  fullName: string
   type: AlertType
   level: AlertLevel
   value: string
-  time: Date
-  dateOfBirth: string
+  timestamp: Date
+  birthDate: string
 }
