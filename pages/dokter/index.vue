@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { AlertType, IMelding } from '~/interfaces/AlertType'
+import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
-import { $fetch, FetchError, ofetch } from 'ofetch'
+import { $fetch, FetchContext, FetchError, ofetch } from 'ofetch'
 import { useUser } from '~/composables/useUser'
 import { LucideChevronRight, LucidePin } from 'lucide-vue-next'
 
@@ -45,43 +45,29 @@ watch(pinnedPatients, newVal => {
   console.log(newVal)
 })
 
-const gebruiker = ref('Dokter Mertens')
-const meldingen = ref<IMelding[]>([
-  {
-    id: '1',
-    name: 'Joshy Jonkheere',
-    time: new Date(Date.now() - 6 * 1000),
-    type: AlertType.Bloeddruk,
-    value: '95/120',
-    level: 'danger',
-    birthDate: '01/01/1980',
-    patientId: '1',
+const {
+  data: criticalNotifications,
+  pending: notificationsPending,
+  error,
+} = useFetch<IMelding[]>(`/meldingen/dokter/${user.value?.localAccountId}`, {
+  baseURL: servicesUrls.meldingenService,
+  server: false,
+  immediate: true,
+  onRequest(context: FetchContext): Promise<void> | void {
+    context.options.params = {
+      level: AlertLevel.Kritiek,
+    }
   },
-  {
-    id: '2',
-    name: 'Joshy Jonkheere',
-    time: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    type: AlertType.Temperatuur,
-    value: '37',
-    level: 'danger',
-    birthDate: '01/01/1980',
-    patientId: '1',
-  },
-  {
-    id: '3',
-    name: 'Joshy Jonkheere',
-    time: new Date(Date.now() - 3 * 60 * 60 * 1000),
-    type: AlertType.Bloedzuurstof,
-    value: '95',
-    level: 'warning',
-    birthDate: '01/01/1980',
-    patientId: '1',
-  },
-])
+});
+
 
 const removeFromList = (id: string) => {
   console.log(id)
-  meldingen.value = meldingen.value.filter(melding => melding.id !== id)
+  const NotificationToRemove = criticalNotifications.value?.filter(
+    melding => melding.id !== id,
+  )
+  if (NotificationToRemove === undefined) return
+  criticalNotifications.value = NotificationToRemove
 }
 const unpin = async (id: string) => {
   // send request to backend
@@ -107,7 +93,7 @@ const unpin = async (id: string) => {
 </script>
 
 <template>
-  <div class="mx-auto my-12 max-w-[67rem]">
+  <div class='mx-auto my-12 max-w-[75rem]'>
     <h2 v-if="user !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Welkom, {{ user?.name }}
     </h2>
@@ -147,11 +133,12 @@ const unpin = async (id: string) => {
       <!--      Content right    -->
       <div class="flex max-w-[30rem] flex-col gap-4">
         <AlertsPinned
-          v-for="melding of meldingen"
+          v-for='melding of criticalNotifications.slice(0, 6)'
+          v-if='criticalNotifications'
           :key="melding.id"
-          :datetime="melding.time"
+          :datetime='melding.timestamp'
           :level="melding.level"
-          :name="melding.name"
+          :name='melding.fullName'
           :type="melding.type"
           :value="melding.value"
           @remove="removeFromList(melding.id)"

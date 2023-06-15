@@ -1,11 +1,12 @@
 <script setup lang='ts'>
 import { LucideX } from 'lucide-vue-next'
-import { AlertType } from '~/interfaces/AlertType'
+import { AlertLevel, AlertType } from '~/interfaces/AlertType'
 import { SvgAdemfrequentie, SvgBloodpressure, SvgHeartrate, SvgOxygen, SvgTemperature } from '#components'
+import { PropType } from '@vue/runtime-core'
 
 const props = defineProps({
   type: {
-    type: String as PropType<AlertType>,
+    type: Number as PropType<AlertType>,
     required: true,
   },
   name: {
@@ -21,7 +22,7 @@ const props = defineProps({
     required: true,
   },
   level: {
-    type: String,
+    type: Number as PropType<AlertLevel>,
     required: true,
   },
 })
@@ -32,20 +33,22 @@ const unit = computed(() => {
   if (props.type === AlertType.Bloeddruk) return 'mmHg'
   if (props.type === AlertType.Temperatuur) return '°C'
   if (props.type === AlertType.Bloedzuurstof) return '%'
+  if (props.type === AlertType.Hartslag) return 'bpm'
+  if (props.type === AlertType.AdemsFrequentie) return 'rpm'
   return ''
 })
 console.log(props.datetime)
 
-const { elapsedTime } = useElapsedTime(props.datetime)
+const { elapsedTime } = useElapsedTime(new Date(props.datetime))
 
 
 const status = computed(() => {
   switch (props.level) {
-    case 'danger':
+    case AlertLevel.Kritiek:
       return 'kritisch'
-    case 'warning':
+    case AlertLevel.Matig:
       return 'matig'
-    case 'good':
+    case AlertLevel.Info:
       return 'goed'
     default:
       return ''
@@ -78,9 +81,9 @@ const alertSvg = computed(() => {
       :is='alertSvg'
       class='h-14 w-14 rounded-md p-2 row-start-1 row-end-3'
       :class="{
-        'bg-primary-50 text-primary-500': props.level === 'danger',
-        'bg-orange-50 text-orange-500': props.level === 'warning',
-        'bg-green-50 text-green-500': props.level === 'good',
+        'bg-primary-50 text-primary-500': props.level === AlertLevel.Kritiek,
+        'bg-orange-50 text-orange-500': props.level === AlertLevel.Matig,
+        'bg-green-50 text-green-500': props.level === AlertLevel.Info,
        }" />
     <!--    <h3 class='text-md font-semibold capitalize'>{{ type.toString() }}: {{ value }} {{ unit }}</h3>-->
     <h3 class='text-md font-semibold capitalize whitespace-nowrap'>{{ value }} {{ unit }}</h3>
@@ -92,9 +95,10 @@ const alertSvg = computed(() => {
 
     <p
       class='text-sm font-medium uppercase text-gray-500 text-right'
-      :class="{ 'text-primary-500': level === 'danger',
-                        'text-orange-500': level === 'warning',
-                        'text-green-500': level === 'good' }"
+      :class="{ 'text-primary-500': level === AlertLevel.Kritiek,
+                        'text-orange-500': level === AlertLevel.Matig,
+                        'text-green-500': level === AlertLevel.Info,
+                        }"
     >
       {{ status }}
     </p>
