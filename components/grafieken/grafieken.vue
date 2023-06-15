@@ -5,6 +5,9 @@ import { LucideLoader2 } from 'lucide-vue-next'
 import VitalStats = PatientData.models.VitalStats
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import useWebPubSub from '~/composables/useWebPubSub'
+import { IRealtime } from '~/interfaces/IRealtime'
+import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
 
 const date = ref<Date[]>([
   new Date(new Date().setDate(new Date().getDate() - 7)),
@@ -118,6 +121,19 @@ const stats = useFetch<VitalStats>(
 )
 const { data: statsData, error: statsError, pending: statsPending, execute: statsExecute } = stats
 
+const { data: patient, error: patientError, pending: patientPending } = useFetch<PatientGegevens>(
+  `patient/${props.for}`,
+  {
+    method: 'GET',
+    baseURL:
+      'https://patientgegevens.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/',
+    lazy: true,
+    immediate: true,
+    key: Math.random().toString(),
+  },
+)
+
+
 watch(grafiekData, (value, oldValue, onCleanup) => {
   if (value !== null) {
     hasLoadedBefore.value = true
@@ -132,6 +148,32 @@ watch(statsData, (value, oldValue, onCleanup) => {
     console.log(value)
   }
 })
+
+const {client, initializeClient, isInitialized, subscribeToGroup} = useWebPubSub()
+if (process.client){
+  initializeClient()
+}
+const message = ref<IRealtime>()
+watch(isInitialized, async (newVal) => {
+  if (!newVal) return
+  if (!client.value) return
+  client.value?.on('group-message', (data) => {
+    if (!patient.value) return
+    if (data.message.group !== patient.value.deviceId) {
+      console.log("message meant for different group", data.message.group, patient.value.deviceId)
+    }
+    message.value = data.message.data as IRealtime
+  })
+})
+
+watch(patient, () => {
+  if (patient.value){
+    subscribeToGroup(patient.value.deviceId)
+  }
+})
+
+
+
 </script>
 <template>
   <div class='flex flex-row justify-between gap-8 items-center max-w-6xl mx-auto'>
@@ -179,6 +221,7 @@ watch(statsData, (value, oldValue, onCleanup) => {
         width='800px'
         height='600px'
       />
+      <grafieken-realtime :data='message.hartslag.value' :unit='message.hartslag.unit' v-if='message'/>
       <grafieken-stats :data='statsData.hartslag' type='Hartslag' v-if='statsData !== null' />
       <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
     </div>
@@ -198,6 +241,7 @@ watch(statsData, (value, oldValue, onCleanup) => {
         width='800px'
         height='600px'
       />
+      <grafieken-realtime :data='message.bloedzuurstof.value' :unit='message.bloedzuurstof.unit' v-if='message'/>
       <grafieken-stats :data='statsData.bloedzuurstof' type='Bloedzuurstof' v-if='statsData !== null' />
       <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
     </div>
@@ -217,6 +261,7 @@ watch(statsData, (value, oldValue, onCleanup) => {
         width='800px'
         height='600px'
       />
+      <grafieken-realtime :data='message.ademFrequentie.value' :unit='message.ademFrequentie.unit' v-if='message'/>
       <grafieken-stats :data='statsData.ademFrequentie' type='AdemFrequentie' v-if='statsData !== null' />
       <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
     </div>
@@ -235,6 +280,7 @@ watch(statsData, (value, oldValue, onCleanup) => {
         width='800px'
         height='600px'
       />
+      <grafieken-realtime :data='message.temperatuur.value.toFixed(1)' :unit='message.temperatuur.unit' v-if='message'/>
       <grafieken-stats :data='statsData.bloedzuurstof' type='Bloedzuurstof' v-if='statsData !== null' />
       <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
     </div>
@@ -253,6 +299,7 @@ watch(statsData, (value, oldValue, onCleanup) => {
         width='800px'
         height='600px'
       />
+      <grafieken-realtime :data='message.bloeddruk.systolic + "/" + message.bloeddruk.diastolic' :unit='message.bloeddruk.unit' v-if='message'/>
       <grafieken-stats :data='statsData.systolic' :data-diastolic='statsData.diastolic' type='Bloeddruk'
                        v-if='statsData !== null' />
       <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
