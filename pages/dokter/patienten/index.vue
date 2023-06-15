@@ -19,7 +19,6 @@ const clickEdit = () => {
 }
 
 const clickDelete = () => {
-  console.log('clickDelete -------------')
   isDeleting.value = !isDeleting.value
 }
 
@@ -57,21 +56,21 @@ watch(
   () => isDeleting.value,
   state => {
     console.log(state + ' state isDeleting')
-    console.log('KAARTJE MOET NU WEG')
+    for(let i = 0; i < selected_list.value.length; i++) {
+      del(selected_list.value[i])
+    }
     selected_list.value = []
     count.value = selected_list.value.length
-
   },
 )
 
 const removeFromList = (id: string) => {
-  console.log("het is verwijdered 😀")
+  console.log("patiënt is verwijdered")
 }
 
 const del = async (id: string) => {
-  // TODO: user can undo this action
   if (patients.value === null) return
-  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
     method: 'DELETE',
     baseURL: servicesUrls.dokterService,
   }).then(
