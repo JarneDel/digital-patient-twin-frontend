@@ -115,7 +115,6 @@ useHead({
 </script>
 
 <template>
-  <div>{{ selected_list }}</div>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Patiënt lijst</h2>
     <div class="my-20 flex flex-col items-center justify-between lg:flex-row">

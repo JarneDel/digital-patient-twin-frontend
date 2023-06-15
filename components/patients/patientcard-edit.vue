@@ -2,6 +2,7 @@
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { ref, onUnmounted, getCurrentInstance } from 'vue'
+import { servicesUrls } from '~/servicesurls'
 
 const props = defineProps({
   patient: {
@@ -13,6 +14,8 @@ const props = defineProps({
     required: true,
   },
 })
+
+const user = useUser()
 
 const isSelected = ref(false)
 const instance = getCurrentInstance()
@@ -48,6 +51,19 @@ const calculateAge = (date: string): number => {
   return age
 }
 
+// patienten met pin
+const {
+  data,
+  error,
+  pending,
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/pinned`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
+
 watch(
   () => props.clickEdit,
   state => {
@@ -56,49 +72,64 @@ watch(
   },
 )
 
-const handlePin = () => {
-  console.log('pin')
+const handlePin = (id: string) => {
+  console.log('handlepin')
+  console.log(id)
+  console.log(data.value)
+  if (props.patient.id === id) {
+    console.log('het is gepind')
+  } else {
+    console.log('het is niet gepind')
+  }
 }
 
+const TEST = (id: string) => {
+  console.log('TEST')
+  // if (props.patient.id === id) {
+  //   return 'gepind'
+  // } else {
+  //   return 'niet gepind'
+  // }
+}
 </script>
 
 <template>
+  <div>{{ TEST(patient.id) }}</div>
+  <div>{{ props.patient.id }} => id van patient</div>
+  <div v-for="i of data">{{ i.id }} => alle gepinde patienten</div>
   <div
-    class='mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6'
+    class="mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6"
   >
     <div
       :class="{ 'gap-4': !clickEdit, 'gap-8': clickEdit }"
-      class='flex h-auto w-full items-center justify-end font-semibold'
+      class="flex h-auto w-full items-center justify-end font-semibold"
     >
       <div
-        class='focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none'
-        @click='handlePin'
-      >
-        <svg-pinrotated
-          class='h-9 w-9 rounded-lg hover:bg-neutral-200/20 active:text-gray-800 fill-primary-375'
-        />
-      </div>
-      <!-- <div
-        @click="handlePin"
         class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
+        @click="handlePin(patient.id)"
       >
-        <svg-pinrotated
-          class="h-9 w-9 rounded-lg hover:bg-neutral-200/20 active:text-gray-800"
+        <!-- <svg-pinrotated
+        v-if="TEST(patient.id) === 'gepind'"
+          class="h-9 w-9 rounded-lg fill-tertiary-500 hover:bg-neutral-200/20 active:text-gray-800"
         />
-      </div> -->
+        <svg-pinrotated
+        v-else
+          class="h-9 w-9 rounded-lg fill-primary-375 hover:bg-neutral-200/20 active:text-gray-800"
+        /> -->
+      </div>
       <input
-        v-if='clickEdit'
+        v-if="clickEdit"
         id="patient-check"
         type="checkbox"
         value=""
-        class='form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0'
+        class="form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
       <div
         v-else
-        id='patient-check'
-        class='form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0'
+        id="patient-check"
+        class="form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
       ></div>
       <div class="capitalize">{{ patient.algemeen.voornaam }}</div>
       <div class="capitalize">{{ patient.algemeen.naam }}</div>
@@ -109,8 +140,8 @@ const handlePin = () => {
         <div class="flex items-center justify-end">
           <div class="flex items-center justify-end">
             <NuxtLink
-              :to='`/dokter/patienten/${patient.id}`'
-              class='focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none'
+              :to="`/dokter/patienten/${patient.id}`"
+              class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
             >
               <LucideLineChart
                 class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
@@ -118,8 +149,8 @@ const handlePin = () => {
             </NuxtLink>
           </div>
           <NuxtLink
-            :to='`/dokter/patienten/${patient.id}/gegevens`'
-            class='focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none'
+            :to="`/dokter/patienten/${patient.id}/gegevens`"
+            class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
           >
             <ChevronRight
               class="h-9 w-9 rounded-lg p-2 hover:bg-neutral-200/20 active:text-gray-800"
