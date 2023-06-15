@@ -75,9 +75,17 @@ const handlePin = () => {
         class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
       >
         <svg-pinrotated
-          class="h-9 w-9 rounded-lg hover:bg-neutral-200/20 active:text-gray-800"
+          class="h-9 w-9 rounded-lg hover:bg-neutral-200/20 active:text-gray-800 fill-primary-375"
         />
       </div>
+      <!-- <div
+        @click="handlePin"
+        class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
+      >
+        <svg-pinrotated
+          class="h-9 w-9 rounded-lg hover:bg-neutral-200/20 active:text-gray-800"
+        />
+      </div> -->
       <input
         v-if="clickEdit"
         id="patient-check"
