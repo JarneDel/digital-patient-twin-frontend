@@ -190,13 +190,14 @@ watch(isSelectPatientOpen, (state) => {
       >
         <Plus class='h-8 w-8' />
       </button>
-      <popup-closeable v-model:is-open='isAddPatientOpen'
-                       button2='Bestaande patient'
-                       button3='Nieuwe patient'
-                       message='Wil je een bestaande patient toevoegen of een nieuwe patient aanmaken?'
-                       title-message='Patient toevoegen'
-                       @button2Event='() => isSelectPatientOpen = true'
-                       @button3Event='()=> navigateTo("/dokter/patienten/create")'
+      <popup-closeable 
+        v-model:is-open='isAddPatientOpen'
+        button2='Bestaande patient'
+        button3='Nieuwe patient'
+        message='Wil je een bestaande patient toevoegen of een nieuwe patient aanmaken?'
+        title-message='Patient toevoegen'
+        @button2Event='() => isSelectPatientOpen = true'
+        @button3Event='()=> navigateTo("/dokter/patienten/create")'
 
       />
       <popup-select-patient
