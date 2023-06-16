@@ -54,18 +54,14 @@ const emits = defineEmits([
   'update:isValid',
 ])
 
-const validateInput = (value: string) => {
-  // Perform your form validation logic here
-  // Example: Check if the input value has a length greater than 3
-  return value.length > 3 || value.length === 0
-}
+
 
 const updateValuePostCode = (event: Event) => {
   const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
 
   if (target) {
     const value = target.value
-    const isValid = validateInput(value)
+    const isValid = value.length > 0
 
     emits('update:isValid', isValid)
 
@@ -79,12 +75,12 @@ const updateValueNr = (event: Event) => {
 
   if (target) {
     const value = target.value
-    const isValid = validateInput(value)
-
+    const isValid = value.length > 0
+    console.log(value, target, isValid)
     emits('update:isValid', isValid)
 
     if (isValid) {
-      emits('update:postalcodeValue', value)
+      emits('update:houseNumberValue', value)
     }
   }
 }
@@ -103,6 +99,7 @@ watch(
 watch(
   () => props.houseNumberValue,
   newValue => {
+    console.log(newValue)
     if (newValue) {
       emits('update:isValid', true)
     } else {
@@ -110,6 +107,8 @@ watch(
     }
   },
 )
+
+
 </script>
 
 <template>

@@ -15,10 +15,15 @@ useHead({
     },
   ],
 })
+const routeID = useRoute().params.patientid as string
 
-const patientId = '878c95cf-e82d-40a5-a56c-8790427f1657'
+const refrenceid = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
+//id dynamicaaly
+const id = ref(routeID)
 
-const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${patientId}`
+const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
+
+// const url = `/dokter/${user.value?.localAccountId}/patients/${patientId}`
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
@@ -41,7 +46,7 @@ const result = computed<PatientGegevens[]>(() => {
       link_name="patient gegevens"
     ></PressablesGoback>
 
-    <NuxtLink to="/dokter/patienten/[patientid]/edit">
+    <NuxtLink :to="`/dokter/patienten/${id}/edit`">
       <PressablesEdit></PressablesEdit>
     </NuxtLink>
   </div>
@@ -56,14 +61,36 @@ const result = computed<PatientGegevens[]>(() => {
           :key="Math.random()"
           v-if="result"
           v-for="naam in result"
-          class="text-center"
+          class="mx-auto text-center text-2xl font-semibold"
         >
           {{ naam.algemeen?.voornaam }} {{ naam.algemeen?.naam }}
         </p>
       </div>
+      <div>
+        <p
+          :key="Math.random()"
+          v-if="result"
+          v-for="naam in result"
+          class="mx-auto text-center text-sm text-neutral-100 font-normal"
+        >
+          {{ naam.contact?.email }}<br />
+          {{ naam.algemeen?.geboorteDatum }}
+        </p>
+      </div>
 
       <!-- meldingen -->
-      <FormsSelectDevice class="-mx-5"></FormsSelectDevice>
+      <div class="relative">
+        <svg-fitbit></svg-fitbit>
+        <p
+          class="absolute top-12 mx-auto text-center text-sm font-semibold"
+          :key="Math.random()"
+          v-if="result"
+          v-for="naam in result"
+        >
+          {{ '#' + naam.deviceId }}
+        </p>
+      </div>
+
       <div class="inline-flex items-center gap-4">
         <h1 class="font-semibold">Harstslag</h1>
         <PressablesSwitch></PressablesSwitch>
