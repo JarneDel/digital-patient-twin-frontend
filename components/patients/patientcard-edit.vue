@@ -92,19 +92,21 @@ watch(
       :class="{ 'gap-4': !clickEdit, 'gap-8': clickEdit }"
       class="flex h-auto w-full items-center justify-end font-semibold"
     >
-      <div
-        class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
+      <button
+        class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none hover:bg-neutral-200/20 active:text-gray-800"
         @click="handlePin(patient.id)"
       >
         <svg-pinrotated
           v-if="isPinned === false"
-          class="h-9 w-9 rounded-lg fill-tertiary-500 hover:bg-neutral-200/20 active:text-gray-800"
+          :isRotated="false"
+          class="h-9 w-9 rounded-lg fill-neutral-200"
         />
         <svg-pinrotated
           v-else
-          class="h-9 w-9 rounded-lg fill-pink-400 hover:bg-neutral-200/20 active:text-gray-800"
+          :isRotated="true"
+          class="h-9 w-9 rounded-lg fill-primary-400"
         />
-      </div>
+      </button>
       <input
         v-if="clickEdit"
         id="patient-check"
