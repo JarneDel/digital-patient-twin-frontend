@@ -19,7 +19,6 @@ useHead({
 })
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
-const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657/thresholds`
 
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
@@ -49,7 +48,6 @@ const patientContact = reactive<Contact>({
 watch(patientAdres, () => {
   console.log(patientAdres)
 })
-
 
 const submitForm = async () => {
   try {

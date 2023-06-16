@@ -26,6 +26,10 @@ const id = ref(routeID)
 //get patient data
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
 
+const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
+
+console.log(notifcationurl)
+
 const { error, data, pending, execute } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
 const patientAdres: Address = data.value?.adres as Address
@@ -63,8 +67,7 @@ const submitForm = async () => {
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
-      console.log(fetch);
-      
+      console.log(fetch)
     } else {
       // Handle update error
       console.error('Failed to update patient data')
@@ -82,29 +85,68 @@ const editLinkName = computed(
 
 <template>
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
-    <pressables-goback :link_name="editLinkName"
-    link_path=´/dokter/patienten/${id}/gegevens´ />
+    <pressables-goback
+      :link_name="editLinkName"
+      :link_path="`/dokter/patienten/${id.valueOf}/gegevens`"
+    />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
   <form @submit.prevent="submitForm">
     <div class="mx-10 flex items-start justify-end">
-      <button type="submit" class="md:fixed">
+      <button type="submit">
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
     <div class="mx-5 flex flex-col flex-wrap gap-4 md:flex-row lg:mx-20">
       <!-- persoonlijke -->
       <div class="">
-        <FormsSelectDevice></FormsSelectDevice>
-        <pressables-switch
-          :text="AlertType[AlertType.Temperatuur]"
-          :type="AlertType[AlertType.Temperatuur]"
-        ></pressables-switch>
-        <div>
+        <!-- <FormsSelectDevice></FormsSelectDevice> -->
+        <TextKop2>meldingen</TextKop2>
+        <div class="mt-4">
+          <pressables-switch
+            :text="AlertType[AlertType.AdemsFrequentie]"
+            :type="AlertType[AlertType.AdemsFrequentie]"
+          ></pressables-switch>
           <template-slider
             class="-mx-5"
             :type="AlertType[AlertType.AdemsFrequentie]"
+            :min="0"
+            :max="100"
+          />
+        </div>
+        <div class="mt-4">
+          <pressables-switch
+            :text="AlertType[AlertType.Hartslag]"
+            :type="AlertType[AlertType.Hartslag]"
+          ></pressables-switch>
+          <template-slider
+            class="-mx-5"
+            :type="AlertType[AlertType.Hartslag]"
+            :min="0"
+            :max="100"
+          />
+        </div>
+        <div class="mt-4">
+          <pressables-switch
+            :text="AlertType[AlertType.Bloeddruk]"
+            :type="AlertType[AlertType.Bloeddruk]"
+          ></pressables-switch>
+          <template-slider
+            class="-mx-5"
+            :type="AlertType[AlertType.Bloeddruk]"
+            :min="0"
+            :max="100"
+          />
+        </div>
+        <div class="mt-4">
+          <pressables-switch
+            :text="AlertType[AlertType.Temperatuur]"
+            :type="AlertType[AlertType.Temperatuur]"
+          ></pressables-switch>
+          <template-slider
+            class="-mx-5"
+            :type="AlertType[AlertType.Temperatuur]"
             :min="0"
             :max="100"
           />
