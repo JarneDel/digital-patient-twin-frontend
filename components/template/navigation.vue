@@ -5,7 +5,7 @@ import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
 import { ILink } from '~/interfaces/ILink'
-import { LogOut, LucideChevronRight } from 'lucide-vue-next'
+import { LogOut, LucideChevronRight, UserCircle2 } from 'lucide-vue-next'
 import { msalInstance } from '~/auth'
 
 const links: ILink[] = [
@@ -86,13 +86,13 @@ onMounted(() => {
         <h1 v-if='isOpen' class='p-2'>Digital Patient Twin</h1>
         <img v-else alt='Digital Patient Twin' class='block w-8 h-8 mx-auto' src='/DigitalPatientTwin.png'>
       </NuxtLink>
-      <Button
+      <button
         :class='isOpen? "rotate-180" : "rotate-0"'
         class='rounded-full bg-primary-550 drop-shadow-md w-8 h-8 absolute -right-4 -bottom-4 z-10 hover:bg-primary-450 transition-all duration-300 focus:bg-primary-450'
         type='button'
         @click='isOpen = !isOpen'>
         <LucideChevronRight class='ml-1.5 w-6 h-6' color='white' />
-      </Button>
+      </button>
     </div>
     <div :class='isOpen? "pl-3 pr-8": ""'
          class='z-[8] flex shadow-normal h-16 items-center justify-end pr-4'>
@@ -100,7 +100,7 @@ onMounted(() => {
       <NuxtLink to='/dokter/account'>
         <button
           class='appearance-none border-transparent focus-visible:border-tertiary-500 border-2 focus-visible:outline-none rounded-lg'>
-          <user-circle-2 class='h-12 w-12 px-2 text-neutral-700' />
+          <user-circle2 class='h-12 w-12 px-2 text-neutral-700' />
         </button>
       </NuxtLink>
     </div>
