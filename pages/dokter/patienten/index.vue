@@ -113,16 +113,45 @@ useHead({
   ],
 })
 
-const { data: pinnedPatients, error: pinnedPatientsError, pending:pinnedPatientsPending } = useFetch<PatientGegevens[]>(
+const { data: pinnedPatients, error: pinnedPatientsError, pending:pinnedPatientsPending, execute:pinnedPatientsExecute } = useFetch<PatientGegevens[]>(
   `/dokter/${user.value?.localAccountId}/pinned`,
   {
     baseURL: servicesUrls.dokterService,
     server: false,
+    immediate: false,
   },
 )
 
+watch(pending, () => {
+  if (pending.value) {
+    console.log('pending')
+  }
+  else{
+    pinnedPatientsExecute()
+  }
+})
+
+
 watch(pinnedPatients, () => {
-  console.log(pinnedPatients.value, patients.value?.map(p => p.id))   
+  console.log(pinnedPatients.value?.map(p => p.id) + ' pinnedpatients')
+  console.log(patients.value?.map(p => p.id) + ' patients')
+  if (pinnedPatients.value !== null && patients.value !== null) {
+    const pinnedPatientsIds = pinnedPatients.value?.map(p => p.id)
+    const patientsIds = patients.value?.map(p => p.id)
+    // const filteredPatients = patientsIds?.filter(p => pinnedPatientsIds?.includes(p))
+    const filteredPatients = pinnedPatientsIds?.filter(p => patientsIds?.includes(p))
+    console.log(filteredPatients + ' filteredPatients')
+    if (filteredPatients !== undefined) {
+      console.log('filteredPatients is not undefined')
+      console.log(filteredPatients)
+      // compare the 2 arrays, if patientid in pinnedpatientid, return blue, else return white
+
+      console.log()
+    }
+    else {
+      console.log('filteredPatients IS undefined')
+    }
+  }
 })
 </script>
 
@@ -159,5 +188,6 @@ watch(pinnedPatients, () => {
       :isPinned="patient.id in pinnedPatients?.map(p => p.id)"
       @checkboxSelected="updateList"
     />
+    <div v-else="pinnedPatients === null">geen pinnedPatients</div>
   </div>
 </template>

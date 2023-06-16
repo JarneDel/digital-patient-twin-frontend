@@ -77,7 +77,7 @@ const handlePin = (id: string) => {
 }
 
 const TEST = (id: string) => {
-  console.log('TEST')
+  // console.log('TEST')
   // if (props.patient.id === id) {
   //   return 'gepind'
   // } else {
