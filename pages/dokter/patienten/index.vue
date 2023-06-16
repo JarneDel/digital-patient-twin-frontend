@@ -3,7 +3,6 @@ import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchError } from 'ofetch'
-import { exec } from 'child_process'
 
 const user = useUser()
 
@@ -12,13 +11,17 @@ const {
   execute,
   error,
   pending,
-} = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
-  baseURL: servicesUrls.dokterService,
-  server: false,
-})
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/patients`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
 
 const isEditing = ref(false)
 const isDeleting = ref(false)
+const isPinned = ref(false)
 
 const clickEdit = () => {
   isEditing.value = !isEditing.value
@@ -28,7 +31,9 @@ const clickDelete = () => {
   isDeleting.value = !isDeleting.value
 }
 
-
+const clickPin = () => {
+  isPinned.value = !isPinned.value
+}
 
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
@@ -70,12 +75,36 @@ watch(
   },
 )
 
+watch(
+  () => isPinned.value,
+  state => {
+    console.log(state + ' state isPinned')
+    pin()
+  },
+)
+
 const removeFromList = (id: string) => {
   console.log('patiënt is verwijdered')
 }
 
+const pin = async () => {
+  execute()
+}
+
 const del = async (id: string) => {
   if (patients.value === null) return
+  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+    method: 'DELETE',
+    baseURL: servicesUrls.dokterService,
+  }).then(
+    () => {
+      execute()
+      removeFromList(id)
+    },
+    (err: FetchError) => {
+      console.log(err)
+    },
+  )
   $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
     method: 'DELETE',
     baseURL: servicesUrls.dokterService,
@@ -100,10 +129,43 @@ useHead({
     },
   ],
 })
+
+const {
+  data: pinnedPatients,
+  error: pinnedPatientsError,
+  pending: pinnedPatientsPending,
+  execute: pinnedPatientsExecute,
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/pinned`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+    immediate: false,
+  },
+)
+
+watch(pending, () => {
+  if (pending.value) {
+    console.log('pending')
+  } else {
+    pinnedPatientsExecute()
+  }
+})
+
+const pinned = (id: string) => {
+  if(patients.value !== null && pinnedPatients.value !== null){
+    if(pinnedPatients.value.filter(p => p.id === id).length > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+}
+
+
 </script>
 
 <template>
-  <div>{{ selected_list }}</div>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Patiënt lijst</h2>
     <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
@@ -116,23 +178,27 @@ useHead({
       </NuxtLink>
 
       <PressablesEdit
-        @clickDelete='clickDelete'
-        @clickEdit='() => clickEdit'
+        @clickDelete="clickDelete"
+        @clickEdit="() => clickEdit"
         v-model:is-editing="isEditing"
         :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del='del(patient.id)'
+        @del="del(patient.id)"
       />
     </div>
 
     <patients-patientcard-edit
-      v-for='patient in patients'
-      :key='patient.id'
+      v-for="patient in patients"
+      v-if="pinnedPatients"
+      :key="patient.id"
       :id="patient.id"
       :patient="patient"
-      :click-edit='isEditing'
-      @checkboxSelected='updateList'
+      :click-edit="isEditing"
+      :isPinned="pinned(patient.id)"
+      @checkboxSelected="updateList"
+      @clickPin="clickPin"
     />
+    <div v-else="pinnedPatients === null">geen pinnedPatients</div>
   </div>
 </template>
