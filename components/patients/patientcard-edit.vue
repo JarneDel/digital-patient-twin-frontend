@@ -68,7 +68,6 @@ watch(
 const handlePin = (id: string) => {
   console.log('handlepin')
   console.log(id)
-  console.log(data.value)
   if (props.patient.id === id) {
     console.log('het is gepind')
   } else {
@@ -84,14 +83,12 @@ const TEST = (id: string) => {
   //   return 'niet gepind'
   // }
 }
-console.log(props.patient.id + ' => id van patient')
 watch(
   () => props.isPinned,
   state => {
-    console.log(props.isPinned + ' state isPinned')
+    console.log('state isPinned')
   },
 )
-console.log(props.isPinned + ' => isPinned')
 </script>
 
 <template>

@@ -135,23 +135,19 @@ watch(pending, () => {
 watch(pinnedPatients, () => {
   console.log(pinnedPatients.value?.map(p => p.id) + ' pinnedpatients')
   console.log(patients.value?.map(p => p.id) + ' patients')
-  if (pinnedPatients.value !== null && patients.value !== null) {
-    const pinnedPatientsIds = pinnedPatients.value?.map(p => p.id)
-    const patientsIds = patients.value?.map(p => p.id)
-    // const filteredPatients = patientsIds?.filter(p => pinnedPatientsIds?.includes(p))
-    const filteredPatients = pinnedPatientsIds?.filter(p => patientsIds?.includes(p))
-    console.log(filteredPatients + ' filteredPatients')
-    if (filteredPatients !== undefined) {
-      console.log('filteredPatients is not undefined')
-      console.log(filteredPatients)
-      // compare the 2 arrays, if patientid in pinnedpatientid, return blue, else return white
-
-      console.log()
-    }
-    else {
-      console.log('filteredPatients IS undefined')
+  if(patients.value !== null && pinnedPatients.value !== null){
+    for (let i = 0; i < patients.value.length; i++) {
+      if (pinnedPatients.value.map(p => p.id).includes(patients.value[i].id)) {
+        console.log(patients.value[i].id + ' is pinned')
+        // patients.value[i].isPinned = true
+      } else {
+        console.log(patients.value[i].id + ' is not pinned')
+        // patients.value[i].isPinned = false
+      }
     }
   }
+
+  
 })
 </script>
 
