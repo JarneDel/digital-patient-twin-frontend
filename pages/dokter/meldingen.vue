@@ -16,6 +16,11 @@ useHead({
   ],
 })
 
+const route = useRoute()
+const id = route.query.id as string | undefined
+let isFirstLoad = true
+console.log(id, 'id')
+
 
 const user = useUser().value
 const AlertTypes: Array<AlertType | 'Alle types'> = [
@@ -28,11 +33,12 @@ const AlertTypes: Array<AlertType | 'Alle types'> = [
 ]
 const selectedPatient = ref<string | 'Alle patiënten'>('')
 const currentOffset = ref(0)
-const selectedPatientId = ref<string | null>(null)
+const selectedPatientId = ref<string | null>(id ? id : null)
 const AlertSeverity = ref<Array<AlertLevel | 'Alles'>>(['Alles', AlertLevel.Info, AlertLevel.Matig, AlertLevel.Kritiek])
 const selectedSeverity = ref<string>('Alles')
 const selectedType = ref<string>('Alle types')
 const requestFromScroll= ref(false)
+const nameFromQuery = ref<string | null>(null)
 
 
 // get patienten by dokterid
@@ -73,7 +79,29 @@ const patientNamen = computed(() => {
   const namen = patienten.value.map(patient => {
     return `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
   })
+  if (nameFromQuery.value) {
+    selectedPatient.value = nameFromQuery.value
+    // remove name from query from list
+    namen.splice(namen.indexOf(nameFromQuery.value), 1)
+    const toReturn = [nameFromQuery.value, 'Alle patiënten', ...namen]
+    nameFromQuery.value = null
+    return toReturn
+  }
   return ['Alle patiënten', ...namen]
+})
+
+watch(patienten, () => {
+  if (patienten && id) {
+    // get name from id
+    const patient = patienten.value?.find(patient => {
+      return patient.id === id
+    })
+    if (patient) {
+      console.log('patient found', `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`)
+      selectedPatient.value = `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
+      nameFromQuery.value = `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
+    }
+  }
 })
 
 
@@ -95,9 +123,14 @@ watch(selectedSeverity, (newVal) => {
 
 watch(selectedPatient, (newVal) => {
   // get patient id from name
+  if (isFirstLoad) {
+    isFirstLoad = false
+    return
+  }
   const patient = patienten.value?.find(patient => {
     return `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}` === newVal
   })
+  console.log(patient, 'patient', newVal)
   if (patient) {
     console.log(patient.id, 'selected patient changed')
     selectedPatientId.value = patient.id
@@ -176,7 +209,7 @@ watch(meldingen, (newVal) => {
 <template>
   <div class='mx-auto my-12 max-w-[55rem] '>
     <div class='flex flex-row items-center justify-between'>
-      <h2 class='mx-8 mb-8 mt-6 text-3xl font-semibold'>Meldingen</h2>
+      <h2 class='mb-4 mx-5 text-3xl font-semibold'>Meldingen</h2>
       <div class='refresh mr-5' role='button' @click='onButtonClick'>
         <lucide-rotate-cw :class='{
           "animate-spin" : meldingenPending && isRefreshing

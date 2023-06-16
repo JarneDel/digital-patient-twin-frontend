@@ -7,7 +7,7 @@ import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import useWebPubSub from '~/composables/useWebPubSub'
 import { IRealtime } from '~/interfaces/IRealtime'
-import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
+import { PatientGegevens } from '~/interfaces/IPatient'
 
 const date = ref<Date[]>([
   new Date(new Date().setDate(new Date().getDate() - 7)),
@@ -31,7 +31,7 @@ const manual = reactive({
 const hasLoadedBefore = ref<boolean>(false)
 
 
-watch(date, ((value, oldValue, onCleanup) => {
+watch(date, ((value) => {
   if (value == null) return
   execute()
   statsExecute()
@@ -157,7 +157,7 @@ watch(grafiekData, (value, oldValue, onCleanup) => {
   }
 })
 
-watch(statsData, (value, oldValue, onCleanup) => {
+watch(statsData, (value) => {
   if (value !== null) {
     console.log(value)
   }
@@ -243,6 +243,7 @@ watch(patient, () => {
       />
       <div class='flex flex-row justify-between'>
         <grafieken-realtime v-if='message' :data='message.hartslag.value' :unit='message.hartslag.unit' />
+        <lucide-loader2 v-else :size='32' class='animate-spin text-tertiary-600'></lucide-loader2>
         <grafieken-stats v-if='statsData !== null' :data='statsData.hartslag' type='Hartslag' />
         <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
       </div>
@@ -265,6 +266,7 @@ watch(patient, () => {
       />
       <div class='flex flex-row justify-between'>
         <grafieken-realtime v-if='message' :data='message.bloedzuurstof.value' :unit='message.bloedzuurstof.unit' />
+        <lucide-loader2 v-else :size='32' class='animate-spin text-tertiary-600'></lucide-loader2>
         <grafieken-stats v-if='statsData !== null' :data='statsData.bloedzuurstof' type='Bloedzuurstof' />
         <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
       </div>
@@ -288,6 +290,7 @@ watch(patient, () => {
       />
       <div class='flex flex-row justify-between'>
         <grafieken-realtime v-if='message' :data='message.ademFrequentie.value' :unit='message.ademFrequentie.unit' />
+        <lucide-loader2 v-else :size='32' class='animate-spin text-tertiary-600'></lucide-loader2>
         <grafieken-stats v-if='statsData !== null' :data='statsData.ademFrequentie' type='AdemFrequentie' />
         <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
       </div>
@@ -333,6 +336,7 @@ watch(patient, () => {
       <div class='flex flex-row justify-between'>
         <grafieken-realtime v-if='message'
                             :data='message.bloeddruk.systolic + "/" + message.bloeddruk.diastolic' :unit='message.bloeddruk.unit' />
+        <lucide-loader2 v-else :size='32' class='animate-spin text-tertiary-600'></lucide-loader2>
         <grafieken-stats v-if='statsData !== null' :data='statsData.systolic' :data-diastolic='statsData.diastolic'
                          type='Bloeddruk' />
         <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />

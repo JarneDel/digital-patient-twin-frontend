@@ -21,7 +21,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isFixed: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
 })
+
 
 const emits = defineEmits(['update:selected'])
 const opt = computed(() => props.options.map((name) => ({ name })))
@@ -30,6 +36,7 @@ watch(opt, (newVal) => {
   selected.value = newVal[0]
 })
 watch(selected, (newVal) => {
+  console.log('update:selected' + newVal.name)
   emits('update:selected', newVal.name)
 })
 
@@ -59,7 +66,11 @@ watch(selected, (newVal) => {
         leave-to-class='opacity-0'
       >
         <ListboxOptions
-          class='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-tertiary-20 border shadow-tertiary-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
+          :class='{
+              "absolute z-10 max-h-60": isFixed,
+              "max-h-40": !isFixed,
+          }'
+          class='mt-1 w-full overflow-auto rounded-md bg-tertiary-20 border shadow-tertiary-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
         >
           <ListboxOption
             v-for='person in opt'

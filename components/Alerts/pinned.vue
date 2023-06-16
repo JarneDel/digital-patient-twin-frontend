@@ -25,6 +25,10 @@ const props = defineProps({
     type: Number as PropType<AlertLevel>,
     required: true,
   },
+  clickUrl: {
+    type: String,
+    required: true,
+  },
 })
 
 defineEmits(['remove', 'details'])
@@ -74,7 +78,8 @@ const alertSvg = computed(() => {
 </script>
 
 <template>
-  <div @click='$emit("details")'
+  <nuxt-link :to='clickUrl'
+             @click='$emit("details")'
        class='rounded-lg bg-white p-5 drop-shadow-lg gap-x-2 grid grid-rows-2 hover:bg-neutral-50 hover:translate-x-1 transition-all grid-cols-[auto,repeat(3,1fr),auto] items-center'
        role='button'>
     <component
@@ -106,7 +111,7 @@ const alertSvg = computed(() => {
              class='col-start-5 row-start-1 row-end-3 text-gray-500 cursor-pointer rounded-lg hover:bg-neutral-300 active:text-gray-800' />
 
 
-  </div>
+  </nuxt-link>
 </template>
 
 <style scoped>

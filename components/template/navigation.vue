@@ -5,7 +5,7 @@ import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
 import { ILink } from '~/interfaces/ILink'
-import { LogOut, UserCircle2, LucideChevronRight } from 'lucide-vue-next'
+import { LogOut, LucideChevronRight } from 'lucide-vue-next'
 import { msalInstance } from '~/auth'
 
 const links: ILink[] = [
@@ -88,14 +88,14 @@ onMounted(() => {
       </NuxtLink>
       <Button
         :class='isOpen? "rotate-180" : "rotate-0"'
-        class='rounded-full bg-primary-550 drop-shadow-md w-8 h-8 absolute -right-4 -bottom-4 z-50 hover:bg-primary-450 transition-all duration-300 focus:bg-primary-450'
+        class='rounded-full bg-primary-550 drop-shadow-md w-8 h-8 absolute -right-4 -bottom-4 z-10 hover:bg-primary-450 transition-all duration-300 focus:bg-primary-450'
         type='button'
         @click='isOpen = !isOpen'>
         <LucideChevronRight class='ml-1.5 w-6 h-6' color='white' />
       </Button>
     </div>
     <div :class='isOpen? "pl-3 pr-8": ""'
-         class='z-10 flex shadow-normal h-16 items-center justify-end pr-4'>
+         class='z-[8] flex shadow-normal h-16 items-center justify-end pr-4'>
       <SearchProp></SearchProp>
       <NuxtLink to='/dokter/account'>
         <button
@@ -141,19 +141,16 @@ onMounted(() => {
           </div>
         </button>
       </div>
-
     </div>
-    <div ref='scrollDiv' class='z-0 overflow-auto bg-neutral-50' @scroll='onScrollEvent'>
-      <div class='pb-20 relative min-h-full'>
-        <div class='min-h-full'>
-          <slot />
-        </div>
+    <div ref='scrollDiv' class='overflow-auto flex flex-col min-h-full bg-neutral-50' @scroll='onScrollEvent'>
+      <main class='flex-grow'>
+        <slot />
+      </main>
         <footer
-          class='absolute right-[50%] bottom-0 mt-11 flex items-center justify-center'
+          class='mt-auto flex items-center justify-center'
         >
           <div class='pb-5 pt-2 text-tertiary-500'>MCT 2023</div>
         </footer>
-      </div>
     </div>
   </div>
 </template>
