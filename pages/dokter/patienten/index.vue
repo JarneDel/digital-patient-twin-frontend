@@ -21,7 +21,7 @@ const {
 )
 
 const user1 = useUser()
-console.log(user1.value?.localAccountId)
+console.log(user1.value?.localAccountId, 'user1')
 
 const isEditing = ref(false)
 const isDeleting = ref(false)

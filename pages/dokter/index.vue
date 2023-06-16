@@ -58,8 +58,7 @@ const {
       level: AlertLevel.Kritiek,
     }
   },
-});
-
+})
 
 const removeFromList = (id: string) => {
   console.log(id)
@@ -93,7 +92,7 @@ const unpin = async (id: string) => {
 </script>
 
 <template>
-  <div class='mx-auto my-12 max-w-[75rem]'>
+  <div class="mx-auto my-12 max-w-[75rem]">
     <h2 v-if="user !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Welkom, {{ user?.name }}
     </h2>
@@ -133,12 +132,12 @@ const unpin = async (id: string) => {
       <!--      Content right    -->
       <div class="flex max-w-[30rem] flex-col gap-4">
         <AlertsPinned
-          v-for='melding of criticalNotifications.slice(0, 6)'
-          v-if='criticalNotifications'
+          v-for="melding of criticalNotifications.slice(0, 6)"
+          v-if="criticalNotifications"
           :key="melding.id"
-          :datetime='melding.timestamp'
+          :datetime="melding.timestamp"
           :level="melding.level"
-          :name='melding.fullName'
+          :name="melding.fullName"
           :type="melding.type"
           :value="melding.value"
           @remove="removeFromList(melding.id)"

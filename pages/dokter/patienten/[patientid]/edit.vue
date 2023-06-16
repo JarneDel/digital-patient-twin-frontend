@@ -63,6 +63,8 @@ const submitForm = async () => {
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
+      console.log(fetch);
+      
     } else {
       // Handle update error
       console.error('Failed to update patient data')
