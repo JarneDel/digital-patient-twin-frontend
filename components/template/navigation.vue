@@ -5,7 +5,7 @@ import SvgPatient from '@/components/svg/patient.vue'
 import SvgNotification from '@/components/svg/notification.vue'
 import { useRoute } from 'vue-router'
 import { ILink } from '~/interfaces/ILink'
-import { LogOut, UserCircle2, LucideChevronRight } from 'lucide-vue-next'
+import { LogOut, LucideChevronRight } from 'lucide-vue-next'
 import { msalInstance } from '~/auth'
 
 const links: ILink[] = [
@@ -95,7 +95,7 @@ onMounted(() => {
       </Button>
     </div>
     <div :class='isOpen? "pl-3 pr-8": ""'
-         class='z-10 flex shadow-normal h-16 items-center justify-end pr-4'>
+         class='z-[8] flex shadow-normal h-16 items-center justify-end pr-4'>
       <SearchProp></SearchProp>
       <NuxtLink to='/dokter/account'>
         <button

@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
-import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
+import { AlertLevel, IMelding } from '~/interfaces/AlertType'
+import { PatientGegevens } from '~/interfaces/IPatient'
 import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
-import { $fetch, FetchContext, FetchError, ofetch } from 'ofetch'
+import { $fetch, FetchContext, FetchError } from 'ofetch'
 import { useUser } from '~/composables/useUser'
-import { LucideX } from 'lucide-vue-next'
 
 const isLoggedIn = ref(false)
 
@@ -109,13 +108,14 @@ watch(hovered, newVal => {
       <TextKop2>Gepinde Patiënten</TextKop2>
       <!--      Content Left      -->
       <div
-        v-if="pinnedPatients !== null && pinnedPatients.length > 0"
+        v-if='pinnedPatients !== null && pinnedPatients.length > 0'
         class="flex flex-col gap-4"
       >
         <patients-sm
           v-for="patient of pinnedPatients"
           :key="patient.id"
           :patient="patient.algemeen"
+          :patientId='patient.id'
           @unpin="unpin(patient.id)"
         />
       </div>
@@ -146,6 +146,7 @@ watch(hovered, newVal => {
           :name="melding.fullName"
           :type="melding.type"
           :value="melding.value"
+          :click-url="'/dokter/meldingen?id=' + melding.patientId"
           @remove="removeFromList(melding.id)"
         />
       </div>
