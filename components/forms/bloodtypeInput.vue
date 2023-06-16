@@ -24,7 +24,7 @@ const validateInput = (value: string) => {
 }
 
 const updateValue = (event: Event) => {
-  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat, is null
 
   if (target) {
     const value = target.value
