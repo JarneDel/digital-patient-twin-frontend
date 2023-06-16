@@ -31,10 +31,9 @@ const hover = ref<boolean>(false)
         @mouseover='hover = true'
         @click.stop="$emit('unpin')"
       >
-        <Pinrotated v-if='!hover' class='h-10 w-10' />
+        <Pinrotated v-if='!hover' class='h-10 w-10' :isRotated="true"/>
         <LucideX v-else class='h-10 w-10 p-2' />
       </button>
-
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
       <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
       <span class="text-gray-800">{{ patient.geslacht }}</span>

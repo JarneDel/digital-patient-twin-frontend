@@ -24,6 +24,7 @@ console.log(user1.value?.localAccountId, 'user1')
 
 const isEditing = ref(false)
 const isDeleting = ref(false)
+const isPinned = ref(false)
 
 const clickEdit = () => {
   isEditing.value = !isEditing.value
@@ -33,6 +34,9 @@ const clickDelete = () => {
   isDeleting.value = !isDeleting.value
 }
 
+const clickPin = () => {
+  isPinned.value = !isPinned.value
+}
 
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
@@ -74,12 +78,36 @@ watch(
   },
 )
 
+watch(
+  () => isPinned.value,
+  state => {
+    console.log(state + ' state isPinned')
+    pin()
+  },
+)
+
 const removeFromList = (id: string) => {
   console.log('patiënt is verwijdered')
 }
 
+const pin = async () => {
+  execute()
+}
+
 const del = async (id: string) => {
   if (patients.value === null) return
+  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+    method: 'DELETE',
+    baseURL: servicesUrls.dokterService,
+  }).then(
+    () => {
+      execute()
+      removeFromList(id)
+    },
+    (err: FetchError) => {
+      console.log(err)
+    },
+  )
   $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
     method: 'DELETE',
     baseURL: servicesUrls.dokterService,
@@ -105,6 +133,40 @@ useHead({
   ],
 })
 
+const {
+  data: pinnedPatients,
+  error: pinnedPatientsError,
+  pending: pinnedPatientsPending,
+  execute: pinnedPatientsExecute,
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/pinned`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+    immediate: false,
+  },
+)
+
+watch(pending, () => {
+  if (pending.value) {
+    console.log('pending')
+  } else {
+    pinnedPatientsExecute()
+  }
+})
+
+const pinned = (id: string) => {
+  if(patients.value !== null && pinnedPatients.value !== null){
+    if(pinnedPatients.value.filter(p => p.id === id).length > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+}
+
+
+
 const showAddPatientPopup = () => {
   console.log('showAddPatientPopup')
   isAddPatientOpen.value = true
@@ -127,13 +189,14 @@ watch(isSelectPatientOpen, (state) => {
       >
         <Plus class='h-8 w-8' />
       </button>
-      <popup-closeable v-model:is-open='isAddPatientOpen'
-                       button2='Bestaande patient'
-                       button3='Nieuwe patient'
-                       message='Wil je een bestaande patient toevoegen of een nieuwe patient aanmaken?'
-                       title-message='Patient toevoegen'
-                       @button2Event='() => isSelectPatientOpen = true'
-                       @button3Event='()=> navigateTo("/dokter/patienten/create")'
+      <popup-closeable 
+        v-model:is-open='isAddPatientOpen'
+        button2='Bestaande patient'
+        button3='Nieuwe patient'
+        message='Wil je een bestaande patient toevoegen of een nieuwe patient aanmaken?'
+        title-message='Patient toevoegen'
+        @button2Event='() => isSelectPatientOpen = true'
+        @button3Event='()=> navigateTo("/dokter/patienten/create")'
 
       />
       <popup-select-patient
@@ -148,17 +211,21 @@ watch(isSelectPatientOpen, (state) => {
         :selected-count='count'
         @checkboxSelected='updateSelectedCount'
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del='del(patient.id)'
+        @del="del(patient.id)"
       />
     </div>
 
     <patients-patientcard-edit
       v-for="patient in patients"
+      v-if="pinnedPatients"
       :key="patient.id"
-      :id='patient.id'
-      :patient='patient'
+      :id="patient.id"
+      :patient="patient"
       :click-edit="isEditing"
+      :isPinned="pinned(patient.id)"
       @checkboxSelected="updateList"
+      @clickPin="clickPin"
     />
+    <div v-else="pinnedPatients === null">geen pinnedPatients</div>
   </div>
 </template>
