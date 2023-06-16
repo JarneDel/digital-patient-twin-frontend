@@ -2,6 +2,8 @@
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { ref, onUnmounted, getCurrentInstance } from 'vue'
+import { servicesUrls } from '~/servicesurls'
+import { $fetch, FetchError } from 'ofetch'
 
 const props = defineProps({
   patient: {
@@ -64,9 +66,9 @@ watch(
   },
 )
 
-const handlePin = (id: string) => {
+const handlePin = (id: string, isPinned: boolean) => {
   console.log('handlepin')
-  console.log(id)
+  pinPatient(id, isPinned)
   if (props.patient.id === id) {
     console.log('het is gepind')
   } else {
@@ -74,6 +76,47 @@ const handlePin = (id: string) => {
   }
 }
 
+const pinPatient = (id: string, isPinned: boolean) => {
+  if (isPinned === true) {
+    console.log('😀')
+    $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+      method: 'DELETE',
+      baseURL: servicesUrls.dokterService,
+    }).then(
+      () => {
+        console.log('PIN REMOVED')
+      },
+      (err: FetchError) => {
+        console.log(err)
+      },
+    )
+  } else {
+    console.log('😛')
+    $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+      method: 'POST',
+      baseURL: servicesUrls.dokterService,
+    }).then(
+      () => {
+        console.log('PIN ADDED')
+      },
+      (err: FetchError) => {
+        console.log(err)
+      },
+    )
+  }
+}
+// terug fetchen van patienten
+// $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pinned`, {
+//       method: 'GET',
+//       baseURL: servicesUrls.dokterService,
+//     }).then(
+//       () => {
+//         console.log('PIN GET')
+//       },
+//       (err: FetchError) => {
+//         console.log(err)
+//       },
+//     )
 
 watch(
   () => props.isPinned,
@@ -93,8 +136,8 @@ watch(
       class="flex h-auto w-full items-center justify-end font-semibold"
     >
       <button
-        class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none hover:bg-neutral-200/20 active:text-gray-800"
-        @click="handlePin(patient.id)"
+        class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent hover:bg-neutral-200/20 focus-visible:border-tertiary-500 focus-visible:outline-none active:text-gray-800"
+        @click="handlePin(patient.id, isPinned)"
       >
         <svg-pinrotated
           v-if="isPinned === false"
