@@ -3,8 +3,6 @@ import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchError } from 'ofetch'
-import { exec } from 'child_process'
-import { REFUSED } from 'dns'
 
 const user = useUser()
 
@@ -138,52 +136,13 @@ watch(pending, () => {
   }
 })
 
-// watch(pinnedPatients, () => {
-//   console.log(pinnedPatients.value?.map(p => p.id) + ' pinnedpatients')
-//   console.log(patients.value?.map(p => p.id) + ' patients')
-//   if(patients.value !== null && pinnedPatients.value !== null){
-//     for (let i = 0; i < patients.value.length; i++) {
-//       if (pinnedPatients.value.map(p => p.id).includes(patients.value[i].id)) {
-//         console.log(patients.value[i].id + ' is pinned')
-//         isPinned.value = true
-//         // patients.value[i].isPinned = true
-//       } else {
-//         console.log(patients.value[i].id + ' is not pinned')
-//         isPinned.value = false
-//         // patients.value[i].isPinned = false
-//       }
-//     }
-//   }
-// })
-
 const pinned = (id: string) => {
-  // als patientenlijst en lijst van gepinde patienten niet leeg zijn
   if(patients.value !== null && pinnedPatients.value !== null){
-    // voor elke patient in de gepinde patientenlijst
-    console.log(pinnedPatients.value + ' VALUE')
-    
     if(pinnedPatients.value.filter(p => p.id === id).length > 0){
-      console.log('true')
       return true
     }else{
-      console.log('false')
       return false
     }
-
-
-    // for (const i of pinnedPatients.value) {
-    //   if (i.id === id) {
-    //     console.log(i.id + ' is pinned')
-    //     console.log('true')
-    //     return true
-    //   }
-    //   else{
-    //     console.log(i.id + ' is not pinned!!!!!!!!!!!!!!!!!!!')
-    //     console.log('false')
-    //     return false
-    //   }  
-    // }
-
   }
 }
 </script>
@@ -210,7 +169,6 @@ const pinned = (id: string) => {
         @del="del(patient.id)"
       />
     </div>
-    <div v-for="patient in patients">id {{patient.id}} pinned: {{ pinned(patient.id) }}</div>
 
     <patients-patientcard-edit
       v-for="patient in patients"

@@ -2,7 +2,6 @@
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { ref, onUnmounted, getCurrentInstance } from 'vue'
-import { servicesUrls } from '~/servicesurls'
 
 const props = defineProps({
   patient: {
@@ -75,14 +74,7 @@ const handlePin = (id: string) => {
   }
 }
 
-const TEST = (id: string) => {
-  // console.log('TEST')
-  // if (props.patient.id === id) {
-  //   return 'gepind'
-  // } else {
-  //   return 'niet gepind'
-  // }
-}
+
 watch(
   () => props.isPinned,
   state => {
@@ -92,10 +84,7 @@ watch(
 </script>
 
 <template>
-  <div>{{ TEST(patient.id) }}</div>
-  <div>{{ props.patient.id }} => id van patient</div>
   <div>{{ props.isPinned }} => is gepind</div>
-  <div v-for="i of data">{{ i.id }} => alle gepinde patienten</div>
   <div
     class="mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6"
   >
