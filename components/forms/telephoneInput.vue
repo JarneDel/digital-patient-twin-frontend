@@ -15,18 +15,14 @@ const props = defineProps({
 
 const emits = defineEmits(['update:phoneNumberValue', 'update:isValid'])
 
-const validateInput = (value: string) => {
-  // Perform your form validation logic here
-  // Example: Check if the input value has a length greater than 3
-  return value.includes('@')
-}
-
 const updateValue = (event: Event) => {
+  console.log('updateValue')
   const target = event.target as HTMLInputElement | null //target is input als event niet bestaat is null
-
   if (target) {
     const value = target.value
-    const isValid = validateInput(value)
+    // check if phone number is valid
+    const regex = /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+    const isValid = regex.test(value)
 
     emits('update:isValid', isValid)
 

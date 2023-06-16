@@ -1,4 +1,4 @@
-<script lang='ts' setup>
+<script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
@@ -12,10 +12,16 @@ const {
   execute,
   error,
   pending,
-} = useFetch<PatientGegevens[]>(`/dokter/${user.value?.localAccountId}/patients`, {
-  baseURL: servicesUrls.dokterService,
-  server: false,
-})
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/patients/`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
+
+const user1 = useUser()
+console.log(user1.value?.localAccountId, 'user1')
 
 const isEditing = ref(false)
 const isDeleting = ref(false)
@@ -138,8 +144,8 @@ watch(isSelectPatientOpen, (state) => {
       />
 
       <PressablesEdit
-        @clickDelete='clickDelete'
-        @clickEdit='() => clickEdit'
+        @clickDelete="clickDelete"
+        @clickEdit="() => clickEdit"
         v-model:is-editing='isEditing'
         :selected-count='count'
         @checkboxSelected='updateSelectedCount'
@@ -149,12 +155,12 @@ watch(isSelectPatientOpen, (state) => {
     </div>
 
     <patients-patientcard-edit
-      v-for='patient in patients'
-      :key='patient.id'
+      v-for="patient in patients"
+      :key="patient.id"
       :id='patient.id'
       :patient='patient'
-      :click-edit='isEditing'
-      @checkboxSelected='updateList'
+      :click-edit="isEditing"
+      @checkboxSelected="updateList"
     />
   </div>
 </template>

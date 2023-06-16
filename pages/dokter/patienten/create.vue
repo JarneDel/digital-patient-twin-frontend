@@ -19,22 +19,21 @@ useHead({
 })
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
-const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/878c95cf-e82d-40a5-a56c-8790427f1657/thresholds`
 
 const patient = reactive<IPatientAlgemeen>({
   // Initialize the patient data with empty values or default values
   id: '',
   voornaam: '',
   naam: '',
-  geslacht: 'man',
+  geslacht: '',
   geboorteland: '',
   geboorteDatum: '',
 })
 const patientAdres = reactive<Address>({
-  gemeente: 'Stad',
-  straat: 'voorbeeld straat',
-  postcode: 8500,
-  nr: '21',
+  gemeente: '',
+  straat: '',
+  postcode: 0,
+  nr: '',
 })
 const patientMedisch = reactive<Medisch>({
   lengte: 180,
@@ -42,8 +41,12 @@ const patientMedisch = reactive<Medisch>({
   bloedgroep: 'A+',
 })
 const patientContact = reactive<Contact>({
-  email: 'user@hotmail.com',
-  telefoon: '04555555555',
+  email: '',
+  telefoon: '',
+})
+
+watch(patientAdres, () => {
+  console.log(patientAdres)
 })
 
 const submitForm = async () => {
@@ -54,6 +57,7 @@ const submitForm = async () => {
       medisch: { ...patientMedisch },
       contact: { ...patientContact },
     }
+    console.log(newPatientData)
 
     // Send the new patient data to your API endpoint using POST request
     const response = await $fetch(url, {
@@ -82,7 +86,7 @@ const submitForm = async () => {
   <div class="m-5 flex flex-col items-center justify-between md:flex-row">
     <pressables-goback
       link_name="Nieuw Patiënt creëren"
-      :link_path="'/dokter/patienten/'"
+      link_path="/dokter/patienten/"
     />
 
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
@@ -98,12 +102,12 @@ const submitForm = async () => {
       <div class="">
         <FormsSelectDevice></FormsSelectDevice>
         <pressables-toggle
-          :type="AlertType.temperature"
-          :text="AlertType.temperature"
+          :type="AlertType.Temperatuur"
+          :text="AlertType.Temperatuur"
         ></pressables-toggle>
         <div>
           <template-slider
-            :type="AlertType.breathingRate"
+            :type="AlertType.AdemsFrequentie"
             :min="0"
             :max="100"
           />
