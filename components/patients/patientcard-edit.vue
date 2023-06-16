@@ -94,6 +94,7 @@ watch(
 <template>
   <div>{{ TEST(patient.id) }}</div>
   <div>{{ props.patient.id }} => id van patient</div>
+  <div>{{ props.isPinned }} => is gepind</div>
   <div v-for="i of data">{{ i.id }} => alle gepinde patienten</div>
   <div
     class="mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6"
@@ -107,7 +108,7 @@ watch(
         @click="handlePin(patient.id)"
       >
         <svg-pinrotated
-          v-if="isPinned"
+          v-if="isPinned === false"
           class="h-9 w-9 rounded-lg fill-tertiary-500 hover:bg-neutral-200/20 active:text-gray-800"
         />
         <svg-pinrotated
