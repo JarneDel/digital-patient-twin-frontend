@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang='ts' setup>
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
@@ -27,7 +27,6 @@ const clickEdit = () => {
 const clickDelete = () => {
   isDeleting.value = !isDeleting.value
 }
-
 
 
 // lijst van geselecteerde patienten bijhouden
@@ -100,27 +99,50 @@ useHead({
     },
   ],
 })
+
+const showAddPatientPopup = () => {
+  console.log('showAddPatientPopup')
+  isAddPatientOpen.value = true
+}
+const isAddPatientOpen = ref(false)
+const isSelectPatientOpen = ref(false)
+watch(isSelectPatientOpen, (state) => {
+  console.log(state + ' state isSelectPatientOpen')
+})
+
 </script>
 
 <template>
   <div>{{ selected_list }}</div>
-  <div class="mx-auto my-12 max-w-[67rem]">
-    <h2 class="mx-8 mb-8 mt-6 text-3xl font-semibold">Patiënt lijst</h2>
-    <div class="my-20 flex flex-col items-center justify-between lg:flex-row">
-      <NuxtLink to="/dokter/patienten/[patientid]/create">
-        <button
-          class="inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80"
-        >
-          <Plus class="h-8 w-8" />
-        </button>
-      </NuxtLink>
+  <div class='mx-auto my-12 max-w-[67rem]'>
+    <h2 class='mx-8 mb-8 mt-6 text-3xl font-semibold'>Patiënt lijst</h2>
+    <div class='my-20 flex flex-col items-center justify-between lg:flex-row'>
+      <button
+        class='inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80'
+        @click='showAddPatientPopup'
+      >
+        <Plus class='h-8 w-8' />
+      </button>
+      <popup-closeable v-model:is-open='isAddPatientOpen'
+                       button2='Bestaande patient'
+                       button3='Nieuwe patient'
+                       message='Wil je een bestaande patient toevoegen of een nieuwe patient aanmaken?'
+                       title-message='Patient toevoegen'
+                       @button2Event='() => isSelectPatientOpen = true'
+                       @button3Event='()=> navigateTo("/dokter/patienten/create")'
+
+      />
+      <popup-select-patient
+        v-if='user'
+        v-model:is-open='isSelectPatientOpen'
+      />
 
       <PressablesEdit
         @clickDelete='clickDelete'
         @clickEdit='() => clickEdit'
-        v-model:is-editing="isEditing"
-        :selected-count="count"
-        @checkboxSelected="updateSelectedCount"
+        v-model:is-editing='isEditing'
+        :selected-count='count'
+        @checkboxSelected='updateSelectedCount'
         @update:isEditing="$emit('update:isEditing', $event)"
         @del='del(patient.id)'
       />
@@ -129,8 +151,8 @@ useHead({
     <patients-patientcard-edit
       v-for='patient in patients'
       :key='patient.id'
-      :id="patient.id"
-      :patient="patient"
+      :id='patient.id'
+      :patient='patient'
       :click-edit='isEditing'
       @checkboxSelected='updateList'
     />
