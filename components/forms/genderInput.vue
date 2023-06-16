@@ -60,8 +60,7 @@ const emits = defineEmits(['update:genderValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
-  // Example: Check if the input value has a length greater than 3
-  return value === 'man'|| value === 'vrouw'
+  return value === 'Man' || value === 'Vrouw' || value === 'Andere'
 }
 
 const updateValue = (event: Event) => {
@@ -98,8 +97,9 @@ watch(
     class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   >
     <option value="">Selecteer geslacht</option>
-    <option value="man">Man</option>
-    <option value="vrouw">Vrouw</option>
+    <option value="Man">Man</option>
+    <option value="Vrouw">Vrouw</option>
+    <option value="Andere">Andere</option>
   </select>
   <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
     Invalid input.
