@@ -14,6 +14,11 @@ const props = defineProps({
     type: Object as PropType<IMelding>,
     required: true,
   },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 
 
@@ -90,7 +95,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
       'border-l-4 border-other-200': alert.level === AlertLevel.Matig,
       'border-l-4 border-indigo-300': alert.level === AlertLevel.Info,
     }"
-    :to='`/dokter/patienten/${alert.patientId}`'
+    :to='!isDisabled? `/dokter/patienten/${alert.patientId}` : undefined'
   >
     <div class='flex flex-row gap-6'>
       <component
@@ -101,7 +106,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
         'bg-orange-50 text-orange-500': alert.level === AlertLevel.Matig,
         'bg-indigo-50 text-indigo-500': alert.level === AlertLevel.Info,
        }" />
-      <div class='self-center'>
+      <div class='self-center min-w-[11rem]'>
         <div>{{ alert.fullName }}</div>
         <div class='text-sm text-neutral-100'>{{ time }} - <span class='font-fix'>{{ timeAgo.elapsedTime.value }}</span></div>
       </div>
@@ -130,8 +135,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
 <style scoped>
 
 .font-fix {
-  font-variant-numeric: tabular-nums;
-  font-family: 'sans-serif';
+  font-feature-settings: 'tnum';
 }
 
 </style>

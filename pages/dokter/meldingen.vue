@@ -271,6 +271,7 @@ watch(meldingen, (newVal) => {
         :key='Math.random()'
         :alert='placeHolderAlert'
         :type='alert'
+        :isDisabled='true'
       />
       </client-only>
     </div>
