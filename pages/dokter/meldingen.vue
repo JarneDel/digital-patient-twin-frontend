@@ -263,6 +263,8 @@ watch(meldingen, (newVal) => {
       <lucide-loader2 class='animate-spin' />
     </div>
     <div v-if='(meldingenPending || patientenPending) && !requestFromScroll'>
+      <client-only>
+
       <alerts-lg
         class='animate-pulse blurred-text'
         v-for='alert of 5'
@@ -270,6 +272,7 @@ watch(meldingen, (newVal) => {
         :alert='placeHolderAlert'
         :type='alert'
       />
+      </client-only>
     </div>
   </div>
   <!--  <decorations-fixed-right/>-->
