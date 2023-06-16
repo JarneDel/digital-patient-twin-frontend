@@ -13,6 +13,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isPinned: {
+    type: Boolean,
+    required: true,
+  },
 })
 
 const user = useUser()
@@ -52,17 +56,6 @@ const calculateAge = (date: string): number => {
 }
 
 // patienten met pin
-const {
-  data,
-  error,
-  pending,
-} = useFetch<PatientGegevens[]>(
-  `/dokter/${user.value?.localAccountId}/pinned`,
-  {
-    baseURL: servicesUrls.dokterService,
-    server: false,
-  },
-)
 
 watch(
   () => props.clickEdit,
@@ -91,6 +84,14 @@ const TEST = (id: string) => {
   //   return 'niet gepind'
   // }
 }
+console.log(props.patient.id + ' => id van patient')
+watch(
+  () => props.isPinned,
+  state => {
+    console.log(props.isPinned + ' state isPinned')
+  },
+)
+console.log(props.isPinned + ' => isPinned')
 </script>
 
 <template>
@@ -108,14 +109,14 @@ const TEST = (id: string) => {
         class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
         @click="handlePin(patient.id)"
       >
-        <!-- <svg-pinrotated
-        v-if="TEST(patient.id) === 'gepind'"
+        <svg-pinrotated
+          v-if="isPinned"
           class="h-9 w-9 rounded-lg fill-tertiary-500 hover:bg-neutral-200/20 active:text-gray-800"
         />
         <svg-pinrotated
-        v-else
-          class="h-9 w-9 rounded-lg fill-primary-375 hover:bg-neutral-200/20 active:text-gray-800"
-        /> -->
+          v-else
+          class="h-9 w-9 rounded-lg fill-pink-400 hover:bg-neutral-200/20 active:text-gray-800"
+        />
       </div>
       <input
         v-if="clickEdit"

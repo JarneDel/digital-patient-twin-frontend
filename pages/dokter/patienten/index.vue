@@ -112,6 +112,18 @@ useHead({
     },
   ],
 })
+
+const { data: pinnedPatients, error: pinnedPatientsError, pending:pinnedPatientsPending } = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/pinned`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
+
+watch(pinnedPatients, () => {
+  console.log(pinnedPatients.value, patients.value?.map(p => p.id))   
+})
 </script>
 
 <template>
@@ -127,23 +139,25 @@ useHead({
       </NuxtLink>
 
       <PressablesEdit
-        @clickDelete='clickDelete'
-        @clickEdit='() => clickEdit'
+        @clickDelete="clickDelete"
+        @clickEdit="() => clickEdit"
         v-model:is-editing="isEditing"
         :selected-count="count"
         @checkboxSelected="updateSelectedCount"
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del='del(patient.id)'
+        @del="del(patient.id)"
       />
     </div>
 
     <patients-patientcard-edit
-      v-for='patient in patients'
-      :key='patient.id'
+      v-for="patient in patients"
+      v-if="pinnedPatients"
+      :key="patient.id"
       :id="patient.id"
       :patient="patient"
-      :click-edit='isEditing'
-      @checkboxSelected='updateList'
+      :click-edit="isEditing"
+      :isPinned="patient.id in pinnedPatients?.map(p => p.id)"
+      @checkboxSelected="updateList"
     />
   </div>
 </template>
