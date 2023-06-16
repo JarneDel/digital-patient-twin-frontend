@@ -5,7 +5,7 @@ import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchContext, FetchError, ofetch } from 'ofetch'
 import { useUser } from '~/composables/useUser'
-import { LucideChevronRight, LucidePin } from 'lucide-vue-next'
+import { LucideX } from 'lucide-vue-next'
 
 const isLoggedIn = ref(false)
 
@@ -89,6 +89,11 @@ const unpin = async (id: string) => {
     patient => patient.id !== id,
   )
 }
+const hovered = ref(false)
+watch(hovered, newVal => {
+  console.log(newVal, 'hovered')
+})
+
 </script>
 
 <template>
@@ -119,6 +124,7 @@ const unpin = async (id: string) => {
         <PressablesButton
           class="mt-2 hover:underline"
           @click="() => navigateTo('/dokter/patienten')"
+
         >
           <svg-pinrotated class="rotate-270 mr-2 h-8 w-8"></svg-pinrotated>
 

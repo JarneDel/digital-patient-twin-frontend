@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@azure/msal-browser": "^2.37.0",
+    "@azure/web-pubsub": "^1.1.1",
     "@canvasjs/vue-charts": "^1.0.1",
     "@headlessui/vue": "^1.7.14",
     "@kalimahapps/vue-icons": "^1.4.0",
@@ -54,6 +55,7 @@
     ]
   },
   "dependencies": {
+    "@azure/web-pubsub-client": "^1.0.0-beta.3",
     "@formkit/auto-animate": "^1.0.0-beta.6"
   }
 }

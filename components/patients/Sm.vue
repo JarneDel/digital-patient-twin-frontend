@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Pinrotated from '../svg/pinrotated.vue'
-import { Pencil, LineChart } from 'lucide-vue-next'
+import { Pencil, LineChart, LucideX } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const props = defineProps({
@@ -10,7 +10,7 @@ const props = defineProps({
   },
 })
 defineEmits(['unpin'])
-
+const hover = ref<boolean>(false)
 </script>
 
 <template>
@@ -21,11 +21,16 @@ defineEmits(['unpin'])
     <div
       class="grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center"
     >
-      <Pinrotated
-        role="button"
-        class="h-10 w-10 self-center rounded-md text-gray-800 hover:bg-neutral-400"
+      <button
+        class='h-10 w-10 rounded-lg text-gray-700 hover:bg-neutral-300 active:text-gray-800'
+        @mouseleave='hover = false'
+        @mouseover='hover = true'
         @click.stop="$emit('unpin')"
-      />
+      >
+        <Pinrotated v-if='!hover' class='h-10 w-10' />
+        <LucideX v-else class='h-10 w-10 p-2' />
+      </button>
+
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
       <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
       <span class="text-gray-800">{{ patient.geslacht }}</span>

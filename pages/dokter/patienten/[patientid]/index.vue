@@ -3,6 +3,10 @@
 const routeID = useRoute().params.dokterid as string
 // string | string[] => string
 const id = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
+if (routeID){
+  console.log(routeID)
+  id.value = routeID
+}
 const patientNaam = ref('Test Patient')
 useHead({
   title: `Vitalen ${patientNaam.value}`,
@@ -19,12 +23,11 @@ useHead({
 </script>
 
 <template>
-  <pressables-goback
-    link_name='nieuw patienten toevoegen'
-    link_path='dokter/patienten'
-  />
+
   <text-kop2 class='mx-8 mb-2'>Vitalen {{ patientNaam }}</text-kop2>
-  <grafieken :for='id' />
+  <client-only>
+    <grafieken :for='id' />
+  </client-only>
 </template>
 
 <style scoped></style>
