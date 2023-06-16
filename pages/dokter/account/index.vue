@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { MailCheckIcon } from 'lucide-vue-next'
+
 useHead({
   title: 'Je account',
   meta: [
@@ -49,11 +51,11 @@ console.log('Last Name:', lastName)
 <template>
   <div class="flex h-[100vh] flex-col items-center justify-center">
     <div
-      class="shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:!shadow-none relative mx-auto flex w-[400px] flex-col items-center rounded-[20px] bg-white bg-clip-border p-4 dark:text-white"
+      class="shadow-3xl shadow-shadow-500 relative mx-auto flex w-[400px] flex-col items-center rounded-[20px] bg-white bg-clip-border p-4 drop-shadow-2xl"
     >
       <div class="h-34 relative flex w-full justify-center rounded-xl bg-cover">
         <div
-          class="dark:!border-navy-700 absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400"
+          class="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-2 border-[4px] border-secondary-500"
         >
           <img
             class="h-full w-full rounded-full"
@@ -66,24 +68,15 @@ console.log('Last Name:', lastName)
         <h4 class="text-xl font-bold text-black">
           {{ fullName }}
         </h4>
-        <p class="text-base font-normal text-gray-600">
-          {{ useUser().value?.idTokenClaims?.preferred_username }}
+        <p class="mt-4 text-base font-normal text-gray-600">
+          <span class="inline">
+            <MailCheckIcon class="inline-block align-middle mr-2" />
+          </span>
+          <span class="inline-block align-middle">
+            {{ useUser().value?.idTokenClaims?.preferred_username }}
+          </span>
         </p>
       </div>
-      <!-- <div class="mb-3 mt-6 flex gap-14 md:!gap-14">
-        <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold">17</p>
-          <p class="text-sm font-normal text-gray-600">Posts</p>
-        </div>
-        <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold">9.7K</p>
-          <p class="text-sm font-normal text-gray-600">Followers</p>
-        </div>
-        <div class="flex flex-col items-center justify-center">
-          <p class="text-2xl font-bold dark:text-white">434</p>
-          <p class="text-sm font-normal text-gray-600">Following</p>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
