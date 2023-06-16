@@ -105,25 +105,8 @@ const pinPatient = (id: string, isPinned: boolean) => {
     )
   }
 }
-// terug fetchen van patienten
-// $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pinned`, {
-//       method: 'GET',
-//       baseURL: servicesUrls.dokterService,
-//     }).then(
-//       () => {
-//         console.log('PIN GET')
-//       },
-//       (err: FetchError) => {
-//         console.log(err)
-//       },
-//     )
 
-watch(
-  () => props.isPinned,
-  state => {
-    console.log('state isPinned')
-  },
-)
+defineEmits(['clickPin'])
 </script>
 
 <template>
@@ -137,7 +120,7 @@ watch(
     >
       <button
         class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent hover:bg-neutral-200/20 focus-visible:border-tertiary-500 focus-visible:outline-none active:text-gray-800"
-        @click="handlePin(patient.id, isPinned)"
+        @click="[handlePin(patient.id, isPinned), $emit('clickPin')]"
       >
         <svg-pinrotated
           v-if="isPinned === false"

@@ -31,6 +31,10 @@ const clickDelete = () => {
   isDeleting.value = !isDeleting.value
 }
 
+const clickPin = () => {
+  isPinned.value = !isPinned.value
+}
+
 // lijst van geselecteerde patienten bijhouden
 const selected_list = ref<string[]>([])
 const count = ref(selected_list.value.length)
@@ -71,8 +75,20 @@ watch(
   },
 )
 
+watch(
+  () => isPinned.value,
+  state => {
+    console.log(state + ' state isPinned')
+    pin()
+  },
+)
+
 const removeFromList = (id: string) => {
   console.log('patiënt is verwijdered')
+}
+
+const pin = async () => {
+  execute()
 }
 
 const del = async (id: string) => {
@@ -181,6 +197,7 @@ const pinned = (id: string) => {
       :click-edit="isEditing"
       :isPinned="pinned(patient.id)"
       @checkboxSelected="updateList"
+      @clickPin="clickPin"
     />
     <div v-else="pinnedPatients === null">geen pinnedPatients</div>
   </div>
