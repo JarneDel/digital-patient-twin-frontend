@@ -110,9 +110,8 @@ defineEmits(['clickPin'])
 </script>
 
 <template>
-  <div>{{ props.isPinned }} => is gepind</div>
   <div
-    class="mx-auto my-3 flex flex-row justify-end rounded-lg bg-neutral-300 p-6"
+    class="mx-auto my-3 flex flex-row justify-end bg-white p-6"
   >
     <div
       :class="{ 'gap-4': !clickEdit, 'gap-8': clickEdit }"

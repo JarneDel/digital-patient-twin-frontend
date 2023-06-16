@@ -25,6 +25,7 @@ defineEmits(['unpin'])
         role="button"
         class="h-10 w-10 self-center rounded-md text-gray-800 hover:bg-neutral-400"
         @click.stop="$emit('unpin')"
+        :isRotated="true"
       />
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
       <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
