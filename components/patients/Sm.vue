@@ -15,6 +15,8 @@ const props = defineProps({
 })
 defineEmits(['unpin'])
 const hover = ref<boolean>(false)
+
+console.info('patient', props.patientId)
 </script>
 
 <template>
@@ -47,7 +49,7 @@ const hover = ref<boolean>(false)
       </NuxtLink>
       <NuxtLink
         class="justify-self-center"
-        :to='`/dokter/patienten/${patient.id}`'
+        :to='`/dokter/patienten/${patientId}`'
       >
         <Line-chart
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
