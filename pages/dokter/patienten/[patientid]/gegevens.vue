@@ -87,8 +87,8 @@ const result = computed<PatientGegevens[]>(() => {
           v-if="result"
           v-for="naam in result"
         >
-          <!-- {{ '#' + naam.deviceId }} -->
-          #1
+          {{ '#' + naam.deviceId }}
+          <!-- #1 -->
         </p>
       </div>
 

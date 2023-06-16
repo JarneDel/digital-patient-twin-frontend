@@ -6,6 +6,8 @@ import { AlertType } from '~/interfaces/AlertType'
 const value = ref([30, 60])
 const value_1 = ref(10)
 
+
+
 defineProps({
   type: {
     type: String,
