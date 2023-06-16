@@ -160,20 +160,16 @@ const pinned = (id: string) => {
   // als patientenlijst en lijst van gepinde patienten niet leeg zijn
   if(patients.value !== null && pinnedPatients.value !== null){
     // voor elke patient in de gepinde patientenlijst
-    for (const i of pinnedPatients.value) {
-      // als de id van de gepinde patient gelijk is aan de id van de patientenlijst
-      if (i.id === id) {
-        console.log(i.id + ' is pinned')
-        console.log('true')
-        return true
-      }
-      else{
-        // als het niet gelijk is
-        console.log(i.id + ' is not pinned!!!!!!!!!!!!!!!!!!!')
-        console.log('false')
-        return false
-      }  
+    console.log(pinnedPatients.value + ' VALUE')
+    
+    if(pinnedPatients.value.filter(p => p.id === id).length > 0){
+      console.log('true')
+      return true
+    }else{
+      console.log('false')
+      return false
     }
+
 
     // for (const i of pinnedPatients.value) {
     //   if (i.id === id) {
