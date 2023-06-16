@@ -22,6 +22,7 @@ export default function useWebPubSub() {
       });
       client.value?.start()
       isInitialized.value = true
+      console.log(client.value?.joinGroup('testdatagenerator'))
     } catch (error) {
       console.error('Failed to initialize WebPubSub client', error)
     }

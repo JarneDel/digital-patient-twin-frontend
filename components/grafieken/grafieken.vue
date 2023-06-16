@@ -38,7 +38,7 @@ watch(date, ((value, oldValue, onCleanup) => {
   const timeDiff = date.value[0].getTime() - date.value[1].getTime()
   if (timeDiff < 1000 * 60 * 60 * 25) {
     range.value = 'dag'
-  } else if (timeDiff < 1000 * 60 * 60 * 24 * 8  ) {
+  } else if (timeDiff < 1000 * 60 * 60 * 24 * 8) {
     range.value = 'week'
   } else if (timeDiff < 1000 * 60 * 60 * 24 * 31) {
     range.value = 'maand'
@@ -79,7 +79,12 @@ const rangeEn = computed(() => {
   }
 })
 
-const { data: grafiekData, error: grafiekError, pending: grafiekPending, execute } = useFetch<IHistoriek[]>(
+const {
+  data: grafiekData,
+  error: grafiekError,
+  pending: grafiekPending,
+  execute,
+} = useFetch<IHistoriek[]>(
   `${props.for}`,
   {
     method: 'GET',
@@ -119,9 +124,18 @@ const stats = useFetch<VitalStats>(
     watch: [range, date],
   },
 )
-const { data: statsData, error: statsError, pending: statsPending, execute: statsExecute } = stats
+const {
+  data: statsData,
+  error: statsError,
+  pending: statsPending,
+  execute: statsExecute,
+} = stats
 
-const { data: patient, error: patientError, pending: patientPending } = useFetch<PatientGegevens>(
+const {
+  data: patient,
+  error: patientError,
+  pending: patientPending,
+} = useFetch<PatientGegevens>(
   `patient/${props.for}`,
   {
     method: 'GET',
@@ -149,8 +163,13 @@ watch(statsData, (value, oldValue, onCleanup) => {
   }
 })
 
-const {client, initializeClient, isInitialized, subscribeToGroup} = useWebPubSub()
-if (process.client){
+const {
+  client,
+  initializeClient,
+  isInitialized,
+  subscribeToGroup,
+} = useWebPubSub()
+if (process.client) {
   initializeClient()
 }
 const message = ref<IRealtime>()
@@ -160,25 +179,26 @@ watch(isInitialized, async (newVal) => {
   client.value?.on('group-message', (data) => {
     if (!patient.value) return
     if (data.message.group !== patient.value.deviceId) {
-      console.log("message meant for different group", data.message.group, patient.value.deviceId)
+      console.log('message meant for different group', data.message.group, patient.value.deviceId)
     }
     message.value = data.message.data as IRealtime
   })
 })
 
 watch(patient, () => {
-  if (patient.value){
+  console.log('subscribing to group')
+  if (patient.value) {
     subscribeToGroup(patient.value.deviceId)
   }
 })
-
 
 
 </script>
 <template>
   <div class='flex flex-row justify-between gap-8 items-center max-w-6xl mx-auto'>
     <!--     time picker start -->
-    <Datepicker :range='true' v-model='date' :max-date="new Date()"  v-on:text-submit="() => {manual.end = true; manual.start= true}" class='max-w-[434px]' />
+    <Datepicker v-model='date' :max-date='new Date()' :range='true'
+                class='max-w-[434px]' v-on:text-submit='() => {manual.end = true; manual.start= true}' />
 
     <!--  range picker -->
     <pressables-selector
@@ -221,9 +241,11 @@ watch(patient, () => {
         width='800px'
         height='600px'
       />
-      <grafieken-realtime :data='message.hartslag.value' :unit='message.hartslag.unit' v-if='message'/>
-      <grafieken-stats :data='statsData.hartslag' type='Hartslag' v-if='statsData !== null' />
-      <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      <div class='flex flex-row justify-between'>
+        <grafieken-realtime v-if='message' :data='message.hartslag.value' :unit='message.hartslag.unit' />
+        <grafieken-stats v-if='statsData !== null' :data='statsData.hartslag' type='Hartslag' />
+        <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      </div>
     </div>
     <div>
       <grafieken-boxplot
@@ -241,9 +263,12 @@ watch(patient, () => {
         width='800px'
         height='600px'
       />
-      <grafieken-realtime :data='message.bloedzuurstof.value' :unit='message.bloedzuurstof.unit' v-if='message'/>
-      <grafieken-stats :data='statsData.bloedzuurstof' type='Bloedzuurstof' v-if='statsData !== null' />
-      <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      <div class='flex flex-row justify-between'>
+        <grafieken-realtime v-if='message' :data='message.bloedzuurstof.value' :unit='message.bloedzuurstof.unit' />
+        <grafieken-stats v-if='statsData !== null' :data='statsData.bloedzuurstof' type='Bloedzuurstof' />
+        <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      </div>
+
     </div>
 
     <div>
@@ -261,9 +286,11 @@ watch(patient, () => {
         width='800px'
         height='600px'
       />
-      <grafieken-realtime :data='message.ademFrequentie.value' :unit='message.ademFrequentie.unit' v-if='message'/>
-      <grafieken-stats :data='statsData.ademFrequentie' type='AdemFrequentie' v-if='statsData !== null' />
-      <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      <div class='flex flex-row justify-between'>
+        <grafieken-realtime v-if='message' :data='message.ademFrequentie.value' :unit='message.ademFrequentie.unit' />
+        <grafieken-stats v-if='statsData !== null' :data='statsData.ademFrequentie' type='AdemFrequentie' />
+        <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      </div>
     </div>
     <div>
       <grafieken-boxplot
@@ -280,9 +307,13 @@ watch(patient, () => {
         width='800px'
         height='600px'
       />
-      <grafieken-realtime :data='message.temperatuur.value.toFixed(1)' :unit='message.temperatuur.unit' v-if='message'/>
-      <grafieken-stats :data='statsData.bloedzuurstof' type='Bloedzuurstof' v-if='statsData !== null' />
-      <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      <div class='flex flex-row justify-between'>
+        <grafieken-realtime v-if='message' :data='message.temperatuur.value.toFixed(1)'
+                            :unit='message.temperatuur.unit' />
+        <lucide-loader2 v-else :size='32' class='animate-spin text-tertiary-600'></lucide-loader2>
+        <grafieken-stats v-if='statsData !== null' :data='statsData.bloedzuurstof' type='Bloedzuurstof' />
+        <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      </div>
     </div>
     <div>
       <grafieken-linechart
@@ -299,10 +330,13 @@ watch(patient, () => {
         width='800px'
         height='600px'
       />
-      <grafieken-realtime :data='message.bloeddruk.systolic + "/" + message.bloeddruk.diastolic' :unit='message.bloeddruk.unit' v-if='message'/>
-      <grafieken-stats :data='statsData.systolic' :data-diastolic='statsData.diastolic' type='Bloeddruk'
-                       v-if='statsData !== null' />
-      <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      <div class='flex flex-row justify-between'>
+        <grafieken-realtime v-if='message'
+                            :data='message.bloeddruk.systolic + "/" + message.bloeddruk.diastolic' :unit='message.bloeddruk.unit' />
+        <grafieken-stats v-if='statsData !== null' :data='statsData.systolic' :data-diastolic='statsData.diastolic'
+                         type='Bloeddruk' />
+        <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
+      </div>
     </div>
   </div>
 </template>
