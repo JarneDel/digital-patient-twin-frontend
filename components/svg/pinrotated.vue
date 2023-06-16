@@ -2,7 +2,7 @@
 defineProps({
   isRotated:{
     type: Boolean,
-    required: true,
+    required: false,
   },
 })
 </script>
