@@ -111,11 +111,11 @@ defineEmits(['clickPin'])
 
 <template>
   <div
-    class="mx-auto my-3 flex flex-row justify-end bg-white p-6"
+    class="flex flex-row h-[80px] my-4 mx-4 justify-end drop-shadow-xl bg-white rounded-lg px-4 py-4"
   >
     <div
       :class="{ 'gap-4': !clickEdit, 'gap-8': clickEdit }"
-      class="flex h-auto w-full items-center justify-end font-semibold"
+      class="flex h-auto w-full items-center justify-end"
     >
       <button
         class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent hover:bg-neutral-200/20 focus-visible:border-tertiary-500 focus-visible:outline-none active:text-gray-800"
@@ -137,14 +137,14 @@ defineEmits(['clickPin'])
         id="patient-check"
         type="checkbox"
         value=""
-        class="form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
+        class="form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
         :checked="isSelected"
         @change="handleCheckboxChange"
       />
       <div
         v-else
         id="patient-check"
-        class="form-checkbox form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
+        class="form-tertiary-500 h-6 w-6 cursor-pointer rounded border-none accent-tertiary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-500 focus-visible:ring-offset-0"
       ></div>
       <div class="capitalize">{{ patient.algemeen.voornaam }}</div>
       <div class="capitalize">{{ patient.algemeen.naam }}</div>
