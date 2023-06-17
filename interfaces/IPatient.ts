@@ -50,3 +50,13 @@ export interface INotifcations {
   min: Number
   max: Number
 }
+
+export interface IMeldingenInstellingen {
+  patientId: string;
+  masterSwitch: boolean;
+  bloeddruk: boolean;
+  hartslag: boolean;
+  ademhalingsfrequentie: boolean;
+  temperatuur: boolean;
+  bloedzuurstof: boolean;
+}
