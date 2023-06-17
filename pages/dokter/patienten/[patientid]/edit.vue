@@ -13,6 +13,9 @@ import useConvertNotificationRange from '~/composables/useConvertNotificationRan
 
 const {convertThresholdsToRange, convertRangeToThresholds }  =useConvertNotificationRange()
 
+// todo: when there are no notification settings, make a button to prompt the user to create them
+// todo: skeleton loading of meldingen to prevent layout shift
+
 useHead({
   title: 'Gegevens patiënt',
   meta: [
@@ -71,6 +74,8 @@ const formPatientGegevens = ref<PatientGegevens>(gegevens)
 const submitForm = async () => {
   try {
     console.log('submitting form')
+
+    // todo: this function is not submitting the form
     if (!data.value || !thresholds.value) throw new Error('No data or thresholds')
     const updatedPatientData: PatientGegevens = {
       algemeen: formPatient.value,
@@ -97,6 +102,7 @@ const submitForm = async () => {
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
+      // todo: redirect user to patient detail page
       console.log(fetch)
     } else {
       // Handle update error
