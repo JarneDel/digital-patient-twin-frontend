@@ -19,6 +19,35 @@ const {
   },
 )
 
+const placeholderPatient = ref<PatientGegevens>({
+  id: '1',
+  deviceId: '1',
+  algemeen: {
+    id: '1',
+    voornaam: 'voornaam',
+    naam: 'naam',
+    geboorteDatum: 'geboortedatum',
+    geslacht: 'geslacht',
+    geboorteland: 'geboorteland',
+  },
+  profilePictureUrl: 'https://i.imgur.com/3Zo7z6d.png',
+  adres: {
+    gemeente: 'gemeente',
+    straat: 'straat',
+    postcode: 123,
+    nr: '123a',
+  },
+  contact: {
+    email: 'email@mail.com',
+    telefoon: '123456789',
+  },
+  medisch: {
+    bloedgroep: 'A+',
+    lengte: 170,
+    gewicht: 170,
+  }
+})
+
 const user1 = useUser()
 console.log(user1.value?.localAccountId, 'user1')
 
@@ -215,6 +244,8 @@ watch(isSelectPatientOpen, (state) => {
       />
     </div>
 
+
+    
     <patients-patientcard-edit
       v-for="patient in patients"
       v-if="pinnedPatients"
@@ -226,6 +257,42 @@ watch(isSelectPatientOpen, (state) => {
       @checkboxSelected="updateList"
       @clickPin="clickPin"
     />
-    <div v-else="pinnedPatients === null">geen pinnedPatients</div>
+
+    <div v-else="pending">
+      <patients-patientcard-edit
+      v-for="patient of 3"
+      class="animate-pulse blurred-text"
+      :key="Math.random()"
+      :patient="placeholderPatient"
+      :click-edit="isEditing"
+      :isPinned="true"
+      @checkboxSelected="updateList"
+      @clickPin="clickPin"
+    />
+    </div>
+    
   </div>
 </template>
+
+
+<style>
+.small-dropdown {
+  width: 14rem;
+}
+
+.medium-dropdown {
+  width: 16rem;
+}
+
+.blurred-text {
+  color: transparent;
+  text-shadow: 0 0 8px #000;
+  filter: grayscale(1);
+}
+
+.blurred-text .text-sm {
+  color: transparent !important;
+  text-shadow: 0 0 8px #000;
+}
+
+</style>
