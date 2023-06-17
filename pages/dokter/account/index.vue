@@ -59,7 +59,7 @@ console.log('Last Name:', lastName)
         >
           <img
             class="h-full w-full rounded-full"
-            src="/Images/random_profile.jpg"
+            src="/Images/avatar_default.png"
             alt=""
           />
         </div>
@@ -70,7 +70,7 @@ console.log('Last Name:', lastName)
         </h4>
         <p class="mt-4 text-base font-normal text-gray-600">
           <span class="inline">
-            <MailCheckIcon class="inline-block align-middle mr-2" />
+            <MailCheckIcon class="mr-2 inline-block align-middle" />
           </span>
           <span class="inline-block align-middle">
             {{ useUser().value?.idTokenClaims?.preferred_username }}

@@ -86,9 +86,9 @@ const alertSvg = computed(() => {
       :is='alertSvg'
       class='h-14 w-14 rounded-md p-2 row-start-1 row-end-3'
       :class="{
-        'bg-primary-50 text-primary-500': props.level === AlertLevel.Kritiek,
-        'bg-orange-50 text-orange-500': props.level === AlertLevel.Matig,
-        'bg-green-50 text-green-500': props.level === AlertLevel.Info,
+        'bg-primary-50 text-primary-375': props.level === AlertLevel.Kritiek,
+        'bg-orange-50 text-other-200': props.level === AlertLevel.Matig,
+        'bg-indigo-50 text-indigo-300': props.level === AlertLevel.Info,
        }" />
     <!--    <h3 class='text-md font-semibold capitalize'>{{ type.toString() }}: {{ value }} {{ unit }}</h3>-->
     <h3 class='text-md font-semibold capitalize whitespace-nowrap'>{{ value }} {{ unit }}</h3>
@@ -100,9 +100,9 @@ const alertSvg = computed(() => {
 
     <p
       class='text-sm font-medium uppercase text-gray-500 text-right'
-      :class="{ 'text-primary-500': level === AlertLevel.Kritiek,
-                        'text-orange-500': level === AlertLevel.Matig,
-                        'text-green-500': level === AlertLevel.Info,
+      :class="{ 'text-primary-375': level === AlertLevel.Kritiek,
+                        'text-other-200': level === AlertLevel.Matig,
+                        'text-indigo-300': level === AlertLevel.Info,
                         }"
     >
       {{ status }}

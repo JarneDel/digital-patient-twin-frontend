@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { AlertLevel, IMelding } from '~/interfaces/AlertType'
-import { PatientGegevens } from '~/interfaces/IPatient'
+import { AlertLevel, IMelding, AlertType } from '~/interfaces/AlertType'
+import { PatientGegevens, IPatientAlgemeen } from '~/interfaces/IPatient'
 import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchContext, FetchError } from 'ofetch'
@@ -17,6 +17,26 @@ if (process.client) {
 }
 
 const user = useUser()
+
+const placeHolderAlert = ref<IMelding>({
+  id: '1',
+  patientId: '1',
+  type: AlertType.Bloeddruk,
+  value: '1',
+  birthDate: '01/01/2000',
+  level: AlertLevel.Info,
+  timestamp: new Date(),
+  fullName: 'name',
+})
+
+const placeHolderPatient = ref<IPatientAlgemeen>({
+  id: '1',
+  voornaam: 'voornaam',
+  naam: 'naam',
+  geboorteDatum: '01/01/2000',
+  geslacht: 'geslacht',
+  geboorteland: 'België',
+})
 
 useHead({
   title: 'Home',
@@ -111,14 +131,22 @@ watch(hovered, newVal => {
         v-if='pinnedPatients !== null && pinnedPatients.length > 0'
         class="flex flex-col gap-4"
       >
-        <patients-sm
+        <!-- <patients-sm
           v-for="patient of pinnedPatients"
           :key="patient.id"
           :patient="patient.algemeen"
           :patientId='patient.id'
           @unpin="unpin(patient.id)"
+        /> -->
+        <patients-sm
+          v-for="patient of 5"
+          :key="Math.random()"
+          :patient="placeHolderPatient"
+          :patientId='placeHolderPatient.id'
+          class="animate-pulse blurred-text"
         />
       </div>
+      <div v-else-if="pendingPinnedPatients" v-for="patient of 5">help</div>
       <div v-else class="w-[34.375rem]">
         <TextKop3>Er zijn nog geen gepinde patiënten</TextKop3>
         <PressablesButton
@@ -149,9 +177,33 @@ watch(hovered, newVal => {
           :click-url="'/dokter/meldingen?id=' + melding.patientId"
           @remove="removeFromList(melding.id)"
         />
+
+        <AlertsPinned
+            v-for="melding of 5"
+            v-if="notificationsPending"
+            class='animate-pulse blurred-text w-[30rem]'
+            :key="placeHolderAlert.id"
+            :datetime="placeHolderAlert.timestamp"
+            :level="placeHolderAlert.level"
+            :name="placeHolderAlert.fullName"
+            :type="placeHolderAlert.type"
+            :value="placeHolderAlert.value"
+            :click-url="'/dokter/meldingen?id=' + placeHolderAlert.patientId"
+          />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.blurred-text {
+  color: transparent;
+  text-shadow: 0 0 8px #000;
+  filter: grayscale(1);
+}
+
+.blurred-text .text-gray-800 {
+  color: transparent !important;
+  text-shadow: 0 0 8px #000;
+}
+</style>
