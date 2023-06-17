@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { MailCheckIcon } from 'lucide-vue-next'
+
 useHead({
   title: 'Je account',
   meta: [
@@ -24,7 +26,7 @@ console.log('First Name:', firstName)
 console.log('Last Name:', lastName)
 </script>
 
-<template>
+<!-- <template>
   <div class="mx-auto my-12 max-w-[67rem]">
     <h2 v-if="fullName !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Mijn gegevens
@@ -45,5 +47,36 @@ console.log('Last Name:', lastName)
       </div>
     </div>
   </div>
+</template> -->
+<template>
+  <div class="flex h-[100vh] flex-col items-center justify-center">
+    <div
+      class="shadow-3xl shadow-shadow-500 relative mx-auto flex w-[400px] flex-col items-center rounded-[20px] bg-white bg-clip-border p-4 drop-shadow-2xl"
+    >
+      <div class="h-34 relative flex w-full justify-center rounded-xl bg-cover">
+        <div
+          class="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-2 border-[4px] border-secondary-500"
+        >
+          <img
+            class="h-full w-full rounded-full"
+            src="/Images/random_profile.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div class="mt-16 flex flex-col items-center">
+        <h4 class="text-xl font-bold text-black">
+          {{ fullName }}
+        </h4>
+        <p class="mt-4 text-base font-normal text-gray-600">
+          <span class="inline">
+            <MailCheckIcon class="inline-block align-middle mr-2" />
+          </span>
+          <span class="inline-block align-middle">
+            {{ useUser().value?.idTokenClaims?.preferred_username }}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
-

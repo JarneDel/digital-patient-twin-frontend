@@ -94,7 +94,7 @@ const submitForm = async () => {
     <div class="mx-5 flex flex-col gap-4 lg:mx-20 lg:flex-row">
       <!-- persoonlijke -->
       <div class="">
-        <FormsSelectDevice></FormsSelectDevice>
+        <!-- <FormsSelectDevice></FormsSelectDevice> -->
         <pressables-toggle
           :type="AlertType.Temperatuur"
           :text="AlertType.Temperatuur"

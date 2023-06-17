@@ -66,7 +66,7 @@ const result = computed<PatientGegevens[]>(() => {
           :key="Math.random()"
           v-if="result"
           v-for="naam in result"
-          class="mx-auto text-center text-sm text-neutral-100 font-normal"
+          class="mx-auto text-center text-sm font-normal text-neutral-100"
         >
           {{ naam.contact?.email }}<br />
           {{ naam.algemeen?.geboorteDatum }}
@@ -75,14 +75,15 @@ const result = computed<PatientGegevens[]>(() => {
 
       <!-- meldingen -->
       <div class="relative">
-        <svg-fitbit></svg-fitbit>
+        <svg-fitbit class="mx-auto"></svg-fitbit>
         <p
-          class="absolute top-12 mx-auto text-center text-sm font-semibold"
+          class="absolute inset-0 top-12 text-center text-sm font-semibold"
           :key="Math.random()"
           v-if="result"
           v-for="naam in result"
         >
           {{ '#' + naam.deviceId }}
+          <!-- #1 -->
         </p>
       </div>
 
