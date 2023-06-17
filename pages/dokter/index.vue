@@ -5,7 +5,6 @@ import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchContext, FetchError } from 'ofetch'
 import { useUser } from '~/composables/useUser'
-import { ClientOnly } from '~/.nuxt/components'
 
 const isLoggedIn = ref(false)
 
@@ -113,7 +112,6 @@ const hovered = ref(false)
 watch(hovered, newVal => {
   console.log(newVal, 'hovered')
 })
-
 </script>
 
 <template>
@@ -128,31 +126,27 @@ watch(hovered, newVal => {
       <!--      Title Left      -->
       <TextKop2>Gepinde Patiënten</TextKop2>
       <!--      Content Left      -->
-      <div
-        v-if='pendingPinnedPatients'
-        class="flex flex-col gap-4"
-      >
-        <patients-sm
-          v-for="patient of 5"
-          :key="Math.random()"
-          :patient="placeHolderPatient"
-          :patientId='placeHolderPatient.id'
-          class="animate-pulse blurred-text"
-        />
+      <div v-if="pendingPinnedPatients" class="flex flex-col gap-4">
+        <client-only>
+          <patients-sm
+            v-for="patient of 5"
+            :key="Math.random()"
+            :patient="placeHolderPatient"
+            :patientId="placeHolderPatient.id"
+            class="blurred-text animate-pulse"
+          />
+        </client-only>
       </div>
       <div
-        v-else-if='pinnedPatients !== null && pinnedPatients.length > 0'
+        v-else-if="pinnedPatients !== null && pinnedPatients.length > 0"
         class="flex flex-col gap-4"
       >
-        <div v-for="patient of 5">hello</div>
-        <!-- <ClientOnly>
         <patients-sm
           v-for="patient of pinnedPatients"
           :key="patient.id"
           :patient="patient.algemeen"
-          :patientId='patient.id'
+          :patientId="patient.id"
         />
-        </ClientOnly> -->
       </div>
 
       <div v-else class="w-[34.375rem]">
@@ -160,7 +154,6 @@ watch(hovered, newVal => {
         <PressablesButton
           class="mt-2 hover:underline"
           @click="() => navigateTo('/dokter/patienten')"
-
         >
           <svg-pinrotated class="rotate-270 mr-2 h-8 w-8"></svg-pinrotated>
 
@@ -186,17 +179,17 @@ watch(hovered, newVal => {
         />
 
         <AlertsPinned
-            v-for="melding of 5"
-            v-if="notificationsPending"
-            class='animate-pulse blurred-text w-[30rem]'
-            :key="placeHolderAlert.id"
-            :datetime="placeHolderAlert.timestamp"
-            :level="placeHolderAlert.level"
-            :name="placeHolderAlert.fullName"
-            :type="placeHolderAlert.type"
-            :value="placeHolderAlert.value"
-            :click-url="'/dokter/meldingen?id=' + placeHolderAlert.patientId"
-          />
+          v-for="melding of 5"
+          v-if="notificationsPending"
+          class="blurred-text w-[30rem] animate-pulse"
+          :key="placeHolderAlert.id"
+          :datetime="placeHolderAlert.timestamp"
+          :level="placeHolderAlert.level"
+          :name="placeHolderAlert.fullName"
+          :type="placeHolderAlert.type"
+          :value="placeHolderAlert.value"
+          :click-url="'/dokter/meldingen?id=' + placeHolderAlert.patientId"
+        />
       </div>
     </div>
   </div>
