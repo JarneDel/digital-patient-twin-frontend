@@ -260,7 +260,7 @@ watch(isSelectPatientOpen, (state) => {
 
     <div v-else="pending">
       <patients-patientcard-edit
-      v-for="patient of 3"
+      v-for="patient of 5"
       class="animate-pulse blurred-text"
       :key="Math.random()"
       :patient="placeholderPatient"
