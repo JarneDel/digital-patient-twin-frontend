@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { AlertType } from '~/interfaces/AlertType'
-import {
-  IPatientAlgemeen,
-  PatientGegevens,
-  Address,
-  Medisch,
-  Contact,
-} from '~/interfaces/IPatient'
+import { Address, Contact, IPatientAlgemeen, Medisch } from '~/interfaces/IPatient'
+
 useHead({
   title: 'Nieuwe patiënt',
   meta: [

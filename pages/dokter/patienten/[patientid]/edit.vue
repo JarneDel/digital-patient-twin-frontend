@@ -1,14 +1,16 @@
-<script setup lang="ts">
-import { d } from 'ofetch/dist/error-04138797'
+<script setup lang='ts'>
 import { ref } from 'vue'
 import { AlertType } from '~/interfaces/AlertType'
 import {
-  IPatientAlgemeen,
-  PatientGegevens,
   Address,
-  Medisch,
   Contact,
+  IMedicalNotifcationsTresholds, IMeldingenInstellingen,
+  IPatientAlgemeen,
+  Medisch,
+  PatientGegevens,
 } from '~/interfaces/IPatient'
+import { Switch } from '@headlessui/vue'
+
 useHead({
   title: 'Gegevens patiënt',
   meta: [
@@ -19,9 +21,9 @@ useHead({
   ],
 })
 
+const user = useUser().value
+
 const routeID = useRoute().params.patientid as string
-const refrenceid = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
-//id dynamicaaly
 const id = ref(routeID)
 //get patient data
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
@@ -30,13 +32,36 @@ const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.nort
 
 console.log(notifcationurl)
 
+
+const dokterServiceUrl = 'https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io'
+const {
+  data: notificationsEnabledData,
+  pending: notificationsPending,
+  error: notificationsError,
+} = useFetch<IMeldingenInstellingen>(
+  `dokter/${user?.localAccountId}/patient/${id.value}/notifications`,
+  {
+    baseURL: dokterServiceUrl,
+    server: false,
+  },
+)
+
+const notificationsEnabled = ref<IMeldingenInstellingen>()
+watch(notificationsEnabledData, () => {
+  console.log('notificationsEnabledData changed to:', notificationsEnabledData.value)
+  if (notificationsEnabledData.value) {
+    notificationsEnabled.value = notificationsEnabledData.value
+  }
+})
+
+
 const { error, data, pending, execute } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
 const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
 const patientContact: Contact = data.value?.contact as Contact
 const gegevens = data.value as PatientGegevens
-const thresholds = data.value?.thresholds as Thresholds
+const thresholds = data.value?.medicalNotificationThresholds as IMedicalNotifcationsTresholds
 
 const formPatient = ref<IPatientAlgemeen>(patient)
 
@@ -47,13 +72,14 @@ const formPatientGegevens = ref<PatientGegevens>(gegevens)
 
 const submitForm = async () => {
   try {
-    const updatedPatientData = {
-      gegevens: formPatientGegevens.value,
+    const updatedPatientData: PatientGegevens = {
       algemeen: formPatient.value,
       adres: formPatientAdres.value,
       medisch: formPatientMedisch.value,
       contact: formPatientContact.value,
-
+      deviceId: gegevens.deviceId,
+      id: gegevens.id,
+      medicalNotificationThresholds: thresholds,
     }
 
     // Send the updated patient data to your API endpoint
@@ -68,7 +94,6 @@ const submitForm = async () => {
     if (response.ok) {
       //execute the fetch again to update the data
       execute()
-      window.location.reload()
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
@@ -86,155 +111,250 @@ const patientForGoback = { ...patient }
 const editLinkName = computed(
   () => `${patientForGoback.voornaam} ${patientForGoback.naam} | Edit`,
 )
+
+
+
+watch(
+  notificationsEnabled,
+  () => {
+    if (!notificationsEnabled.value) return
+    const url = `https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/dokter/${user?.localAccountId}/patient/${notificationsEnabled.value.patientId}/notifications`
+    $fetch(url, {
+      method: "POST",
+      body: JSON.stringify(notificationsEnabled.value),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  },
+  { deep: true },
+)
+
+
 </script>
 
 <template>
-  <div class="m-5 flex flex-col items-center justify-between md:flex-row">
+  <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
     <pressables-goback
-      :link_name="editLinkName"
-      :link_path="`/dokter/patienten/${id.valueOf}/gegevens`"
+      :link_name='editLinkName'
+      :link_path='`/dokter/patienten/${id.valueOf}/gegevens`'
     />
-
+    <button type='submit'>
+      <PressablesSaveButton></PressablesSaveButton>
+    </button>
     <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
   </div>
-  <form @submit.prevent="submitForm">
-    <div class="mx-10 flex items-start justify-end">
-      <button type="submit">
-        <PressablesSaveButton></PressablesSaveButton>
-      </button>
+  <form @submit.prevent='submitForm'>
+    <div class='mx-10 flex items-start justify-end'>
+
     </div>
-    <div class="mx-5 flex flex-col flex-wrap gap-4 md:flex-row lg:mx-20">
+    <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
       <!-- persoonlijke -->
-      <div class="">
+      <div class=''
+           v-if='notificationsEnabled'>
         <!-- <FormsSelectDevice></FormsSelectDevice> -->
-        <TextKop2>meldingen</TextKop2>
-        <div class="mt-4">
-          <pressables-switch
-            :text="AlertType[AlertType.AdemsFrequentie]"
-            :type="AlertType[AlertType.AdemsFrequentie]"
-          ></pressables-switch>
+        <div class='flex flex-row justify-between'>
+          <TextKop2>meldingen</TextKop2>
+          <Switch
+            v-model='notificationsEnabled.masterSwitch'
+            :class="notificationsEnabled.masterSwitch ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+            class='relative inline-flex h-6  w-11 items-center rounded-full'
+          >
+            <span class='sr-only'>zet alle meldingen aan/uit</span>
+            <span
+              :class="notificationsEnabled.masterSwitch ? 'translate-x-6' : 'translate-x-1'"
+              class='inline-block h-4 w-4 transform rounded-full bg-white transition'
+            />
+          </Switch>
+        </div>
+        <div class='mt-4'>
+          <div class='flex flex-row justify-between content-center'
+               v-if='notificationsEnabled'>
+            <text-kop3>Ademfrequentie</text-kop3>
+            <Switch
+              v-model='notificationsEnabled.ademhalingsfrequentie'
+              :class="notificationsEnabled.ademhalingsfrequentie ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+              class='relative inline-flex h-6  w-11 items-center rounded-full'
+            >
+              <span class='sr-only'>Enable notifications</span>
+              <span
+                :class="notificationsEnabled.ademhalingsfrequentie ? 'translate-x-6' : 'translate-x-1'"
+                class='inline-block h-4 w-4 transform rounded-full bg-white transition'
+              />
+            </Switch>
+          </div>
           <template-slider
-            class="-mx-5"
-            :type="AlertType[AlertType.AdemsFrequentie]"
-            :min="0"
-            :max="100"
+            class='-mx-5 mt-0'
+            :type='AlertType[AlertType.AdemsFrequentie]'
+            :min='0'
+            :max='100'
           />
         </div>
-        <div class="mt-4">
-          <pressables-switch
-            :text="AlertType[AlertType.Hartslag]"
-            :type="AlertType[AlertType.Hartslag]"
-          ></pressables-switch>
+        <div class='mt-8'>
+          <div class='flex flex-row justify-between content-center '>
+            <text-kop3>Bloedzuurstof</text-kop3>
+            <Switch
+              v-model='notificationsEnabled.bloedzuurstof'
+              :class="notificationsEnabled.bloedzuurstof ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+              class='relative inline-flex h-6  w-11 items-center rounded-full'
+            >
+              <span class='sr-only'>Enable notifications</span>
+              <span
+                :class="notificationsEnabled.bloedzuurstof ? 'translate-x-6' : 'translate-x-1'"
+                class='inline-block h-4 w-4 transform rounded-full bg-white transition'
+              />
+            </Switch>
+          </div>
           <template-slider
-            class="-mx-5"
-            :type="AlertType[AlertType.Hartslag]"
-            :min="0"
-            :max="100"
+            class='-mx-5'
+            :type='AlertType[AlertType.Bloedzuurstof]'
+            :min='0'
+            :max='100'
           />
         </div>
-        <div class="mt-4">
-          <pressables-switch
-            :text="AlertType[AlertType.Bloeddruk]"
-            :type="AlertType[AlertType.Bloeddruk]"
-          ></pressables-switch>
+        <div class='mt-4'>
+          <div class='flex flex-row justify-between content-center '>
+            <text-kop3>Hartslag</text-kop3>
+            <Switch
+              v-model='notificationsEnabled.hartslag'
+              :class="notificationsEnabled.hartslag ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+              class='relative inline-flex h-6  w-11 items-center rounded-full'
+            >
+              <span class='sr-only'>Enable notifications</span>
+              <span
+                :class="notificationsEnabled.hartslag ? 'translate-x-6' : 'translate-x-1'"
+                class='inline-block h-4 w-4 transform rounded-full bg-white transition'
+              />
+            </Switch>
+          </div>
           <template-slider
-            class="-mx-5"
-            :type="AlertType[AlertType.Bloeddruk]"
-            :min="0"
-            :max="100"
+            class='-mx-5'
+            :type='AlertType[AlertType.Hartslag]'
+            :min='0'
+            :max='100'
           />
         </div>
-        <div class="mt-4">
-          <pressables-switch
-            :text="AlertType[AlertType.Temperatuur]"
-            :type="AlertType[AlertType.Temperatuur]"
-          ></pressables-switch>
+        <div class='mt-4'>
+          <div class='flex flex-row justify-between content-center '>
+            <text-kop3>Bloeddruk</text-kop3>
+            <Switch
+              v-model='notificationsEnabled.bloeddruk'
+              :class="notificationsEnabled.bloeddruk ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+              class='relative inline-flex h-6  w-11 items-center rounded-full'
+            >
+              <span class='sr-only'>Enable notifications</span>
+              <span
+                :class="notificationsEnabled.bloeddruk ? 'translate-x-6' : 'translate-x-1'"
+                class='inline-block h-4 w-4 transform rounded-full bg-white transition'
+              />
+            </Switch>
+          </div>
           <template-slider
-            class="-mx-5"
-            :type="AlertType[AlertType.Temperatuur]"
-            :min="0"
-            :max="100"
+            class='-mx-5'
+            :type='AlertType[AlertType.Bloeddruk]'
+            :min='0'
+            :max='100'
           />
+        </div>
+        <div class='mt-4'>
+          <div class='flex flex-row justify-between content-center '>
+            <text-kop3>temperatuur</text-kop3>
+            <Switch
+              v-model='notificationsEnabled.temperatuur'
+              :class="notificationsEnabled.temperatuur ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+              class='relative inline-flex h-6  w-11 items-center rounded-full'
+            >
+              <span class='sr-only'>Enable notifications</span>
+              <span
+                :class="notificationsEnabled.temperatuur ? 'translate-x-6' : 'translate-x-1'"
+                class='inline-block h-4 w-4 transform rounded-full bg-white transition'
+              />
+            </Switch>
+          </div>
+            <template-slider
+              class='-mx-5'
+              :type='AlertType[AlertType.Temperatuur]'
+              :min='0'
+              :max='100'
+            />
         </div>
       </div>
 
-      <div class="flex">
+      <div class='flex'>
         <div>
-          <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
+          <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
           <forms-text-input
-            :textValue="patient.voornaam"
-            v-model="patient.voornaam"
-            @update:textValue="patient.voornaam = $event"
-          ></forms-text-input>
+            :textValue='patient.voornaam'
+            v-model='patient.voornaam'
+            @update:textValue='patient.voornaam = $event'
+          />
           <forms-surname-input
-            :surnameValue="patient.naam"
-            v-model="patient.naam"
-            @update:surnameValue="patient.naam = $event"
-          >
-          </forms-surname-input>
+            :surnameValue='patient.naam'
+            v-model='patient.naam'
+            @update:surnameValue='patient.naam = $event'
+          />
           <forms-gender-input
-            :genderValue="patient.geslacht"
-            v-model="patient.geslacht"
-            @update:genderValue="patient.geslacht = $event"
-          ></forms-gender-input>
+            :genderValue='patient.geslacht'
+            v-model='patient.geslacht'
+            @update:genderValue='patient.geslacht = $event'
+          />
           <forms-country-input
-            :countryValue="patient.geboorteland"
-            v-model="patient.geboorteland"
-            @update:countryValue="patient.geboorteland = $event"
-          ></forms-country-input>
+            :countryValue='patient.geboorteland'
+            v-model='patient.geboorteland'
+            @update:countryValue='patient.geboorteland = $event'
+          />
           <forms-date-input
-            :birthDateValue="patient.geboorteDatum"
-            v-model="patient.geboorteDatum"
-            @update:birthDateValue="patient.geboorteDatum = $event"
-          >
-          </forms-date-input>
-          <TextKop2 class="my-5">Adres informatie</TextKop2>
+            :birthDateValue='patient.geboorteDatum'
+            v-model='patient.geboorteDatum'
+            @update:birthDateValue='patient.geboorteDatum = $event'
+          />
+          <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
           <forms-city-input
-            :cityValue="patientAdres.gemeente"
-            v-model="patientAdres.gemeente"
-            @update:cityValue="patientAdres.gemeente = $event"
-          ></forms-city-input>
+            :cityValue='patientAdres.gemeente'
+            v-model='patientAdres.gemeente'
+            @update:cityValue='patientAdres.gemeente = $event'
+          />
           <forms-street-input
-            :textStreetNameValue="patientAdres.straat"
-            v-model="patientAdres.straat"
-            @update:textStreetNameValue="patientAdres.straat = $event"
-          ></forms-street-input>
+            :textStreetNameValue='patientAdres.straat'
+            v-model='patientAdres.straat'
+            @update:textStreetNameValue='patientAdres.straat = $event'
+          />
           <forms-postalcode-inputs
-            @update:postalcodeValue="patientAdres.postcode = parseInt($event)"
-            @update:houseNumberValue="patientAdres.nr = $event"
-          ></forms-postalcode-inputs>
-          <TextKop2 class="my-5">Contact gegevens</TextKop2>
+            v-model:house-number-value='patientAdres.nr'
+            v-model:postalcode-value='patientAdres.postcode'
+          />
+          <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
           <forms-email-input
-            :emailValue="patientContact.email"
-            v-model="patientContact.email"
-            @update:emailValue="patientContact.email = $event"
-          ></forms-email-input>
+            :emailValue='patientContact.email'
+            v-model='patientContact.email'
+            @update:emailValue='patientContact.email = $event'
+          />
           <forms-telephone-input
-            :phoneNumberValue="patientContact.telefoon"
-            v-model="patientContact.telefoon"
-            @update:phoneNumberValue="patientContact.telefoon = $event"
-          ></forms-telephone-input>
+            :phoneNumberValue='patientContact.telefoon'
+            v-model='patientContact.telefoon'
+            @update:phoneNumberValue='patientContact.telefoon = $event'
+          />
         </div>
       </div>
 
       <!-- medisch -->
-      <div class="flex">
+      <div class='flex'>
         <div>
-          <TextKop2 class="my-5">Medische gegevens</TextKop2>
+          <TextKop2 class='mb-5'>Medische gegevens</TextKop2>
           <FormsLenghtInput
-            :lengthValue="patientMedisch.lengte"
-            v-model="patientMedisch.lengte"
-            @update:lengthValue="patientMedisch.lengte = parseInt($event)"
+            :lengthValue='patientMedisch.lengte'
+            v-model='patientMedisch.lengte'
+            @update:lengthValue='patientMedisch.lengte = parseInt($event)'
           ></FormsLenghtInput>
           <FormsWeightInput
-            :weightValue="patientMedisch.gewicht"
-            v-model="patientMedisch.gewicht"
-            @update:weightValue="patientMedisch.gewicht = parseInt($event)"
+            :weightValue='patientMedisch.gewicht'
+            v-model='patientMedisch.gewicht'
+            @update:weightValue='patientMedisch.gewicht = parseInt($event)'
           ></FormsWeightInput>
           <FormsBloodtypeInput
-            :bloodTypeValue="patientMedisch.bloedgroep"
-            v-model="patientMedisch.bloedgroep"
-            @update:bloodTypeValue="patientMedisch.bloedgroep = $event"
+            :bloodTypeValue='patientMedisch.bloedgroep'
+            v-model='patientMedisch.bloedgroep'
+            @update:bloodTypeValue='patientMedisch.bloedgroep = $event'
           ></FormsBloodtypeInput>
         </div>
       </div>

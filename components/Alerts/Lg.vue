@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import {  LucideSlidersHorizontal } from 'lucide-vue-next'
+import { LucideSlidersHorizontal } from 'lucide-vue-next'
 import { PropType } from '@vue/runtime-core'
 import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { SvgAdemfrequentie, SvgBloodpressure, SvgHeartrate, SvgOxygen, SvgTemperature } from '#components'
@@ -125,7 +125,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
         <div class='text-sm'>{{ alert.value }} {{ unit }}</div>
       </div>
 <!--      TODO: link to correct patient settings page-->
-      <NuxtLink :to='`/dokter/settings/${alert.patientId}`'>
+      <NuxtLink :to='`/dokter/patienten/${alert.patientId}/gegevens`'>
         <LucideSlidersHorizontal />
       </NuxtLink>
     </div>

@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import SvgNotification from '@/components/svg/notification.vue'
 import { AlertType } from '~/interfaces/AlertType'
+
 defineProps({
   imgUrl: {
     type: String,

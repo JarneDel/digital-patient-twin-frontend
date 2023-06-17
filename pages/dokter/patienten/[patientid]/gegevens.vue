@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { AlertType } from '~/interfaces/AlertType'
-import {
-  IPatientAlgemeen,
-  PatientGegevens,
-  Address,
-  Medisch,
-} from '~/interfaces/IPatient'
+import { Address, IPatientAlgemeen, Medisch, PatientGegevens } from '~/interfaces/IPatient'
+
 useHead({
   title: 'Gegevens patiënt',
   meta: [

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
-import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
+import { LucideEdit, LucideLineChart } from 'lucide-vue-next'
 
 const props = defineProps({
   for:{

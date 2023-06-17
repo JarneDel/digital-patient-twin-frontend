@@ -1,74 +1,34 @@
-<script setup lang='ts'>
+<script setup>
+import { Switch } from '@headlessui/vue'
 
-defineEmits({
-  change: (e: MouseEvent) => true,
+const emits = defineEmits(['update:enabled']) // Define custom event
+const props = defineProps({
+  enabled: {
+    type: Boolean,
+    required: true,
+  },
+  srMessage: {
+    type: String,
+    required: false,
+    default: 'Enable notifications',
+  },
+
 })
 
+// Emit the custom event when the value of `enabled` changes
 </script>
 
 <template>
-  <div class="bg-tertiary-400"></div>
-  <label class='switch'>
-    <input type='checkbox' @change='
-      $emit("change", $event.target.checked)
-'>
-    <span class='slider'></span>
-  </label>
+  <Switch
+    :model-value="enabled"
+    @model-value="$emit('update:enabled', $event.target.value)"
+  :class="enabled ? 'bg-tertiary-400' : 'bg-tertiary-200'"
+  class="relative inline-flex h-6  w-11 items-center rounded-full"
+  >
+  <span class="sr-only">Enable notifications</span>
+  <span
+    :class="enabled ? 'translate-x-6' : 'translate-x-1'"
+    class="inline-block h-4 w-4 transform rounded-full bg-white transition"
+  />
+  </Switch>
 </template>
-
-<style scoped>
-
-/* The switch - the box around the slider */
-.switch {
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: 3.5em;
-  height: 2em;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  background: #F2F2F2;
-  border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2em;
-  width: 2em;
-  inset: 0;
-  background-color: #AD9FCA;
-  border-radius: 50px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.switch input:checked + .slider {
-  background: #D3CCE3;
-}
-
-.switch input:focus + .slider {
-  box-shadow: 0 0 1px #D3CCE3;
-}
-
-.switch input:checked + .slider:before {
-  transform: translateX(1.6em);
-}
-
-</style>
