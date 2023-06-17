@@ -276,14 +276,6 @@ watch(isSelectPatientOpen, (state) => {
 
 
 <style>
-.small-dropdown {
-  width: 14rem;
-}
-
-.medium-dropdown {
-  width: 16rem;
-}
-
 .blurred-text {
   color: transparent;
   text-shadow: 0 0 8px #000;

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AlertLevel, IMelding } from '~/interfaces/AlertType'
+import { AlertLevel, IMelding, AlertType } from '~/interfaces/AlertType'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
@@ -17,6 +17,17 @@ if (process.client) {
 }
 
 const user = useUser()
+
+const placeHolderAlert = ref<IMelding>({
+  id: '1',
+  patientId: '1',
+  type: AlertType.Bloeddruk,
+  value: '1',
+  birthDate: '01/01/2000',
+  level: AlertLevel.Info,
+  timestamp: new Date(),
+  fullName: 'name',
+})
 
 useHead({
   title: 'Home',
@@ -149,9 +160,33 @@ watch(hovered, newVal => {
           :click-url="'/dokter/meldingen?id=' + melding.patientId"
           @remove="removeFromList(melding.id)"
         />
+
+        <AlertsPinned
+            v-for="melding of 5"
+            v-if="notificationsPending"
+            class='animate-pulse blurred-text w-[30rem]'
+            :key="placeHolderAlert.id"
+            :datetime="placeHolderAlert.timestamp"
+            :level="placeHolderAlert.level"
+            :name="placeHolderAlert.fullName"
+            :type="placeHolderAlert.type"
+            :value="placeHolderAlert.value"
+            :click-url="'/dokter/meldingen?id=' + placeHolderAlert.patientId"
+          />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.blurred-text {
+  color: transparent;
+  text-shadow: 0 0 8px #000;
+  filter: grayscale(1);
+}
+
+.blurred-text .text-sm {
+  color: transparent !important;
+  text-shadow: 0 0 8px #000;
+}
+</style>
