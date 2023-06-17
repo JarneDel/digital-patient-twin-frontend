@@ -106,7 +106,7 @@ const editLinkName = computed(
     <div class="mx-5 flex flex-col flex-wrap gap-4 md:flex-row lg:mx-20">
       <!-- persoonlijke -->
       <div class="">
-        <FormsSelectDevice></FormsSelectDevice>
+        <!-- <FormsSelectDevice></FormsSelectDevice> -->
         <TextKop2>meldingen</TextKop2>
         <div class="mt-4">
           <pressables-switch
