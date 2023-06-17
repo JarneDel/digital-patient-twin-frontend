@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { d } from 'ofetch/dist/error-04138797'
 import { ref } from 'vue'
 import { AlertType } from '~/interfaces/AlertType'
-import {
-  IPatientAlgemeen,
-  PatientGegevens,
-  Address,
-  Medisch,
-  Contact,
-} from '~/interfaces/IPatient'
+import { Address, Contact, IPatientAlgemeen, Medisch, PatientGegevens } from '~/interfaces/IPatient'
+
 useHead({
   title: 'Gegevens patiënt',
   meta: [
@@ -20,8 +14,6 @@ useHead({
 })
 
 const routeID = useRoute().params.patientid as string
-const refrenceid = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
-//id dynamicaaly
 const id = ref(routeID)
 //get patient data
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`

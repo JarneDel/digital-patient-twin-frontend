@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LucideEdit3, LucideX, LucideTrash } from 'lucide-vue-next'
+import { LucideEdit3, LucideTrash, LucideX } from 'lucide-vue-next'
 import Button from '~/components/pressables/button.vue'
 
 defineProps({

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Pinrotated from '../svg/pinrotated.vue'
-import { Pencil, LineChart, LucideX } from 'lucide-vue-next'
+import { LineChart, LucideX, Pencil } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const props = defineProps({
@@ -20,8 +20,8 @@ console.info('patient', props.patientId)
 </script>
 
 <template>
-  <NuxtLink
-    :to='`/dokter/patienten/${patientId}`'
+  <button
+    @click='navigateTo(`/dokter/patienten/${patientId}`)'
     class="flex h-[66px] w-[550px] items-center rounded-lg bg-white px-4 drop-shadow-xl transition-all hover:bg-neutral-500"
   >
     <div
@@ -56,5 +56,5 @@ console.info('patient', props.patientId)
         />
       </NuxtLink>
     </div>
-  </NuxtLink>
+  </button>
 </template>

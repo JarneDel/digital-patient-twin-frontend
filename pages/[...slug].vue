@@ -1,5 +1,5 @@
 <script setup>
-import { LucideArrowLeft } from 'lucide-vue-next';
+import { LucideArrowLeft } from 'lucide-vue-next'
 
 useHead({
   title: 'Page not found',

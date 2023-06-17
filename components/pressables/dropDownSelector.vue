@@ -1,10 +1,5 @@
 <script lang='ts' setup>
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from '@headlessui/vue'
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { Check, ChevronDown } from 'lucide-vue-next'
 
 const props = defineProps({

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Slider from '@vueform/slider'
 import { ref } from 'vue'
-import { AlertType } from '~/interfaces/AlertType'
 
 const value = ref([30, 60])
 const value_1 = ref(10)

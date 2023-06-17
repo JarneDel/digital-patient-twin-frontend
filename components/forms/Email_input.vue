@@ -55,7 +55,7 @@ function validateEmail(email: any) {
 }
 </style> -->
 <script setup lang="ts">
-import { defineProps, defineEmits, watch } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 
 const props = defineProps({
   emailValue: {

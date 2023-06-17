@@ -1,11 +1,11 @@
 <script setup lang='ts'>
-import { ref, defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import {
   Combobox,
-  ComboboxInput,
   ComboboxButton,
-  ComboboxOptions,
+  ComboboxInput,
   ComboboxOption,
+  ComboboxOptions,
   TransitionRoot,
 } from '@headlessui/vue'
 import { Check, ChevronDown } from 'lucide-vue-next'

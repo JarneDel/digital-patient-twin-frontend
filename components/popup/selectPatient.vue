@@ -2,7 +2,6 @@
 
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import DropDownSelector from '~/components/pressables/dropDownSelector.vue'
 import Button from '~/components/pressables/button.vue'
 import { $fetch } from 'ofetch'
 

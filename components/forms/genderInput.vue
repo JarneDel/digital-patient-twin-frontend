@@ -42,7 +42,7 @@ watch(
 
 <style scoped></style> -->
 <script setup lang="ts">
-import { defineProps, defineEmits, watch } from 'vue'
+import { defineEmits, defineProps, watch } from 'vue'
 
 const props = defineProps({
   genderValue: {
