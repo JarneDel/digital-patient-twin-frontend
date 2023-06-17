@@ -24,7 +24,7 @@ const {
   data,
   error,
   pending,
-} = useFetch<Array<PatientGegevens>>(`/dokter/${props.dokterId}/patients`, {
+} = useFetch<Array<PatientGegevens>>(`/dokter/${dokterId}/patients`, {
   baseURL: 'https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io',
 })
 
@@ -120,7 +120,12 @@ const selected2 = ref('')
               </DialogTitle>
               <div class='mt-2'>
                 <p class='text-sm text-gray-500'>
-                  Selecteer een patient om toe te voegen aan uw patientenlijst.
+                  Selecteer een patient om toe te voegen aan uw patiëntenlijst.
+                  <br/>
+                  <strong>
+                    ( gesimuleerd, lees hier id kaart van patient in )
+
+                  </strong>
                 </p>
               </div>
               <div>
