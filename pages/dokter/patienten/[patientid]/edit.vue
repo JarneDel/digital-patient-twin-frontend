@@ -130,6 +130,11 @@ watch(
   { deep: true },
 )
 
+const test = ref([10, 12])
+const test2 = ref([10, 12])
+watch(test, () => {
+  console.log('test changed to:', test.value)
+})
 
 </script>
 
@@ -185,7 +190,7 @@ watch(
           </div>
           <template-slider
             class='-mx-5 mt-0'
-            :type='AlertType[AlertType.AdemsFrequentie]'
+            v-model='test2'
             :min='0'
             :max='100'
           />
@@ -207,8 +212,8 @@ watch(
           </div>
           <template-slider
             class='-mx-5'
-            :type='AlertType[AlertType.Bloedzuurstof]'
-            :min='0'
+            v-model='test'
+            :min='67'
             :max='100'
           />
         </div>
@@ -229,9 +234,9 @@ watch(
           </div>
           <template-slider
             class='-mx-5'
-            :type='AlertType[AlertType.Hartslag]'
-            :min='0'
-            :max='100'
+            v-model='test'
+            :min='10'
+            :max='160'
           />
         </div>
         <div class='mt-4'>
@@ -249,12 +254,22 @@ watch(
               />
             </Switch>
           </div>
+          <p class='text-xs text-gray-500'>systolisch</p>
           <template-slider
             class='-mx-5'
-            :type='AlertType[AlertType.Bloeddruk]'
+            v-model='test'
             :min='0'
-            :max='100'
+            :max='200'
           />
+          <p class='text-xs text-gray-500'>diastolisch</p>
+          <template-slider
+            class='-mx-5'
+            v-model='test'
+            :min='0'
+            :max='150'
+          />
+
+
         </div>
         <div class='mt-4'>
           <div class='flex flex-row justify-between content-center '>
@@ -273,9 +288,9 @@ watch(
           </div>
             <template-slider
               class='-mx-5'
-              :type='AlertType[AlertType.Temperatuur]'
-              :min='0'
-              :max='100'
+              v-model='test'
+              :min='33'
+              :max='42'
             />
         </div>
       </div>
