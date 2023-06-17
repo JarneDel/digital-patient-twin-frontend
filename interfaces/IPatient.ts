@@ -16,6 +16,7 @@ export interface PatientGegevens {
   contact: Contact
   medisch: Medisch
   createdBy?: string
+  medicalNotificationThresholds: IMedicalNotifcationsTresholds
 }
 
 export interface Address {

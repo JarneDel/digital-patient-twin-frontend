@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { AlertType } from '~/interfaces/AlertType'
-import { Address, Contact, IPatientAlgemeen, Medisch, PatientGegevens } from '~/interfaces/IPatient'
+import {
+  Address,
+  Contact,
+  IMedicalNotifcationsTresholds,
+  IPatientAlgemeen,
+  Medisch,
+  PatientGegevens,
+} from '~/interfaces/IPatient'
 
 useHead({
   title: 'Gegevens patiënt',
@@ -28,7 +35,7 @@ const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
 const patientContact: Contact = data.value?.contact as Contact
 const gegevens = data.value as PatientGegevens
-const thresholds = data.value?.thresholds as Thresholds
+const thresholds = data.value?.medicalNotificationThresholds as IMedicalNotifcationsTresholds
 
 const formPatient = ref<IPatientAlgemeen>(patient)
 
@@ -39,13 +46,14 @@ const formPatientGegevens = ref<PatientGegevens>(gegevens)
 
 const submitForm = async () => {
   try {
-    const updatedPatientData = {
-      gegevens: formPatientGegevens.value,
+    const updatedPatientData: PatientGegevens = {
       algemeen: formPatient.value,
       adres: formPatientAdres.value,
       medisch: formPatientMedisch.value,
       contact: formPatientContact.value,
-
+      deviceId: gegevens.deviceId,
+      id: gegevens.id,
+      medicalNotificationThresholds: thresholds
     }
 
     // Send the updated patient data to your API endpoint
@@ -60,7 +68,6 @@ const submitForm = async () => {
     if (response.ok) {
       //execute the fetch again to update the data
       execute()
-      window.location.reload()
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
@@ -157,55 +164,53 @@ const editLinkName = computed(
             :textValue="patient.voornaam"
             v-model="patient.voornaam"
             @update:textValue="patient.voornaam = $event"
-          ></forms-text-input>
+          />
           <forms-surname-input
             :surnameValue="patient.naam"
             v-model="patient.naam"
             @update:surnameValue="patient.naam = $event"
-          >
-          </forms-surname-input>
+          />
           <forms-gender-input
             :genderValue="patient.geslacht"
             v-model="patient.geslacht"
             @update:genderValue="patient.geslacht = $event"
-          ></forms-gender-input>
+          />
           <forms-country-input
             :countryValue="patient.geboorteland"
             v-model="patient.geboorteland"
             @update:countryValue="patient.geboorteland = $event"
-          ></forms-country-input>
+          />
           <forms-date-input
             :birthDateValue="patient.geboorteDatum"
             v-model="patient.geboorteDatum"
             @update:birthDateValue="patient.geboorteDatum = $event"
-          >
-          </forms-date-input>
+          />
           <TextKop2 class="my-5">Adres informatie</TextKop2>
           <forms-city-input
             :cityValue="patientAdres.gemeente"
             v-model="patientAdres.gemeente"
             @update:cityValue="patientAdres.gemeente = $event"
-          ></forms-city-input>
+          />
           <forms-street-input
             :textStreetNameValue="patientAdres.straat"
             v-model="patientAdres.straat"
             @update:textStreetNameValue="patientAdres.straat = $event"
-          ></forms-street-input>
+          />
           <forms-postalcode-inputs
-            @update:postalcodeValue="patientAdres.postcode = parseInt($event)"
-            @update:houseNumberValue="patientAdres.nr = $event"
-          ></forms-postalcode-inputs>
+            v-model:house-number-value='patientAdres.nr'
+            v-model:postalcode-value='patientAdres.postcode'
+          />
           <TextKop2 class="my-5">Contact gegevens</TextKop2>
           <forms-email-input
             :emailValue="patientContact.email"
             v-model="patientContact.email"
             @update:emailValue="patientContact.email = $event"
-          ></forms-email-input>
+          />
           <forms-telephone-input
             :phoneNumberValue="patientContact.telefoon"
             v-model="patientContact.telefoon"
             @update:phoneNumberValue="patientContact.telefoon = $event"
-          ></forms-telephone-input>
+          />
         </div>
       </div>
 
