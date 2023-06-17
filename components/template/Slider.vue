@@ -17,7 +17,8 @@ const props = defineProps({
   },
 })
 const emits = defineEmits([
-  'update:modelValue'
+  'update:modelValue',
+  'change',
 ])
 
 const updateLowerValue = (low: number) => {
@@ -54,7 +55,9 @@ const updateUpperValue = (high: number) => {
     <Slider
       :modelValue='modelValue'
       @update:modelValue='$emit("update:modelValue", $event)'
+      @change='$emit("change", $event)'
       :tooltips='false'
+      :lazy='false'
       :min='min'
       :max='max'
       class='slider-style'

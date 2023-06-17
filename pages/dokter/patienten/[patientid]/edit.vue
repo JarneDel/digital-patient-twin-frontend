@@ -1,15 +1,17 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
-import { AlertType } from '~/interfaces/AlertType'
 import {
   Address,
   Contact,
-  IMedicalNotifcationsTresholds, IMeldingenInstellingen,
+  IMeldingenInstellingen, INotificationRange,
   IPatientAlgemeen,
   Medisch,
   PatientGegevens,
 } from '~/interfaces/IPatient'
 import { Switch } from '@headlessui/vue'
+import useConvertNotificationRange from '~/composables/useConvertNotificationRange'
+
+const {convertThresholdsToRange, convertRangeToThresholds }  =useConvertNotificationRange()
 
 useHead({
   title: 'Gegevens patiënt',
@@ -29,9 +31,6 @@ const id = ref(routeID)
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
 
 const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
-
-console.log(notifcationurl)
-
 
 const dokterServiceUrl = 'https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io'
 const {
@@ -61,7 +60,6 @@ const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
 const patientContact: Contact = data.value?.contact as Contact
 const gegevens = data.value as PatientGegevens
-const thresholds = data.value?.medicalNotificationThresholds as IMedicalNotifcationsTresholds
 
 const formPatient = ref<IPatientAlgemeen>(patient)
 
@@ -72,6 +70,8 @@ const formPatientGegevens = ref<PatientGegevens>(gegevens)
 
 const submitForm = async () => {
   try {
+    console.log('submitting form')
+    if (!data.value || !thresholds.value) throw new Error('No data or thresholds')
     const updatedPatientData: PatientGegevens = {
       algemeen: formPatient.value,
       adres: formPatientAdres.value,
@@ -79,7 +79,7 @@ const submitForm = async () => {
       contact: formPatientContact.value,
       deviceId: gegevens.deviceId,
       id: gegevens.id,
-      medicalNotificationThresholds: thresholds,
+      medicalNotificationThresholds: convertRangeToThresholds(thresholds.value),
     }
 
     // Send the updated patient data to your API endpoint
@@ -130,11 +130,32 @@ watch(
   { deep: true },
 )
 
-const test = ref([10, 12])
-const test2 = ref([10, 12])
-watch(test, () => {
-  console.log('test changed to:', test.value)
-})
+const thresholds = ref<INotificationRange>();
+watch(data,
+  () => {
+    console.log('data changed to:', data.value)
+    if (!data.value || !data.value.medicalNotificationThresholds) return
+    thresholds.value = convertThresholdsToRange(data.value.medicalNotificationThresholds)
+    console.log('thresholds', thresholds.value)
+  },
+  {
+    immediate: true,
+  }
+)
+const fireRangeUpdate = () => {
+  console.log("update")
+  const url = `https://patientgegevens.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
+  // convert the thresholds to the correct format
+  if  (!thresholds.value) return
+  const updatedThresholds = convertRangeToThresholds(thresholds.value)
+  $fetch(url, {
+    method: "PUT",
+    body: JSON.stringify(updatedThresholds),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
 
 </script>
 
@@ -156,7 +177,7 @@ watch(test, () => {
     <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
       <!-- persoonlijke -->
       <div class=''
-           v-if='notificationsEnabled'>
+           v-if='notificationsEnabled && thresholds'>
         <!-- <FormsSelectDevice></FormsSelectDevice> -->
         <div class='flex flex-row justify-between'>
           <TextKop2>meldingen</TextKop2>
@@ -190,7 +211,8 @@ watch(test, () => {
           </div>
           <template-slider
             class='-mx-5 mt-0'
-            v-model='test2'
+            v-model='thresholds.ademhalingsfrequentie'
+            @change='fireRangeUpdate'
             :min='0'
             :max='100'
           />
@@ -212,7 +234,8 @@ watch(test, () => {
           </div>
           <template-slider
             class='-mx-5'
-            v-model='test'
+            v-model='thresholds.bloedzuurstof'
+            @change='fireRangeUpdate'
             :min='67'
             :max='100'
           />
@@ -234,7 +257,8 @@ watch(test, () => {
           </div>
           <template-slider
             class='-mx-5'
-            v-model='test'
+            v-model='thresholds.hartslag'
+            @change='fireRangeUpdate'
             :min='10'
             :max='160'
           />
@@ -257,14 +281,16 @@ watch(test, () => {
           <p class='text-xs text-gray-500'>systolisch</p>
           <template-slider
             class='-mx-5'
-            v-model='test'
+            v-model='thresholds.bloeddrukSystolisch'
+            @change='fireRangeUpdate'
             :min='0'
             :max='200'
           />
           <p class='text-xs text-gray-500'>diastolisch</p>
           <template-slider
             class='-mx-5'
-            v-model='test'
+            v-model='thresholds.bloeddrukDiastolisch'
+            @change='fireRangeUpdate'
             :min='0'
             :max='150'
           />
@@ -288,7 +314,8 @@ watch(test, () => {
           </div>
             <template-slider
               class='-mx-5'
-              v-model='test'
+              v-model='thresholds.temperatuur'
+              @change='fireRangeUpdate'
               :min='33'
               :max='42'
             />

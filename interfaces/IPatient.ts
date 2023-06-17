@@ -16,7 +16,7 @@ export interface PatientGegevens {
   contact: Contact
   medisch: Medisch
   createdBy?: string
-  medicalNotificationThresholds: IMedicalNotifcationsTresholds
+  medicalNotificationThresholds: IMedicalNotificationsThresholds
 }
 
 export interface Address {
@@ -37,18 +37,18 @@ export interface Medisch {
   gewicht?: number
 }
 
-export interface IMedicalNotifcationsTresholds {
-  bloeddrukSystolisch: INotifcations
-  bloeddrukDiaStolisch: INotifcations
-  hartslag: INotifcations
-  temperatuur: INotifcations
-  ademhalingsfrequentie: INotifcations
-  bloedzuurstof: INotifcations
+export interface IMedicalNotificationsThresholds {
+  bloeddrukSystolisch: INotifications
+  bloeddrukDiastolisch: INotifications
+  hartslag: INotifications
+  temperatuur: INotifications
+  ademhalingsfrequentie: INotifications
+  bloedzuurstof: INotifications
 }
 
-export interface INotifcations {
-  min: Number
-  max: Number
+export interface INotifications {
+  min: number
+  max: number
 }
 
 export interface IMeldingenInstellingen {
@@ -59,4 +59,13 @@ export interface IMeldingenInstellingen {
   ademhalingsfrequentie: boolean;
   temperatuur: boolean;
   bloedzuurstof: boolean;
+}
+
+export interface INotificationRange {
+  bloeddrukSystolisch: [number, number];
+  bloeddrukDiastolisch: [number, number];
+  hartslag: [number, number];
+  temperatuur: [number, number];
+  ademhalingsfrequentie: [number, number];
+  bloedzuurstof: [number, number];
 }
