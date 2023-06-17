@@ -116,7 +116,7 @@ watch(hovered, newVal => {
 
 <template>
   <div class="mx-auto my-12 max-w-[75rem]">
-    <h2 v-if="user !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
+    <h2 v-if="user !== null" class="mx-8 mb-8 mt-6 text-3xl w-[34rem] font-semibold">
       Welkom, {{ user?.name }}
     </h2>
     <!--    Grid container -->
@@ -149,7 +149,6 @@ watch(hovered, newVal => {
           :patientId="patient.id"
         />
       </div>
-
       <div v-else class="w-[34.375rem]">
         <TextKop3>Er zijn nog geen gepinde patiënten</TextKop3>
         <PressablesButton
