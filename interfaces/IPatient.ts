@@ -35,3 +35,17 @@ export interface Medisch {
   lengte?: number
   gewicht?: number
 }
+
+export interface IMedicalNotifcationsTresholds {
+  bloeddrukSystolisch: INotifcations
+  bloeddrukDiaStolisch: INotifcations
+  hartslag: INotifcations
+  temperatuur: INotifcations
+  ademhalingsfrequentie: INotifcations
+  bloedzuurstof: INotifcations
+}
+
+export interface INotifcations {
+  min: Number
+  max: Number
+}

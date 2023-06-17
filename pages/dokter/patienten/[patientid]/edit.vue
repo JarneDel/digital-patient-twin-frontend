@@ -35,20 +35,25 @@ const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
 const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
 const patientContact: Contact = data.value?.contact as Contact
+const gegevens = data.value as PatientGegevens
+const thresholds = data.value?.thresholds as Thresholds
 
 const formPatient = ref<IPatientAlgemeen>(patient)
+
 const formPatientAdres = ref<Address>(patientAdres)
 const formPatientMedisch = ref<Medisch>(patientMedisch)
 const formPatientContact = ref<Contact>(patientContact)
+const formPatientGegevens = ref<PatientGegevens>(gegevens)
 
 const submitForm = async () => {
   try {
     const updatedPatientData = {
-      deviceId: 'testdatagenerator', //deviceid remains unchanged when updated
+      gegevens: formPatientGegevens.value,
       algemeen: formPatient.value,
       adres: formPatientAdres.value,
       medisch: formPatientMedisch.value,
       contact: formPatientContact.value,
+
     }
 
     // Send the updated patient data to your API endpoint
