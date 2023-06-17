@@ -134,6 +134,7 @@ watch(hovered, newVal => {
             :patient="placeHolderPatient"
             :patientId="placeHolderPatient.id"
             class="blurred-text animate-pulse"
+            :isDisabled="true"
           />
         </client-only>
       </div>

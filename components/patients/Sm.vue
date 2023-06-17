@@ -12,6 +12,11 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 defineEmits(['unpin'])
 const hover = ref<boolean>(false)
@@ -21,7 +26,7 @@ console.info('patient', props.patientId)
 
 <template>
   <NuxtLink
-    :to='`/dokter/patienten/${patientId}`'
+    :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
     class="flex h-[66px] w-[550px] items-center rounded-lg bg-white px-4 drop-shadow-xl transition-all hover:bg-neutral-500"
   >
     <div
@@ -41,7 +46,7 @@ console.info('patient', props.patientId)
       <span class="text-gray-800">{{ patient.geslacht }}</span>
       <NuxtLink
         class="justify-self-center"
-        :to='`/dokter/patienten/${patientId}/edit`'
+        :to='!isDisabled? `/dokter/patienten/${patientId}/edit` : undefined'
       >
         <pencil
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
@@ -49,7 +54,7 @@ console.info('patient', props.patientId)
       </NuxtLink>
       <NuxtLink
         class="justify-self-center"
-        :to='`/dokter/patienten/${patientId}`'
+        :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
       >
         <Line-chart
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
