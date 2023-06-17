@@ -98,10 +98,11 @@ const selected2 = ref('')
       as="div"
       class="relative z-10"
       @close="() => $emit('update:isOpen', false)"
+     
     >
       <TransitionChild
         as="template"
-        enter="duration-300 ease-out"
+        enter="duration-100 ease-out"
         enter-from="opacity-0"
         enter-to="opacity-100"
         leave="duration-200 ease-in"
@@ -137,13 +138,14 @@ const selected2 = ref('')
                 <p class="text-sm text-gray-500">
                   Selecteer een patient om toe te voegen aan uw patiëntenlijst.
                   <br />
-                  <strong>
+                  <p class="font-semibold my-2">
                     ( gesimuleerd, lees hier id kaart van patient in )
-                  </strong>
+                  </p>
                 </p>
               </div>
               <div>
                 <pressables-drop-down-selector
+                  v-model:selected="selectedPatientName"
                   :is-fixed="false"
                   :options="
                     remainingPatients.map(
@@ -154,7 +156,7 @@ const selected2 = ref('')
                   @update:selected="(naam: string)=> selected2 = naam"
                 />
                 <button
-                  class="shadow-sm mt-4 inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 sm:text-sm"
+                  class="shadow-sm mt-4 inline-flex w-full justify-center rounded-md border-tertiary-400 border-2 bg-tertiary-100/30 px-4 py-2 text-base font-semibold text-tertiary-600 hover:bg-tertiary-200/40 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-2 disabled:opacity-50 sm:text-sm"
                   @click="() => submit(selected2)"
                 >
                   ok

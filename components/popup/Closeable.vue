@@ -71,12 +71,13 @@ defineProps({
         <div
           class="flex min-h-full items-center justify-center p-4 text-center"
         >
+          <!-- Changed leave from 200 to 100 so you dont see the X icon  -->
           <TransitionChild
             as="template"
             enter="duration-300 ease-out"
             enter-from="opacity-0 scale-95"
             enter-to="opacity-100 scale-100"
-            leave="duration-200 ease-in"
+            leave="duration-100 ease-in"
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
@@ -97,7 +98,8 @@ defineProps({
               <div>
                 <LucideX
                   name="close"
-                  class="absolute right-4 top-4 cursor-pointer rounded-md hover:bg-neutral-200/20 p-1 text-tertiary-600 ring-2 focus:ring-tertiary-300 hover:bg-tertiary-200/20 focus:outline-none focus-visible:ring-tertiary-500"
+                  role="button"
+                  class="absolute right-4 top-4 cursor-pointer rounded-md p-1 transition-colors duration-200 hover:bg-neutral-100/20"
                   @click="closeModal"
                 ></LucideX>
               </div>
