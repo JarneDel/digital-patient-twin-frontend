@@ -131,21 +131,22 @@ watch(hovered, newVal => {
         v-if='pinnedPatients !== null && pinnedPatients.length > 0'
         class="flex flex-col gap-4"
       >
-        <patients-sm
+        <!-- <patients-sm
           v-for="patient of pinnedPatients"
           :key="patient.id"
           :patient="patient.algemeen"
           :patientId='patient.id'
           @unpin="unpin(patient.id)"
-        />
+        /> -->
         <patients-sm
           v-for="patient of 5"
-          v-if="pendingPinnedPatients"
           :key="Math.random()"
           :patient="placeHolderPatient"
           :patientId='placeHolderPatient.id'
+          class="animate-pulse blurred-text"
         />
       </div>
+      <div v-else-if="pendingPinnedPatients" v-for="patient of 5">help</div>
       <div v-else class="w-[34.375rem]">
         <TextKop3>Er zijn nog geen gepinde patiënten</TextKop3>
         <PressablesButton
