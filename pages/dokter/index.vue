@@ -5,6 +5,7 @@ import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchContext, FetchError } from 'ofetch'
 import { useUser } from '~/composables/useUser'
+import { ClientOnly } from '~/.nuxt/components'
 
 const isLoggedIn = ref(false)
 
@@ -128,16 +129,9 @@ watch(hovered, newVal => {
       <TextKop2>Gepinde Patiënten</TextKop2>
       <!--      Content Left      -->
       <div
-        v-if='pinnedPatients !== null && pinnedPatients.length > 0'
+        v-if='pendingPinnedPatients'
         class="flex flex-col gap-4"
       >
-        <!-- <patients-sm
-          v-for="patient of pinnedPatients"
-          :key="patient.id"
-          :patient="patient.algemeen"
-          :patientId='patient.id'
-          @unpin="unpin(patient.id)"
-        /> -->
         <patients-sm
           v-for="patient of 5"
           :key="Math.random()"
@@ -146,7 +140,21 @@ watch(hovered, newVal => {
           class="animate-pulse blurred-text"
         />
       </div>
-      <div v-else-if="pendingPinnedPatients" v-for="patient of 5">help</div>
+      <div
+        v-else-if='pinnedPatients !== null && pinnedPatients.length > 0'
+        class="flex flex-col gap-4"
+      >
+        <div v-for="patient of 5">hello</div>
+        <!-- <ClientOnly>
+        <patients-sm
+          v-for="patient of pinnedPatients"
+          :key="patient.id"
+          :patient="patient.algemeen"
+          :patientId='patient.id'
+        />
+        </ClientOnly> -->
+      </div>
+
       <div v-else class="w-[34.375rem]">
         <TextKop3>Er zijn nog geen gepinde patiënten</TextKop3>
         <PressablesButton
@@ -157,7 +165,6 @@ watch(hovered, newVal => {
           <svg-pinrotated class="rotate-270 mr-2 h-8 w-8"></svg-pinrotated>
 
           <span class="mr-1 text-lg"> Pin een patiënt </span>
-          <!--          <LucideChevronRight class='w-6 h-6 ml-2' />-->
         </PressablesButton>
       </div>
       <!--      Title Right      -->
