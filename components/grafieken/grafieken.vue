@@ -8,6 +8,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import useWebPubSub from '~/composables/useWebPubSub'
 import { IRealtime } from '~/interfaces/IRealtime'
 import { PatientGegevens } from '~/interfaces/IPatient'
+import { OnGroupDataMessageArgs } from '@azure/web-pubsub-client'
 
 const date = ref<Date[]>([
   new Date(new Date().setDate(new Date().getDate() - 7)),
@@ -173,25 +174,27 @@ if (process.client) {
   initializeClient()
 }
 const message = ref<IRealtime>()
+const watchGroupMessage = (data: OnGroupDataMessageArgs) => {
+  console.info('group message received', data.message)
+  console.log(new Date())
+  if (!patient.value) return
+  if (data.message.group !== patient.value.deviceId) {
+    console.log('message meant for different group', data.message.group, patient.value.deviceId)
+  }
+  message.value = data.message.data as IRealtime
+}
+
 watch(isInitialized, async (newVal) => {
   if (!newVal) return
   if (!client.value) return
-  client.value?.on('group-message', (data) => {
-    if (!patient.value) return
-    if (data.message.group !== patient.value.deviceId) {
-      console.log('message meant for different group', data.message.group, patient.value.deviceId)
-    }
-    message.value = data.message.data as IRealtime
-  })
+  client.value?.on('group-message', watchGroupMessage)
 })
 
-watch(patient, () => {
-  console.log('subscribing to group')
+watch(patient, async () => {
   if (patient.value) {
-    subscribeToGroup(patient.value.deviceId)
+    await subscribeToGroup(patient.value.deviceId)
   }
 })
-
 
 </script>
 <template>
