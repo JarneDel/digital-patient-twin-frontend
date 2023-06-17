@@ -195,14 +195,14 @@ watch(hovered, newVal => {
   </div>
 </template>
 
-<style scoped>
+<style>
 .blurred-text {
   color: transparent;
   text-shadow: 0 0 8px #000;
   filter: grayscale(1);
 }
 
-.blurred-text .text-sm {
+.blurred-text .text-gray-800 {
   color: transparent !important;
   text-shadow: 0 0 8px #000;
 }
