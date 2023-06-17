@@ -116,7 +116,7 @@ watch(hovered, newVal => {
 
 <template>
   <div class="mx-auto my-12 max-w-[75rem]">
-    <h2 v-if="user !== null" class="mx-8 mb-8 mt-6 text-3xl w-[34rem] font-semibold">
+    <h2 v-if="user !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold">
       Welkom, {{ user?.name }}
     </h2>
     <!--    Grid container -->
