@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { AlertLevel, IMelding, AlertType } from '~/interfaces/AlertType'
-import { PatientGegevens } from '~/interfaces/IPatient'
+import { PatientGegevens, IPatientAlgemeen } from '~/interfaces/IPatient'
 import { AccountInfo } from '@azure/msal-browser'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchContext, FetchError } from 'ofetch'
@@ -27,6 +27,15 @@ const placeHolderAlert = ref<IMelding>({
   level: AlertLevel.Info,
   timestamp: new Date(),
   fullName: 'name',
+})
+
+const placeHolderPatient = ref<IPatientAlgemeen>({
+  id: '1',
+  voornaam: 'voornaam',
+  naam: 'naam',
+  geboorteDatum: '01/01/2000',
+  geslacht: 'geslacht',
+  geboorteland: 'België',
 })
 
 useHead({
@@ -128,6 +137,13 @@ watch(hovered, newVal => {
           :patient="patient.algemeen"
           :patientId='patient.id'
           @unpin="unpin(patient.id)"
+        />
+        <patients-sm
+          v-for="patient of 5"
+          v-if="pendingPinnedPatients"
+          :key="Math.random()"
+          :patient="placeHolderPatient"
+          :patientId='placeHolderPatient.id'
         />
       </div>
       <div v-else class="w-[34.375rem]">
