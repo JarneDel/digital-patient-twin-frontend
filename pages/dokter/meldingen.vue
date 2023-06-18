@@ -6,16 +6,7 @@ import { FetchContext } from 'ofetch'
 import { LucideInfo, LucideLoader2, LucideRotateCw } from 'lucide-vue-next'
 import { useWatchIfScrolledToBottom } from '~/composables/useWatchIfScrolledToBottom'
 
-useHead({
-  title: 'Meldingen',
-  meta: [
-    {
-      name: 'description',
-      content: 'Meldingen pagina. Bekijk alle meldingen van patiënten.',
-    },
-  ],
-})
-
+useTitle('Meldingen', 'Meldingen pagina. Bekijk alle meldingen van patiënten.')
 const route = useRoute()
 const id = route.query.id as string | undefined
 let isFirstLoad = true

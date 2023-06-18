@@ -20,8 +20,8 @@ const props = defineProps({
 })
 defineEmits(['unpin'])
 const hover = ref<boolean>(false)
+const {convertDateStringToLocaleString} = UseDateConverter()
 
-console.info('patient', props.patientId)
 </script>
 
 <template>
@@ -42,7 +42,7 @@ console.info('patient', props.patientId)
         <LucideX v-else class='h-10 w-10 p-2' />
       </button>
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
-      <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
+      <span class='text-gray-800'>{{ convertDateStringToLocaleString(patient.geboorteDatum) }}</span>
       <span class="text-gray-800">{{ patient.geslacht }}</span>
       <NuxtLink
         class="justify-self-center rounded-lg outline-none ring-transparent ring-2 focus:ring-tertiary-500"

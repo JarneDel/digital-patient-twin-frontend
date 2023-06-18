@@ -77,7 +77,7 @@ const handlePin = (id: string, isPinned: boolean) => {
 }
 
 const pinPatient = (id: string, isPinned: boolean) => {
-  if (isPinned === true) {
+  if (isPinned) {
     console.log('😀')
     $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
       method: 'DELETE',
@@ -105,8 +105,9 @@ const pinPatient = (id: string, isPinned: boolean) => {
     )
   }
 }
-
+console.log(props.patient.algemeen.geboorteDatum, props.patient.algemeen.naam)
 defineEmits(['clickPin'])
+const {convertDateStringToAge}  = UseDateConverter()
 </script>
 
 <template>
@@ -122,7 +123,7 @@ defineEmits(['clickPin'])
         @click="[handlePin(patient.id, isPinned), $emit('clickPin')]"
       >
         <svg-pinrotated
-          v-if="isPinned === false"
+          v-if="!isPinned"
           :isRotated="false"
           class="h-9 w-9 rounded-lg fill-neutral-200"
         />
@@ -148,7 +149,7 @@ defineEmits(['clickPin'])
       ></div>
       <div class="capitalize">{{ patient.algemeen.voornaam }}</div>
       <div class="capitalize">{{ patient.algemeen.naam }}</div>
-      <div>{{ calculateAge(patient.algemeen.geboorteDatum.toString()) }}</div>
+      <div>{{ convertDateStringToAge(patient.algemeen.geboorteDatum) }}</div>
       <div class="capitalize">{{ patient.algemeen.geslacht }}</div>
 
       <div class="flex-1 justify-between">
