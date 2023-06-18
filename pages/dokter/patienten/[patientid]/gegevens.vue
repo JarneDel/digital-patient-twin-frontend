@@ -11,14 +11,13 @@ const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azu
 
 // const url = `/dokter/${user.value?.localAccountId}/patients/${patientId}`
 
-const { error, data, pending } = await useFetch<PatientGegevens>(url)
-const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
+const { error, data, pending } = useFetch<PatientGegevens>(url)
 
 const {convertDateStringToLocaleString} = UseDateConverter()
 </script>
 
 <template>
-  <div class="m-5 flex flex-col items-center justify-between md:flex-row lg:mx-20">
+  <div class="m-5 flex flex-col items-center justify-between md:flex-row lg:mx-20 max-w-[74rem]">
     <PressablesGoback
       link_path="/dokter/patienten"
       link_name="patient gegevens"

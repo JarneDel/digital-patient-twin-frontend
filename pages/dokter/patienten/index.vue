@@ -178,7 +178,7 @@ watch(isSelectPatientOpen, (state) => {
     <h2 class='mb-4 text-3xl font-semibold'>Patiënt lijst</h2>
     <div class='my-8 flex mx-4 items-center justify-between lg:flex-row'>
       <button
-        class='inline-flex justify-center rounded-lg border-2 bg-secondary-100/30 border-secondary-200 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80'
+        class='inline-flex justify-center transition-colors rounded-lg border-2 bg-secondary-100/30 border-secondary-200 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/30 focus-visible:ring-secondary-400/80'
         @click='showAddPatientPopup'
       >
         <Plus class='h-8 w-8' />
