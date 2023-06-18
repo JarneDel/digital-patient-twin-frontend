@@ -166,6 +166,7 @@ watch(hovered, newVal => {
         <AlertsPinned
           v-for="melding of criticalNotifications.slice(0, 6)"
           v-if="criticalNotifications"
+          class="w-[30rem]"
           :key="melding.id"
           :datetime="melding.timestamp"
           :level="melding.level"
