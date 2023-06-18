@@ -33,64 +33,8 @@ const {
   },
 )
 
-const placeholderPatient = ref<PatientGegevens>({
-  id: '1',
-  deviceId: '1',
-  algemeen: {
-    id: '1',
-    voornaam: 'voornaam',
-    naam: 'naam',
-    geboorteDatum: 'geboortedatum',
-    geslacht: 'geslacht',
-    geboorteland: 'geboorteland',
-  },
-  profilePictureUrl: 'https://i.imgur.com/3Zo7z6d.png',
-  adres: {
-    gemeente: 'gemeente',
-    straat: 'straat',
-    postcode: 123,
-    nr: '123a',
-  },
-  contact: {
-    email: 'email@mail.com',
-    telefoon: '123456789',
-  },
-  medisch: {
-    bloedgroep: 'A+',
-    lengte: 170,
-    gewicht: 170,
-  },
-  createdBy:"1",
-  medicalNotificationThresholds:{
-    bloeddrukSystolisch: {
-      min: 120,
-      max: 140,
-    },
-    bloeddrukDiaStolisch: {
-      min: 80,
-      max: 90,
-    },
-    hartslag: {
-      min: 80,
-      max: 120,
-    },
-    temperatuur: {
-      min: 35,
-      max: 40,
-    },
-    ademhalingsfrequentie: {
-      min: 10,
-      max: 30,
-    },
-    bloedzuurstof: {
-      min: 70,
-      max: 100,
-    }
-  }
-})
-
-const user1 = useUser()
-console.log(user1.value?.localAccountId, 'user1')
+const {createPlaceholderPatient } = usePatientHelper()
+const placeholderPatient = ref<PatientGegevens>(createPlaceholderPatient())
 
 const isEditing = ref(false)
 const isDeleting = ref(false)
@@ -201,16 +145,7 @@ const del = async () => {
   execute()
 }
 
-
-useHead({
-  title: 'Patiënten',
-  meta: [
-    {
-      name: 'description',
-      content: 'Patiënten pagina. Bekijk al je patiënten zien.',
-    },
-  ],
-})
+useTitle('Patiënten', "Patiënten pagina. Bekijk al je patiënten zien.")
 
 watch(pending, () => {
   if (pending.value) {
@@ -222,11 +157,7 @@ watch(pending, () => {
 
 const pinned = (id: string) => {
   if(patients.value !== null && pinnedPatients.value !== null){
-    if(pinnedPatients.value.filter(p => p.id === id).length > 0){
-      return true
-    }else{
-      return false
-    }
+    return pinnedPatients.value.filter(p => p.id === id).length > 0;
   }
 }
 

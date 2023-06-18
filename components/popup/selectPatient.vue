@@ -30,6 +30,7 @@ const { data, error, pending } = useFetch<Array<PatientGegevens>>(
   {
     baseURL:
       'https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io',
+    cache: 'no-cache',
   },
 )
 
@@ -40,10 +41,11 @@ const {
 } = useFetch<Array<PatientGegevens>>('/patient', {
   baseURL:
     'https://patientgegevens.blackdune-2fd1ec46.northeurope.azurecontainerapps.io',
+  cache: 'no-cache',
 })
 
 const remainingPatients = ref<Array<PatientGegevens>>([])
-
+const noRemainingPatients = ref(false)
 const calculateRemainingPatients = () => {
   if (!data || !data.value || !allPatients.value) return
   const patientenVanDokter = data.value.map(patient => patient.id)
@@ -51,9 +53,14 @@ const calculateRemainingPatients = () => {
   const remainingPatientIds = allePatienten.filter(
     patient => !patientenVanDokter.includes(patient),
   )
-  remainingPatients.value = allPatients.value.filter(patient =>
+  const remaining = allPatients.value.filter(patient =>
     remainingPatientIds.includes(patient.id),
   )
+  if (!remaining) {
+    noRemainingPatients.value = true
+    return
+  }
+  remainingPatients.value = remaining
 }
 
 watch(data, data => {
@@ -68,7 +75,18 @@ watch(allPatients, () => {
   }
 })
 
+
 const selectedPatientName = ref<string>('')
+watch(selectedPatientName, name => {
+  console.info(name, "new selected patient name")
+})
+const remainingPatientsNames = computed(() => {
+  if (!remainingPatients.value) return []
+  return remainingPatients.value.map(
+    patient => patient.algemeen.voornaam + ' ' + patient.algemeen.naam,
+  )
+})
+
 
 const submit = async (fullName: string) => {
   console.log('submit', fullName)
@@ -89,7 +107,6 @@ const submit = async (fullName: string) => {
   navigateTo(`/dokter/patienten/${selectedPatientTemp.id}/gegevens`)
 }
 
-const selected2 = ref('')
 </script>
 
 <template>
@@ -138,29 +155,30 @@ const selected2 = ref('')
                 <p class="text-sm text-gray-500">
                   Selecteer een patient om toe te voegen aan uw patiëntenlijst.
                   <br />
-                  <p class="font-semibold my-2">
+                  <span class="font-semibold my-2">
                     ( gesimuleerd, lees hier id kaart van patient in )
-                  </p>
+                  </span>
                 </p>
               </div>
               <div>
                 <pressables-drop-down-selector
-                  v-model:selected="selectedPatientName"
+                  v-if='!noRemainingPatients'
+                  v-model='selectedPatientName'
                   :is-fixed="false"
-                  :options="
-                    remainingPatients.map(
-                      patient =>
-                        patient.algemeen.voornaam + ' ' + patient.algemeen.naam,
-                    )
-                  "
-                  @update:selected="(naam: string)=> selected2 = naam"
+                  :options="remainingPatientsNames"
                 />
                 <button
                   class="shadow-sm mt-4 inline-flex w-full justify-center rounded-md border-tertiary-400 border-2 bg-tertiary-100/30 px-4 py-2 text-base font-semibold text-tertiary-600 hover:bg-tertiary-200/40 focus:outline-none focus:ring-2 focus:ring-tertiary-500 focus:ring-offset-2 disabled:opacity-50 sm:text-sm"
-                  @click="() => submit(selected2)"
+                  @click="() => submit(selectedPatientName)"
+                  v-if='!noRemainingPatients'
                 >
                   ok
                 </button>
+              </div>
+              <div v-if='noRemainingPatients'>
+                <p class="text-sm text-gray-500">
+                  U heeft alle patienten al toegevoegd.
+                </p>
               </div>
             </DialogPanel>
           </TransitionChild>

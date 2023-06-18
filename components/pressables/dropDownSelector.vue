@@ -12,7 +12,7 @@ const props = defineProps({
     type: Array as PropType<string[]>,
     required: true,
   },
-  selected: {
+  modelValue: {
     type: String,
     required: true,
   },
@@ -24,7 +24,7 @@ const props = defineProps({
 })
 
 
-const emits = defineEmits(['update:selected'])
+const emits = defineEmits(['update:modelValue'])
 const opt = computed(() => props.options.map((name) => ({ name })))
 const selected = ref(opt.value[0])
 watch(opt, (newVal) => {
@@ -32,7 +32,7 @@ watch(opt, (newVal) => {
 })
 watch(selected, (newVal) => {
   console.log('update:selected' + newVal.name)
-  emits('update:selected', newVal.name)
+  emits('update:modelValue', newVal.name)
 })
 
 

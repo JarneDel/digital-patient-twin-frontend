@@ -8,7 +8,6 @@ import { useUser } from '~/composables/useUser'
 
 const isLoggedIn = ref(false)
 
-let userValue: AccountInfo | null = null
 if (process.client) {
   const user = useUser()
   if (user.value !== null) {
@@ -47,7 +46,6 @@ useHead({
     },
   ],
 })
-
 const {
   data: pinnedPatients,
   error: pinnedPatientsError,
