@@ -18,6 +18,18 @@ const {
     server: false,
   },
 )
+const {
+  data: pinPatient,
+  execute: executePinPatient,
+  error: errorPinPatient,
+  pending: pendingPinPatient,
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/pinned`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+  },
+)
 
 const placeholderPatient = ref<PatientGegevens>({
   id: '1',
@@ -153,21 +165,26 @@ const pin = async () => {
 
 const del = async () => {
   console.log(selected_list.value, ' selected_list')
-  for (const id of selected_list.value) {
+  for(const id of selected_list.value) {
     console.log(id);
-    if (patients.value === null) return
-    $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
-      method: 'DELETE',
-      baseURL: servicesUrls.dokterService,
-    }).then(
-      () => {
-        execute()
-        removeFromList(id)
-      },
-      (err: FetchError) => {
-        console.log(err)
-      },
-    )
+    for(const i of pinPatient.value && pinPatient != null ? pinPatient.value : []){
+      if(i.id === id){
+        console.log("eerst pin verwijderen")
+        $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+          method: 'DELETE',
+          baseURL: servicesUrls.dokterService,
+        }).then(
+          () => {
+            execute()
+            removeFromList(id)
+          },
+          (err: FetchError) => {
+            console.log(err)
+          },
+        )
+      }
+      console.log("patient verwijderen")
+    }
     $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
       method: 'DELETE',
       baseURL: servicesUrls.dokterService,
@@ -182,7 +199,6 @@ const del = async () => {
     )
     isEditing.value = false
   }
-
   
 
 }
