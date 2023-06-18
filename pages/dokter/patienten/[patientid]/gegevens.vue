@@ -12,7 +12,6 @@ useHead({
 })
 const routeID = useRoute().params.patientid as string
 
-const refrenceid = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
 //id dynamicaaly
 const id = ref(routeID)
 
@@ -32,6 +31,7 @@ const result = computed<PatientGegevens[]>(() => {
   }
   return lijst
 })
+const {convertDateStringToLocaleString} = UseDateConverter()
 </script>
 
 <template>
@@ -69,7 +69,7 @@ const result = computed<PatientGegevens[]>(() => {
           class="mx-auto text-center text-sm font-normal text-neutral-100"
         >
           {{ naam.contact?.email }}<br />
-          {{ naam.algemeen?.geboorteDatum }}
+          {{ convertDateStringToLocaleString(naam.algemeen?.geboorteDatum) }}
         </p>
       </div>
 
@@ -106,7 +106,7 @@ const result = computed<PatientGegevens[]>(() => {
         <div class="flex items-center">
           <h1 class="mr-3 font-medium capitalize">Geboortedatum:</h1>
           <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.algemeen?.geboorteDatum.toString() }}
+            {{ convertDateStringToLocaleString(naam.algemeen?.geboorteDatum) }}
           </p>
         </div>
         <div class="flex items-center">
