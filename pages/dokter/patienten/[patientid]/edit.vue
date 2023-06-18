@@ -10,45 +10,35 @@ import {
 } from '~/interfaces/IPatient'
 import { Switch } from '@headlessui/vue'
 import useConvertNotificationRange from '~/composables/useConvertNotificationRange'
-import { $fetch } from 'ofetch'
+import useTitle from '~/composables/useTitle'
+import useMeldingenHelper from '~/composables/useMeldingenHelper'
 
-const {convertThresholdsToRange, convertRangeToThresholds }  =useConvertNotificationRange()
-
-// todo: when there are no notification settings, make a button to prompt the user to create them
+const { convertThresholdsToRange, convertRangeToThresholds } = useConvertNotificationRange()
 // todo: skeleton loading of meldingen to prevent layout shift
 
-useHead({
-  title: 'Gegevens patiënt',
-  meta: [
-    {
-      name: 'description',
-      content: 'Patiënt gegevens aanpassen.',
-    },
-  ],
-})
-
+useTitle('Gegevens patiënt', 'Patiënt gegevens aanpassen.')
 const user = useUser().value
 
 const routeID = useRoute().params.patientid as string
 const id = ref(routeID)
+const {
+  fetchMeldingen,
+  updateThresholds,
+  updateAreNotificationsEnabled,
+  createEmptyNotificationThresholds,
+  createEmptyMeldingenInstellingen,
+} = useMeldingenHelper(id, user)
+
 //get patient data
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
 
-const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
-
-const dokterServiceUrl = 'https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io'
 const {
   data: notificationsEnabledData,
   pending: notificationsPending,
   error: notificationsError,
   execute: refreshNotifications,
-} = useFetch<IMeldingenInstellingen>(
-  `dokter/${user?.localAccountId}/patient/${id.value}/notifications`,
-  {
-    baseURL: dokterServiceUrl,
-    server: false,
-  },
-)
+} = fetchMeldingen()
+
 
 const notificationsEnabled = ref<IMeldingenInstellingen>()
 watch(notificationsEnabledData, () => {
@@ -71,7 +61,6 @@ const formPatient = ref<IPatientAlgemeen>(patient)
 const formPatientAdres = ref<Address>(patientAdres)
 const formPatientMedisch = ref<Medisch>(patientMedisch)
 const formPatientContact = ref<Contact>(patientContact)
-const formPatientGegevens = ref<PatientGegevens>(gegevens)
 
 const submitForm = async () => {
   try {
@@ -121,121 +110,55 @@ const editLinkName = computed(
 )
 
 
-
 watch(
   notificationsEnabled,
   () => {
     if (!notificationsEnabled.value) return
-    const url = `https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/dokter/${user?.localAccountId}/patient/${notificationsEnabled.value.patientId}/notifications`
-    $fetch(url, {
-      method: "POST",
-      body: JSON.stringify(notificationsEnabled.value),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    updateAreNotificationsEnabled(notificationsEnabled.value)
   },
   { deep: true },
 )
 
-const thresholds = ref<INotificationRange>();
+const thresholds = ref<INotificationRange>()
 watch(data,
   () => {
-    console.log('data changed to:', data.value)
     if (!data.value || !data.value.medicalNotificationThresholds) return
     thresholds.value = convertThresholdsToRange(data.value.medicalNotificationThresholds)
     console.log('thresholds', thresholds.value)
-  },
-  {
-    immediate: true,
-  }
+  }, { immediate: true },
 )
 const fireRangeUpdate = () => {
-  console.log("update")
-  const url = `https://patientgegevens.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
+  console.log('update')
   // convert the thresholds to the correct format
-  if  (!thresholds.value) return
-  const updatedThresholds = convertRangeToThresholds(thresholds.value)
-  $fetch(url, {
-    method: "PUT",
-    body: JSON.stringify(updatedThresholds),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  if (!thresholds.value) return
+  updateThresholds(convertRangeToThresholds(thresholds.value))
 }
 const createThresholds = async () => {
   if (!gegevens.medicalNotificationThresholds) {
-    gegevens.medicalNotificationThresholds = {
-      ademhalingsfrequentie: {
-        min: 0,
-        max: 0,
-      },
-      hartslag: {
-        min: 0,
-        max: 0,
-      },
-      bloedzuurstof: {
-        min: 0,
-        max: 0,
-      },
-      temperatuur: {
-        min: 0,
-        max: 0,
-      },
-      bloeddrukDiastolisch: {
-        min: 0,
-        max: 0,
-      },
-      bloeddrukSystolisch: {
-        min: 0,
-        max: 0,
-      },
-    }
-    const url = `https://patientgegevens.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
-    await $fetch(url, {
-      method: "PUT",
-      body: JSON.stringify(gegevens.medicalNotificationThresholds),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    gegevens.medicalNotificationThresholds = createEmptyNotificationThresholds()
+    await updateThresholds(gegevens.medicalNotificationThresholds)
   }
   if (notificationsError.value) {
     // post the enabled notifications
     if (!notificationsEnabled.value) {
-      notificationsEnabled.value = {
-        patientId: id.value,
-        ademhalingsfrequentie: false,
-        hartslag: false,
-        bloedzuurstof: false,
-        temperatuur: false,
-        bloeddruk: false,
-        masterSwitch: false,
-      }
+      notificationsEnabled.value = createEmptyMeldingenInstellingen()
     }
-
   }
   await execute()
   await refreshNotifications()
 }
-
 </script>
 
 <template>
-  <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
-    <pressables-goback
-      :link_name='editLinkName'
-      :link_path='`/dokter/patienten/${id.valueOf}/gegevens`'
-    />
-    <button type='submit'>
-      <PressablesSaveButton></PressablesSaveButton>
-    </button>
-    <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
-  </div>
   <form @submit.prevent='submitForm'>
-    <div class='mx-10 flex items-start justify-end'>
-
+    <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
+      <pressables-goback
+        :link_name='editLinkName'
+        :link_path='`/dokter/patienten/${id.valueOf}/gegevens`'
+      />
+      <button type='submit'>
+        <PressablesSaveButton></PressablesSaveButton>
+      </button>
     </div>
     <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
       <!-- persoonlijke -->
@@ -244,8 +167,9 @@ const createThresholds = async () => {
         <!-- <FormsSelectDevice></FormsSelectDevice> -->
         <div class='flex flex-row justify-between'>
           <TextKop2
-            title='Slaat automatisch op'
-          >meldingen 🛈</TextKop2>
+            title="Stel hier in wanneer je een melding wil krijgen van afwijkende waardes van de patiënt. De instellingen slaan automatisch op."
+          >meldingen 🛈
+          </TextKop2>
           <Switch
             v-model='notificationsEnabled.masterSwitch'
             :class="notificationsEnabled.masterSwitch ? 'bg-tertiary-400' : 'bg-tertiary-200'"
@@ -377,13 +301,14 @@ const createThresholds = async () => {
               />
             </Switch>
           </div>
-            <template-slider
-              class='-mx-5'
-              v-model='thresholds.temperatuur'
-              @change='fireRangeUpdate'
-              :min='33'
-              :max='42'
-            />
+          <template-slider
+            class='-mx-5'
+            v-model='thresholds.temperatuur'
+            @change='fireRangeUpdate'
+            :min='33'
+            :max='42'
+            :step='0.1'
+          />
         </div>
       </div>
       <div v-else-if='!gegevens.medicalNotificationThresholds || notificationsError'>
@@ -398,31 +323,31 @@ const createThresholds = async () => {
       <div class='flex'>
         <div>
           <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
-          <forms-text-input
-            :textValue='patient.voornaam'
+          <forms-text
             v-model='patient.voornaam'
-            @update:textValue='patient.voornaam = $event'
+            label='Voornaam'
+            input-id='voornaam'
           />
-          <forms-surname-input
-            :surnameValue='patient.naam'
+         <forms-text
             v-model='patient.naam'
-            @update:surnameValue='patient.naam = $event'
+            label='Achternaam'
+            input-id='naam'
           />
-          <forms-gender-input
-            :genderValue='patient.geslacht'
+          <forms-input-select
             v-model='patient.geslacht'
-            @update:genderValue='patient.geslacht = $event'
-          />
-          <forms-country-input
-            :countryValue='patient.geboorteland'
+            input-id='geslacht'
+            label='Geslacht'
+            :options='["Man", "Vrouw", "Anders"]'/>
+          <forms-text
             v-model='patient.geboorteland'
-            @update:countryValue='patient.geboorteland = $event'
-          />
-          <forms-date-input
-            :birthDateValue='patient.geboorteDatum'
+            input-id='geboorteland'
+            label='Geboorteland'/>
+          <forms-text
             v-model='patient.geboorteDatum'
-            @update:birthDateValue='patient.geboorteDatum = $event'
-          />
+            input-id='geboorteDatum'
+            label='Geboortedatum'
+            type='date'/>
+
           <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
           <forms-city-input
             :cityValue='patientAdres.gemeente'

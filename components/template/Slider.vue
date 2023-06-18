@@ -15,6 +15,11 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  step: {
+    type: Number,
+    required: false,
+    default: 1,
+  },
 })
 const emits = defineEmits([
   'update:modelValue',
@@ -43,14 +48,19 @@ const updateUpperValue = (high: number) => {
       @input="updateLowerValue($event.target.value)"
       @change='$emit("change", $event)'
       type='number'
-      class='h-8 w-12 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      class='h-8 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      :class='step < 1 ? "w-16" : "w-12"'
+      :step='step'
+
     />
     <input
       :value='modelValue[1]'
       @input="updateUpperValue($event.target.value)"
       @change='$emit("change", $event)'
       type='number'
-      class='h-8 w-12 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      class='h-8 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      :class='step < 1 ? "w-16" : "w-12"'
+      :step='step'
     />
   </div>
   <div class='mb-4 mt-3 w-52'>
@@ -62,6 +72,7 @@ const updateUpperValue = (high: number) => {
       :lazy='false'
       :min='min'
       :max='max'
+      :step='step'
       class='slider-style'
     />
   </div>

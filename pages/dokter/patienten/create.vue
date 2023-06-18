@@ -123,7 +123,6 @@ const submitForm = async () => {
           >
           </forms-surname-input>
           <forms-gender-input
-            :genderValue="patient.geslacht"
             v-model="patient.geslacht"
             @update:genderValue="patient.geslacht = $event"
           ></forms-gender-input>
