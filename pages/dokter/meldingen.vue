@@ -221,7 +221,7 @@ watch(meldingen, (newVal) => {
         type='default'
         class='small-dropdown'
         :options='AlertTypesString'
-        v-model:selected='selectedType'
+        v-model='selectedType'
       />
       <!--      </div>-->
       <PressablesSelector
