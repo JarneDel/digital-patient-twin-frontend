@@ -126,7 +126,7 @@ watch(hovered, newVal => {
       <!--      Title Left      -->
       <TextKop2>Gepinde Patiënten</TextKop2>
       <!--      Content Left      -->
-      <div v-if="pendingPinnedPatients" class="flex flex-col gap-4">
+      <div v-if="pendingPinnedPatients" class="flex flex-col gap-4 min-w-[34rem]">
         <client-only>
           <patients-sm
             v-for="patient of 5"

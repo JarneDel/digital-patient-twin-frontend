@@ -27,7 +27,7 @@ console.info('patient', props.patientId)
 <template>
   <NuxtLink
     :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
-    class="flex h-[66px] w-[550px] items-center rounded-lg bg-white px-4 drop-shadow-xl transition-all hover:bg-neutral-500"
+    class='rounded-lg h-[66px] flex bg-white px-4 drop-shadow-xl transition-all max-w-[34rem] hover:bg-neutral-500 items-center'
   >
     <div
       class="grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center"
