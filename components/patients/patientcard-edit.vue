@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronRight, LucideLineChart } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
-import { ref, onUnmounted, getCurrentInstance } from 'vue'
+import { getCurrentInstance, onUnmounted, ref } from 'vue'
 import { servicesUrls } from '~/servicesurls'
 import { $fetch, FetchError } from 'ofetch'
 

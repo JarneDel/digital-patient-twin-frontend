@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Pinrotated from '../svg/pinrotated.vue'
-import { Pencil, LineChart, LucideX } from 'lucide-vue-next'
+import { LineChart, LucideX, Pencil } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const props = defineProps({
@@ -61,5 +61,5 @@ console.info('patient', props.patientId)
         />
       </NuxtLink>
     </div>
-  </NuxtLink>
+  </button>
 </template>

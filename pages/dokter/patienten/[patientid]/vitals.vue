@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Eye } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
+
 const registerPatient = ref<IPatientAlgemeen>({
   naam: 'Jonkheere',
   geslacht: 'M',

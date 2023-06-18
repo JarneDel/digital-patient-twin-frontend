@@ -62,6 +62,7 @@ watch(isOpen, () => {
 })
 
 
+
 // load isOpen from localstorage
 onMounted(() => {
   const isOpenFromLocalStorage = localStorage.getItem('navigationIsOpen')

@@ -2,13 +2,13 @@
 import { IHistoriek } from '~/interfaces/IHistoriek'
 import { FetchContext } from 'ofetch'
 import { LucideLoader2 } from 'lucide-vue-next'
-import VitalStats = PatientData.models.VitalStats
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import useWebPubSub from '~/composables/useWebPubSub'
 import { IRealtime } from '~/interfaces/IRealtime'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { OnGroupDataMessageArgs } from '@azure/web-pubsub-client'
+import VitalStats = PatientData.models.VitalStats
 
 const date = ref<Date[]>([
   new Date(new Date().setDate(new Date().getDate() - 7)),

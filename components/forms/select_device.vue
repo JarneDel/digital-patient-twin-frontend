@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import fitbit from '../svg/fitbit.vue'
+
 const dummydata = [
   {
     id: '#101',

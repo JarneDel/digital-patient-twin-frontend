@@ -1,6 +1,3 @@
-import { HubConnectionBuilder } from '@microsoft/signalr'
-import { msalInstance } from '~/auth'
-
 export default (url: string) => {
   // const connection = new HubConnectionBuilder().withUrl(url, {
     // accessTokenFactory: async () => {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import VitalStat = PatientData.models.VitalStat
+
 defineProps({
   data: {
     type: Object as PropType<VitalStat>,

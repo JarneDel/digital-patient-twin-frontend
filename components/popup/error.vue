@@ -1,12 +1,5 @@
 <script setup lang='ts'>
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from '@headlessui/vue'
-import { title } from 'process'
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 const isOpen = ref(true)
 const emits = defineEmits(['close', "button2Event"])
