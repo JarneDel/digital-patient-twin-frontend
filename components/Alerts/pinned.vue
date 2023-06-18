@@ -41,7 +41,6 @@ const unit = computed(() => {
   if (props.type === AlertType.AdemsFrequentie) return 'rpm'
   return ''
 })
-console.log(props.datetime)
 
 const { elapsedTime } = useElapsedTime(new Date(props.datetime))
 

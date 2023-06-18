@@ -1,50 +1,44 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
-import { AlertType } from '~/interfaces/AlertType'
 import {
   Address,
   Contact,
-  IMedicalNotifcationsTresholds, IMeldingenInstellingen,
+  IMeldingenInstellingen, INotificationRange,
   IPatientAlgemeen,
   Medisch,
   PatientGegevens,
 } from '~/interfaces/IPatient'
 import { Switch } from '@headlessui/vue'
+import useConvertNotificationRange from '~/composables/useConvertNotificationRange'
+import useTitle from '~/composables/useTitle'
+import useMeldingenHelper from '~/composables/useMeldingenHelper'
 
-useHead({
-  title: 'Gegevens patiënt',
-  meta: [
-    {
-      name: 'description',
-      content: 'Patiënt gegevens aanpassen.',
-    },
-  ],
-})
+const { convertThresholdsToRange, convertRangeToThresholds } = useConvertNotificationRange()
+// todo: skeleton loading of meldingen to prevent layout shift
 
+useTitle('Gegevens patiënt', 'Patiënt gegevens aanpassen.')
 const user = useUser().value
 
 const routeID = useRoute().params.patientid as string
 const id = ref(routeID)
+const {
+  fetchMeldingen,
+  updateThresholds,
+  updateAreNotificationsEnabled,
+  createEmptyNotificationThresholds,
+  createEmptyMeldingenInstellingen,
+} = useMeldingenHelper(id, user)
+
 //get patient data
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}`
 
-const notifcationurl = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
-
-console.log(notifcationurl)
-
-
-const dokterServiceUrl = 'https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io'
 const {
   data: notificationsEnabledData,
   pending: notificationsPending,
   error: notificationsError,
-} = useFetch<IMeldingenInstellingen>(
-  `dokter/${user?.localAccountId}/patient/${id.value}/notifications`,
-  {
-    baseURL: dokterServiceUrl,
-    server: false,
-  },
-)
+  execute: refreshNotifications,
+} = fetchMeldingen()
+
 
 const notificationsEnabled = ref<IMeldingenInstellingen>()
 watch(notificationsEnabledData, () => {
@@ -61,17 +55,19 @@ const patientAdres: Address = data.value?.adres as Address
 const patientMedisch: Medisch = data.value?.medisch as Medisch
 const patientContact: Contact = data.value?.contact as Contact
 const gegevens = data.value as PatientGegevens
-const thresholds = data.value?.medicalNotificationThresholds as IMedicalNotifcationsTresholds
 
 const formPatient = ref<IPatientAlgemeen>(patient)
 
 const formPatientAdres = ref<Address>(patientAdres)
 const formPatientMedisch = ref<Medisch>(patientMedisch)
 const formPatientContact = ref<Contact>(patientContact)
-const formPatientGegevens = ref<PatientGegevens>(gegevens)
 
 const submitForm = async () => {
   try {
+    console.log('submitting form')
+
+    // todo: this function is not submitting the form
+    if (!data.value || !thresholds.value) throw new Error('No data or thresholds')
     const updatedPatientData: PatientGegevens = {
       algemeen: formPatient.value,
       adres: formPatientAdres.value,
@@ -79,7 +75,7 @@ const submitForm = async () => {
       contact: formPatientContact.value,
       deviceId: gegevens.deviceId,
       id: gegevens.id,
-      medicalNotificationThresholds: thresholds,
+      medicalNotificationThresholds: convertRangeToThresholds(thresholds.value),
     }
 
     // Send the updated patient data to your API endpoint
@@ -97,6 +93,7 @@ const submitForm = async () => {
       // Handle successful update
       console.log('Patient data updated successfully')
       alert('Patient data updated successfully')
+      // todo: redirect user to patient detail page
       console.log(fetch)
     } else {
       // Handle update error
@@ -113,48 +110,66 @@ const editLinkName = computed(
 )
 
 
-
 watch(
   notificationsEnabled,
   () => {
     if (!notificationsEnabled.value) return
-    const url = `https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/dokter/${user?.localAccountId}/patient/${notificationsEnabled.value.patientId}/notifications`
-    $fetch(url, {
-      method: "POST",
-      body: JSON.stringify(notificationsEnabled.value),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    updateAreNotificationsEnabled(notificationsEnabled.value)
   },
   { deep: true },
 )
 
-
+const thresholds = ref<INotificationRange>()
+watch(data,
+  () => {
+    if (!data.value || !data.value.medicalNotificationThresholds) return
+    thresholds.value = convertThresholdsToRange(data.value.medicalNotificationThresholds)
+    console.log('thresholds', thresholds.value)
+  }, { immediate: true },
+)
+const fireRangeUpdate = () => {
+  console.log('update')
+  // convert the thresholds to the correct format
+  if (!thresholds.value) return
+  updateThresholds(convertRangeToThresholds(thresholds.value))
+}
+const createThresholds = async () => {
+  if (!gegevens.medicalNotificationThresholds) {
+    gegevens.medicalNotificationThresholds = createEmptyNotificationThresholds()
+    await updateThresholds(gegevens.medicalNotificationThresholds)
+  }
+  if (notificationsError.value) {
+    // post the enabled notifications
+    if (!notificationsEnabled.value) {
+      notificationsEnabled.value = createEmptyMeldingenInstellingen()
+    }
+  }
+  await execute()
+  await refreshNotifications()
+}
 </script>
 
 <template>
-  <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
-    <pressables-goback
-      :link_name='editLinkName'
-      :link_path='`/dokter/patienten/${id.valueOf}/gegevens`'
-    />
-    <button type='submit'>
-      <PressablesSaveButton></PressablesSaveButton>
-    </button>
-    <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
-  </div>
   <form @submit.prevent='submitForm'>
-    <div class='mx-10 flex items-start justify-end'>
-
+    <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
+      <pressables-goback
+        :link_name='editLinkName'
+        :link_path='`/dokter/patienten/${id.valueOf}/gegevens`'
+      />
+      <button type='submit'>
+        <PressablesSaveButton></PressablesSaveButton>
+      </button>
     </div>
     <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
       <!-- persoonlijke -->
       <div class=''
-           v-if='notificationsEnabled'>
+           v-if='notificationsEnabled && thresholds'>
         <!-- <FormsSelectDevice></FormsSelectDevice> -->
         <div class='flex flex-row justify-between'>
-          <TextKop2>meldingen</TextKop2>
+          <TextKop2
+            title="Stel hier in wanneer je een melding wil krijgen van afwijkende waardes van de patiënt. De instellingen slaan automatisch op."
+          >meldingen 🛈
+          </TextKop2>
           <Switch
             v-model='notificationsEnabled.masterSwitch'
             :class="notificationsEnabled.masterSwitch ? 'bg-tertiary-400' : 'bg-tertiary-200'"
@@ -185,7 +200,8 @@ watch(
           </div>
           <template-slider
             class='-mx-5 mt-0'
-            :type='AlertType[AlertType.AdemsFrequentie]'
+            v-model='thresholds.ademhalingsfrequentie'
+            @change='fireRangeUpdate'
             :min='0'
             :max='100'
           />
@@ -207,8 +223,9 @@ watch(
           </div>
           <template-slider
             class='-mx-5'
-            :type='AlertType[AlertType.Bloedzuurstof]'
-            :min='0'
+            v-model='thresholds.bloedzuurstof'
+            @change='fireRangeUpdate'
+            :min='67'
             :max='100'
           />
         </div>
@@ -229,9 +246,10 @@ watch(
           </div>
           <template-slider
             class='-mx-5'
-            :type='AlertType[AlertType.Hartslag]'
-            :min='0'
-            :max='100'
+            v-model='thresholds.hartslag'
+            @change='fireRangeUpdate'
+            :min='10'
+            :max='160'
           />
         </div>
         <div class='mt-4'>
@@ -249,12 +267,24 @@ watch(
               />
             </Switch>
           </div>
+          <p class='text-xs text-gray-500'>systolisch</p>
           <template-slider
             class='-mx-5'
-            :type='AlertType[AlertType.Bloeddruk]'
+            v-model='thresholds.bloeddrukSystolisch'
+            @change='fireRangeUpdate'
             :min='0'
-            :max='100'
+            :max='200'
           />
+          <p class='text-xs text-gray-500'>diastolisch</p>
+          <template-slider
+            class='-mx-5'
+            v-model='thresholds.bloeddrukDiastolisch'
+            @change='fireRangeUpdate'
+            :min='0'
+            :max='150'
+          />
+
+
         </div>
         <div class='mt-4'>
           <div class='flex flex-row justify-between content-center '>
@@ -271,69 +301,88 @@ watch(
               />
             </Switch>
           </div>
-            <template-slider
-              class='-mx-5'
-              :type='AlertType[AlertType.Temperatuur]'
-              :min='0'
-              :max='100'
-            />
+          <template-slider
+            class='-mx-5'
+            v-model='thresholds.temperatuur'
+            @change='fireRangeUpdate'
+            :min='33'
+            :max='42'
+            :step='0.1'
+          />
         </div>
+      </div>
+      <div v-else-if='!gegevens.medicalNotificationThresholds || notificationsError'>
+        <p>Meldingen van deze patient staan uit.</p>
+        <pressables-button
+          @click='createThresholds'
+        >
+          Zet je meldingen aan
+        </pressables-button>
       </div>
 
       <div class='flex'>
         <div>
           <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
-          <forms-text-input
-            :textValue='patient.voornaam'
+          <forms-text
             v-model='patient.voornaam'
-            @update:textValue='patient.voornaam = $event'
+            label='Voornaam'
+            input-id='voornaam'
           />
-          <forms-surname-input
-            :surnameValue='patient.naam'
+         <forms-text
             v-model='patient.naam'
-            @update:surnameValue='patient.naam = $event'
+            label='Achternaam'
+            input-id='naam'
           />
-          <forms-gender-input
-            :genderValue='patient.geslacht'
+          <forms-input-select
             v-model='patient.geslacht'
-            @update:genderValue='patient.geslacht = $event'
-          />
-          <forms-country-input
-            :countryValue='patient.geboorteland'
+            input-id='geslacht'
+            label='Geslacht'
+            :options='["Man", "Vrouw", "Anders"]'/>
+          <forms-text
             v-model='patient.geboorteland'
-            @update:countryValue='patient.geboorteland = $event'
-          />
-          <forms-date-input
-            :birthDateValue='patient.geboorteDatum'
+            input-id='geboorteland'
+            label='Geboorteland'/>
+          <forms-text
             v-model='patient.geboorteDatum'
-            @update:birthDateValue='patient.geboorteDatum = $event'
-          />
+            input-id='geboorteDatum'
+            label='Geboortedatum'
+            type='date'/>
+
           <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
-          <forms-city-input
-            :cityValue='patientAdres.gemeente'
+          <forms-text
             v-model='patientAdres.gemeente'
-            @update:cityValue='patientAdres.gemeente = $event'
+            input-id='gemeente'
+            label='Gemeeente'
           />
-          <forms-street-input
-            :textStreetNameValue='patientAdres.straat'
+          <forms-text-aria
             v-model='patientAdres.straat'
-            @update:textStreetNameValue='patientAdres.straat = $event'
-          />
-          <forms-postalcode-inputs
-            v-model:house-number-value='patientAdres.nr'
-            v-model:postalcode-value='patientAdres.postcode'
-          />
+            input-id='straat'
+            label='Straatnaam'/>
+          <div class='flex gap-4 flex-row'>
+            <forms-text
+              v-model='patientAdres.postcode'
+              input-id='Postcode'
+              label='Postcode'
+            />
+            <forms-text
+              v-model='patientAdres.nr'
+              input-id='huisnummer'
+              label='Huisnummer'
+            />
+          </div>
           <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
-          <forms-email-input
-            :emailValue='patientContact.email'
+          <forms-text
             v-model='patientContact.email'
-            @update:emailValue='patientContact.email = $event'
+            input-id='email'
+            label='Email'
+            type='email'
           />
-          <forms-telephone-input
-            :phoneNumberValue='patientContact.telefoon'
+          <forms-text
             v-model='patientContact.telefoon'
-            @update:phoneNumberValue='patientContact.telefoon = $event'
-          />
+            input-id='telefoon'
+            label='Telefoon'
+            type='tel'
+            />
         </div>
       </div>
 
@@ -341,21 +390,24 @@ watch(
       <div class='flex'>
         <div>
           <TextKop2 class='mb-5'>Medische gegevens</TextKop2>
-          <FormsLenghtInput
-            :lengthValue='patientMedisch.lengte'
+          <forms-text
             v-model='patientMedisch.lengte'
-            @update:lengthValue='patientMedisch.lengte = parseInt($event)'
-          ></FormsLenghtInput>
-          <FormsWeightInput
-            :weightValue='patientMedisch.gewicht'
+            input-id='length'
+            label='Lengte [cm]'
+          />
+          <forms-text
             v-model='patientMedisch.gewicht'
-            @update:weightValue='patientMedisch.gewicht = parseInt($event)'
-          ></FormsWeightInput>
-          <FormsBloodtypeInput
-            :bloodTypeValue='patientMedisch.bloedgroep'
+            input-id='weight'
+            label='Gewicht [kg]'
+            />
+
+          <forms-input-select
+            input-id='bloedgroep'
+            label='Bloedgroep'
+            :options='["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]'
             v-model='patientMedisch.bloedgroep'
-            @update:bloodTypeValue='patientMedisch.bloedgroep = $event'
-          ></FormsBloodtypeInput>
+          />
+
         </div>
       </div>
     </div>

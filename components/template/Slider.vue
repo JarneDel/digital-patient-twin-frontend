@@ -1,16 +1,8 @@
 <script setup lang='ts'>
 import Slider from '@vueform/slider'
-import { ref } from 'vue'
-
-const value = ref([30, 60])
-const value_1 = ref(10)
 
 
-defineProps({
-  type: {
-    type: String,
-    required: true,
-  },
+const props = defineProps({
   min: {
     type: Number,
     required: true,
@@ -19,42 +11,72 @@ defineProps({
     type: Number,
     required: true,
   },
+  modelValue: {
+    type: Array,
+    required: true,
+  },
+  step: {
+    type: Number,
+    required: false,
+    default: 1,
+  },
 })
+const emits = defineEmits([
+  'update:modelValue',
+  'change',
+])
 
-defineExpose({ value, value_1 })
+const updateLowerValue = (low: number) => {
+  let newValue = [...props.modelValue]
+  newValue[0] = low
+  emits('update:modelValue', newValue)
+}
+const updateUpperValue = (high: number) => {
+  let newValue = [...props.modelValue]
+  newValue[1] = high
+  emits('update:modelValue', newValue)
+}
+
+
+// defineExpose({ value, value_1 })
 </script>
 
 <template>
   <div class=' mt-1  flex w-52 justify-between'>
     <input
-      v-model='value[0]'
-      type='text'
-      class='h-8 w-9 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      :value='modelValue[0]'
+      @input="updateLowerValue($event.target.value)"
+      @change='$emit("change", $event)'
+      type='number'
+      class='h-8 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      :class='step < 1 ? "w-16" : "w-12"'
+      :step='step'
+
     />
     <input
-      v-model='value[1]'
-      type='text'
-      class='h-8 w-9 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      :value='modelValue[1]'
+      @input="updateUpperValue($event.target.value)"
+      @change='$emit("change", $event)'
+      type='number'
+      class='h-8 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
+      :class='step < 1 ? "w-16" : "w-12"'
+      :step='step'
     />
   </div>
   <div class='mb-4 mt-3 w-52'>
     <Slider
-      v-model='value'
+      :modelValue='modelValue'
+      @update:modelValue='$emit("update:modelValue", $event)'
+      @change='$emit("change", $event)'
       :tooltips='false'
+      :lazy='false'
       :min='min'
       :max='max'
+      :step='step'
       class='slider-style'
     />
   </div>
 
-  <!-- <div>
-        <div class="w-52 flex justify-between m-4">
-            <input v-model=value_1 type="text" class="h-10 w-11 text-sm pl-[7px] border-tertiary-400 border-2 rounded-md focus:border-tertiary-400 focus:ring-0 outline-none"/>
-        </div>
-        <div class="m-4 w-52">
-            <Slider v-model=value_1 :tooltips="false" :min="0" :max="100" class='slider-style' />
-        </div>
-    </div> -->
 </template>
 
 <style src='@vueform/slider/themes/default.css'></style>

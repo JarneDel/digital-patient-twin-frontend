@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { defineEmits, defineProps, watch } from 'vue'
 
 const props = defineProps({
-  birthDateValue: {
+  modelValue: {
     type: String,
     required: true,
   },
@@ -13,7 +12,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:birthDateValue', 'update:isValid'])
+const emits = defineEmits(['update:modelValue', 'update:isValid'])
 
 const validateInput = (value: string) => {
   // Perform your form validation logic here
@@ -31,7 +30,7 @@ const updateValue = (event: Event) => {
       return
     }
 
-    emits('update:birthDateValue', dateValue)
+    emits('update:modelValue', dateValue)
     emits('update:isValid', true)
 
     console.log('Date Value: ' + dateValue)
@@ -39,11 +38,11 @@ const updateValue = (event: Event) => {
 }
 
 watch(
-  () => props.birthDateValue,
+  () => props.modelValue,
   newValue => {
     if (newValue) {
       emits('update:isValid', true)
-      emits('update:birthDateValue', newValue)
+      emits('update:modelValue', newValue)
     } else {
       emits('update:isValid', false)
     }
@@ -56,9 +55,9 @@ watch(
   <input
     id="geboortedatum"
     type="date"
-    :value="birthDateValue"
-    @input="updateValue($event)"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    :value="modelValue"
+    @change="updateValue($event)"
+    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   />
 </template>
 
