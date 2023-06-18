@@ -61,5 +61,5 @@ console.info('patient', props.patientId)
         />
       </NuxtLink>
     </div>
-  </button>
+  </NuxtLink>
 </template>
