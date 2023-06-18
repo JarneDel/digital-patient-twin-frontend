@@ -127,7 +127,8 @@ watch(
   state => {
     console.log(state + ' state isDeleting')
     for (let i = 0; i < selected_list.value.length; i++) {
-      del(selected_list.value[i])
+      del()
+      // del(selected_list.value[i])
     }
     selected_list.value = []
     count.value = selected_list.value.length
@@ -150,33 +151,40 @@ const pin = async () => {
   execute()
 }
 
-const del = async (id: string) => {
-  if (patients.value === null) return
-  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
-    method: 'DELETE',
-    baseURL: servicesUrls.dokterService,
-  }).then(
-    () => {
-      execute()
-      removeFromList(id)
-    },
-    (err: FetchError) => {
-      console.log(err)
-    },
-  )
-  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
-    method: 'DELETE',
-    baseURL: servicesUrls.dokterService,
-  }).then(
-    () => {
-      execute()
-      removeFromList(id)
-    },
-    (err: FetchError) => {
-      console.log(err)
-    },
-  )
-  isEditing.value = false
+const del = async () => {
+  console.log(selected_list.value, ' selected_list')
+  for (const id of selected_list.value) {
+    console.log(id);
+    if (patients.value === null) return
+    $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+      method: 'DELETE',
+      baseURL: servicesUrls.dokterService,
+    }).then(
+      () => {
+        execute()
+        removeFromList(id)
+      },
+      (err: FetchError) => {
+        console.log(err)
+      },
+    )
+    $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
+      method: 'DELETE',
+      baseURL: servicesUrls.dokterService,
+    }).then(
+      () => {
+        execute()
+        removeFromList(id)
+      },
+      (err: FetchError) => {
+        console.log(err)
+      },
+    )
+    isEditing.value = false
+  }
+
+  
+
 }
 
 useHead({
@@ -259,6 +267,7 @@ watch(isSelectPatientOpen, (state) => {
         v-if='user'
         v-model:is-open='isSelectPatientOpen'
       />
+      <div>{{selected_list}}</div>
 
       <PressablesEdit
         @clickDelete="clickDelete"
@@ -267,8 +276,17 @@ watch(isSelectPatientOpen, (state) => {
         :selected-count='count'
         @checkboxSelected='updateSelectedCount'
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del="del(patient.id)"
+        @del="del()"
       />
+      <!-- <PressablesEdit
+        @clickDelete="clickDelete"
+        @clickEdit="() => clickEdit"
+        v-model:is-editing='isEditing'
+        :selected-count='count'
+        @checkboxSelected='updateSelectedCount'
+        @update:isEditing="$emit('update:isEditing', $event)"
+        @del="del(patient.id)"
+      /> -->
     </div>
 
 
