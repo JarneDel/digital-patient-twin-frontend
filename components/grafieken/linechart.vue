@@ -3,6 +3,7 @@
 import { GChart } from 'vue-google-charts'
 import { GoogleChartOptions } from 'vue-google-charts/dist/types'
 import { BloodPressureData } from '~/interfaces/IHistoriek'
+
 const props = defineProps({
   type: {
     type: String,

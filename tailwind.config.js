@@ -10,9 +10,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        md: '900px',
+      },
       colors: {
         primary: {
           600: '#C30707',
+          550: '#cb2525',
           500: '#C42828',
           450: '#F23F54',
           400: '#FA6262',
@@ -39,6 +43,7 @@ module.exports = {
           200: '#CFC6DF',
           100: '#D3CCE3',
           50: '#BDB5CC',
+          20: '#E9E6F1',
         },
         neutral: {
           600: '#FAFBFD',

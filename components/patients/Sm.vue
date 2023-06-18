@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Pinrotated from '../svg/pinrotated.vue'
-import { Pencil, LineChart } from 'lucide-vue-next'
+import { LineChart, LucideX, Pencil } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
 const props = defineProps({
@@ -8,44 +8,53 @@ const props = defineProps({
     type: Object as PropType<IPatientAlgemeen>,
     required: true,
   },
+  patientId: {
+    type: Number,
+    required: true,
+  },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 defineEmits(['unpin'])
+const hover = ref<boolean>(false)
+const {convertDateStringToLocaleString} = UseDateConverter()
 
-const timeDDMMYYYY = computed(() => {
-  const date = props.patient.geboorteDatum
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const year = date.getFullYear()
-  return `${day}/${month}/${year}`
-})
 </script>
 
 <template>
   <div
-    class="flex h-[66px] w-[550px] items-center rounded-lg bg-white px-4 drop-shadow-xl transition-all hover:bg-neutral-500"
+  @click="() => navigateTo(`/dokter/patienten/${patient.id}`)"
+    class='rounded-lg h-[66px] flex bg-white px-4 drop-shadow-xl transition-all max-w-[34rem] hover:bg-neutral-500 items-center'
   >
     <div
       class="grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center"
     >
-      <Pinrotated
-        role="button"
-        class="h-10 w-10 self-center rounded-md text-gray-800 hover:bg-neutral-400"
-        @click="$emit('unpin')"
-      />
+      <button
+        class='h-10 w-10 rounded-lg text-gray-700 hover:bg-neutral-300 active:text-gray-800 outline-none ring-transparent ring-2 focus:ring-tertiary-500'
+        @mouseleave='hover = false'
+        @mouseover='hover = true'
+        @click.stop="$emit('unpin')"
+      >
+        <Pinrotated v-if='!hover' class='h-10 w-10' :isRotated="true"/>
+        <LucideX v-else class='h-10 w-10 p-2' />
+      </button>
       <span class="pl-4">{{ patient.voornaam }} {{ patient.naam }}</span>
-      <span class="text-gray-800">{{ timeDDMMYYYY }}</span>
+      <span class='text-gray-800'>{{ convertDateStringToLocaleString(patient.geboorteDatum) }}</span>
       <span class="text-gray-800">{{ patient.geslacht }}</span>
       <NuxtLink
-        class="justify-self-center"
-        to="/dokter/[dokterid]/patients/[patientid]/edit"
+        class="justify-self-center rounded-lg outline-none ring-transparent ring-2 focus:ring-tertiary-500"
+        :to='!isDisabled? `/dokter/patienten/${patientId}/edit` : undefined'
       >
         <pencil
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
         />
       </NuxtLink>
       <NuxtLink
-        class="justify-self-center"
-        to="/dokter/[dokterid]/patients/[patientid]"
+        class="justify-self-center rounded-lg outline-none ring-transparent ring-2 focus:ring-tertiary-500"
+        :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
       >
         <Line-chart
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"

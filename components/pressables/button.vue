@@ -3,6 +3,7 @@ export type ButtonTypes = 'primary' | 'secondary' | 'tertiary'
 
 defineEmits({
   click: (e: MouseEvent) => true,
+  mouseover: (e: MouseEvent) => true,
 })
 defineProps({
   type: {
@@ -20,30 +21,24 @@ defineProps({
     required: false,
     default: 'auto',
   },
-  padding: {
-    type: String,
-    required: false,
-    default: '20px',
-  },
 })
 </script>
 
 <template>
-  <div>
-    <button
-      @click="e => $emit('click', e)"
-      :disabled="disabled"
-      class="inline-flex justify-center rounded-md border border-transparent bg-tertiary-100/30 px-4 py-2 text-sm font-medium text-tertiary-600 ring-2 ring-tertiary-300 hover:bg-tertiary-200/40 focus:outline-none focus-visible:ring-tertiary-500"
-      :class="disabled && 'bg-tertiary-300'"
-    >
-      <slot />
-    </button>
-  </div>
+  <button
+    @click="e => $emit('click', e)"
+    :disabled="disabled"
+    class="inline-flex justify-center rounded-md border-2 border-tertiary-400 bg-tertiary-100/30 px-3 py-2 text-sm font-medium text-tertiary-600 hover:bg-tertiary-200/40 focus:outline-none focus-visible:border-tertiary-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary-500 active:bg-tertiary-100/60"
+    type="button"
+    :class="disabled && 'bg-tertiary-300'"
+    @mouseover="e => $emit('mouseover', e)"
+  >
+    <slot />
+  </button>
 </template>
 
 <style scoped>
 button {
   width: v-bind(width);
-  padding: v-bind(padding);
 }
 </style>

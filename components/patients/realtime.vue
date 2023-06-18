@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import { IPatientAlgemeen, PatientGegevens } from '~/interfaces/IPatient'
-import { LucideLineChart, LucideEdit } from 'lucide-vue-next'
-import { FetchContext } from 'ofetch'
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from '@headlessui/vue'
-import { waitForDebugger } from 'inspector'
+import { LucideEdit, LucideLineChart } from 'lucide-vue-next'
 
 const props = defineProps({
   for:{
@@ -64,7 +55,6 @@ const closeModal = () => {
   isOpen.value = false
   window.location.reload()
 }
-// fetching function for the realtime data or websocket
 </script>
 
 <template>
@@ -94,7 +84,7 @@ const closeModal = () => {
           <button v-if="type === 'view'">
             <LucideLineChart />
           </button>
-          <NuxtLink to="/dokter/[dokterid]/patients/[patientid]/edit">
+          <NuxtLink to='/dokter/patients/[patientid]/edit'>
             <button v-if="type === 'edit'">
               <LucideEdit />
             </button>

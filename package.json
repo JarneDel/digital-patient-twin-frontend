@@ -3,13 +3,14 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --port 4200",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@azure/msal-browser": "^2.37.0",
+    "@azure/web-pubsub": "^1.1.1",
     "@canvasjs/vue-charts": "^1.0.1",
     "@headlessui/vue": "^1.7.14",
     "@kalimahapps/vue-icons": "^1.4.0",
@@ -25,9 +26,7 @@
     "autoprefixer": "^10.4.14",
     "azure-iot-device": "^1.18.2",
     "azure-iot-device-mqtt": "^1.16.2",
-    "bodymovin": "^4.13.0",
     "chart.js": "^4.3.0",
-    "lottie-web": "^5.11.0",
     "lucide-vue-next": "^0.216.0",
     "mqtt": "^4.3.7",
     "nuxt": "^3.4.3",
@@ -54,5 +53,9 @@
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]
+  },
+  "dependencies": {
+    "@azure/web-pubsub-client": "^1.0.0-beta.3",
+    "@formkit/auto-animate": "^1.0.0-beta.6"
   }
 }

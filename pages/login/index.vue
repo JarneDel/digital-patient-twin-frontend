@@ -1,28 +1,48 @@
 <script setup lang='ts'>
-import {msalInstance} from '~/auth'
+import { msalInstance } from '~/auth'
 
-  definePageMeta({
-    layout: false,
-  });
+definePageMeta({
+  layout: false,
+})
 
-onMounted(() => {
-  console.log("mounted")
+let timeout: string | number | NodeJS.Timeout | undefined;
+if (process.client) {
   const users = msalInstance.getAllAccounts()
-  console.log(users.length, "users in login")
+  console.log(users.length, 'users in login')
   if (users.length !== 0) {
     navigateTo('/')
   }
+  timeout = setTimeout(() => {
+    const users = msalInstance.getAllAccounts()
+    console.log("getting users", users.length)
+    if (users.length > 0) {
+      navigateTo('/')
+    }
+  }, 1000)
+
+}
+
+onUnmounted(() => {
+  clearTimeout(timeout)
 })
 
 
 const login = async () => {
-    const result = await msalInstance.loginPopup()
+  const result = await msalInstance.loginPopup()
     console.log({ result })
     navigateTo(`/`)
 }
 
 
-
+useHead({
+  title: 'Login | Digital Patient Twin',
+  meta: [
+    {
+      name: 'description',
+      content: 'Login to your account',
+    },
+  ],
+})
 </script>
 
 <template>
@@ -32,7 +52,3 @@ const login = async () => {
     <cards-login @click='login'/>
   </div>
 </template>
-
-<style scoped>
-
-</style>

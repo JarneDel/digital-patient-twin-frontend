@@ -1,57 +1,77 @@
-<template>
-  <!-- bloedtype -->
-  <label for="bloodType" class="mb-2 block">Bloedtype</label>
-  <input
-    id="bloodType"
-    type="text"
-    v-model="bloodType"
-    :class="{ 'border-red-500': isBloodTypeInvalid }"
-    @input="validateBloodType"
-    class="focus:border-tertiary-600 peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
-  />
-  <span v-if="isBloodTypeInvalid" class="break-word inline-block text-red-500">
-    {{ bloodTypeErrorMessage }}
-  </span>
-  <span
-    v-else-if="bloodType === ''"
-    class="break-word inline-block text-gray-500"
-  >
-    Onbekend
-  </span>
-</template>
-
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { defineEmits, defineProps, watch } from 'vue'
 
-const bloodType = ref('')
-const isBloodTypeInvalid = ref(false)
-const bloodTypeErrorMessage = ref('')
+const props = defineProps({
+  bloodTypeValue: {
+    type: String,
+    required: true,
+  },
+  isValid: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+})
 
-const validateBloodType = () => {
-  const value = bloodType.value.trim()
-  if (value !== '' && !/^(A|B|AB|O)(\+|\-)?$/.test(value)) {
-    isBloodTypeInvalid.value = true
-    bloodTypeErrorMessage.value =
-      'Voer een geldig bloedtype in (bijv. A+, B-, AB, O+).'
-  } else {
-    isBloodTypeInvalid.value = false
-    bloodTypeErrorMessage.value = ''
+const emits = defineEmits(['update:bloodTypeValue', 'update:isValid'])
+
+const validateInput = (value: string) => {
+  const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+
+  const uppercaseValue = value.toUpperCase()
+
+  return bloodGroups.includes(uppercaseValue) || bloodGroups.includes(value)
+}
+
+const updateValue = (event: Event) => {
+  const target = event.target as HTMLInputElement | null //target is input als event niet bestaat, is null
+
+  if (target) {
+    const value = target.value
+    const isValid = validateInput(value)
+
+    emits('update:isValid', isValid)
+
+    if (isValid) {
+      emits('update:bloodTypeValue', value)
+    }
   }
 }
 
-watch(bloodType, () => {
-  validateBloodType()
-})
-</script>
+watch(
+  () => props.bloodTypeValue,
+  newValue => {
+    const isValid = validateInput(newValue)
 
-<style>
-.border-red-500 {
-  border-color: #ef4444;
-}
-.text-red-500 {
-  color: #ef4444;
-}
-.text-gray-500 {
-  color: #999999;
-}
-</style>
+    emits('update:isValid', isValid)
+  },
+)
+</script>
+<template>
+  <div class="select-container">
+    <label for="blood-group">Bloedgroep</label>
+    <div class="select-wrapper">
+      <select
+        id="blood-group"
+        :value="bloodTypeValue"
+        @input="updateValue($event)"
+        class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+      >
+        <option value="">Selecteer bloedgroep</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+    </div>
+    <div v-if="!isValid" class="mt-1 text-sm text-primary-500">
+      Ongeldige selectie.
+    </div>
+  </div>
+</template>
+
+<style scoped></style>
