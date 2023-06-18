@@ -21,30 +21,7 @@ const props = defineProps({
   },
 })
 
-
-
-function calculateAge(birthDate: string) {
-  const birthDateParts = birthDate.split('/')
-  const birthDay = parseInt(birthDateParts[0], 10)
-  const birthMonth = parseInt(birthDateParts[1], 10) - 1
-  const birthYear = parseInt(birthDateParts[2], 10)
-
-  const currentDate = new Date()
-  const currentDay = currentDate.getDate()
-  const currentMonth = currentDate.getMonth()
-  const currentYear = currentDate.getFullYear()
-
-  let age = currentYear - birthYear
-
-  if (
-    currentMonth < birthMonth ||
-    (currentMonth === birthMonth && currentDay < birthDay)
-  ) {
-    age--
-  }
-
-  return age
-}
+const {convertDateStringToAge, convertDateStringToLocaleString}  = UseDateConverter()
 
 
 const alertSvg = computed(() => {
@@ -111,9 +88,9 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
         <div class='text-sm text-neutral-100'>{{ time }} - <span class='font-fix'>{{ timeAgo.elapsedTime.value }}</span></div>
       </div>
       <div class='self-center'>
-        <div>{{ alert.birthDate }}</div>
+        <div>{{ convertDateStringToLocaleString(alert.birthDate) }}</div>
         <div class='text-sm text-neutral-100'>
-          {{ calculateAge(alert.birthDate) }} jaar
+          {{ convertDateStringToAge(alert.birthDate) }} jaar
         </div>
       </div>
 
