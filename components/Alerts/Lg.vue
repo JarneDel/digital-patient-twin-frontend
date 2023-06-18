@@ -99,7 +99,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
     <div class='md:justify-center md:items-center justify-between flex flex-row pr-4'>
       <div class='flex flex-col justify-center items-start w-44 pr-10'>
         <div>{{ AlertType[alert.type] }}</div>
-        <div class='text-sm'>{{ alert.value }} {{ unit }}</div>
+        <div class='text-sm'>{{ alert.type === AlertType.Temperatuur? Number(alert.value).toFixed(1) : alert.value }} {{ unit }}</div>
       </div>
 <!--      TODO: link to correct patient settings page-->
       <NuxtLink :to='`/dokter/patienten/${alert.patientId}/gegevens`'>

@@ -162,7 +162,7 @@ const createThresholds = async () => {
   />
 
   <form @submit.prevent='submitForm'>
-    <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
+    <div class='m-5 flex flex-col items-center justify-between md:flex-row max-w-[73rem]'>
       <pressables-goback
         :link_name='editLinkName'
         :link_path='`/dokter/patienten/${id.valueOf}/gegevens`'
@@ -213,6 +213,7 @@ const createThresholds = async () => {
             class='-mx-5 mt-0'
             v-model='thresholds.ademhalingsfrequentie'
             @change='fireRangeUpdate'
+            :step='.1'
             :min='0'
             :max='100'
           />
