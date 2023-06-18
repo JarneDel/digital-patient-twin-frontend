@@ -117,11 +117,6 @@ const alertSvg = computed(() => {
     >
       {{ status }}
     </p>
-    <LucideX
-      :size="28"
-      @click="$emit('remove')"
-      class="col-start-5 row-start-1 row-end-3 cursor-pointer rounded-lg text-gray-500 hover:bg-neutral-300 active:text-gray-800"
-    />
   </nuxt-link>
 </template>
 
