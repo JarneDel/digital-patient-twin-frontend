@@ -41,12 +41,14 @@ const updateUpperValue = (high: number) => {
     <input
       :value='modelValue[0]'
       @input="updateLowerValue($event.target.value)"
+      @change='$emit("change", $event)'
       type='number'
       class='h-8 w-12 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
     />
     <input
       :value='modelValue[1]'
       @input="updateUpperValue($event.target.value)"
+      @change='$emit("change", $event)'
       type='number'
       class='h-8 w-12 rounded-md border-2 border-tertiary-400 pl-[4px] text-sm outline-none focus:border-tertiary-400 focus:ring-0'
     />

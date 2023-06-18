@@ -317,7 +317,7 @@ watch(patient, async () => {
         <grafieken-realtime v-if='message' :data='message.temperatuur.value.toFixed(1)'
                             :unit='message.temperatuur.unit' />
         <lucide-loader2 v-else :size='32' class='animate-spin text-tertiary-600'></lucide-loader2>
-        <grafieken-stats v-if='statsData !== null' :data='statsData.bloedzuurstof' type='Bloedzuurstof' />
+        <grafieken-stats v-if='statsData !== null' :data='statsData.temperatuur' type='Temperatuur' />
         <lucide-loader2 v-if='statsPending' :size='32' class='animate-spin text-tertiary-600' />
       </div>
     </div>

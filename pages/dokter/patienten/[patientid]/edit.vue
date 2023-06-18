@@ -10,6 +10,7 @@ import {
 } from '~/interfaces/IPatient'
 import { Switch } from '@headlessui/vue'
 import useConvertNotificationRange from '~/composables/useConvertNotificationRange'
+import { $fetch } from 'ofetch'
 
 const {convertThresholdsToRange, convertRangeToThresholds }  =useConvertNotificationRange()
 
@@ -40,6 +41,7 @@ const {
   data: notificationsEnabledData,
   pending: notificationsPending,
   error: notificationsError,
+  execute: refreshNotifications,
 } = useFetch<IMeldingenInstellingen>(
   `dokter/${user?.localAccountId}/patient/${id.value}/notifications`,
   {
@@ -162,6 +164,61 @@ const fireRangeUpdate = () => {
     },
   })
 }
+const createThresholds = async () => {
+  if (!gegevens.medicalNotificationThresholds) {
+    gegevens.medicalNotificationThresholds = {
+      ademhalingsfrequentie: {
+        min: 0,
+        max: 0,
+      },
+      hartslag: {
+        min: 0,
+        max: 0,
+      },
+      bloedzuurstof: {
+        min: 0,
+        max: 0,
+      },
+      temperatuur: {
+        min: 0,
+        max: 0,
+      },
+      bloeddrukDiastolisch: {
+        min: 0,
+        max: 0,
+      },
+      bloeddrukSystolisch: {
+        min: 0,
+        max: 0,
+      },
+    }
+    const url = `https://patientgegevens.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient/${id.value}/thresholds`
+    await $fetch(url, {
+      method: "PUT",
+      body: JSON.stringify(gegevens.medicalNotificationThresholds),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  }
+  if (notificationsError.value) {
+    // post the enabled notifications
+    if (!notificationsEnabled.value) {
+      notificationsEnabled.value = {
+        patientId: id.value,
+        ademhalingsfrequentie: false,
+        hartslag: false,
+        bloedzuurstof: false,
+        temperatuur: false,
+        bloeddruk: false,
+        masterSwitch: false,
+      }
+    }
+
+  }
+  await execute()
+  await refreshNotifications()
+}
 
 </script>
 
@@ -186,7 +243,9 @@ const fireRangeUpdate = () => {
            v-if='notificationsEnabled && thresholds'>
         <!-- <FormsSelectDevice></FormsSelectDevice> -->
         <div class='flex flex-row justify-between'>
-          <TextKop2>meldingen</TextKop2>
+          <TextKop2
+            title='Slaat automatisch op'
+          >meldingen 🛈</TextKop2>
           <Switch
             v-model='notificationsEnabled.masterSwitch'
             :class="notificationsEnabled.masterSwitch ? 'bg-tertiary-400' : 'bg-tertiary-200'"
@@ -326,6 +385,14 @@ const fireRangeUpdate = () => {
               :max='42'
             />
         </div>
+      </div>
+      <div v-else-if='!gegevens.medicalNotificationThresholds || notificationsError'>
+        <p>Meldingen van deze patient staan uit.</p>
+        <pressables-button
+          @click='createThresholds'
+        >
+          Zet je meldingen aan
+        </pressables-button>
       </div>
 
       <div class='flex'>
