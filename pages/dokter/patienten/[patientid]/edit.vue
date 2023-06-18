@@ -349,31 +349,40 @@ const createThresholds = async () => {
             type='date'/>
 
           <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
-          <forms-city-input
-            :cityValue='patientAdres.gemeente'
+          <forms-text
             v-model='patientAdres.gemeente'
-            @update:cityValue='patientAdres.gemeente = $event'
+            input-id='gemeente'
+            label='Gemeeente'
           />
-          <forms-street-input
-            :textStreetNameValue='patientAdres.straat'
+          <forms-text-aria
             v-model='patientAdres.straat'
-            @update:textStreetNameValue='patientAdres.straat = $event'
-          />
-          <forms-postalcode-inputs
-            v-model:house-number-value='patientAdres.nr'
-            v-model:postalcode-value='patientAdres.postcode'
-          />
+            input-id='straat'
+            label='Straatnaam'/>
+          <div class='flex gap-4 flex-row'>
+            <forms-text
+              v-model='patientAdres.postcode'
+              input-id='Postcode'
+              label='Postcode'
+            />
+            <forms-text
+              v-model='patientAdres.nr'
+              input-id='huisnummer'
+              label='Huisnummer'
+            />
+          </div>
           <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
-          <forms-email-input
-            :emailValue='patientContact.email'
+          <forms-text
             v-model='patientContact.email'
-            @update:emailValue='patientContact.email = $event'
+            input-id='email'
+            label='Email'
+            type='email'
           />
-          <forms-telephone-input
-            :phoneNumberValue='patientContact.telefoon'
+          <forms-text
             v-model='patientContact.telefoon'
-            @update:phoneNumberValue='patientContact.telefoon = $event'
-          />
+            input-id='telefoon'
+            label='Telefoon'
+            type='tel'
+            />
         </div>
       </div>
 
@@ -381,21 +390,24 @@ const createThresholds = async () => {
       <div class='flex'>
         <div>
           <TextKop2 class='mb-5'>Medische gegevens</TextKop2>
-          <FormsLenghtInput
-            :lengthValue='patientMedisch.lengte'
+          <forms-text
             v-model='patientMedisch.lengte'
-            @update:lengthValue='patientMedisch.lengte = parseInt($event)'
-          ></FormsLenghtInput>
-          <FormsWeightInput
-            :weightValue='patientMedisch.gewicht'
+            input-id='length'
+            label='Lengte [cm]'
+          />
+          <forms-text
             v-model='patientMedisch.gewicht'
-            @update:weightValue='patientMedisch.gewicht = parseInt($event)'
-          ></FormsWeightInput>
-          <FormsBloodtypeInput
-            :bloodTypeValue='patientMedisch.bloedgroep'
+            input-id='weight'
+            label='Gewicht [kg]'
+            />
+
+          <forms-input-select
+            input-id='bloedgroep'
+            label='Bloedgroep'
+            :options='["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]'
             v-model='patientMedisch.bloedgroep'
-            @update:bloodTypeValue='patientMedisch.bloedgroep = $event'
-          ></FormsBloodtypeInput>
+          />
+
         </div>
       </div>
     </div>
