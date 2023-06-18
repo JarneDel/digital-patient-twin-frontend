@@ -19,9 +19,9 @@ defineEmits(['click'])
     </div>
     <div class='rounded-b-lg bg-neutral-600 p-6 pb-4'>
       <kop2 class='pb-4'>Dokter Login</kop2>
-      <p class='pb-6'>Log in with your Microsoft Account</p>
-      <pressables-button @click='$emit("click")' class='text-neutral-600' width='100%' padding='12px'>
-        Login with Microsoft
+      <p class='pb-6 text-neutral-800'>Log in met je Microsoft Account</p>
+      <pressables-button @click='$emit("click")' width='100%' padding='12px'>
+        Login met Microsoft
       </pressables-button>
     </div>
   </div>
