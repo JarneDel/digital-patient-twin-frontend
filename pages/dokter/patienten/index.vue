@@ -138,10 +138,7 @@ watch(
   () => isDeleting.value,
   state => {
     console.log(state + ' state isDeleting')
-    for (let i = 0; i < selected_list.value.length; i++) {
-      del()
-      // del(selected_list.value[i])
-    }
+    del()
     selected_list.value = []
     count.value = selected_list.value.length
   },
@@ -156,52 +153,145 @@ watch(
 )
 
 const removeFromList = (id: string) => {
-  console.log('patiënt is verwijdered')
+  console.log("verwijder uit lijst: " + id)
 }
 
 const pin = async () => {
   execute()
 }
 
+
 const del = async () => {
-  console.log(selected_list.value, ' selected_list')
+  console.log("IK KOM HIER VERWIJDEREN")
+
+  // voor id uit geselecteerde lijst
   for(const id of selected_list.value) {
-    console.log(id);
+    console.log("dit is het id: " + id);
+
+    // voor elke id uit lijst van gepinde patienten
     for(const i of pinPatient.value && pinPatient != null ? pinPatient.value : []){
+      // als id en id overeenkomen verwijder de pin
       if(i.id === id){
-        console.log("eerst pin verwijderen")
-        $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+        // k ga der wel vanuit dat de patienten overeen komen hier
+        console.log(i.id + " == " + id)
+        const res = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, { // veranderd
           method: 'DELETE',
           baseURL: servicesUrls.dokterService,
-        }).then(
-          () => {
-            execute()
-            removeFromList(id)
-          },
-          (err: FetchError) => {
-            console.log(err)
-          },
-        )
+        })
+        try {
+          if (!res) {
+            console.log("PATIENT VERWIJDERD ✨")
+            return !res
+          }
+        } catch (error) {
+          console.log("PATIENT NIET VERWIJDERD ❌")
+          console.log(error)
+        }
+        // if(!res) return //iets in die aard ben niet zeker (gewoon kijken of die result 200 is) kan eventueel met try catch
+        // const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, options) // hier de patient verwijderen
+        // const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, { // veranderd
+        //   method: 'DELETE',
+        //   baseURL: servicesUrls.dokterService,
+        // })
+        // try {
+        //   if (!resDeletePatient) {
+        //     console.log("PATIENT VERWIJDERD ✨")
+        //     return !resDeletePatient
+        //   }
+        // } catch (error) {
+        //   console.log(error)
+        // }
       }
-      console.log("patient verwijderen")
+      
+      // als ze niet overeenkomen
+      else{
+        console.log(i.id + " != " + id)
+      }
     }
-    $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
-      method: 'DELETE',
-      baseURL: servicesUrls.dokterService,
-    }).then(
-      () => {
-        execute()
-        removeFromList(id)
-      },
-      (err: FetchError) => {
-        console.log(err)
-      },
-    )
+
+    // dan verwijderen van patienten
+    const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, { // veranderd
+        method: 'DELETE',
+        baseURL: servicesUrls.dokterService,
+      })
+      try {
+        if (!resDeletePatient) {
+          console.log("PATIENT VERWIJDERD ✨")
+          return !resDeletePatient
+        }
+      } catch (error) {
+        console.log(error)
+      }
     isEditing.value = false
   }
-  
-
+  console.log("YAAAAYYY")
+  execute()
 }
+
+
+// const del = async () => {
+//   console.log("IK KOM HIER VERWIJDEREN")
+//   console.log("1")
+
+//   // voor id uit geselecteerde lijst
+//   for(const id of selected_list.value) {
+//     console.log("2")
+//     console.log("dit is het id: " + id);
+
+//     // voor elke id uit lijst van gepinde patienten
+//     for(const i of pinPatient.value && pinPatient != null ? pinPatient.value : []){
+//       console.log("3")
+//       // als id en id overeenkomen verwijder de pin
+//       if(i.id === id){
+//         console.log("4")
+//         console.log(i.id + " == " + id)
+//         $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+//           method: 'DELETE',
+//           baseURL: servicesUrls.dokterService,
+//         }).then(
+//           () => {
+//             execute()
+//             // removeFromList(id)
+//             console.log("5")
+//             console.log("PIN verwijderd 📌")
+//           },
+//           (err: FetchError) => {
+//             console.log(err)
+//           },
+//         )
+//         console.log("6")
+//       }
+      
+//       // als ze niet overeenkomen
+//       else{
+//         console.log("7")
+//         console.log(i.id + " != " + id)
+//       }
+//       console.log("8")
+//     }
+//     // $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
+//     //   method: 'DELETE',
+//     //   baseURL: servicesUrls.dokterService,
+//     // }).then(
+//     //   () => {
+//     //     execute()
+//     //     removeFromList(id)
+//     //   },
+//     //   (err: FetchError) => {
+//     //     console.log(err)
+//     //   },
+//     // )
+//     console.log("9")
+//     isEditing.value = false
+//   }
+//   console.log("10")
+//   for(const id of selected_list.value) {
+//     console.log("11")
+//     console.log("🤑")
+//     console.log("patient verwijderen: " + id)
+//   }
+
+// }
 
 useHead({
   title: 'Patiënten',
