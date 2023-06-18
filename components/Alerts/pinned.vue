@@ -83,7 +83,7 @@ const alertSvg = computed(() => {
   <nuxt-link
     :to="clickUrl"
     @click="$emit('details')"
-    class="grid grid-cols-[auto,repeat(3,1fr),auto] grid-rows-2 items-center gap-x-2 rounded-lg bg-white p-5 drop-shadow-lg transition-all hover:translate-x-1 hover:bg-neutral-50"
+    class="grid grid-cols-[auto,repeat(3,1fr),auto] grid-rows-2 items-center gap-x-2 rounded-lg bg-white p-5 drop-shadow-lg transition-all hover:translate-x-1 hover:bg-neutral-50 outline-none ring-transparent ring-2 focus:ring-tertiary-500"
     role="button"
   >
     
