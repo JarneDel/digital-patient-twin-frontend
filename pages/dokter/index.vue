@@ -85,6 +85,7 @@ const removeFromList = (id: string) => {
   if (NotificationToRemove === undefined) return
   criticalNotifications.value = NotificationToRemove
 }
+
 const unpin = async (id: any) => {
   // send request to backend
 
