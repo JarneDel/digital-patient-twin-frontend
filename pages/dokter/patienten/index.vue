@@ -2,7 +2,7 @@
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
-import { $fetch, FetchError } from 'ofetch'
+import { $fetch } from 'ofetch'
 
 const user = useUser()
 
@@ -16,6 +16,20 @@ const {
   {
     baseURL: servicesUrls.dokterService,
     server: false,
+  },
+)
+
+const {
+  data: pinnedPatients,
+  error: pinnedPatientsError,
+  pending: pinnedPatientsPending,
+  execute: pinnedPatientsExecute,
+} = useFetch<PatientGegevens[]>(
+  `/dokter/${user.value?.localAccountId}/pinned`,
+  {
+    baseURL: servicesUrls.dokterService,
+    server: false,
+    immediate: false,
   },
 )
 
@@ -45,6 +59,33 @@ const placeholderPatient = ref<PatientGegevens>({
     bloedgroep: 'A+',
     lengte: 170,
     gewicht: 170,
+  },
+  createdBy:"1",
+  medicalNotificationThresholds:{
+    bloeddrukSystolisch: {
+      min: 120,
+      max: 140,
+    },
+    bloeddrukDiaStolisch: {
+      min: 80,
+      max: 90,
+    },
+    hartslag: {
+      min: 80,
+      max: 120,
+    },
+    temperatuur: {
+      min: 35,
+      max: 40,
+    },
+    ademhalingsfrequentie: {
+      min: 10,
+      max: 30,
+    },
+    bloedzuurstof: {
+      min: 70,
+      max: 100,
+    }
   }
 })
 
@@ -99,9 +140,7 @@ watch(
   () => isDeleting.value,
   state => {
     console.log(state + ' state isDeleting')
-    for (let i = 0; i < selected_list.value.length; i++) {
-      del(selected_list.value[i])
-    }
+    del()
     selected_list.value = []
     count.value = selected_list.value.length
   },
@@ -115,42 +154,53 @@ watch(
   },
 )
 
-const removeFromList = (id: string) => {
-  console.log('patiënt is verwijdered')
-}
-
 const pin = async () => {
   execute()
 }
 
-const del = async (id: string) => {
-  if (patients.value === null) return
-  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
-    method: 'DELETE',
-    baseURL: servicesUrls.dokterService,
-  }).then(
-    () => {
-      execute()
-      removeFromList(id)
-    },
-    (err: FetchError) => {
-      console.log(err)
-    },
-  )
-  $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
-    method: 'DELETE',
-    baseURL: servicesUrls.dokterService,
-  }).then(
-    () => {
-      execute()
-      removeFromList(id)
-    },
-    (err: FetchError) => {
-      console.log(err)
-    },
-  )
-  isEditing.value = false
+const del = async () => {
+  console.log("IK KOM HIER VERWIJDEREN")
+  pinnedPatientsExecute()
+  execute()
+  // voor id uit geselecteerde lijst
+  for(const id of selected_list.value) {
+    // voor elke id uit lijst van gepinde patienten
+    pinnedPatientsExecute()
+    for(const i of pinnedPatients.value && pinnedPatients != null ? pinnedPatients.value : []){
+      // als id en id overeenkomen verwijder de pin
+      if(i.id === id){
+        // k ga der wel vanuit dat de patienten overeen komen hier
+        const res = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
+          method: 'DELETE',
+          baseURL: servicesUrls.dokterService,
+        })
+        try {
+          if (!res) {
+            return !res
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    }
+
+    // dan verwijderen van patienten
+    const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
+        method: 'DELETE',
+        baseURL: servicesUrls.dokterService,
+      })
+      try {
+        if (!resDeletePatient) {
+          return !resDeletePatient
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    isEditing.value = false
+  }
+  execute()
 }
+
 
 useHead({
   title: 'Patiënten',
@@ -161,20 +211,6 @@ useHead({
     },
   ],
 })
-
-const {
-  data: pinnedPatients,
-  error: pinnedPatientsError,
-  pending: pinnedPatientsPending,
-  execute: pinnedPatientsExecute,
-} = useFetch<PatientGegevens[]>(
-  `/dokter/${user.value?.localAccountId}/pinned`,
-  {
-    baseURL: servicesUrls.dokterService,
-    server: false,
-    immediate: false,
-  },
-)
 
 watch(pending, () => {
   if (pending.value) {
@@ -193,8 +229,6 @@ const pinned = (id: string) => {
     }
   }
 }
-
-
 
 const showAddPatientPopup = () => {
   console.log('showAddPatientPopup')
@@ -240,11 +274,9 @@ watch(isSelectPatientOpen, (state) => {
         :selected-count='count'
         @checkboxSelected='updateSelectedCount'
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del="del(patient.id)"
+        @del="del()"
       />
     </div>
-
-
     
     <patients-patientcard-edit
       v-for="patient in patients"
