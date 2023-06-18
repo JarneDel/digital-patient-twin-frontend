@@ -45,6 +45,33 @@ const placeholderPatient = ref<PatientGegevens>({
     bloedgroep: 'A+',
     lengte: 170,
     gewicht: 170,
+  },
+  createdBy:"1",
+  medicalNotificationThresholds:{
+    bloeddrukSystolisch: {
+      min: 120,
+      max: 140,
+    },
+    bloeddrukDiaStolisch: {
+      min: 80,
+      max: 90,
+    },
+    hartslag: {
+      min: 80,
+      max: 120,
+    },
+    temperatuur: {
+      min: 35,
+      max: 40,
+    },
+    ademhalingsfrequentie: {
+      min: 10,
+      max: 30,
+    },
+    bloedzuurstof: {
+      min: 70,
+      max: 100,
+    }
   }
 })
 
