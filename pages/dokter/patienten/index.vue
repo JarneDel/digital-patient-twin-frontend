@@ -2,7 +2,7 @@
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
-import { $fetch, FetchError } from 'ofetch'
+import { $fetch } from 'ofetch'
 
 const user = useUser()
 
@@ -154,74 +154,43 @@ watch(
   },
 )
 
-const removeFromList = (id: string) => {
-  console.log("verwijder uit lijst: " + id)
-}
-
 const pin = async () => {
   execute()
 }
-
 
 const del = async () => {
   console.log("IK KOM HIER VERWIJDEREN")
   pinnedPatientsExecute()
   execute()
-
   // voor id uit geselecteerde lijst
   for(const id of selected_list.value) {
-    console.log("dit is het id: " + id);
-
     // voor elke id uit lijst van gepinde patienten
     pinnedPatientsExecute()
     for(const i of pinnedPatients.value && pinnedPatients != null ? pinnedPatients.value : []){
       // als id en id overeenkomen verwijder de pin
       if(i.id === id){
         // k ga der wel vanuit dat de patienten overeen komen hier
-        console.log(i.id + " == " + id)
-        const res = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, { // veranderd
+        const res = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
           method: 'DELETE',
           baseURL: servicesUrls.dokterService,
         })
         try {
           if (!res) {
-            console.log("PATIENT VERWIJDERD ✨")
             return !res
           }
         } catch (error) {
-          console.log("PATIENT NIET VERWIJDERD ❌")
           console.log(error)
         }
-        // if(!res) return //iets in die aard ben niet zeker (gewoon kijken of die result 200 is) kan eventueel met try catch
-        // const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, options) // hier de patient verwijderen
-        // const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, { // veranderd
-        //   method: 'DELETE',
-        //   baseURL: servicesUrls.dokterService,
-        // })
-        // try {
-        //   if (!resDeletePatient) {
-        //     console.log("PATIENT VERWIJDERD ✨")
-        //     return !resDeletePatient
-        //   }
-        // } catch (error) {
-        //   console.log(error)
-        // }
-      }
-      
-      // als ze niet overeenkomen
-      else{
-        console.log(i.id + " != " + id)
       }
     }
 
     // dan verwijderen van patienten
-    const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, { // veranderd
+    const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
         method: 'DELETE',
         baseURL: servicesUrls.dokterService,
       })
       try {
         if (!resDeletePatient) {
-          console.log("PATIENT VERWIJDERD ✨")
           return !resDeletePatient
         }
       } catch (error) {
@@ -229,75 +198,9 @@ const del = async () => {
       }
     isEditing.value = false
   }
-  console.log(selected_list.value)
-  console.log("YAAAAYYY")
   execute()
 }
 
-
-// const del = async () => {
-//   console.log("IK KOM HIER VERWIJDEREN")
-//   console.log("1")
-
-//   // voor id uit geselecteerde lijst
-//   for(const id of selected_list.value) {
-//     console.log("2")
-//     console.log("dit is het id: " + id);
-
-//     // voor elke id uit lijst van gepinde patienten
-//     for(const i of pinnedPatients.value && pinnedPatients != null ? pinnedPatients.value : []){
-//       console.log("3")
-//       // als id en id overeenkomen verwijder de pin
-//       if(i.id === id){
-//         console.log("4")
-//         console.log(i.id + " == " + id)
-//         $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
-//           method: 'DELETE',
-//           baseURL: servicesUrls.dokterService,
-//         }).then(
-//           () => {
-//             execute()
-//             // removeFromList(id)
-//             console.log("5")
-//             console.log("PIN verwijderd 📌")
-//           },
-//           (err: FetchError) => {
-//             console.log(err)
-//           },
-//         )
-//         console.log("6")
-//       }
-      
-//       // als ze niet overeenkomen
-//       else{
-//         console.log("7")
-//         console.log(i.id + " != " + id)
-//       }
-//       console.log("8")
-//     }
-//     // $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
-//     //   method: 'DELETE',
-//     //   baseURL: servicesUrls.dokterService,
-//     // }).then(
-//     //   () => {
-//     //     execute()
-//     //     removeFromList(id)
-//     //   },
-//     //   (err: FetchError) => {
-//     //     console.log(err)
-//     //   },
-//     // )
-//     console.log("9")
-//     isEditing.value = false
-//   }
-//   console.log("10")
-//   for(const id of selected_list.value) {
-//     console.log("11")
-//     console.log("🤑")
-//     console.log("patient verwijderen: " + id)
-//   }
-
-// }
 
 useHead({
   title: 'Patiënten',
@@ -308,8 +211,6 @@ useHead({
     },
   ],
 })
-
-
 
 watch(pending, () => {
   if (pending.value) {
@@ -328,8 +229,6 @@ const pinned = (id: string) => {
     }
   }
 }
-
-
 
 const showAddPatientPopup = () => {
   console.log('showAddPatientPopup')
@@ -367,7 +266,6 @@ watch(isSelectPatientOpen, (state) => {
         v-if='user'
         v-model:is-open='isSelectPatientOpen'
       />
-      <div>{{selected_list}}</div>
 
       <PressablesEdit
         @clickDelete="clickDelete"
@@ -378,18 +276,7 @@ watch(isSelectPatientOpen, (state) => {
         @update:isEditing="$emit('update:isEditing', $event)"
         @del="del()"
       />
-      <!-- <PressablesEdit
-        @clickDelete="clickDelete"
-        @clickEdit="() => clickEdit"
-        v-model:is-editing='isEditing'
-        :selected-count='count'
-        @checkboxSelected='updateSelectedCount'
-        @update:isEditing="$emit('update:isEditing', $event)"
-        @del="del(patient.id)"
-      /> -->
     </div>
-
-
     
     <patients-patientcard-edit
       v-for="patient in patients"
