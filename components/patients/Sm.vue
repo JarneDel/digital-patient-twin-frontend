@@ -25,8 +25,8 @@ console.info('patient', props.patientId)
 </script>
 
 <template>
-  <NuxtLink
-    :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
+  <div
+  @click="() => navigateTo(`/dokter/patienten/${patient.id}`)"
     class='rounded-lg h-[66px] flex bg-white px-4 drop-shadow-xl transition-all max-w-[34rem] hover:bg-neutral-500 items-center'
   >
     <div
@@ -61,5 +61,5 @@ console.info('patient', props.patientId)
         />
       </NuxtLink>
     </div>
-  </NuxtLink>
+  </div>
 </template>

@@ -85,7 +85,7 @@ const removeFromList = (id: string) => {
   if (NotificationToRemove === undefined) return
   criticalNotifications.value = NotificationToRemove
 }
-const unpin = async (id: string) => {
+const unpin = async (id: any) => {
   // send request to backend
 
   // TODO: user can undo this action
@@ -145,6 +145,7 @@ watch(hovered, newVal => {
           :key="patient.id"
           :patient="patient.algemeen"
           :patientId="patient.id"
+          @unpin="unpin(patient.id)"
         />
       </div>
       <div v-else class="w-[34.375rem]">
