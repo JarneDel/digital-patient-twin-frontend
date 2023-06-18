@@ -112,7 +112,6 @@ const hovered = ref(false)
 watch(hovered, newVal => {
   console.log(newVal, 'hovered')
 })
-
 </script>
 
 <template>
@@ -127,37 +126,38 @@ watch(hovered, newVal => {
       <!--      Title Left      -->
       <TextKop2>Gepinde Patiënten</TextKop2>
       <!--      Content Left      -->
+      <div v-if="pendingPinnedPatients" class="flex flex-col gap-4 min-w-[34rem]">
+        <client-only>
+          <patients-sm
+            v-for="patient of 5"
+            :key="Math.random()"
+            :patient="placeHolderPatient"
+            :patientId="placeHolderPatient.id"
+            class="blurred-text animate-pulse"
+            :isDisabled="true"
+          />
+        </client-only>
+      </div>
       <div
-        v-if='pinnedPatients !== null && pinnedPatients.length > 0'
+        v-else-if="pinnedPatients !== null && pinnedPatients.length > 0"
         class="flex flex-col gap-4"
       >
-        <!-- <patients-sm
+        <patients-sm
           v-for="patient of pinnedPatients"
           :key="patient.id"
           :patient="patient.algemeen"
-          :patientId='patient.id'
-          @unpin="unpin(patient.id)"
-        /> -->
-        <patients-sm
-          v-for="patient of 5"
-          :key="Math.random()"
-          :patient="placeHolderPatient"
-          :patientId='placeHolderPatient.id'
-          class="animate-pulse blurred-text"
+          :patientId="patient.id"
         />
       </div>
-      <div v-else-if="pendingPinnedPatients" v-for="patient of 5">help</div>
       <div v-else class="w-[34.375rem]">
         <TextKop3>Er zijn nog geen gepinde patiënten</TextKop3>
         <PressablesButton
           class="mt-2 hover:underline"
           @click="() => navigateTo('/dokter/patienten')"
-
         >
           <svg-pinrotated class="rotate-270 mr-2 h-8 w-8"></svg-pinrotated>
 
           <span class="mr-1 text-lg"> Pin een patiënt </span>
-          <!--          <LucideChevronRight class='w-6 h-6 ml-2' />-->
         </PressablesButton>
       </div>
       <!--      Title Right      -->
@@ -179,17 +179,17 @@ watch(hovered, newVal => {
         />
 
         <AlertsPinned
-            v-for="melding of 5"
-            v-if="notificationsPending"
-            class='animate-pulse blurred-text w-[30rem]'
-            :key="placeHolderAlert.id"
-            :datetime="placeHolderAlert.timestamp"
-            :level="placeHolderAlert.level"
-            :name="placeHolderAlert.fullName"
-            :type="placeHolderAlert.type"
-            :value="placeHolderAlert.value"
-            :click-url="'/dokter/meldingen?id=' + placeHolderAlert.patientId"
-          />
+          v-for="melding of 5"
+          v-if="notificationsPending"
+          class="blurred-text w-[30rem] animate-pulse"
+          :key="placeHolderAlert.id"
+          :datetime="placeHolderAlert.timestamp"
+          :level="placeHolderAlert.level"
+          :name="placeHolderAlert.fullName"
+          :type="placeHolderAlert.type"
+          :value="placeHolderAlert.value"
+          :click-url="'/dokter/meldingen?id=' + placeHolderAlert.patientId"
+        />
       </div>
     </div>
   </div>
