@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 import { Plus } from 'lucide-vue-next'
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { servicesUrls } from '~/servicesurls'
@@ -33,7 +33,7 @@ const {
   },
 )
 
-const {createPlaceholderPatient } = usePatientHelper()
+const { createPlaceholderPatient } = usePatientHelper()
 const placeholderPatient = ref<PatientGegevens>(createPlaceholderPatient())
 
 const isEditing = ref(false)
@@ -103,16 +103,16 @@ const pin = async () => {
 }
 
 const del = async () => {
-  console.log("IK KOM HIER VERWIJDEREN")
+  console.log('IK KOM HIER VERWIJDEREN')
   pinnedPatientsExecute()
   execute()
   // voor id uit geselecteerde lijst
-  for(const id of selected_list.value) {
+  for (const id of selected_list.value) {
     // voor elke id uit lijst van gepinde patienten
     pinnedPatientsExecute()
-    for(const i of pinnedPatients.value && pinnedPatients != null ? pinnedPatients.value : []){
+    for (const i of pinnedPatients.value ? pinnedPatients.value : []) {
       // als id en id overeenkomen verwijder de pin
-      if(i.id === id){
+      if (i.id === id) {
         // k ga der wel vanuit dat de patienten overeen komen hier
         const res = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
           method: 'DELETE',
@@ -130,22 +130,22 @@ const del = async () => {
 
     // dan verwijderen van patienten
     const resDeletePatient = await $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/`, {
-        method: 'DELETE',
-        baseURL: servicesUrls.dokterService,
-      })
-      try {
-        if (!resDeletePatient) {
-          return !resDeletePatient
-        }
-      } catch (error) {
-        console.log(error)
+      method: 'DELETE',
+      baseURL: servicesUrls.dokterService,
+    })
+    try {
+      if (!resDeletePatient) {
+        return !resDeletePatient
       }
+    } catch (error) {
+      console.log(error)
+    }
     isEditing.value = false
   }
   execute()
 }
 
-useTitle('Patiënten', "Patiënten pagina. Bekijk al je patiënten zien.")
+useTitle('Patiënten', 'Patiënten pagina. Bekijk al je patiënten zien.')
 
 watch(pending, () => {
   if (pending.value) {
@@ -156,8 +156,8 @@ watch(pending, () => {
 })
 
 const pinned = (id: string) => {
-  if(patients.value !== null && pinnedPatients.value !== null){
-    return pinnedPatients.value.filter(p => p.id === id).length > 0;
+  if (patients.value !== null && pinnedPatients.value !== null) {
+    return pinnedPatients.value.filter(p => p.id === id).length > 0
   }
 }
 
@@ -178,12 +178,12 @@ watch(isSelectPatientOpen, (state) => {
     <h2 class='mb-4 text-3xl font-semibold'>Patiënt lijst</h2>
     <div class='my-8 flex mx-4 items-center justify-between lg:flex-row'>
       <button
-        class='inline-flex justify-center rounded-lg border border-transparent bg-secondary-100 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80'
+        class='inline-flex justify-center rounded-lg border-2 bg-secondary-100/30 border-secondary-200 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/40 focus-visible:ring-secondary-400/80'
         @click='showAddPatientPopup'
       >
         <Plus class='h-8 w-8' />
       </button>
-      <popup-closeable 
+      <popup-closeable
         v-model:is-open='isAddPatientOpen'
         button2='Bestaande patient'
         button3='Nieuwe patient'
@@ -199,41 +199,44 @@ watch(isSelectPatientOpen, (state) => {
       />
 
       <PressablesEdit
-        @clickDelete="clickDelete"
-        @clickEdit="() => clickEdit"
+        @clickDelete='clickDelete'
+        @clickEdit='() => clickEdit'
         v-model:is-editing='isEditing'
         :selected-count='count'
         @checkboxSelected='updateSelectedCount'
         @update:isEditing="$emit('update:isEditing', $event)"
-        @del="del()"
+        @del='del()'
       />
     </div>
-    
+
     <patients-patientcard-edit
-      v-for="patient in patients"
-      v-if="pinnedPatients"
-      :key="patient.id"
-      :id="patient.id"
-      :patient="patient"
-      :click-edit="isEditing"
-      :isPinned="pinned(patient.id)"
-      @checkboxSelected="updateList"
-      @clickPin="clickPin"
+      v-for='patient in patients'
+      v-if='pinnedPatients && !pending && patients'
+      :key='patient.id'
+      :id='patient.id'
+      :patient='patient'
+      :click-edit='isEditing'
+      :isPinned='pinned(patient.id)'
+      @checkboxSelected='updateList'
+      @clickPin='clickPin'
     />
 
-    <div v-else="pending">
+    <div v-else-if='pending'>
       <patients-patientcard-edit
-      v-for="patient of 5"
-      class="animate-pulse blurred-text"
-      :key="Math.random()"
-      :patient="placeholderPatient"
-      :click-edit="isEditing"
-      :isPinned="true"
-      @checkboxSelected="updateList"
-      @clickPin="clickPin"
-    />
+        v-for='patient of 5'
+        class='animate-pulse blurred-text'
+        :key='Math.random()'
+        :patient='placeholderPatient'
+        :click-edit='isEditing'
+        :isPinned='true'
+        @checkboxSelected='updateList'
+        @clickPin='clickPin'
+      />
     </div>
-    
+    <div v-if='!patients || patients.length === 0 && !pending'>
+      <div class='text-center text-gray-500 text-sm'>Je hebt nog geen patienten</div>
+    </div>
+
   </div>
 </template>
 

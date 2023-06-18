@@ -61,12 +61,12 @@ const formPatient = ref<IPatientAlgemeen>(patient)
 const formPatientAdres = ref<Address>(patientAdres)
 const formPatientMedisch = ref<Medisch>(patientMedisch)
 const formPatientContact = ref<Contact>(patientContact)
+const isSavedPopupOpen = ref(false)
 
 const submitForm = async () => {
   try {
     console.log('submitting form')
 
-    // todo: this function is not submitting the form
     if (!data.value || !thresholds.value) throw new Error('No data or thresholds')
     const updatedPatientData: PatientGegevens = {
       algemeen: formPatient.value,
@@ -92,8 +92,8 @@ const submitForm = async () => {
       execute()
       // Handle successful update
       console.log('Patient data updated successfully')
-      alert('Patient data updated successfully')
-      // todo: redirect user to patient detail page
+      isSavedPopupOpen.value = true
+
       console.log(fetch)
     } else {
       // Handle update error
@@ -150,6 +150,17 @@ const createThresholds = async () => {
 </script>
 
 <template>
+  <popup-closeable
+    v-model:is-open='isSavedPopupOpen'
+    title-message='Gegevens opgeslagen'
+    message='De gegevens van de patiënt zijn opgeslagen.'
+    button2='Terug naar patiënt'
+    button3='Blijf hier'
+    @button2Event='() => navigateTo(`/dokter/patienten/${id}/gegevens`)'
+    @button3Event='() => isSavedPopupOpen = false'
+
+  />
+
   <form @submit.prevent='submitForm'>
     <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
       <pressables-goback
@@ -320,7 +331,7 @@ const createThresholds = async () => {
         </pressables-button>
       </div>
 
-      <div class='flex'>
+      <div class='flex max-w-lg'>
         <div>
           <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
           <forms-text

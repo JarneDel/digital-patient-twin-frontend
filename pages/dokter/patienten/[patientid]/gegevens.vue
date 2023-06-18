@@ -18,7 +18,7 @@ const {convertDateStringToLocaleString} = UseDateConverter()
 </script>
 
 <template>
-  <div class="m-5 flex flex-col items-center justify-between md:flex-row">
+  <div class="m-5 flex flex-col items-center justify-between md:flex-row lg:mx-20">
     <PressablesGoback
       link_path="/dokter/patienten"
       link_name="patient gegevens"

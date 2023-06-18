@@ -198,7 +198,7 @@ watch(patient, async () => {
 
 </script>
 <template>
-  <div class='flex flex-row justify-between gap-8 items-center max-w-6xl mx-auto'>
+  <div class='flex flex-row justify-between gap-8 items-center max-w-7xl mx-auto'>
     <!--     time picker start -->
     <Datepicker v-model='date' :max-date='new Date()' :range='true'
                 class='max-w-[434px]' v-on:text-submit='() => {manual.end = true; manual.start= true}' />
