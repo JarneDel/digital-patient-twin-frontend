@@ -18,16 +18,18 @@ const {
     server: false,
   },
 )
+
 const {
-  data: pinPatient,
-  execute: executePinPatient,
-  error: errorPinPatient,
-  pending: pendingPinPatient,
+  data: pinnedPatients,
+  error: pinnedPatientsError,
+  pending: pinnedPatientsPending,
+  execute: pinnedPatientsExecute,
 } = useFetch<PatientGegevens[]>(
   `/dokter/${user.value?.localAccountId}/pinned`,
   {
     baseURL: servicesUrls.dokterService,
     server: false,
+    immediate: false,
   },
 )
 
@@ -163,13 +165,16 @@ const pin = async () => {
 
 const del = async () => {
   console.log("IK KOM HIER VERWIJDEREN")
+  pinnedPatientsExecute()
+  execute()
 
   // voor id uit geselecteerde lijst
   for(const id of selected_list.value) {
     console.log("dit is het id: " + id);
 
     // voor elke id uit lijst van gepinde patienten
-    for(const i of pinPatient.value && pinPatient != null ? pinPatient.value : []){
+    pinnedPatientsExecute()
+    for(const i of pinnedPatients.value && pinnedPatients != null ? pinnedPatients.value : []){
       // als id en id overeenkomen verwijder de pin
       if(i.id === id){
         // k ga der wel vanuit dat de patienten overeen komen hier
@@ -224,6 +229,7 @@ const del = async () => {
       }
     isEditing.value = false
   }
+  console.log(selected_list.value)
   console.log("YAAAAYYY")
   execute()
 }
@@ -239,7 +245,7 @@ const del = async () => {
 //     console.log("dit is het id: " + id);
 
 //     // voor elke id uit lijst van gepinde patienten
-//     for(const i of pinPatient.value && pinPatient != null ? pinPatient.value : []){
+//     for(const i of pinnedPatients.value && pinnedPatients != null ? pinnedPatients.value : []){
 //       console.log("3")
 //       // als id en id overeenkomen verwijder de pin
 //       if(i.id === id){
@@ -303,19 +309,7 @@ useHead({
   ],
 })
 
-const {
-  data: pinnedPatients,
-  error: pinnedPatientsError,
-  pending: pinnedPatientsPending,
-  execute: pinnedPatientsExecute,
-} = useFetch<PatientGegevens[]>(
-  `/dokter/${user.value?.localAccountId}/pinned`,
-  {
-    baseURL: servicesUrls.dokterService,
-    server: false,
-    immediate: false,
-  },
-)
+
 
 watch(pending, () => {
   if (pending.value) {
