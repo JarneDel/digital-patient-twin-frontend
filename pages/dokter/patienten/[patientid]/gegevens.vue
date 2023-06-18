@@ -1,15 +1,7 @@
 <script setup lang="ts">
 import { Address, IPatientAlgemeen, Medisch, PatientGegevens } from '~/interfaces/IPatient'
 
-useHead({
-  title: 'Gegevens patiënt',
-  meta: [
-    {
-      name: 'description',
-      content: 'Patiënt detailpagina.',
-    },
-  ],
-})
+useTitle("Gegevens patiënt", "Patiënt detailpagina.")
 const routeID = useRoute().params.patientid as string
 
 //id dynamicaaly
@@ -21,16 +13,7 @@ const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azu
 
 const { error, data, pending } = await useFetch<PatientGegevens>(url)
 const patient: IPatientAlgemeen = data.value?.algemeen as IPatientAlgemeen
-const patientAdres: Address = data.value?.adres as Address
-const patientMedisch: Medisch = data.value?.medisch as Medisch
 
-const result = computed<PatientGegevens[]>(() => {
-  const lijst: PatientGegevens[] = []
-  if (data.value) {
-    lijst.push(data.value)
-  }
-  return lijst
-})
 const {convertDateStringToLocaleString} = UseDateConverter()
 </script>
 
@@ -47,29 +30,25 @@ const {convertDateStringToLocaleString} = UseDateConverter()
   </div>
 
   <div
-    class="mx-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    class="mx-5 grid grid-cols-1 gap-8 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    v-if="data"
   >
     <!-- profiel -->
     <div class="mx-auto lg:col-span-1">
       <div class="flex text-lg font-semibold">
         <p
-          :key="Math.random()"
-          v-if="result"
-          v-for="naam in result"
           class="mx-auto text-center text-2xl font-semibold"
         >
-          {{ naam.algemeen?.voornaam }} {{ naam.algemeen?.naam }}
+          {{ data.algemeen.voornaam }} {{ data.algemeen.naam }}
         </p>
       </div>
       <div>
         <p
-          :key="Math.random()"
-          v-if="result"
-          v-for="naam in result"
+ 
           class="mx-auto text-center text-sm font-normal text-neutral-100"
         >
-          {{ naam.contact?.email }}<br />
-          {{ convertDateStringToLocaleString(naam.algemeen?.geboorteDatum) }}
+          {{ data.contact.email }}<br />
+          {{ convertDateStringToLocaleString(data.algemeen.geboorteDatum) }}
         </p>
       </div>
 
@@ -78,17 +57,15 @@ const {convertDateStringToLocaleString} = UseDateConverter()
         <svg-fitbit class="mx-auto"></svg-fitbit>
         <p
           class="absolute inset-0 top-12 text-center text-sm font-semibold"
-          :key="Math.random()"
-          v-if="result"
-          v-for="naam in result"
+ 
         >
-          {{ '#' + naam.deviceId }}
+          {{ '#' + data.deviceId }}
           <!-- #1 -->
         </p>
       </div>
 
       <div class="inline-flex items-center gap-4">
-        <h1 class="font-semibold">Harstslag</h1>
+        <h4 class="font-semibold">Harstslag</h4>
         <PressablesSwitch></PressablesSwitch>
       </div>
     </div>
@@ -96,47 +73,53 @@ const {convertDateStringToLocaleString} = UseDateConverter()
     <!-- persoonlijke -->
     <div class="lg:col-span-1">
       <TextKop2 class="my-5">Persoonlijke informatie</TextKop2>
-      <div class="flex flex-col gap-5">
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">geslacht</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.algemeen?.geslacht }}
+      <div class="form-item">
+        <div>
+          <h4 >geslacht</h4>
+          <p >
+            {{ data.algemeen.geslacht }}
           </p>
         </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Geboortedatum:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ convertDateStringToLocaleString(naam.algemeen?.geboorteDatum) }}
+        <div>
+          <h4 >Geboortedatum:</h4>
+          <p >
+            {{ convertDateStringToLocaleString(data.algemeen.geboorteDatum) }}
           </p>
         </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Geboorteland:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.algemeen?.geboorteland }}
+        <div >
+          <h4 >Geboorteland:</h4>
+          <p >
+            {{ data.algemeen.geboorteland }}
           </p>
         </div>
       </div>
 
       <!-- adres -->
       <TextKop2 class="my-5">Adres informatie</TextKop2>
-      <div class="flex flex-col gap-5">
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Straatnaam:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.adres?.straat }}
+      <div class="form-item">
+        <div >
+          <h4 >Straatnaam:</h4>
+          <p >
+            {{ data.adres.straat }}
           </p>
         </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Postcode:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.adres?.postcode }}
+        <div>
+          <h4 >Huisnummer:</h4>
+          <p >
+            {{ data.adres.nr }}
           </p>
         </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Gemeente:</h1>
+        <div >
+          <h4 >Postcode:</h4>
+          <p >
+            {{ data.adres.postcode }}
+          </p>
+        </div>
+        <div >
+          <h4 >Gemeente:</h4>
           <!-- <p>{{ patientAdres.gemeente }}</p> -->
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.adres?.gemeente }}
+          <p >
+            {{ data.adres.gemeente }}
           </p>
         </div>
       </div>
@@ -145,23 +128,23 @@ const {convertDateStringToLocaleString} = UseDateConverter()
     <!-- medisch -->
     <div class="lg:col-span-1">
       <TextKop2 class="my-5">Medische informatie</TextKop2>
-      <div class="flex flex-col gap-5">
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Lengte:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.medisch?.lengte + ' cm' }}
+      <div class="form-item">
+        <div>
+          <h4 >Lengte:</h4>
+          <p >
+            {{ data.medisch.lengte + ' cm' }}
           </p>
         </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Gewicht:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.medisch?.gewicht + ' kg' }}
+        <div >
+          <h4 >Gewicht:</h4>
+          <p >
+            {{ data.medisch.gewicht + ' kg' }}
           </p>
         </div>
-        <div class="flex items-center">
-          <h1 class="mr-3 font-medium capitalize">Bloedgroep:</h1>
-          <p :key="Math.random()" v-if="result" v-for="naam in result">
-            {{ naam.medisch?.bloedgroep }}
+        <div >
+          <h4 >Bloedgroep:</h4>
+          <p >
+            {{ data.medisch.bloedgroep }}
           </p>
         </div>
       </div>
@@ -181,4 +164,19 @@ const {convertDateStringToLocaleString} = UseDateConverter()
     grid-template-columns: repeat(4, 1fr);
   }
 }
+.form-item > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.form-item {
+  margin-bottom: 1rem;
+  max-width: 20rem;
+}
+.form-item > div > h4 {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
 </style>
