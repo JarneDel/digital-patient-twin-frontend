@@ -86,16 +86,16 @@ const alertSvg = computed(() => {
     class="grid grid-cols-[auto,repeat(3,1fr),auto] grid-rows-2 items-center gap-x-2 rounded-lg bg-white p-5 drop-shadow-lg transition-all hover:translate-x-1 hover:bg-neutral-50"
     role="button"
   >
+    
     <component
       :is="alertSvg"
-      class="row-start-1 row-end-3 h-14 w-14 rounded-md p-2"
+      class='p-4 h-20 w-20 md:h-14 md:w-14 rounded-md md:p-2 row-start-1 row-end-3'
       :class="{
         'bg-primary-50 text-primary-375': props.level === AlertLevel.Kritiek,
         'bg-orange-50 text-other-200': props.level === AlertLevel.Matig,
         'bg-indigo-50 text-indigo-300': props.level === AlertLevel.Info,
       }"
     />
-    <!--    <h3 class='text-md font-semibold capitalize'>{{ type.toString() }}: {{ value }} {{ unit }}</h3>-->
     <h3 class="text-md whitespace-nowrap font-semibold capitalize">
       {{ value }} {{ unit }}
     </h3>
