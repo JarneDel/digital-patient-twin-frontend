@@ -25,15 +25,15 @@ console.info('patient', props.patientId)
 </script>
 
 <template>
-  <NuxtLink
-    :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
+  <div
+  @click="() => navigateTo(`/dokter/patienten/${patient.id}`)"
     class='rounded-lg h-[66px] flex bg-white px-4 drop-shadow-xl transition-all max-w-[34rem] hover:bg-neutral-500 items-center'
   >
     <div
       class="grid grid-cols-[1fr_9fr_5fr_4fr_2fr_2fr] grid-rows-1 items-center"
     >
       <button
-        class='h-10 w-10 rounded-lg text-gray-700 hover:bg-neutral-300 active:text-gray-800'
+        class='h-10 w-10 rounded-lg text-gray-700 hover:bg-neutral-300 active:text-gray-800 outline-none ring-transparent ring-2 focus:ring-tertiary-500'
         @mouseleave='hover = false'
         @mouseover='hover = true'
         @click.stop="$emit('unpin')"
@@ -45,7 +45,7 @@ console.info('patient', props.patientId)
       <span class='text-gray-800'>{{ patient.geboorteDatum }}</span>
       <span class="text-gray-800">{{ patient.geslacht }}</span>
       <NuxtLink
-        class="justify-self-center"
+        class="justify-self-center rounded-lg outline-none ring-transparent ring-2 focus:ring-tertiary-500"
         :to='!isDisabled? `/dokter/patienten/${patientId}/edit` : undefined'
       >
         <pencil
@@ -53,7 +53,7 @@ console.info('patient', props.patientId)
         />
       </NuxtLink>
       <NuxtLink
-        class="justify-self-center"
+        class="justify-self-center rounded-lg outline-none ring-transparent ring-2 focus:ring-tertiary-500"
         :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
       >
         <Line-chart
@@ -61,5 +61,5 @@ console.info('patient', props.patientId)
         />
       </NuxtLink>
     </div>
-  </NuxtLink>
+  </div>
 </template>
