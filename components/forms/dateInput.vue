@@ -38,11 +38,11 @@ const updateValue = (event: Event) => {
 }
 
 watch(
-  () => props.birthDateValue,
+  () => props.modelValue,
   newValue => {
     if (newValue) {
       emits('update:isValid', true)
-      emits('update:birthDateValue', newValue)
+      emits('update:modelValue', newValue)
     } else {
       emits('update:isValid', false)
     }

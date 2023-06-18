@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { AlertType } from '~/interfaces/AlertType'
-import { Address, Contact, IPatientAlgemeen, Medisch } from '~/interfaces/IPatient'
+import { PatientGegevens } from '~/interfaces/IPatient'
 
 useHead({
   title: 'Nieuwe patiënt',
@@ -13,63 +12,28 @@ useHead({
 })
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
+const {createEmptyPatient} = usePatientHelper()
+const patient = reactive<PatientGegevens>(
+  createEmptyPatient()
+)
+const user = useUser()
 
-const patient = reactive<IPatientAlgemeen>({
-  // Initialize the patient data with empty values or default values
-  id: '',
-  voornaam: '',
-  naam: '',
-  geslacht: '',
-  geboorteland: '',
-  geboorteDatum: '',
-})
-const patientAdres = reactive<Address>({
-  gemeente: '',
-  straat: '',
-  postcode: 0,
-  nr: '',
-})
-const patientMedisch = reactive<Medisch>({
-  lengte: 180,
-  gewicht: 70,
-  bloedgroep: 'A+',
-})
-const patientContact = reactive<Contact>({
-  email: '',
-  telefoon: '',
-})
-
-watch(patientAdres, () => {
-  console.log(patientAdres)
-})
 
 const submitForm = async () => {
   try {
-    const newPatientData = {
-      algemeen: { ...patient },
-      adres: { ...patientAdres },
-      medisch: { ...patientMedisch },
-      contact: { ...patientContact },
-    }
-    console.log(newPatientData)
-
     // Send the new patient data to your API endpoint using POST request
     const response = await $fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newPatientData),
+      body: JSON.stringify(patient),
     })
-
-    if (response) {
-      // Handle successful creation
-      console.log('New patient created successfully')
-      alert('New patient created successfully')
-    } else {
-      // Handle creation error
-      console.error('Failed to create new patient')
-    }
+    const addToDokterUrl = `https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/dokter/${user.value?.localAccountId}/patient/${response}`
+    await $fetch(addToDokterUrl, {
+      method: 'POST',
+    })
+    navigateTo(`/dokter/patienten/${response}`)
   } catch (error) {
     console.error('An error occurred while creating new patient:', error)
   }
@@ -77,114 +41,106 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <div class="m-5 flex flex-col items-center justify-between md:flex-row">
-    <pressables-goback
-      link_name="Nieuw Patiënt creëren"
-      link_path="/dokter/patienten/"
-    />
-
-    <!-- <PressablesSaveButton @click="saveFormData"></PressablesSaveButton> -->
-  </div>
-  <form @submit.prevent="submitForm">
-    <div class="mx-10 flex items-start justify-end">
-      <button type="submit">
+  <form @submit.prevent='submitForm'>
+    <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
+      <pressables-goback
+        link_name="Nieuw Patiënt creëren"
+        link_path="/dokter/patienten/"
+      />
+      <button type='submit'>
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
-    <div class="mx-5 flex flex-col gap-4 lg:mx-20 lg:flex-row">
-      <!-- persoonlijke -->
-      <div class="">
-        <!-- <FormsSelectDevice></FormsSelectDevice> -->
-        <pressables-toggle
-          :type="AlertType.Temperatuur"
-          :text="AlertType.Temperatuur"
-        ></pressables-toggle>
+    <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
+
+      <div class='flex'>
         <div>
-          <template-slider
-            :type="AlertType.AdemsFrequentie"
-            :min="0"
-            :max="100"
+          <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
+          <forms-text
+            v-model='patient.algemeen.voornaam'
+            label='Voornaam'
+            input-id='voornaam'
+          />
+          <forms-text
+            v-model='patient.algemeen.naam'
+            label='Achternaam'
+            input-id='naam'
+          />
+          <forms-input-select
+            v-model='patient.algemeen.geslacht'
+            input-id='geslacht'
+            label='Geslacht'
+            :options='["Man", "Vrouw", "Anders"]'/>
+          <forms-text
+            v-model='patient.algemeen.geboorteland'
+            input-id='geboorteland'
+            label='Geboorteland'/>
+          <forms-text
+            v-model='patient.algemeen.geboorteDatum'
+            input-id='geboorteDatum'
+            label='Geboortedatum'
+            type='date'/>
+
+          <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
+          <forms-text
+            v-model='patient.adres.gemeente'
+            input-id='gemeente'
+            label='Gemeeente'
+          />
+          <forms-text-aria
+            v-model='patient.adres.straat'
+            input-id='straat'
+            label='Straatnaam'/>
+          <div class='flex gap-4 flex-row'>
+            <forms-text
+              v-model='patient.adres.postcode'
+              input-id='Postcode'
+              label='Postcode'
+            />
+            <forms-text
+              v-model='patient.adres.nr'
+              input-id='huisnummer'
+              label='Huisnummer'
+            />
+          </div>
+          <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
+          <forms-text
+            v-model='patient.contact.email'
+            input-id='email'
+            label='Email'
+            type='email'
+          />
+          <forms-text
+            v-model='patient.contact.telefoon'
+            input-id='telefoon'
+            label='Telefoon'
+            type='tel'
           />
         </div>
       </div>
 
-      <div class="flex">
-        <div>
-          <TextKop2 class="my-5">Persoonlijke gegevens</TextKop2>
-          <forms-text-input
-            :textValue="patient.voornaam"
-            :placeholder="patient.voornaam"
-            @update:textValue="patient.voornaam = $event"
-          ></forms-text-input>
-          <forms-surname-input
-            :surnameValue="patient.naam"
-            v-model="patient.naam"
-            @update:surnameValue="patient.naam = $event"
-          >
-          </forms-surname-input>
-          <forms-gender-input
-            v-model="patient.geslacht"
-            @update:genderValue="patient.geslacht = $event"
-          ></forms-gender-input>
-          <forms-country-input
-            :countryValue="patient.geboorteland"
-            v-model="patient.geboorteland"
-            @update:countryValue="patient.geboorteland = $event"
-          ></forms-country-input>
-          <forms-date-input
-            :birthDateValue="patient.geboorteDatum"
-            v-model="patient.geboorteDatum"
-            @update:birthDateValue="patient.geboorteDatum = $event"
-          >
-          </forms-date-input>
-          <TextKop2 class="my-5">Adres informatie</TextKop2>
-          <forms-city-input
-            :cityValue="patientAdres.gemeente"
-            v-model="patientAdres.gemeente"
-            @update:cityValue="patientAdres.gemeente = $event"
-          ></forms-city-input>
-          <forms-street-input
-            :textStreetNameValue="patientAdres.straat"
-            v-model="patientAdres.straat"
-            @update:textStreetNameValue="patientAdres.straat = $event"
-          ></forms-street-input>
-          <forms-postalcode-inputs
-            @update:postalcodeValue="patientAdres.postcode = parseInt($event)"
-            @update:houseNumberValue="patientAdres.nr = $event"
-          ></forms-postalcode-inputs>
-          <TextKop2 class="my-5">Contact gegevens</TextKop2>
-          <forms-email-input
-            :emailValue="patientContact.email"
-            v-model="patientContact.email"
-            @update:emailValue="patientContact.email = $event"
-          ></forms-email-input>
-          <forms-telephone-input
-            :phoneNumberValue="patientContact.telefoon"
-            v-model="patientContact.telefoon"
-            @update:phoneNumberValue="patientContact.telefoon = $event"
-          ></forms-telephone-input>
-        </div>
-      </div>
-
       <!-- medisch -->
-      <div class="flex">
+      <div class='flex'>
         <div>
-          <TextKop2 class="my-5">Medische gegevens</TextKop2>
-          <FormsLenghtInput
-            :lengthValue="patientMedisch.lengte"
-            v-model="patientMedisch.lengte"
-            @update:lengthValue="patientMedisch.lengte = parseInt($event)"
-          ></FormsLenghtInput>
-          <FormsWeightInput
-            :weightValue="patientMedisch.gewicht"
-            v-model="patientMedisch.gewicht"
-            @update:weightValue="patientMedisch.gewicht = parseInt($event)"
-          ></FormsWeightInput>
-          <FormsBloodtypeInput
-            :bloodTypeValue="patientMedisch.bloedgroep"
-            v-model="patientMedisch.bloedgroep"
-            @update:bloodTypeValue="patientMedisch.bloedgroep = $event"
-          ></FormsBloodtypeInput>
+          <TextKop2 class='mb-5'>Medische gegevens</TextKop2>
+          <forms-text
+            v-model='patient.medisch.lengte'
+            input-id='length'
+            label='Lengte [cm]'
+          />
+          <forms-text
+            v-model='patient.medisch.gewicht'
+            input-id='weight'
+            label='Gewicht [kg]'
+          />
+
+          <forms-input-select
+            input-id='bloedgroep'
+            label='Bloedgroep'
+            :options='["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]'
+            v-model='patient.medisch.bloedgroep'
+          />
+
         </div>
       </div>
     </div>

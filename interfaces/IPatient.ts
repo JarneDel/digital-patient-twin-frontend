@@ -8,7 +8,7 @@ export interface IPatientAlgemeen {
 }
 
 export interface PatientGegevens {
-  id: string
+  id?: string
   deviceId: string
   algemeen: IPatientAlgemeen
   profilePictureUrl?: string
@@ -16,14 +16,14 @@ export interface PatientGegevens {
   contact: Contact
   medisch: Medisch
   createdBy?: string
-  medicalNotificationThresholds: IMedicalNotificationsThresholds
+  medicalNotificationThresholds?: IMedicalNotificationsThresholds
 }
 
 export interface Address {
-  gemeente?: string
-  straat?: string
-  postcode?: number
-  nr?: string
+  gemeente: string
+  straat: string
+  postcode: number
+  nr: string
 }
 
 export interface Contact {

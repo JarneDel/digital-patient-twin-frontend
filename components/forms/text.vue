@@ -33,6 +33,11 @@ export default {
   methods: {
     convertDate(date: string) {
       // date: dd/mm/yyyy --> yyyy-mm-dd
+      // check if format is dd/mm/yyyy or yyyy-mm-dd
+      if (date.includes('-')) {
+        return date;
+      }
+
       const dateArray = date.split('/');
       return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
     },
