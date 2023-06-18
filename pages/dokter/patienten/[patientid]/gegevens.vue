@@ -63,11 +63,6 @@ const {convertDateStringToLocaleString} = UseDateConverter()
           <!-- #1 -->
         </p>
       </div>
-
-      <div class="inline-flex items-center gap-4">
-        <h4 class="font-semibold">Harstslag</h4>
-        <PressablesSwitch></PressablesSwitch>
-      </div>
     </div>
 
     <!-- persoonlijke -->
