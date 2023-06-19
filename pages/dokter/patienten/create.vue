@@ -42,7 +42,7 @@ const submitForm = async () => {
 
 <template>
   <form @submit.prevent='submitForm'>
-    <div class="m-5 flex flex-col items-center justify-between md:flex-row lg:mx-20 max-w-[74rem]">
+    <div class="m-5 flex items-center justify-between flex-row lg:mx-20 max-w-[74rem]">
       <pressables-goback
         link_name="Nieuw Patiënt creëren"
         link_path="/dokter/patienten/"
@@ -51,8 +51,7 @@ const submitForm = async () => {
         <PressablesSaveButton></PressablesSaveButton>
       </button>
     </div>
-    <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
-
+    <div class='mx-5 flex flex-col flex-wrap gap-32 md:flex-row md:mx-52'>
       <div class='flex'>
         <div>
           <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
@@ -85,7 +84,7 @@ const submitForm = async () => {
           <forms-text
             v-model='patient.adres.gemeente'
             input-id='gemeente'
-            label='Gemeeente'
+            label='Gemeente'
           />
           <forms-text-aria
             v-model='patient.adres.straat'
@@ -103,19 +102,6 @@ const submitForm = async () => {
               label='Huisnummer'
             />
           </div>
-          <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
-          <forms-text
-            v-model='patient.contact.email'
-            input-id='email'
-            label='Email'
-            type='email'
-          />
-          <forms-text
-            v-model='patient.contact.telefoon'
-            input-id='telefoon'
-            label='Telefoon'
-            type='tel'
-          />
         </div>
       </div>
 
@@ -139,6 +125,20 @@ const submitForm = async () => {
             label='Bloedgroep'
             :options='["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]'
             v-model='patient.medisch.bloedgroep'
+          />
+
+          <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
+          <forms-text
+            v-model='patient.contact.email'
+            input-id='email'
+            label='Email'
+            type='email'
+          />
+          <forms-text
+            v-model='patient.contact.telefoon'
+            input-id='telefoon'
+            label='Telefoon'
+            type='tel'
           />
 
         </div>
