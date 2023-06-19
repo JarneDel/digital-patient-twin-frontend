@@ -60,7 +60,7 @@ const rangeEn = computed(() => {
         date.value[0] = new Date(new Date().setDate(new Date().getDate() - 1))
         date.value[1] = new Date()
       }
-      xLabel.value = 'Tijd [hh:mm]'
+      xLabel.value = 'Tijd'
       return 'day'
     case 'week':
       if (!manual.start && !manual.end) {

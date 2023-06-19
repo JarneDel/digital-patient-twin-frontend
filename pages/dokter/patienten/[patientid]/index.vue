@@ -21,11 +21,12 @@ useTitle('Vitalen ' + patient.value?.algemeen.voornaam + " " + patient.value?.al
 </script>
 
 <template>
-
-  <text-kop2 v-if='patient' class='mx-auto mb-2 mt-5 max-w-7xl'>Vitalen {{ patient.algemeen.voornaam }} {{ patient.algemeen.naam}}</text-kop2>
-  <client-only>
-    <grafieken :for='id' />
-  </client-only>
+  <div class="mx-auto my-12 max-w-7xl">
+    <text-kop2 v-if='patient' class='mx-auto mb-2 mt-5'>Vitalen {{ patient.algemeen.voornaam }} {{ patient.algemeen.naam}}</text-kop2>
+    <client-only>
+      <grafieken :for='id' />
+    </client-only>
+  </div>
 </template>
 
 <style scoped></style>
