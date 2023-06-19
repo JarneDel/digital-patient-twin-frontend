@@ -78,26 +78,24 @@ const handlePin = (id: string, isPinned: boolean) => {
 
 const pinPatient = (id: string, isPinned: boolean) => {
   if (isPinned) {
-    console.log('😀')
     $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
       method: 'DELETE',
       baseURL: servicesUrls.dokterService,
     }).then(
       () => {
-        console.log('PIN REMOVED')
+        console.log('pin removed')
       },
       (err: FetchError) => {
         console.log(err)
       },
     )
   } else {
-    console.log('😛')
     $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
       method: 'POST',
       baseURL: servicesUrls.dokterService,
     }).then(
       () => {
-        console.log('PIN ADDED')
+        console.log('pin added')
       },
       (err: FetchError) => {
         console.log(err)
