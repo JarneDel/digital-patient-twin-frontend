@@ -33,7 +33,7 @@ const submitForm = async () => {
     await $fetch(addToDokterUrl, {
       method: 'POST',
     })
-    navigateTo(`/dokter/patienten/${response}`)
+    navigateTo(`/dokter/patienten/${response}/gegevens`)
   } catch (error) {
     console.error('An error occurred while creating new patient:', error)
   }
@@ -47,9 +47,7 @@ const submitForm = async () => {
         link_name="Nieuw Patiënt creëren"
         link_path="/dokter/patienten/"
       />
-      <button type='submit'>
-        <PressablesSaveButton></PressablesSaveButton>
-      </button>
+      <PressablesSaveButton type='submit'></PressablesSaveButton>
     </div>
     <div class='mx-5 flex flex-col flex-wrap gap-32 md:flex-row md:mx-52'>
       <div class='flex'>
