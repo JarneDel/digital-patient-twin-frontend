@@ -42,7 +42,7 @@ const submitForm = async () => {
 
 <template>
   <form @submit.prevent='submitForm'>
-    <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
+    <div class="m-5 flex flex-col items-center justify-between md:flex-row lg:mx-20 max-w-[74rem]">
       <pressables-goback
         link_name="Nieuw Patiënt creëren"
         link_path="/dokter/patienten/"
