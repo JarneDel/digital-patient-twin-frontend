@@ -294,4 +294,9 @@ watch(meldingen, newVal => {
   color: transparent !important;
   text-shadow: 0 0 8px #000;
 }
+
+.blurred-text .text-neutral-800 {
+  color: transparent !important;
+  text-shadow: 0 0 8px #000;
+}
 </style>
