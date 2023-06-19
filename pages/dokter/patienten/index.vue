@@ -154,10 +154,11 @@ watch(pending, () => {
   }
 })
 
-const pinned = (id: any) => {
+const pinned = (id: any) : boolean => {
   if (patients.value !== null && pinnedPatients.value !== null) {
     return pinnedPatients.value.filter(p => p.id === id).length > 0
   }
+  return false
 }
 
 const showAddPatientPopup = () => {
