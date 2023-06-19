@@ -14,7 +14,7 @@ const props = defineProps({
   <div class='mx-2'>
     <!--    one row, multiple cols, format: min: value unit | gemiddelde: | value unit | max: value: unit-->
     <div
-      class='inline-flex flex-row gap-4 rounded-md bg-neutral-600 p-2 drop-shadow-md font-medium'
+      class='inline-flex flex-row gap-4 rounded-md bg-neutral-600 p-2 drop-shadow-md font-medium text-neutral-800'
     >
       <div>nu: {{ data }} {{ unit }}</div>
     </div>

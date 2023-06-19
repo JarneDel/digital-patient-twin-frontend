@@ -17,28 +17,16 @@ const { data: patient } = useFetch<PatientGegevens>(
     server: false,
   },
 )
-
-const patientNaam = ref('Test Patient')
-useHead({
-  title: `Vitalen ${patient.value?.algemeen.voornaam} ${patient.value?.algemeen.naam}`,
-  // title: 'Vitalen patiënt',
-  meta: [
-    {
-      name: 'description',
-      content: 'Detailpage van de realtime data van de patiënt',
-    },
-  ],
-})
-// const url = "https://industryprojectsignalr.service.signalr.net/client/?hub=IndustryProjectSignalr"
-// useSignalR(url)
+useTitle('Vitalen ' + patient.value?.algemeen.voornaam + " " + patient.value?.algemeen.naam, "Detailpage van de realtime data van de patiënt")
 </script>
 
 <template>
-
-  <text-kop2 v-if='patient' class='mx-auto mb-2 mt-5 max-w-7xl'>Vitalen {{ patient.algemeen.voornaam }} {{ patient.algemeen.naam}}</text-kop2>
-  <client-only>
-    <grafieken :for='id' />
-  </client-only>
+  <div class="md:mx-20 my-12 mx-8">
+    <text-kop2 v-if='patient' class='mt-5 mb-2 text-3xl font-semibold text-neutral-800'>Vitalen {{ patient.algemeen.voornaam }} {{ patient.algemeen.naam}}</text-kop2>
+    <client-only>
+      <grafieken :for='id' />
+    </client-only>
+  </div>
 </template>
 
 <style scoped></style>

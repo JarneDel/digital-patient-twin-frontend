@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { LucideX } from 'lucide-vue-next'
 import { AlertLevel, AlertType } from '~/interfaces/AlertType'
 import {
   SvgAdemfrequentie,

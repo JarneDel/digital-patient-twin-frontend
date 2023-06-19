@@ -47,7 +47,7 @@ export default {
 
 <template>
   <div>
-    <label :for='inputId' >{{ label }}</label>
+    <label :for='inputId' class="text-neutral-800">{{ label }}</label>
     <input
       :type="type"
       :id="inputId"
