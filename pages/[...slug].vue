@@ -1,15 +1,7 @@
 <script setup>
 import { LucideArrowLeft } from 'lucide-vue-next'
 
-useHead({
-  title: 'Page not found',
-  meta: [
-    {
-      name: 'description',
-      content: 'Sorry, but the page you were trying to view does not exist.',
-    },
-  ],
-})
+useTitle('Page not found', 'Sorry, but the page you were trying to view does not exist.')
 </script>
 
 <template>

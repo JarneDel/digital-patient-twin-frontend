@@ -1,15 +1,7 @@
 <script setup lang="ts">
 import { Mail } from 'lucide-vue-next'
 
-useHead({
-  title: 'Je account',
-  meta: [
-    {
-      name: 'description',
-      content: 'Je accountgegevens.',
-    },
-  ],
-})
+useTitle('Je account', 'Je accountgegevens.')
 
 function divideFullName(fullName: string): [string, string] {
   const names = fullName.split(' ')

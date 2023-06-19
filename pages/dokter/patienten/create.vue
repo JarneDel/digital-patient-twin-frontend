@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import { PatientGegevens } from '~/interfaces/IPatient'
 
-useHead({
-  title: 'Nieuwe patiënt',
-  meta: [
-    {
-      name: 'description',
-      content: 'Patiënt gegevens aanmaken.',
-    },
-  ],
-})
+useTitle('Nieuwe patiënt', 'Patiënt gegevens aanmaken.')
+
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
 const {createEmptyPatient} = usePatientHelper()
