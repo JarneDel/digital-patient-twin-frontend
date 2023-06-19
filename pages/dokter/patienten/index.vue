@@ -173,7 +173,7 @@ watch(isSelectPatientOpen, (state) => {
 </script>
 
 <template>
-  <div class='mx-auto my-12 max-w-[67rem]'>
+  <div class='mx-auto my-12 max-w-4xl'>
     <h2 class='mb-4 text-3xl font-semibold text-neutral-800'>Patiënt lijst</h2>
     <div class='my-8 flex mx-4 items-center justify-between lg:flex-row'>
       <button

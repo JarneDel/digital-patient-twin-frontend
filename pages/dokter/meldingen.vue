@@ -198,7 +198,7 @@ watch(meldingen, (newVal) => {
 </script>
 
 <template>
-  <div class='mx-auto my-12 max-w-[55rem] '>
+  <div class='mx-auto my-12 max-w-4xl'>
     <div class='flex flex-row items-center justify-between'>
       <h2 class='mb-4 mx-5 text-3xl font-semibold'>Meldingen</h2>
       <div class='refresh mr-5' role='button' @click='onButtonClick'>

@@ -27,7 +27,7 @@ console.log('Last Name:', lastName)
 </script>
 
 <template>
-  <div class="mx-auto my-12 max-w-[67rem]">
+  <div class="mx-auto my-12 max-w-4xl">
     <h2 v-if="fullName !== null" class="mx-8 mb-8 mt-6 text-3xl font-semibold text-neutral-800">
       Mijn gegevens
     </h2>
