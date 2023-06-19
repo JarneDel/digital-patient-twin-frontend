@@ -80,7 +80,7 @@ onMounted(() => {
       class="relative flex h-16 items-center justify-center bg-primary-600 transition-all ease-out"
     >
       <NuxtLink
-        class="mx-auto rounded-md p-1 font-semibold text-white outline-none ring-2 ring-transparent transition-colors focus:ring-tertiary-500"
+        class="mx-auto rounded-md p-1 font-semibold text-white outline-none ring-2 ring-transparent transition-colors focus-visible:ring-tertiary-500"
         to="/dokter"
       >
         <h1 v-if="isOpen" class="p-2">Digital Patient Twin</h1>
