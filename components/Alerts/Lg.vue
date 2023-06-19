@@ -66,7 +66,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
 
 <template>
   <NuxtLink
-    class='mx-5 my-4  flex md:flex-row flex-row justify-between max-w-4xl flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:bg-neutral-300'
+    class='mx-5 my-4 outline-none ring-transparent ring-2 focus:ring-tertiary-500 flex md:flex-row flex-row justify-between max-w-4xl flex-grow-0  rounded-lg bg-white p-2 drop-shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:bg-neutral-300'
     :class="{
       'border-l-4 border-primary-375': alert.level === AlertLevel.Kritiek,
       'border-l-4 border-other-200': alert.level === AlertLevel.Matig,
@@ -101,7 +101,7 @@ const timeAgo = useElapsedTime(new Date(props.alert?.timestamp))
         <div class="text-neutral-800">{{ AlertType[alert.type] }}</div>
         <div class='text-sm text-neutral-800'>{{ alert.type === AlertType.Temperatuur? Number(alert.value).toFixed(1) : alert.value }} {{ unit }}</div>
       </div>
-      <NuxtLink class="text-neutral-800" :to='`/dokter/patienten/${alert.patientId}/gegevens`'>
+      <NuxtLink class="text-neutral-800 rounded-lg p-1 outline-none ring-transparent ring-2 focus:ring-tertiary-500" :to='`/dokter/patienten/${alert.patientId}/gegevens`'>
         <LucideSlidersHorizontal />
       </NuxtLink>
     </div>
