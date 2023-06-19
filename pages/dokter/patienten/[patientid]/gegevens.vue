@@ -17,7 +17,7 @@ const { convertDateStringToLocaleString } = UseDateConverter()
 
 <template>
   <div
-    class="m-5 flex max-w-[74rem] flex-col items-center justify-between md:flex-row lg:mx-20"
+    class="m-5 flex max-w-[74rem] items-center justify-between md:flex-row lg:mx-20"
   >
     <PressablesGoback
       link_path="/dokter/patienten"
@@ -33,11 +33,11 @@ const { convertDateStringToLocaleString } = UseDateConverter()
   </div>
 
   <div
-    class="mx-5 grid grid-cols-1 gap-8 md:grid-cols-2 lg:mx-20 lg:grid-cols-4"
+    class="mx-5 grid grid-cols-1 gap-8 md:grid-cols-2 lg:mx-20 lg:grid-cols-3"
     v-if="data"
   >
     <!-- profiel -->
-    <div class="mx-auto lg:col-span-1">
+    <div class="mx-auto col-span-2 lg:col-span-1 text-neutral-800">
       <div class="flex text-lg font-semibold">
         <p class="mx-auto text-center text-2xl font-semibold">
           {{ data.algemeen.voornaam }} {{ data.algemeen.naam }}
@@ -61,8 +61,8 @@ const { convertDateStringToLocaleString } = UseDateConverter()
     </div>
 
     <!-- persoonlijke -->
-    <div class="lg:col-span-1">
-      <TextKop2 class="my-5">Persoonlijke informatie</TextKop2>
+    <div class="mx-auto col-span-2 lg:col-span-1 text-neutral-800">
+      <TextKop2 class="mb-2 text-neutral-800">Persoonlijke informatie</TextKop2>
       <div class="form-item">
         <div>
           <h4>geslacht</h4>
@@ -85,7 +85,7 @@ const { convertDateStringToLocaleString } = UseDateConverter()
       </div>
 
       <!-- adres -->
-      <TextKop2 class="my-5">Adres informatie</TextKop2>
+      <TextKop2 class="mb-2 mt-6">Adres informatie</TextKop2>
       <div class="form-item">
         <div>
           <h4>Straatnaam:</h4>
@@ -116,8 +116,8 @@ const { convertDateStringToLocaleString } = UseDateConverter()
     </div>
 
     <!-- medisch -->
-    <div class="lg:col-span-1">
-      <TextKop2 class="my-5">Medische informatie</TextKop2>
+    <div class="mx-auto col-span-2 lg:col-span-1 text-neutral-800">
+      <TextKop2 class="mb-2 text-neutral-800">Medische informatie</TextKop2>
       <div class="form-item">
         <div>
           <h4>Lengte:</h4>
