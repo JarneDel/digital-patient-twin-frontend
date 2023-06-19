@@ -40,12 +40,12 @@ export default defineComponent( {
 </script>
 
 <template>
-  <label :id='inputId'>{{ label }}</label>
+  <label :id='inputId' class="text-neutral-800">{{ label }}</label>
   <select
     :id="inputId"
     :value="modelValue"
     @change="updateValue"
-    class="peer block h-fit w-full appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
+    class="peer block h-fit w-full text-neutral-800 appearance-none rounded-lg border-2 border-gray-300 p-2 text-sm focus:border-2 focus:border-tertiary-500 focus:outline-none focus:ring-0 focus:ring-tertiary-300"
   >
     <option disabled value="">Selecteer {{ label }}</option>
     <option v-for="option in options" :key="option" :value="option">{{ option }}</option>

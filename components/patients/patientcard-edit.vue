@@ -66,7 +66,7 @@ watch(
   },
 )
 
-const handlePin = (id: string, isPinned: boolean) => {
+const handlePin = (id: any, isPinned: boolean) => {
   console.log('handlepin')
   pinPatient(id, isPinned)
   if (props.patient.id === id) {
@@ -78,26 +78,24 @@ const handlePin = (id: string, isPinned: boolean) => {
 
 const pinPatient = (id: string, isPinned: boolean) => {
   if (isPinned) {
-    console.log('😀')
     $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
       method: 'DELETE',
       baseURL: servicesUrls.dokterService,
     }).then(
       () => {
-        console.log('PIN REMOVED')
+        console.log('pin removed')
       },
       (err: FetchError) => {
         console.log(err)
       },
     )
   } else {
-    console.log('😛')
     $fetch(`/dokter/${user.value?.localAccountId}/patient/${id}/pin`, {
       method: 'POST',
       baseURL: servicesUrls.dokterService,
     }).then(
       () => {
-        console.log('PIN ADDED')
+        console.log('pin added')
       },
       (err: FetchError) => {
         console.log(err)
@@ -107,20 +105,20 @@ const pinPatient = (id: string, isPinned: boolean) => {
 }
 console.log(props.patient.algemeen.geboorteDatum, props.patient.algemeen.naam)
 defineEmits(['clickPin'])
-const {convertDateStringToAge}  = UseDateConverter()
+const { convertDateStringToAge } = UseDateConverter()
 </script>
 
 <template>
   <div
-    class="flex flex-row h-[80px] my-4 mx-4 justify-end drop-shadow-xl bg-white rounded-lg px-4 py-4"
+    class="mx-4 my-4 flex h-[80px] flex-row justify-end rounded-lg bg-white px-4 py-4 drop-shadow-xl"
   >
     <div
       :class="{ 'gap-4': !clickEdit, 'gap-8': clickEdit }"
-      class="flex h-auto w-full items-center justify-end"
+      class="flex h-auto w-full items-center justify-end text-neutral-800"
     >
       <button
         class="focus-visible:border-offset-0 rounded-lg border-2 border-transparent hover:bg-neutral-200/20 focus-visible:border-tertiary-500 focus-visible:outline-none active:text-gray-800"
-        @click="[handlePin(patient.id, isPinned), $emit('clickPin')]"
+        @click=";[handlePin(patient.id, isPinned), $emit('clickPin')]"
       >
         <svg-pinrotated
           v-if="!isPinned"

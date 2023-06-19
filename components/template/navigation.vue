@@ -80,7 +80,7 @@ onMounted(() => {
       class="relative flex h-16 items-center justify-center bg-primary-600 transition-all ease-out"
     >
       <NuxtLink
-        class="mx-auto rounded-md font-semibold text-white transition-colors outline-none ring-transparent ring-2 focus:ring-tertiary-500 p-1"
+        class="mx-auto rounded-md p-1 font-semibold text-white outline-none ring-2 ring-transparent transition-colors focus-visible:ring-tertiary-500"
         to="/dokter"
       >
         <h1 v-if="isOpen" class="p-2">Digital Patient Twin</h1>
@@ -93,7 +93,7 @@ onMounted(() => {
       </NuxtLink>
       <button
         :class="isOpen ? 'rotate-180' : 'rotate-0'"
-        class="absolute -bottom-4 -right-4 z-10 h-8 w-8 rounded-full bg-primary-550 drop-shadow-md transition-all duration-300 hover:bg-primary-450 focus:bg-primary-450 outline-none ring-transparent ring-2 focus:ring-tertiary-500"
+        class="absolute -bottom-4 -right-4 z-10 h-8 w-8 rounded-full bg-primary-550 outline-none ring-2 ring-transparent drop-shadow-md transition-all duration-300 hover:bg-primary-450 focus:bg-primary-450 focus:ring-tertiary-500"
         type="button"
         @click="isOpen = !isOpen"
       >
@@ -151,10 +151,11 @@ onMounted(() => {
       <div class="h-24">
         <button
           class="flex appearance-none items-center rounded-l-lg border-2 border-transparent focus-visible:border-tertiary-500 focus-visible:outline-none"
+          :class="isOpen ? 'rounded-l-lg' : '' + !isOpen ? 'rounded-lg' : ''"
           type="button"
           @click="logout"
         >
-          <div class="flex items-center justify-center gap-2 py-2 pl-3">
+          <div class="flex items-center justify-center gap-2 py-2 ml-2 p-1">
             <log-out class="h-8 w-8 stroke-white pl-1 pr-2" />
             <div v-if="isOpen" class="whitespace-nowrap text-white">
               Log out

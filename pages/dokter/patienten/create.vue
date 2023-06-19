@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import { PatientGegevens } from '~/interfaces/IPatient'
 
-useHead({
-  title: 'Nieuwe patiënt',
-  meta: [
-    {
-      name: 'description',
-      content: 'Patiënt gegevens aanmaken.',
-    },
-  ],
-})
+useTitle('Nieuwe patiënt', 'Patiënt gegevens aanmaken.')
+
 
 const url = `https://patientgegevens--hml08fh.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/patient`
 const {createEmptyPatient} = usePatientHelper()
@@ -33,7 +26,7 @@ const submitForm = async () => {
     await $fetch(addToDokterUrl, {
       method: 'POST',
     })
-    navigateTo(`/dokter/patienten/${response}`)
+    navigateTo(`/dokter/patienten/${response}/gegevens`)
   } catch (error) {
     console.error('An error occurred while creating new patient:', error)
   }
@@ -42,20 +35,17 @@ const submitForm = async () => {
 
 <template>
   <form @submit.prevent='submitForm'>
-    <div class='m-5 flex flex-col items-center justify-between md:flex-row'>
+    <div class="m-5 flex items-center justify-between flex-row lg:mx-20 max-w-[74rem]">
       <pressables-goback
         link_name="Nieuw Patiënt creëren"
         link_path="/dokter/patienten/"
       />
-      <button type='submit'>
-        <PressablesSaveButton></PressablesSaveButton>
-      </button>
+      <PressablesSaveButton type='submit'></PressablesSaveButton>
     </div>
-    <div class='mx-5 flex flex-col flex-wrap gap-12 md:flex-row lg:mx-20'>
-
+    <div class='mx-5 flex flex-col flex-wrap gap-32 md:flex-row md:mx-52'>
       <div class='flex'>
         <div>
-          <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
+          <TextKop2 class='mb-2'>Persoonlijke gegevens</TextKop2>
           <forms-text
             v-model='patient.algemeen.voornaam'
             label='Voornaam'
@@ -81,11 +71,11 @@ const submitForm = async () => {
             label='Geboortedatum'
             type='date'/>
 
-          <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
+          <TextKop2 class='mb-2 mt-6'>Adres informatie</TextKop2>
           <forms-text
             v-model='patient.adres.gemeente'
             input-id='gemeente'
-            label='Gemeeente'
+            label='Gemeente'
           />
           <forms-text-aria
             v-model='patient.adres.straat'
@@ -103,26 +93,13 @@ const submitForm = async () => {
               label='Huisnummer'
             />
           </div>
-          <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
-          <forms-text
-            v-model='patient.contact.email'
-            input-id='email'
-            label='Email'
-            type='email'
-          />
-          <forms-text
-            v-model='patient.contact.telefoon'
-            input-id='telefoon'
-            label='Telefoon'
-            type='tel'
-          />
         </div>
       </div>
 
       <!-- medisch -->
       <div class='flex'>
-        <div>
-          <TextKop2 class='mb-5'>Medische gegevens</TextKop2>
+        <div class="w-[396px]">
+          <TextKop2 class='mb-2'>Medische gegevens</TextKop2>
           <forms-text
             v-model='patient.medisch.lengte'
             input-id='length'
@@ -139,6 +116,20 @@ const submitForm = async () => {
             label='Bloedgroep'
             :options='["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]'
             v-model='patient.medisch.bloedgroep'
+          />
+
+          <TextKop2 class='mb-2 mt-6'>Contact gegevens</TextKop2>
+          <forms-text
+            v-model='patient.contact.email'
+            input-id='email'
+            label='Email'
+            type='email'
+          />
+          <forms-text
+            v-model='patient.contact.telefoon'
+            input-id='telefoon'
+            label='Telefoon'
+            type='tel'
           />
 
         </div>

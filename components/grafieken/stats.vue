@@ -18,7 +18,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="mx-2 text-right">
+  <div class="mx-2 text-right text-neutral-800">
     <!--    one row, multiple cols, format: min: value unit | gemiddelde: | value unit | max: value: unit-->
     <div
       class="inline-flex flex-row gap-4 rounded-md bg-neutral-600 p-2 drop-shadow-md"

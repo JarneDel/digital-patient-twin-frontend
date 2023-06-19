@@ -33,16 +33,8 @@ const login = async () => {
     navigateTo(`/`)
 }
 
+useTitle('Login | Digital Patient Twin', 'Log in op je account')
 
-useHead({
-  title: 'Login | Digital Patient Twin',
-  meta: [
-    {
-      name: 'description',
-      content: 'Login to your account',
-    },
-  ],
-})
 </script>
 
 <template>

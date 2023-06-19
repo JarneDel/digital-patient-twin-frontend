@@ -37,15 +37,8 @@ const placeHolderPatient = ref<IPatientAlgemeen>({
   geboorteland: 'België',
 })
 
-useHead({
-  title: 'Home',
-  meta: [
-    {
-      name: 'description',
-      content: 'Welkom op de homepage.',
-    },
-  ],
-})
+useTitle('Home', 'Welkom op de homepage.')
+
 const {
   data: pinnedPatients,
   error: pinnedPatientsError,

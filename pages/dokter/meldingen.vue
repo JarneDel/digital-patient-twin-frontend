@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { PatientGegevens } from '~/interfaces/IPatient'
 import { AlertLevel, AlertType, IMelding } from '~/interfaces/AlertType'
 import { servicesUrls } from '~/servicesurls'
@@ -10,8 +10,6 @@ useTitle('Meldingen', 'Meldingen pagina. Bekijk alle meldingen van patiënten.')
 const route = useRoute()
 const id = route.query.id as string | undefined
 let isFirstLoad = true
-console.log(id, 'id')
-
 
 const user = useUser().value
 const AlertTypes: Array<AlertType | 'Alle types'> = [
@@ -25,22 +23,26 @@ const AlertTypes: Array<AlertType | 'Alle types'> = [
 const selectedPatient = ref<string | 'Alle patiënten'>('')
 const currentOffset = ref(0)
 const selectedPatientId = ref<string | null>(id ? id : null)
-const AlertSeverity = ref<Array<AlertLevel | 'Alles'>>(['Alles', AlertLevel.Info, AlertLevel.Matig, AlertLevel.Kritiek])
+const AlertSeverity = ref<Array<AlertLevel | 'Alles'>>([
+  'Alles',
+  AlertLevel.Info,
+  AlertLevel.Matig,
+  AlertLevel.Kritiek,
+])
 const selectedSeverity = ref<string>('Alles')
 const selectedType = ref<string>('Alle types')
-const requestFromScroll= ref(false)
+const requestFromScroll = ref(false)
 const nameFromQuery = ref<string | null>(null)
 
-
 // get patienten by dokterid
-
-const { pending: patientenPending, data: patienten, error: patientenError } = useFetch<PatientGegevens[]>(
-  `/dokter/${user?.localAccountId}/patients`,
-  {
-    baseURL: servicesUrls.dokterService,
-    server: false,
-  },
-)
+const {
+  pending: patientenPending,
+  data: patienten,
+  error: patientenError,
+} = useFetch<PatientGegevens[]>(`/dokter/${user?.localAccountId}/patients`, {
+  baseURL: servicesUrls.dokterService,
+  server: false,
+})
 const {
   data: meldingen,
   pending: meldingenPending,
@@ -51,8 +53,10 @@ const {
   server: false,
   immediate: true,
   onRequest(context: FetchContext): Promise<void> | void {
-    const typeEnum: AlertType = AlertType[selectedType.value as keyof typeof AlertType]
-    const levelEnum: AlertLevel = AlertLevel[selectedSeverity.value as keyof typeof AlertLevel]
+    const typeEnum: AlertType =
+      AlertType[selectedType.value as keyof typeof AlertType]
+    const levelEnum: AlertLevel =
+      AlertLevel[selectedSeverity.value as keyof typeof AlertLevel]
     context.options.params = {
       type: typeEnum,
       level: levelEnum,
@@ -62,9 +66,7 @@ const {
   },
 })
 
-
 // meldingen is a list of alerts that are shown on the page
-
 const patientNamen = computed(() => {
   if (!patienten.value) return []
   const namen = patienten.value.map(patient => {
@@ -88,13 +90,15 @@ watch(patienten, () => {
       return patient.id === id
     })
     if (patient) {
-      console.log('patient found', `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`)
+      console.log(
+        'patient found',
+        `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`,
+      )
       selectedPatient.value = `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
       nameFromQuery.value = `${patient.algemeen?.voornaam} ${patient.algemeen?.naam}`
     }
   }
 })
-
 
 watch(selectedType, value => {
   console.log(value)
@@ -103,16 +107,14 @@ watch(selectedType, value => {
   currentOffset.value = 0
 })
 
-
-watch(selectedSeverity, (newVal) => {
+watch(selectedSeverity, newVal => {
   console.log(newVal, 'selected type changed')
   getMeldingen()
   // reset offset
   currentOffset.value = 0
 })
 
-
-watch(selectedPatient, (newVal) => {
+watch(selectedPatient, newVal => {
   // get patient id from name
   if (isFirstLoad) {
     isFirstLoad = false
@@ -123,7 +125,6 @@ watch(selectedPatient, (newVal) => {
   })
   console.log(patient, 'patient', newVal)
   if (patient) {
-    console.log(patient.id, 'selected patient changed')
     selectedPatientId.value = patient.id
     currentOffset.value = 0
     getMeldingen()
@@ -137,7 +138,6 @@ watch(selectedPatient, (newVal) => {
 watch(meldingen, () => {
   isRefreshing.value = false
 })
-
 
 // endregion
 
@@ -172,17 +172,21 @@ const onButtonClick = () => {
   getMeldingen()
 }
 
-watch(useWatchIfScrolledToBottom, (newVal) => {
-  if (newVal) {
-    requestFromScroll.value = true
-    currentOffset.value += 25
-    getMeldingen()
-  }
-} , { immediate: true })
+watch(
+  useWatchIfScrolledToBottom,
+  newVal => {
+    if (newVal) {
+      requestFromScroll.value = true
+      currentOffset.value += 25
+      getMeldingen()
+    }
+  },
+  { immediate: true },
+)
 
 const allMeldingen = ref<IMelding[]>([])
 // add new data to meldingen
-watch(meldingen, (newVal) => {
+watch(meldingen, newVal => {
   console.log(newVal, 'new meldingen')
   if (newVal) {
     if (requestFromScroll.value) {
@@ -193,83 +197,82 @@ watch(meldingen, (newVal) => {
     }
   }
 })
-
-
 </script>
 
 <template>
-  <div class='mx-auto my-12 max-w-[55rem] '>
-    <div class='flex flex-row items-center justify-between'>
-      <h2 class='mb-4 mx-5 text-3xl font-semibold'>Meldingen</h2>
-      <div class='refresh mr-5' role='button' @click='onButtonClick'>
-        <lucide-rotate-cw :class='{
-          "animate-spin" : meldingenPending && isRefreshing
-         }' />
+  <div class="mx-auto my-12 max-w-4xl">
+    <div class="flex flex-row items-center justify-between">
+      <h2 class="mx-5 mb-4 text-3xl font-semibold text-neutral-800">Meldingen</h2>
+      <div class="refresh mr-5 text-neutral-800" role="button" @click="onButtonClick">
+        <lucide-rotate-cw
+          :class="{
+            'animate-spin': meldingenPending && isRefreshing,
+          }"
+        />
       </div>
     </div>
 
-    <div class='notificationSettings'></div>
-    <div class='mx-5 my-8 flex content-center justify-between'>
-      <!--      <div class="flex items-center gap-x-4">-->
+    <div class="notificationSettings"></div>
+    <div class="mx-5 my-8 flex content-center justify-between">
       <pressables-search
-        type='small'
-        class='medium-dropdown'
-        v-model:selected='selectedPatient'
-        :options='patientNamen'
+        type="small"
+        class="medium-dropdown"
+        v-model:selected="selectedPatient"
+        :options="patientNamen"
       />
       <pressables-drop-down-selector
-        type='default'
-        class='small-dropdown'
-        :options='AlertTypesString'
-        v-model='selectedType'
+        type="default"
+        class="small-dropdown"
+        :options="AlertTypesString"
+        v-model="selectedType"
       />
-      <!--      </div>-->
       <PressablesSelector
-        v-model:selected='selectedSeverity'
-        :options='AlertSeverityString'
+        v-model:selected="selectedSeverity"
+        :options="AlertSeverityString"
       />
       <!--     Alerts container     -->
     </div>
-    <div v-if='allMeldingen ||  !(!requestFromScroll && !patientenPending)'>
+    <div v-if="allMeldingen || !(!requestFromScroll && !patientenPending)">
       <alerts-lg
-        v-for='alert of allMeldingen'
-        :key='alert.id'
-        :alert='alert'
-        :type='alert.type'
+        v-for="alert of allMeldingen"
+        :key="alert.id"
+        :alert="alert"
+        :type="alert.type"
       />
     </div>
     <!--       center -->
-    <div v-if='!meldingenPending && !patientenPending && allMeldingen.length === 0'>
-      <div class='flex flex-col items-center justify-center pt-6'>
-        <lucide-info class='text-6xl' />
+    <div
+      v-if="!meldingenPending && !patientenPending && allMeldingen.length === 0"
+    >
+      <div class="flex flex-col items-center justify-center pt-6">
+        <lucide-info class="text-6xl" />
         <text-kop2>Geen meldingen gevonden</text-kop2>
-        <div class='text-center text-neutral-100'>
+        <div class="text-center text-neutral-100">
           Er zijn geen meldingen gevonden voor de geselecteerde filters.
         </div>
-
       </div>
     </div>
 
-    <div  v-if='meldingenPending && requestFromScroll' class='flex justify-center'>
-      <lucide-loader2 class='animate-spin' />
+    <div
+      v-if="meldingenPending && requestFromScroll"
+      class="flex justify-center"
+    >
+      <lucide-loader2 class="animate-spin" />
     </div>
-    <div v-if='(meldingenPending || patientenPending) && !requestFromScroll'>
+    <div v-if="(meldingenPending || patientenPending) && !requestFromScroll">
       <client-only>
-
-      <alerts-lg
-        class='animate-pulse blurred-text'
-        v-for='alert of 5'
-        :key='Math.random()'
-        :alert='placeHolderAlert'
-        :type='alert'
-        :isDisabled='true'
-      />
+        <alerts-lg
+          class="blurred-text animate-pulse"
+          v-for="alert of 5"
+          :key="Math.random()"
+          :alert="placeHolderAlert"
+          :type="alert"
+          :isDisabled="true"
+        />
       </client-only>
     </div>
   </div>
   <!--  <decorations-fixed-right/>-->
-
-
 </template>
 
 <style>
@@ -292,4 +295,8 @@ watch(meldingen, (newVal) => {
   text-shadow: 0 0 8px #000;
 }
 
+.blurred-text .text-neutral-800 {
+  color: transparent !important;
+  text-shadow: 0 0 8px #000;
+}
 </style>
