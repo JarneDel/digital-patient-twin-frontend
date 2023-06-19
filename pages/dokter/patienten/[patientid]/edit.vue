@@ -175,9 +175,7 @@ const createThresholds = async () => {
         :link_name="editLinkName"
         :link_path="`/dokter/patienten/${id.valueOf}/gegevens`"
       />
-      <button type="submit">
-        <PressablesSaveButton></PressablesSaveButton>
-      </button>
+      <PressablesSaveButton type='submit'></PressablesSaveButton>
     </div>
     <div class="mx-5 flex flex-col justify-between flex-wrap gap-12 md:flex-row lg:mx-20">
       <!-- persoonlijke -->
