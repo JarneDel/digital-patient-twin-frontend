@@ -3,6 +3,14 @@ import Pinrotated from '../svg/pinrotated.vue'
 import { LineChart, LucideX, Pencil } from 'lucide-vue-next'
 import { IPatientAlgemeen } from '~/interfaces/IPatient'
 
+const routeID = useRoute().params.dokterid as string
+
+const id = ref('878c95cf-e82d-40a5-a56c-8790427f1657')
+if (routeID){
+  console.log(routeID)
+  id.value = routeID
+}
+
 const props = defineProps({
   patient: {
     type: Object as PropType<IPatientAlgemeen>,
@@ -54,7 +62,7 @@ const {convertDateStringToLocaleString} = UseDateConverter()
       </NuxtLink>
       <NuxtLink
         class="justify-self-center rounded-lg outline-none ring-transparent ring-2 focus:ring-tertiary-500"
-        :to='!isDisabled? `/dokter/patienten/${patientId}` : undefined'
+        :to='!isDisabled? `/dokter/patienten/${id}` : undefined'
       >
         <Line-chart
           class="h-10 w-10 rounded-lg p-2 text-gray-700 hover:bg-neutral-300 active:text-gray-800"
