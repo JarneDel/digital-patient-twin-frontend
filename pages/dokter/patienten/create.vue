@@ -54,7 +54,7 @@ const submitForm = async () => {
     <div class='mx-5 flex flex-col flex-wrap gap-32 md:flex-row md:mx-52'>
       <div class='flex'>
         <div>
-          <TextKop2 class='mb-5'>Persoonlijke gegevens</TextKop2>
+          <TextKop2 class='mb-2'>Persoonlijke gegevens</TextKop2>
           <forms-text
             v-model='patient.algemeen.voornaam'
             label='Voornaam'
@@ -80,7 +80,7 @@ const submitForm = async () => {
             label='Geboortedatum'
             type='date'/>
 
-          <TextKop2 class='mt-3 mb-4'>Adres informatie</TextKop2>
+          <TextKop2 class='mb-2 mt-6'>Adres informatie</TextKop2>
           <forms-text
             v-model='patient.adres.gemeente'
             input-id='gemeente'
@@ -107,8 +107,8 @@ const submitForm = async () => {
 
       <!-- medisch -->
       <div class='flex'>
-        <div>
-          <TextKop2 class='mb-5'>Medische gegevens</TextKop2>
+        <div class="w-[396px]">
+          <TextKop2 class='mb-2'>Medische gegevens</TextKop2>
           <forms-text
             v-model='patient.medisch.lengte'
             input-id='length'
@@ -127,7 +127,7 @@ const submitForm = async () => {
             v-model='patient.medisch.bloedgroep'
           />
 
-          <TextKop2 class='mb-4 mt-3'>Contact gegevens</TextKop2>
+          <TextKop2 class='mb-2 mt-6'>Contact gegevens</TextKop2>
           <forms-text
             v-model='patient.contact.email'
             input-id='email'
