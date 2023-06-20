@@ -177,7 +177,7 @@ const createThresholds = async () => {
       />
       <PressablesSaveButton type='submit'></PressablesSaveButton>
     </div>
-    <div class="mx-5 flex flex-col justify-between flex-wrap gap-12 md:flex-row lg:mx-20">
+    <div class="mx-5 flex flex-col justify-start flex-wrap gap-12 md:flex-row lg:mx-20">
       <!-- persoonlijke -->
       <div class="" v-if="notificationsEnabled && thresholds">
         <!-- <FormsSelectDevice></FormsSelectDevice> -->
