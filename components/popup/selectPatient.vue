@@ -175,9 +175,9 @@ const submit = async (fullName: string) => {
                   ok
                 </button>
               </div>
-              <div v-if='noRemainingPatients'>
+              <div v-if='noRemainingPatients || noRemainingPatients.length===0'>
                 <p class="text-sm text-gray-500">
-                  U heeft alle patienten al toegevoegd.
+                  U heeft alle patiënten al toegevoegd.
                 </p>
               </div>
             </DialogPanel>
