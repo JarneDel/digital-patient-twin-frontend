@@ -10,20 +10,31 @@ const patient = reactive<PatientGegevens>(
   createEmptyPatient()
 )
 const user = useUser()
-
+const isError = reactive({
+  value: false,
+  message: '',
+})
 
 const submitForm = async () => {
   try {
     // Send the new patient data to your API endpoint using POST request
-    const response = await $fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(patient),
     })
+    if (!response.ok) {
+      const message = response.body ? await response.json() : 'An error occurred while creating new patient'
+      console.log(message)
+      isError.value = true
+      const messageAsArray = message as Array<string>
+      isError.message = messageAsArray.join(', ')
+      return
+    }
     const addToDokterUrl = `https://dokterservice.blackdune-2fd1ec46.northeurope.azurecontainerapps.io/dokter/${user.value?.localAccountId}/patient/${response}`
-    await $fetch(addToDokterUrl, {
+    const result = await $fetch(addToDokterUrl, {
       method: 'POST',
     })
     navigateTo(`/dokter/patienten/${response}/gegevens`)
@@ -34,6 +45,8 @@ const submitForm = async () => {
 </script>
 
 <template>
+  <popup-error v-if='isError.value' :message='isError.message' title-message='Patient is niet aangemaakt' />
+
   <form @submit.prevent='submitForm'>
     <div class="m-5 flex items-center justify-between flex-row lg:mx-20 max-w-[74rem]">
       <pressables-goback

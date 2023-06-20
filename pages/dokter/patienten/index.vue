@@ -175,7 +175,7 @@ watch(isSelectPatientOpen, (state) => {
 
 <template>
   <div class='mx-auto my-12 max-w-4xl'>
-    <h2 class='mb-4 text-3xl font-semibold text-neutral-800'>Patiënt lijst</h2>
+    <h2 class='mb-4 text-3xl font-semibold text-neutral-800'>Patiënten lijst</h2>
     <div class='my-8 flex mx-4 items-center justify-between lg:flex-row'>
       <button
         class='inline-flex justify-center transition-colors rounded-lg border-2 bg-secondary-100/30 border-secondary-200 p-5 text-sm font-medium outline-none ring-2 ring-transparent hover:bg-secondary-200/30 focus-visible:ring-secondary-400/80'
@@ -234,7 +234,7 @@ watch(isSelectPatientOpen, (state) => {
       />
     </div>
     <div v-if='!patients || patients.length === 0 && !pending'>
-      <div class='text-center text-gray-500 text-sm'>Je hebt nog geen patienten</div>
+      <div class='text-center text-gray-500 text-sm'>Je hebt nog geen patiënten</div>
     </div>
 
   </div>
